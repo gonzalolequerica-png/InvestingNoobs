@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230b0f14%22/><text x=%2250%25%22 y=%2258%25%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23c9a35a%22>◆</text></svg>">
+<title>InvestingNoobs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #0b0f14;
+    color: #eceef1;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  ::selection { background: #c9a35a; color: #0b0f14; }
+  .mono { font-family: 'IBM Plex Mono', 'Courier New', monospace; }
+  .serif { font-family: 'Fraunces', Georgia, serif; }
+  .flash-up { animation: flashUp 0.9s ease; }
+  .flash-down { animation: flashDown 0.9s ease; }
+  @keyframes flashUp { 0% { background: rgba(61,220,151,0.25); } 100% { background: transparent; } }
+  @keyframes flashDown { 0% { background: rgba(255,107,107,0.25); } 100% { background: transparent; } }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .spin { animation: spin 1s linear infinite; display: inline-block; }
+  tr:hover td { background: rgba(255,255,255,0.03); }
+  input::placeholder { color: #5b6472; }
+  th { cursor: pointer; user-select: none; }
+  table { border-collapse: collapse; width: 100%; min-width: 640px; }
+  th, td { padding: 12px 14px; }
+  #wrap { max-width: 1100px; margin: 0 auto; padding: 32px 20px 60px; }
+  @media (max-width: 700px) { .hide-mobile { display: none !important; } }
+  .pill { font-size: 12px; padding: 4px 10px; border-radius: 20px; white-space: nowrap; font-weight: 500; }
+  .pct { display: inline-flex; align-items: center; gap: 4px; font-variant-numeric: tabular-nums; }
+  #search-box { display: flex; align-items: center; gap: 10px; background: #12161d; border: 1px solid #242b35; border-radius: 6px; padding: 12px 16px; margin-bottom: 20px; }
+  #search-input { background: transparent; border: none; outline: none; color: #eceef1; font-size: 14px; width: 100%; font-family: inherit; }
+  .banner { padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; font-size: 12.5px; line-height: 1.5; }
+  .banner-info { background: #161a14; border: 1px solid #332d1f; color: #c9b98a; }
+  .banner-error { background: #2a1414; border: 1px solid #4a2020; color: #ff9b9b; font-size: 13px; }
+  #table-container { border: 1px solid #242b35; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 0 rgba(201,163,90,0.15) inset, 0 12px 30px -18px rgba(0,0,0,0.6); }
+  #table-scroll { overflow-x: auto; cursor: grab; scrollbar-width: thin; scrollbar-color: #c9a35a #12161d; }
+  #table-scroll.dragging { cursor: grabbing; user-select: none; }
+  #table-scroll::-webkit-scrollbar { height: 10px; }
+  #table-scroll::-webkit-scrollbar-track { background: #12161d; }
+  #table-scroll::-webkit-scrollbar-thumb { background: #3a4250; border-radius: 6px; }
+  #table-scroll::-webkit-scrollbar-thumb:hover { background: #c9a35a; }
+  tbody tr { border-bottom: 1px solid #131c1a; }
+  thead tr { border-bottom: 1px solid #242b35; background: #10141a; }
+  th { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8b93a0; font-weight: 500; white-space: nowrap; }
+  th.active { color: #c9a35a; }
+  .skel { height: 14px; background: #141e1c; border-radius: 4px; }
+  .coin-row { display: flex; align-items: center; gap: 10px; }
+  .coin-img { border-radius: 50%; }
+  .coin-name { font-weight: 600; font-size: 14px; }
+  .coin-sym { font-size: 11px; color: #8b93a0; text-transform: uppercase; }
+  .stat-cell { background: #10141a; padding: 14px 18px; }
+  .stat-label { font-size: 10px; letter-spacing: 0.1em; color: #6b7280; margin-bottom: 6px; }
+  .stat-value { font-size: 15px; color: #eceef1; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .buy-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #e8c27a, #c9a35a 60%, #a9812f);
+    color: #0b0f14;
+    padding: 7px 16px;
+    border-radius: 5px;
+    font-size: 12.5px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+    box-shadow: 0 0 0 rgba(201,163,90,0.5), 0 2px 8px rgba(201,163,90,0.35);
+    animation: buyPulse 2.2s ease-in-out infinite;
+    transition: transform 0.15s ease;
+  }
+  .buy-btn:hover { transform: translateY(-1px) scale(1.04); }
+  .buy-col-cell {
+    position: sticky;
+    right: 0;
+    background: #10141a;
+    box-shadow: -6px 0 10px -6px rgba(0,0,0,0.5);
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 12px;
+  }
+  tr:hover .buy-col-cell { background: #141920; }
+  thead .buy-col-cell { background: #0e1218; }
+  @keyframes buyPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(201,163,90,0.55), 0 2px 8px rgba(201,163,90,0.35); }
+    50% { box-shadow: 0 0 0 6px rgba(201,163,90,0), 0 2px 14px rgba(201,163,90,0.55); }
+  }
+  .tab-btn { background: #12161d; border: 1px solid #242b35; color: #8b93a0; padding: 9px 18px; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+  .tab-btn:hover { color: #c7cdd6; }
+  .tab-btn.tab-active { background: #1c1710; border-color: #c9a35a; color: #c9a35a; }
+  .blog-post { border: 1px solid #242b35; border-radius: 6px; padding: 24px 26px; margin-bottom: 18px; background: #10141a; }
+  .blog-title { font-size: 17px; color: #eceef1; margin: 0 0 12px; }
+  .blog-p { font-size: 14px; line-height: 1.7; color: #a9b0bb; margin: 0 0 10px; }
+  .blog-p:last-child { margin-bottom: 0; }
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4483309337875295" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="wrap">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:20px;">
+    <div>
+      <div class="mono" style="font-size:11px;letter-spacing:0.18em;color:#c9a35a;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+        <span style="width:16px;height:1px;background:#c9a35a;display:inline-block;"></span>
+        LIVE MARKET DATA
+      </div>
+      <h1 class="serif" id="page-title" style="font-size:clamp(30px,5vw,46px);font-weight:600;margin:0 0 6px;letter-spacing:-0.01em;">InvestingNoobs</h1>
+      <p style="font-size:13px;color:#8b93a0;margin:0;max-width:420px;line-height:1.5;">Built for people who don't know much about this yet: a simple way to check prices, without the jargon.</p>
+    </div>
+    <div style="text-align:right;font-size:12px;color:#8b93a0;" class="mono">
+      <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;">
+        <span id="refresh-icon">⟳</span>
+        <span id="status-text">Loading…</span>
+      </div>
+      <div style="margin-top:2px;opacity:0.7;" id="refresh-label">Auto-refresh every 10s</div>
+    </div>
+  </div>
+
+  <div id="tabs" style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+    <button data-tab="crypto" class="tab-btn tab-active">Cryptocurrencies</button>
+    <button data-tab="commodities" class="tab-btn">Commodities</button>
+    <button data-tab="stocks" class="tab-btn">Stocks</button>
+    <a href="game.html" class="tab-btn tab-link-external" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">🎮 Game <span style="font-size:9px;background:#3fa06e;color:#0b0f14;padding:1px 6px;border-radius:10px;font-weight:700;letter-spacing:0.02em;">NEW</span></a>
+    <a href="blog.html" class="tab-btn tab-link-external" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-left:auto;">Learn <span style="font-size:11px;opacity:0.6;">↗</span></a>
+  </div>
+
+  <div id="stat-strip" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:#242b35;border:1px solid #242b35;border-radius:6px;overflow:hidden;margin-bottom:20px;">
+    <div class="stat-cell">
+      <div class="stat-label mono">BTC</div>
+      <div class="stat-value mono" id="stat-btc">—</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label mono">ETH</div>
+      <div class="stat-value mono" id="stat-eth">—</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label mono">GOLD</div>
+      <div class="stat-value mono" id="stat-gold">—</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label mono">TOP GAINER 24H</div>
+      <div class="stat-value mono" id="stat-gainer">—</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label mono">TOP LOSER 24H</div>
+      <div class="stat-value mono" id="stat-loser">—</div>
+    </div>
+  </div>
+
+  <div style="margin-bottom:20px;border:1.5px solid #c9a35a;border-radius:8px;padding:18px 22px;background:linear-gradient(180deg, #161206, #10141a 70%);box-shadow:0 0 0 4px rgba(201,163,90,0.08), 0 8px 24px -14px rgba(201,163,90,0.3);display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:space-between;">
+    <div style="display:flex;align-items:center;gap:14px;flex:1;min-width:240px;">
+      <div style="font-size:28px;">☕</div>
+      <div>
+        <div class="serif" style="font-size:16px;font-weight:600;color:#eceef1;">Support this project</div>
+        <div style="font-size:12.5px;line-height:1.5;color:#a9b0bb;">Free and always will be. Donations go toward improving the site little by little.</div>
+      </div>
+    </div>
+    <a href="https://www.buymeacoffee.com/investingnoobs" target="_blank" rel="noopener" class="buy-btn" style="font-size:13.5px;padding:10px 22px;flex-shrink:0;">☕ Buy us a coffee</a>
+  </div>
+
+  <div id="market-view">
+    <div style="display:flex;gap:10px;margin-bottom:20px;">
+      <div id="search-box" style="margin-bottom:0;flex:1;">
+        <span>🔍</span>
+        <input id="search-input" placeholder="Search by name or symbol (BTC, ETH, SOL...)" />
+      </div>
+      <button id="watchlist-toggle" class="tab-btn" style="white-space:nowrap;">☆ My List</button>
+    </div>
+
+    <div id="error-banner" class="banner banner-error" style="display:none;"></div>
+
+    <div class="banner banner-info">
+      <strong style="color:#c9a35a;">About "Momentum":</strong> describes the recent price trend (1h/24h/7d), not a prediction of where it's headed. No indicator can reliably anticipate future moves — use it as context, not investment advice.
+    </div>
+
+    <div id="table-container">
+      <div id="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:32px;"></th>
+              <th data-sort="market_cap_rank" style="text-align:left;">#</th>
+              <th style="text-align:left;">Coin</th>
+              <th data-sort="current_price" style="text-align:right;">Price</th>
+              <th data-sort="price_change_percentage_1h_in_currency" style="text-align:right;">1h</th>
+              <th data-sort="price_change_percentage_24h_in_currency" style="text-align:right;" id="th-24h">24h</th>
+              <th data-sort="price_change_percentage_7d_in_currency" style="text-align:right;" class="hide-mobile">7d</th>
+              <th style="text-align:left;">Momentum</th>
+              <th data-sort="market_cap" style="text-align:right;" class="hide-mobile">Market Cap</th>
+              <th data-sort="total_volume" style="text-align:right;" class="hide-mobile">Volume 24h</th>
+              <th class="buy-col-cell"></th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;font-size:12px;color:#5b6472;text-align:center;" id="footer-text">
+      Data provided by CoinGecko
+    </div>
+  </div>
+
+  <div style="margin-top:56px;border-top:1px solid #242b35;padding-top:36px;">
+    <h2 class="serif" style="font-size:24px;font-weight:600;color:#eceef1;margin:0 0 16px;">About this tracker</h2>
+    <p style="font-size:14px;line-height:1.7;color:#a9b0bb;margin:0 0 16px;">
+      InvestingNoobs is a free tool built especially for people with no prior knowledge of these markets. You don't need to be an expert to use it: it brings together real-time prices from three markets — cryptocurrencies, commodities (gold, silver, and other metals), and stocks of major companies — explained simply, without unnecessary jargon.
+    </p>
+    <h3 class="mono" style="font-size:15px;color:#c9a35a;margin:24px 0 10px;">What does each column mean?</h3>
+    <p style="font-size:14px;line-height:1.7;color:#a9b0bb;margin:0 0 16px;">
+      The <strong style="color:#eceef1;">price</strong> is the latest available quote. The <strong style="color:#eceef1;">1h, 24h and 7d</strong> columns show the percentage change over those periods. The <strong style="color:#eceef1;">Momentum</strong> column summarizes whether those changes point in the same direction (up or down) or contradict each other — it's a read of the recent trend, not a prediction of what happens next.
+    </p>
+    <h3 class="mono" style="font-size:15px;color:#c9a35a;margin:24px 0 10px;">An important note</h3>
+    <p style="font-size:14px;line-height:1.7;color:#a9b0bb;margin:0;">
+      Financial markets and cryptocurrencies carry real risk of losing money. The information on this page is for informational and educational purposes only: it does not constitute financial advice or a recommendation to buy or sell. Before investing, make sure you're well informed and consult a qualified professional if needed.
+    </p>
+  </div>
+
+  <div style="margin-top:40px;padding-top:20px;border-top:1px solid #242b35;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-size:12px;">
+    <a href="about.html" style="color:#8b93a0;text-decoration:none;">About us</a>
+    <a href="privacidad.html" style="color:#8b93a0;text-decoration:none;">Privacy Policy</a>
+  </div>
+</div>
+
+<script>
+(function () {
+  // ⚠️ EDIT ME: paste your exchange affiliate link here before launch.
+  // Example: 'https://accounts.binance.com/register?ref=YOURCODE'
+  const AFFILIATE_LINK = 'https://accounts.binance.com/register?ref=YOURCODE';
+
+  let coins = [];
+  let commodities = [];
+  let stocks = [];
+  let activeTab = 'crypto';
+  let sortKey = 'market_cap_rank';
+  let sortDir = 'asc';
+  let search = '';
+  let loading = true;
+  let prevPrices = {};
+  let commoditiesLoaded = false;
+  let stocksLoaded = false;
+  let watchlist = new Set();
+  try {
+    const saved = JSON.parse(localStorage.getItem('ct_watchlist') || '[]');
+    watchlist = new Set(saved);
+  } catch (e) { /* ignore */ }
+  let showOnlyWatchlist = false;
+
+  function saveWatchlist() {
+    try { localStorage.setItem('ct_watchlist', JSON.stringify(Array.from(watchlist))); } catch (e) { /* ignore */ }
+  }
+  function toggleWatch(id) {
+    if (watchlist.has(id)) watchlist.delete(id); else watchlist.add(id);
+    saveWatchlist();
+    render();
+  }
+
+  // Plain-English one-line explanations for well-known assets — this is what sets the tool
+  // apart from a plain price table: context a beginner can actually use.
+  const PLAIN_EXPLAIN = {
+    bitcoin: 'The original cryptocurrency — often seen as digital gold.',
+    ethereum: 'Powers apps and other tokens, not just a currency.',
+    tether: 'A "stablecoin" — designed to always be worth $1.',
+    'usd-coin': 'A "stablecoin" — designed to always be worth $1.',
+    binancecoin: 'The token of Binance, the largest crypto exchange.',
+    ripple: 'Built for fast, cheap cross-border payments.',
+    dogecoin: 'Started as a joke, now a widely traded meme coin.',
+    cardano: 'A blockchain focused on research-driven development.',
+    solana: 'Known for very fast, low-cost transactions.',
+    XAU: 'Precious metal, traditionally used to protect savings.',
+    XAG: 'Cheaper than gold, also used heavily in electronics.',
+    XPT: 'Rarer than gold, mostly used in industry and jewelry.',
+    XPD: 'Mainly used in car exhaust systems (catalytic converters).',
+    AAPL: 'Makes the iPhone, Mac, and other consumer devices.',
+    MSFT: 'Windows, Office, and a major cloud computing provider.',
+    GOOGL: "Owns Google Search, YouTube, and Android.",
+    AMZN: 'The largest online retailer, also a major cloud provider.',
+    NVDA: 'Makes chips that power AI and gaming graphics.',
+    META: 'Owns Facebook, Instagram, and WhatsApp.',
+    TSLA: 'Electric vehicles and energy storage.',
+    NFLX: 'The streaming service for movies and TV shows.',
+  };
+
+  const COMMODITY_META = [
+    { symbol: 'XAU', name: 'Gold', image: '🥇' },
+    { symbol: 'XAG', name: 'Silver', image: '🥈' },
+    { symbol: 'XPT', name: 'Platinum', image: '⚪' },
+    { symbol: 'XPD', name: 'Palladium', image: '⚙️' },
+    { symbol: 'XCU', name: 'Copper', image: '🟠' },
+    { symbol: 'XRH', name: 'Rhodium', image: '💠' },
+    { symbol: 'XAL', name: 'Aluminum', image: '🔩' },
+    { symbol: 'XNI', name: 'Nickel', image: '⛓️' },
+    { symbol: 'XZN', name: 'Zinc', image: '🔘' },
+    { symbol: 'XPB', name: 'Lead', image: '⚫' },
+    { symbol: 'XSN', name: 'Tin', image: '🥫' },
+    { symbol: 'XIR', name: 'Iridium', image: '💎' },
+  ];
+  const COMMODITY_FALLBACK = {
+    XAU: 2648.30, XAG: 30.85, XPT: 985.40, XPD: 1015.20, XCU: 4.28, XRH: 5250.00,
+    XAL: 2.55, XNI: 7.10, XZN: 1.32, XPB: 0.98, XSN: 14.20, XIR: 4650.00,
+  };
+
+  // Minimal fallback so the crypto tab is never fully empty, even if the very
+  // first load fails before any real data has come in.
+  const CRYPTO_FALLBACK = [
+    { id: 'bitcoin', symbol: 'btc', name: 'Bitcoin', image: 'https://coin-images.coingecko.com/coins/images/1/small/bitcoin.png', market_cap_rank: 1, current_price: 97000, market_cap: 1920000000000, total_volume: 40000000000, price_change_percentage_1h_in_currency: null, price_change_percentage_24h_in_currency: null, price_change_percentage_7d_in_currency: null },
+    { id: 'ethereum', symbol: 'eth', name: 'Ethereum', image: 'https://coin-images.coingecko.com/coins/images/279/small/ethereum.png', market_cap_rank: 2, current_price: 3400, market_cap: 410000000000, total_volume: 18000000000, price_change_percentage_1h_in_currency: null, price_change_percentage_24h_in_currency: null, price_change_percentage_7d_in_currency: null },
+    { id: 'tether', symbol: 'usdt', name: 'Tether', image: 'https://coin-images.coingecko.com/coins/images/325/small/Tether.png', market_cap_rank: 3, current_price: 1.0, market_cap: 140000000000, total_volume: 65000000000, price_change_percentage_1h_in_currency: null, price_change_percentage_24h_in_currency: null, price_change_percentage_7d_in_currency: null },
+  ];
+
+  const STOCK_DOMAINS = {
+    'AAPL':'apple.com', 'MSFT':'microsoft.com', 'GOOGL':'abc.xyz', 'AMZN':'amazon.com', 'NVDA':'nvidia.com',
+    'META':'meta.com', 'TSLA':'tesla.com', 'AVGO':'broadcom.com', 'ORCL':'oracle.com', 'ADBE':'adobe.com',
+    'CRM':'salesforce.com', 'AMD':'amd.com', 'INTC':'intel.com', 'CSCO':'cisco.com', 'QCOM':'qualcomm.com',
+    'TXN':'ti.com', 'IBM':'ibm.com', 'NOW':'servicenow.com', 'INTU':'intuit.com', 'AMAT':'appliedmaterials.com',
+    'MU':'micron.com', 'LRCX':'lamresearch.com', 'ADI':'analog.com', 'PANW':'paloaltonetworks.com', 'SNPS':'synopsys.com',
+    'CDNS':'cadence.com', 'KLAC':'kla.com', 'ANET':'arista.com', 'FTNT':'fortinet.com', 'NXPI':'nxp.com',
+    'MRVL':'marvell.com', 'WDAY':'workday.com', 'PYPL':'paypal.com', 'UBER':'uber.com', 'ABNB':'airbnb.com',
+    'SHOP':'shopify.com', 'SQ':'block.xyz', 'SNOW':'snowflake.com', 'PLTR':'palantir.com', 'CRWD':'crowdstrike.com',
+    'ZS':'zscaler.com', 'DDOG':'datadoghq.com', 'NET':'cloudflare.com', 'MDB':'mongodb.com', 'TEAM':'atlassian.com',
+    'OKTA':'okta.com', 'HUBS':'hubspot.com', 'TTD':'thetradedesk.com', 'ROKU':'roku.com', 'SPOT':'spotify.com',
+    'PINS':'pinterest.com', 'SNAP':'snap.com', 'EBAY':'ebay.com', 'ETSY':'etsy.com', 'BKNG':'booking.com',
+    'EXPE':'expedia.com', 'MAR':'marriott.com', 'HLT':'hilton.com', 'JPM':'jpmorganchase.com', 'BAC':'bankofamerica.com',
+    'WFC':'wellsfargo.com', 'C':'citigroup.com', 'GS':'goldmansachs.com', 'MS':'morganstanley.com', 'USB':'usbank.com',
+    'PNC':'pnc.com', 'TFC':'truist.com', 'SCHW':'schwab.com', 'BLK':'blackrock.com', 'SPGI':'spglobal.com',
+    'ICE':'ice.com', 'CME':'cmegroup.com', 'V':'visa.com', 'MA':'mastercard.com', 'AXP':'americanexpress.com',
+    'COF':'capitalone.com', 'AIG':'aig.com', 'MET':'metlife.com', 'PRU':'prudential.com', 'TRV':'travelers.com',
+    'ALL':'allstate.com', 'PGR':'progressive.com', 'AON':'aon.com', 'MMC':'marshmclennan.com', 'JNJ':'jnj.com',
+    'UNH':'unitedhealthgroup.com', 'PFE':'pfizer.com', 'MRK':'merck.com', 'ABBV':'abbvie.com', 'LLY':'lilly.com',
+    'TMO':'thermofisher.com', 'ABT':'abbott.com', 'DHR':'danaher.com', 'BMY':'bms.com', 'AMGN':'amgen.com',
+    'GILD':'gilead.com', 'CVS':'cvshealth.com', 'CI':'cigna.com', 'HUM':'humana.com', 'ELV':'elevancehealth.com',
+    'ISRG':'intuitive.com', 'VRTX':'vrtx.com', 'REGN':'regeneron.com', 'ZTS':'zoetis.com', 'BSX':'bostonscientific.com',
+    'SYK':'stryker.com', 'MDT':'medtronic.com', 'BDX':'bd.com', 'HCA':'hcahealthcare.com', 'MRNA':'modernatx.com',
+    'PG':'pg.com', 'KO':'coca-cola.com', 'PEP':'pepsico.com', 'WMT':'walmart.com', 'COST':'costco.com',
+    'HD':'homedepot.com', 'LOW':'lowes.com', 'TGT':'target.com', 'NKE':'nike.com', 'MCD':'mcdonalds.com',
+    'SBUX':'starbucks.com', 'CMG':'chipotle.com', 'YUM':'yum.com', 'DIS':'disney.com', 'NFLX':'netflix.com',
+    'CMCSA':'comcastcorporation.com', 'WBD':'wbd.com', 'T':'att.com', 'VZ':'verizon.com', 'TMUS':'t-mobile.com',
+    'CL':'colgatepalmolive.com', 'KMB':'kimberly-clark.com', 'EL':'elcompanies.com', 'MO':'altria.com', 'PM':'pmi.com',
+    'STZ':'cbrands.com', 'KHC':'kraftheinzcompany.com', 'GIS':'generalmills.com', 'MDLZ':'mondelezinternational.com', 'HSY':'thehersheycompany.com',
+    'KDP':'keurigdrpepper.com', 'MNST':'monsterbevcorp.com', 'CLX':'thecloroxcompany.com', 'CHD':'churchdwight.com', 'XOM':'exxonmobil.com',
+    'CVX':'chevron.com', 'COP':'conocophillips.com', 'SLB':'slb.com', 'EOG':'eogresources.com', 'MPC':'marathonpetroleum.com',
+    'PSX':'phillips66.com', 'VLO':'valero.com', 'OXY':'oxy.com', 'WMB':'williams.com', 'KMI':'kindermorgan.com',
+    'HAL':'halliburton.com', 'BA':'boeing.com', 'CAT':'caterpillar.com', 'DE':'deere.com', 'GE':'ge.com',
+    'HON':'honeywell.com', 'MMM':'3m.com', 'LMT':'lockheedmartin.com', 'RTX':'rtx.com', 'NOC':'northropgrumman.com',
+    'GD':'gd.com', 'UPS':'ups.com', 'FDX':'fedex.com', 'UNP':'up.com', 'CSX':'csx.com',
+    'NSC':'nscorp.com', 'EMR':'emerson.com', 'ETN':'eaton.com', 'ITW':'itw.com', 'PH':'parker.com',
+    'ROK':'rockwellautomation.com', 'CMI':'cummins.com', 'PCAR':'paccar.com', 'DAL':'delta.com', 'UAL':'united.com',
+    'AAL':'aa.com', 'LUV':'southwest.com', 'F':'ford.com', 'GM':'gm.com', 'RIVN':'rivian.com',
+    'LCID':'lucidmotors.com', 'APD':'airproducts.com', 'LIN':'linde.com', 'SHW':'sherwin-williams.com', 'ECL':'ecolab.com',
+    'NEM':'newmont.com', 'FCX':'fcx.com', 'NUE':'nucor.com', 'DOW':'dow.com', 'DD':'dupont.com',
+    'LYB':'lyondellbasell.com', 'NEE':'nexteraenergy.com', 'DUK':'duke-energy.com', 'SO':'southerncompany.com', 'D':'dominionenergy.com',
+    'AEP':'aep.com', 'EXC':'exeloncorp.com', 'SRE':'sempra.com', 'XEL':'xcelenergy.com', 'ED':'coned.com',
+    'PEG':'pseg.com', 'AMT':'americantower.com', 'PLD':'prologis.com', 'CCI':'crowncastle.com', 'EQIX':'equinix.com',
+    'PSA':'publicstorage.com', 'SPG':'simon.com', 'O':'realtyincome.com', 'WELL':'welltower.com', 'DLR':'digitalrealty.com',
+    'AVB':'avalonbay.com', 'EQR':'equityapartments.com', 'VICI':'viciproperties.com', 'IRM':'ironmountain.com', 'ADP':'adp.com',
+    'PAYX':'paychex.com', 'VRSK':'verisk.com', 'CTAS':'cintas.com', 'FAST':'fastenal.com', 'ODFL':'odfl.com',
+    'EFX':'equifax.com', 'RSG':'republicservices.com', 'WM':'wm.com', 'CPRT':'copart.com', 'IQV':'iqvia.com',
+    'MCK':'mckesson.com', 'COR':'cencora.com', 'CAH':'cardinalhealth.com', 'A':'agilent.com', 'WAT':'waters.com',
+    'MTD':'mt.com', 'IDXX':'idexx.com', 'DXCM':'dexcom.com', 'ALGN':'aligntech.com', 'EA':'ea.com',
+    'TTWO':'take2games.com', 'ATVI':'activisionblizzard.com', 'MTCH':'mtch.com', 'LYV':'livenationentertainment.com', 'CHTR':'charter.com',
+    'FOXA':'foxcorporation.com', 'PARA':'paramount.com', 'NWSA':'newscorp.com', 'OMC':'omnicomgroup.com', 'IPG':'interpublic.com',
+    'GPN':'globalpayments.com', 'FIS':'fisglobal.com', 'FI':'fiserv.com', 'WU':'westernunion.com', 'SYF':'synchrony.com',
+    'DFS':'discover.com', 'ALLY':'ally.com', 'AFL':'aflac.com', 'HIG':'thehartford.com', 'CB':'chubb.com',
+    'WTW':'wtwco.com', 'MSCI':'msci.com', 'MCO':'moodys.com', 'NDAQ':'nasdaq.com', 'CBOE':'cboe.com',
+    'COIN':'coinbase.com', 'HOOD':'robinhood.com', 'SOFI':'sofi.com', 'AFRM':'affirm.com', 'UPST':'upstart.com',
+    'DASH':'doordash.com', 'LYFT':'lyft.com', 'CVNA':'carvana.com', 'CROX':'crocs.com', 'DECK':'deckers.com',
+    'LULU':'lululemon.com', 'RL':'ralphlauren.com', 'TPR':'tapestry.com', 'VFC':'vfc.com', 'UAA':'underarmour.com',
+    'GPS':'gap.com', 'ANF':'abercrombie.com', 'ROST':'rossstores.com', 'TJX':'tjx.com', 'BURL':'burlington.com',
+    'DG':'dollargeneral.com', 'DLTR':'dollartree.com', 'KR':'kroger.com', 'SYY':'sysco.com', 'ADM':'adm.com',
+    'BG':'bunge.com', 'TSN':'tysonfoods.com', 'HRL':'hormelfoods.com', 'CAG':'conagrabrands.com', 'CPB':'campbells.com',
+    'K':'kellanova.com', 'SJM':'jmsmucker.com', 'MKC':'mccormick.com', 'TAP':'molsoncoors.com', 'DPZ':'dominos.com',
+    'QSR':'rbi.com', 'DRI':'darden.com', 'WYNN':'wynnresorts.com', 'LVS':'sands.com', 'MGM':'mgmresorts.com',
+    'CZR':'caesars.com', 'RCL':'royalcaribbeangroup.com', 'CCL':'carnivalcorp.com', 'NCLH':'nclhltd.com', 'APO':'apollo.com',
+    'KKR':'kkr.com', 'BX':'blackstone.com', 'ARES':'aresmgmt.com', 'TROW':'troweprice.com', 'BEN':'franklinresources.com',
+    'STT':'statestreet.com', 'NTRS':'northerntrust.com', 'BK':'bny.com', 'RF':'regions.com', 'KEY':'key.com',
+    'CFG':'citizensbank.com', 'HBAN':'huntington.com', 'FITB':'53.com', 'MTB':'mtb.com', 'ZBRA':'zebra.com',
+    'TER':'teradyne.com', 'KEYS':'keysight.com', 'GRMN':'garmin.com', 'SWKS':'skyworksinc.com', 'MPWR':'monolithicpower.com',
+    'ON':'onsemi.com', 'ENPH':'enphase.com', 'FSLR':'firstsolar.com', 'SEDG':'solaredge.com', 'CEG':'constellationenergy.com',
+    'VST':'vistracorp.com', 'PWR':'quantaservices.com', 'J':'jacobs.com', 'URI':'unitedrentals.com', 'XYL':'xylem.com',
+    'AME':'ametek.com', 'BRK.B':'berkshirehathaway.com',
+  };
+
+  const STOCK_META = [
+    { symbol: 'AAPL', name: 'Apple' },
+    { symbol: 'MSFT', name: 'Microsoft' },
+    { symbol: 'GOOGL', name: 'Alphabet (Google)' },
+    { symbol: 'AMZN', name: 'Amazon' },
+    { symbol: 'NVDA', name: 'Nvidia' },
+    { symbol: 'META', name: 'Meta' },
+    { symbol: 'TSLA', name: 'Tesla' },
+    { symbol: 'AVGO', name: 'Broadcom' },
+    { symbol: 'ORCL', name: 'Oracle' },
+    { symbol: 'ADBE', name: 'Adobe' },
+    { symbol: 'CRM', name: 'Salesforce' },
+    { symbol: 'AMD', name: 'AMD' },
+    { symbol: 'INTC', name: 'Intel' },
+    { symbol: 'CSCO', name: 'Cisco' },
+    { symbol: 'QCOM', name: 'Qualcomm' },
+    { symbol: 'TXN', name: 'Texas Instruments' },
+    { symbol: 'IBM', name: 'IBM' },
+    { symbol: 'NOW', name: 'ServiceNow' },
+    { symbol: 'INTU', name: 'Intuit' },
+    { symbol: 'AMAT', name: 'Applied Materials' },
+    { symbol: 'MU', name: 'Micron' },
+    { symbol: 'LRCX', name: 'Lam Research' },
+    { symbol: 'ADI', name: 'Analog Devices' },
+    { symbol: 'PANW', name: 'Palo Alto Networks' },
+    { symbol: 'SNPS', name: 'Synopsys' },
+    { symbol: 'CDNS', name: 'Cadence' },
+    { symbol: 'KLAC', name: 'KLA Corp' },
+    { symbol: 'ANET', name: 'Arista Networks' },
+    { symbol: 'FTNT', name: 'Fortinet' },
+    { symbol: 'NXPI', name: 'NXP Semiconductors' },
+    { symbol: 'MRVL', name: 'Marvell' },
+    { symbol: 'WDAY', name: 'Workday' },
+    { symbol: 'PYPL', name: 'PayPal' },
+    { symbol: 'UBER', name: 'Uber' },
+    { symbol: 'ABNB', name: 'Airbnb' },
+    { symbol: 'SHOP', name: 'Shopify' },
+    { symbol: 'SQ', name: 'Block' },
+    { symbol: 'SNOW', name: 'Snowflake' },
+    { symbol: 'PLTR', name: 'Palantir' },
+    { symbol: 'CRWD', name: 'CrowdStrike' },
+    { symbol: 'ZS', name: 'Zscaler' },
+    { symbol: 'DDOG', name: 'Datadog' },
+    { symbol: 'NET', name: 'Cloudflare' },
+    { symbol: 'MDB', name: 'MongoDB' },
+    { symbol: 'TEAM', name: 'Atlassian' },
+    { symbol: 'OKTA', name: 'Okta' },
+    { symbol: 'HUBS', name: 'HubSpot' },
+    { symbol: 'TTD', name: 'The Trade Desk' },
+    { symbol: 'ROKU', name: 'Roku' },
+    { symbol: 'SPOT', name: 'Spotify' },
+    { symbol: 'PINS', name: 'Pinterest' },
+    { symbol: 'SNAP', name: 'Snap' },
+    { symbol: 'EBAY', name: 'eBay' },
+    { symbol: 'ETSY', name: 'Etsy' },
+    { symbol: 'BKNG', name: 'Booking Holdings' },
+    { symbol: 'EXPE', name: 'Expedia' },
+    { symbol: 'MAR', name: 'Marriott' },
+    { symbol: 'HLT', name: 'Hilton' },
+    { symbol: 'JPM', name: 'JPMorgan Chase' },
+    { symbol: 'BAC', name: 'Bank of America' },
+    { symbol: 'WFC', name: 'Wells Fargo' },
+    { symbol: 'C', name: 'Citigroup' },
+    { symbol: 'GS', name: 'Goldman Sachs' },
+    { symbol: 'MS', name: 'Morgan Stanley' },
+    { symbol: 'USB', name: 'US Bancorp' },
+    { symbol: 'PNC', name: 'PNC Financial' },
+    { symbol: 'TFC', name: 'Truist Financial' },
+    { symbol: 'SCHW', name: 'Charles Schwab' },
+    { symbol: 'BLK', name: 'BlackRock' },
+    { symbol: 'SPGI', name: 'S&P Global' },
+    { symbol: 'ICE', name: 'Intercontinental Exchange' },
+    { symbol: 'CME', name: 'CME Group' },
+    { symbol: 'V', name: 'Visa' },
+    { symbol: 'MA', name: 'Mastercard' },
+    { symbol: 'AXP', name: 'American Express' },
+    { symbol: 'COF', name: 'Capital One' },
+    { symbol: 'BRK.B', name: 'Berkshire Hathaway' },
+    { symbol: 'AIG', name: 'AIG' },
+    { symbol: 'MET', name: 'MetLife' },
+    { symbol: 'PRU', name: 'Prudential Financial' },
+    { symbol: 'TRV', name: 'Travelers' },
+    { symbol: 'ALL', name: 'Allstate' },
+    { symbol: 'PGR', name: 'Progressive' },
+    { symbol: 'AON', name: 'Aon' },
+    { symbol: 'MMC', name: 'Marsh McLennan' },
+    { symbol: 'JNJ', name: 'Johnson & Johnson' },
+    { symbol: 'UNH', name: 'UnitedHealth' },
+    { symbol: 'PFE', name: 'Pfizer' },
+    { symbol: 'MRK', name: 'Merck' },
+    { symbol: 'ABBV', name: 'AbbVie' },
+    { symbol: 'LLY', name: 'Eli Lilly' },
+    { symbol: 'TMO', name: 'Thermo Fisher' },
+    { symbol: 'ABT', name: 'Abbott Labs' },
+    { symbol: 'DHR', name: 'Danaher' },
+    { symbol: 'BMY', name: 'Bristol-Myers Squibb' },
+    { symbol: 'AMGN', name: 'Amgen' },
+    { symbol: 'GILD', name: 'Gilead Sciences' },
+    { symbol: 'CVS', name: 'CVS Health' },
+    { symbol: 'CI', name: 'Cigna' },
+    { symbol: 'HUM', name: 'Humana' },
+    { symbol: 'ELV', name: 'Elevance Health' },
+    { symbol: 'ISRG', name: 'Intuitive Surgical' },
+    { symbol: 'VRTX', name: 'Vertex Pharmaceuticals' },
+    { symbol: 'REGN', name: 'Regeneron' },
+    { symbol: 'ZTS', name: 'Zoetis' },
+    { symbol: 'BSX', name: 'Boston Scientific' },
+    { symbol: 'SYK', name: 'Stryker' },
+    { symbol: 'MDT', name: 'Medtronic' },
+    { symbol: 'BDX', name: 'Becton Dickinson' },
+    { symbol: 'HCA', name: 'HCA Healthcare' },
+    { symbol: 'MRNA', name: 'Moderna' },
+    { symbol: 'PG', name: 'Procter & Gamble' },
+    { symbol: 'KO', name: 'Coca-Cola' },
+    { symbol: 'PEP', name: 'PepsiCo' },
+    { symbol: 'WMT', name: 'Walmart' },
+    { symbol: 'COST', name: 'Costco' },
+    { symbol: 'HD', name: 'Home Depot' },
+    { symbol: 'LOW', name: "Lowe's" },
+    { symbol: 'TGT', name: 'Target' },
+    { symbol: 'NKE', name: 'Nike' },
+    { symbol: 'MCD', name: "McDonald's" },
+    { symbol: 'SBUX', name: 'Starbucks' },
+    { symbol: 'CMG', name: 'Chipotle' },
+    { symbol: 'YUM', name: 'Yum! Brands' },
+    { symbol: 'DIS', name: 'Disney' },
+    { symbol: 'NFLX', name: 'Netflix' },
+    { symbol: 'CMCSA', name: 'Comcast' },
+    { symbol: 'WBD', name: 'Warner Bros Discovery' },
+    { symbol: 'T', name: 'AT&T' },
+    { symbol: 'VZ', name: 'Verizon' },
+    { symbol: 'TMUS', name: 'T-Mobile US' },
+    { symbol: 'CL', name: 'Colgate-Palmolive' },
+    { symbol: 'KMB', name: 'Kimberly-Clark' },
+    { symbol: 'EL', name: 'Estée Lauder' },
+    { symbol: 'MO', name: 'Altria' },
+    { symbol: 'PM', name: 'Philip Morris International' },
+    { symbol: 'STZ', name: 'Constellation Brands' },
+    { symbol: 'KHC', name: 'Kraft Heinz' },
+    { symbol: 'GIS', name: 'General Mills' },
+    { symbol: 'MDLZ', name: 'Mondelez' },
+    { symbol: 'HSY', name: 'Hershey' },
+    { symbol: 'KDP', name: 'Keurig Dr Pepper' },
+    { symbol: 'MNST', name: 'Monster Beverage' },
+    { symbol: 'CLX', name: 'Clorox' },
+    { symbol: 'CHD', name: 'Church & Dwight' },
+    { symbol: 'XOM', name: 'ExxonMobil' },
+    { symbol: 'CVX', name: 'Chevron' },
+    { symbol: 'COP', name: 'ConocoPhillips' },
+    { symbol: 'SLB', name: 'Schlumberger' },
+    { symbol: 'EOG', name: 'EOG Resources' },
+    { symbol: 'MPC', name: 'Marathon Petroleum' },
+    { symbol: 'PSX', name: 'Phillips 66' },
+    { symbol: 'VLO', name: 'Valero Energy' },
+    { symbol: 'OXY', name: 'Occidental Petroleum' },
+    { symbol: 'WMB', name: 'Williams Companies' },
+    { symbol: 'KMI', name: 'Kinder Morgan' },
+    { symbol: 'HAL', name: 'Halliburton' },
+    { symbol: 'BA', name: 'Boeing' },
+    { symbol: 'CAT', name: 'Caterpillar' },
+    { symbol: 'DE', name: 'Deere & Co' },
+    { symbol: 'GE', name: 'General Electric' },
+    { symbol: 'HON', name: 'Honeywell' },
+    { symbol: 'MMM', name: '3M' },
+    { symbol: 'LMT', name: 'Lockheed Martin' },
+    { symbol: 'RTX', name: 'RTX Corp' },
+    { symbol: 'NOC', name: 'Northrop Grumman' },
+    { symbol: 'GD', name: 'General Dynamics' },
+    { symbol: 'UPS', name: 'UPS' },
+    { symbol: 'FDX', name: 'FedEx' },
+    { symbol: 'UNP', name: 'Union Pacific' },
+    { symbol: 'CSX', name: 'CSX Corp' },
+    { symbol: 'NSC', name: 'Norfolk Southern' },
+    { symbol: 'EMR', name: 'Emerson Electric' },
+    { symbol: 'ETN', name: 'Eaton' },
+    { symbol: 'ITW', name: 'Illinois Tool Works' },
+    { symbol: 'PH', name: 'Parker Hannifin' },
+    { symbol: 'ROK', name: 'Rockwell Automation' },
+    { symbol: 'CMI', name: 'Cummins' },
+    { symbol: 'PCAR', name: 'PACCAR' },
+    { symbol: 'DAL', name: 'Delta Air Lines' },
+    { symbol: 'UAL', name: 'United Airlines' },
+    { symbol: 'AAL', name: 'American Airlines' },
+    { symbol: 'LUV', name: 'Southwest Airlines' },
+    { symbol: 'F', name: 'Ford' },
+    { symbol: 'GM', name: 'General Motors' },
+    { symbol: 'RIVN', name: 'Rivian' },
+    { symbol: 'LCID', name: 'Lucid Motors' },
+    { symbol: 'APD', name: 'Air Products' },
+    { symbol: 'LIN', name: 'Linde' },
+    { symbol: 'SHW', name: 'Sherwin-Williams' },
+    { symbol: 'ECL', name: 'Ecolab' },
+    { symbol: 'NEM', name: 'Newmont Mining' },
+    { symbol: 'FCX', name: 'Freeport-McMoRan' },
+    { symbol: 'NUE', name: 'Nucor' },
+    { symbol: 'DOW', name: 'Dow Inc' },
+    { symbol: 'DD', name: 'DuPont' },
+    { symbol: 'LYB', name: 'LyondellBasell' },
+    { symbol: 'NEE', name: 'NextEra Energy' },
+    { symbol: 'DUK', name: 'Duke Energy' },
+    { symbol: 'SO', name: 'Southern Company' },
+    { symbol: 'D', name: 'Dominion Energy' },
+    { symbol: 'AEP', name: 'American Electric Power' },
+    { symbol: 'EXC', name: 'Exelon' },
+    { symbol: 'SRE', name: 'Sempra Energy' },
+    { symbol: 'XEL', name: 'Xcel Energy' },
+    { symbol: 'ED', name: 'Con Edison' },
+    { symbol: 'PEG', name: 'PSEG' },
+    { symbol: 'AMT', name: 'American Tower' },
+    { symbol: 'PLD', name: 'Prologis' },
+    { symbol: 'CCI', name: 'Crown Castle' },
+    { symbol: 'EQIX', name: 'Equinix' },
+    { symbol: 'PSA', name: 'Public Storage' },
+    { symbol: 'SPG', name: 'Simon Property Group' },
+    { symbol: 'O', name: 'Realty Income' },
+    { symbol: 'WELL', name: 'Welltower' },
+    { symbol: 'DLR', name: 'Digital Realty' },
+    { symbol: 'AVB', name: 'AvalonBay Communities' },
+    { symbol: 'EQR', name: 'Equity Residential' },
+    { symbol: 'VICI', name: 'VICI Properties' },
+    { symbol: 'IRM', name: 'Iron Mountain' },
+    { symbol: 'ADP', name: 'ADP' },
+    { symbol: 'PAYX', name: 'Paychex' },
+    { symbol: 'VRSK', name: 'Verisk Analytics' },
+    { symbol: 'CTAS', name: 'Cintas' },
+    { symbol: 'FAST', name: 'Fastenal' },
+    { symbol: 'ODFL', name: 'Old Dominion Freight' },
+    { symbol: 'EFX', name: 'Equifax' },
+    { symbol: 'RSG', name: 'Republic Services' },
+    { symbol: 'WM', name: 'Waste Management' },
+    { symbol: 'CPRT', name: 'Copart' },
+    { symbol: 'IQV', name: 'IQVIA' },
+    { symbol: 'MCK', name: 'McKesson' },
+    { symbol: 'COR', name: 'Cencora' },
+    { symbol: 'CAH', name: 'Cardinal Health' },
+    { symbol: 'A', name: 'Agilent Technologies' },
+    { symbol: 'WAT', name: 'Waters Corp' },
+    { symbol: 'MTD', name: 'Mettler-Toledo' },
+    { symbol: 'IDXX', name: 'IDEXX Laboratories' },
+    { symbol: 'DXCM', name: 'Dexcom' },
+    { symbol: 'ALGN', name: 'Align Technology' },
+    { symbol: 'EA', name: 'Electronic Arts' },
+    { symbol: 'TTWO', name: 'Take-Two Interactive' },
+    { symbol: 'ATVI', name: 'Activision Blizzard' },
+    { symbol: 'MTCH', name: 'Match Group' },
+    { symbol: 'LYV', name: 'Live Nation' },
+    { symbol: 'CHTR', name: 'Charter Communications' },
+    { symbol: 'FOXA', name: 'Fox Corp' },
+    { symbol: 'PARA', name: 'Paramount Global' },
+    { symbol: 'NWSA', name: 'News Corp' },
+    { symbol: 'OMC', name: 'Omnicom Group' },
+    { symbol: 'IPG', name: 'Interpublic Group' },
+    { symbol: 'GPN', name: 'Global Payments' },
+    { symbol: 'FIS', name: 'Fidelity National Information' },
+    { symbol: 'FI', name: 'Fiserv' },
+    { symbol: 'WU', name: 'Western Union' },
+    { symbol: 'SYF', name: 'Synchrony Financial' },
+    { symbol: 'DFS', name: 'Discover Financial' },
+    { symbol: 'ALLY', name: 'Ally Financial' },
+    { symbol: 'AFL', name: 'Aflac' },
+    { symbol: 'HIG', name: 'Hartford Financial' },
+    { symbol: 'CB', name: 'Chubb' },
+    { symbol: 'WTW', name: 'Willis Towers Watson' },
+    { symbol: 'MSCI', name: 'MSCI Inc' },
+    { symbol: 'MCO', name: "Moody's" },
+    { symbol: 'NDAQ', name: 'Nasdaq Inc' },
+    { symbol: 'CBOE', name: 'Cboe Global Markets' },
+    { symbol: 'COIN', name: 'Coinbase' },
+    { symbol: 'HOOD', name: 'Robinhood' },
+    { symbol: 'SOFI', name: 'SoFi Technologies' },
+    { symbol: 'AFRM', name: 'Affirm' },
+    { symbol: 'UPST', name: 'Upstart' },
+    { symbol: 'DASH', name: 'DoorDash' },
+    { symbol: 'LYFT', name: 'Lyft' },
+    { symbol: 'CVNA', name: 'Carvana' },
+    { symbol: 'CROX', name: 'Crocs' },
+    { symbol: 'DECK', name: 'Deckers Brands' },
+    { symbol: 'LULU', name: 'Lululemon' },
+    { symbol: 'RL', name: 'Ralph Lauren' },
+    { symbol: 'TPR', name: 'Tapestry' },
+    { symbol: 'VFC', name: 'VF Corp' },
+    { symbol: 'UAA', name: 'Under Armour' },
+    { symbol: 'GPS', name: 'Gap Inc' },
+    { symbol: 'ANF', name: 'Abercrombie & Fitch' },
+    { symbol: 'ROST', name: 'Ross Stores' },
+    { symbol: 'TJX', name: 'TJX Companies' },
+    { symbol: 'BURL', name: 'Burlington Stores' },
+    { symbol: 'DG', name: 'Dollar General' },
+    { symbol: 'DLTR', name: 'Dollar Tree' },
+    { symbol: 'KR', name: 'Kroger' },
+    { symbol: 'SYY', name: 'Sysco' },
+    { symbol: 'ADM', name: 'Archer-Daniels-Midland' },
+    { symbol: 'BG', name: 'Bunge' },
+    { symbol: 'TSN', name: 'Tyson Foods' },
+    { symbol: 'HRL', name: 'Hormel Foods' },
+    { symbol: 'CAG', name: 'Conagra Brands' },
+    { symbol: 'CPB', name: "Campbell's" },
+    { symbol: 'K', name: 'Kellanova' },
+    { symbol: 'SJM', name: 'J.M. Smucker' },
+    { symbol: 'MKC', name: 'McCormick' },
+    { symbol: 'TAP', name: 'Molson Coors' },
+  ];
+  const STOCK_FALLBACK = {
+    AAPL: 357.09, MSFT: 28.38, GOOGL: 162.14, AMZN: 134.42, NVDA: 409.01, META: 377.03,
+    TSLA: 492.32, AVGO: 61.51, ORCL: 240.73, ADBE: 30.94, CRM: 131.97, AMD: 285.37,
+    INTC: 29.2, CSCO: 121.38, QCOM: 362.69, TXN: 306.54, IBM: 132.94, NOW: 330.26,
+    INTU: 448.05, AMAT: 18.48, MU: 446.11, LRCX: 388.5, ADI: 197.03, PANW: 98.18,
+    SNPS: 527.11, CDNS: 195.08, KLAC: 64.62, ANET: 66.74, FTNT: 468.41, NXPI: 337.99,
+    MRVL: 446.81, WDAY: 405.41, PYPL: 301.88, UBER: 535.62, ABNB: 217.52, SHOP: 310.34,
+    SQ: 458.73, SNOW: 345.91, PLTR: 476.01, CRWD: 323.88, ZS: 391.95, DDOG: 39.52,
+    NET: 136.93, MDB: 169.82, TEAM: 57.69, OKTA: 139.54, HUBS: 69.04, TTD: 163.72,
+    ROKU: 355.09, SPOT: 210.19, PINS: 213.05, SNAP: 127.09, EBAY: 157.83, ETSY: 516.11,
+    BKNG: 361.7, EXPE: 340.89, MAR: 106.56, HLT: 405.08, JPM: 102.42, BAC: 218.01,
+    WFC: 544.39, C: 357.4, GS: 312.97, MS: 381.27, USB: 465.93, PNC: 430.16,
+    TFC: 137.54, SCHW: 32.17, BLK: 183.77, SPGI: 158.24, ICE: 127.88, CME: 519.46,
+    V: 483.86, MA: 183.35, AXP: 365.66, COF: 226.66, 'BRK.B': 460, AIG: 504.28,
+    MET: 260.49, PRU: 156.71, TRV: 146.95, ALL: 315.33, PGR: 155.57, AON: 327.75,
+    MMC: 495.34, JNJ: 228.68, UNH: 132.34, PFE: 548.68, MRK: 287.6, ABBV: 63.64,
+    LLY: 40.21, TMO: 73.66, ABT: 350.68, DHR: 438.76, BMY: 240.86, AMGN: 48.99,
+    GILD: 219.17, CVS: 547.92, CI: 298.08, HUM: 534.53, ELV: 475.52, ISRG: 21.14,
+    VRTX: 400.59, REGN: 379.72, ZTS: 302.28, BSX: 157.75, SYK: 357.91, MDT: 74.68,
+    BDX: 247.6, HCA: 257.74, MRNA: 525.29, PG: 483.58, KO: 155.91, PEP: 282.81,
+    WMT: 110.58, COST: 503.26, HD: 480.73, LOW: 174.67, TGT: 356.84, NKE: 340.8,
+    MCD: 96.77, SBUX: 422.94, CMG: 303.57, YUM: 431.57, DIS: 298.74, NFLX: 15.31,
+    CMCSA: 188.42, WBD: 25.42, T: 512.07, VZ: 485.12, TMUS: 459.94, CL: 179.52,
+    KMB: 45.99, EL: 484.74, MO: 521.62, PM: 60.82, STZ: 275.0, KHC: 52.03,
+    GIS: 421.92, MDLZ: 424.72, HSY: 83.69, KDP: 269.28, MNST: 309.14, CLX: 156.81,
+    CHD: 481.75, XOM: 241.38, CVX: 128.31, COP: 303.52, SLB: 405.51, EOG: 122.62,
+    MPC: 181.77, PSX: 547.4, VLO: 362.68, OXY: 249.38, WMB: 291.9, KMI: 79.74,
+    HAL: 135.21, BA: 195.88, CAT: 329.75, DE: 138.11, GE: 132.82, HON: 52.98,
+    MMM: 352.64, LMT: 137.48, RTX: 499.4, NOC: 474.9, GD: 52.91, UPS: 142.33,
+    FDX: 372.9, UNP: 129.62, CSX: 85.79, NSC: 515.5, EMR: 320.51, ETN: 267.88,
+    ITW: 434.77, PH: 447.01, ROK: 116.87, CMI: 66.86, PCAR: 245.61, DAL: 241.61,
+    UAL: 264.86, AAL: 405.06, LUV: 375.25, F: 541.53, GM: 67.65, RIVN: 230.4,
+    LCID: 196.53, APD: 475.99, LIN: 148.03, SHW: 116.76, ECL: 255.01, NEM: 240.71,
+    FCX: 164.02, NUE: 148.65, DOW: 508.95, DD: 252.07, LYB: 475.82, NEE: 309.42,
+    DUK: 42.06, SO: 549.62, D: 462.27, AEP: 533.41, EXC: 510.61, SRE: 469.05,
+    XEL: 103.98, ED: 274.82, PEG: 129.35, AMT: 229.56, PLD: 46.37, CCI: 217.75,
+    EQIX: 542.14, PSA: 156.88, SPG: 434.48, O: 258.43, WELL: 241.31, DLR: 527.16,
+    AVB: 547.55, EQR: 312.34, VICI: 399.35, IRM: 97.82, ADP: 173.74, PAYX: 533.26,
+    VRSK: 324.86, CTAS: 305.07, FAST: 415.17, ODFL: 45.58, EFX: 327.54, RSG: 284.02,
+    WM: 471.21, CPRT: 99.23, IQV: 529.02, MCK: 57.86, COR: 114.42, CAH: 333.34,
+    A: 376.24, WAT: 140.83, MTD: 79.14, IDXX: 491.3, DXCM: 146.73, ALGN: 333.07,
+    EA: 346.37, TTWO: 239.29, ATVI: 327.26, MTCH: 294.69, LYV: 515.07, CHTR: 124.28,
+    FOXA: 398.16, PARA: 142.7, NWSA: 226.75, OMC: 374.35, IPG: 175.5, GPN: 184.15,
+    FIS: 417.25, FI: 53.81, WU: 260.18, SYF: 549.17, DFS: 547.91, ALLY: 54.19,
+    AFL: 129.04, HIG: 156.88, CB: 514.29, WTW: 486.26, MSCI: 485.41, MCO: 212.7,
+    NDAQ: 99.39, CBOE: 461.05, COIN: 391.39, HOOD: 342.25, SOFI: 543.17, AFRM: 364.88,
+    UPST: 19.19, DASH: 452.15, LYFT: 175.17, CVNA: 369.91, CROX: 517.33, DECK: 86.85,
+    LULU: 76.75, RL: 72.26, TPR: 310.97, VFC: 160.71, UAA: 338.58, GPS: 398.92,
+    ANF: 123.92, ROST: 354.32, TJX: 156.23, BURL: 276.36, DG: 499.36, DLTR: 467.67,
+    KR: 64.38, SYY: 241.61, ADM: 163.02, BG: 16.9, TSN: 427.55, HRL: 355.86,
+    CAG: 155.15, CPB: 411.56, K: 310.15, SJM: 243.81, MKC: 20.17, TAP: 55.26,
+  };
+
+  const tbody = document.getElementById('table-body');
+  const statusText = document.getElementById('status-text');
+  const errorBanner = document.getElementById('error-banner');
+  const footerText = document.getElementById('footer-text');
+  const searchInput = document.getElementById('search-input');
+
+  function updateStatStrip() {
+    const btc = coins.find(c => c.id === 'bitcoin');
+    const eth = coins.find(c => c.id === 'ethereum');
+    if (btc) document.getElementById('stat-btc').textContent = fmtPrice(btc.current_price);
+    if (eth) document.getElementById('stat-eth').textContent = fmtPrice(eth.current_price);
+
+    if (coins.length) {
+      const withChange = coins.filter(c => c.price_change_percentage_24h_in_currency != null);
+      if (withChange.length) {
+        const gainer = withChange.reduce((a, b) => (b.price_change_percentage_24h_in_currency > a.price_change_percentage_24h_in_currency ? b : a));
+        const loser = withChange.reduce((a, b) => (b.price_change_percentage_24h_in_currency < a.price_change_percentage_24h_in_currency ? b : a));
+        document.getElementById('stat-gainer').innerHTML = gainer.symbol.toUpperCase() + ' <span style="color:#3fa06e;">+' + gainer.price_change_percentage_24h_in_currency.toFixed(1) + '%</span>';
+        document.getElementById('stat-loser').innerHTML = loser.symbol.toUpperCase() + ' <span style="color:#c05a52;">' + loser.price_change_percentage_24h_in_currency.toFixed(1) + '%</span>';
+      }
+    }
+  }
+
+  function fmtPrice(v) {
+    if (v == null) return '—';
+    if (v < 1) return '$' + v.toFixed(6);
+    return '$' + v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+  function fmtBig(v) {
+    if (v == null) return '—';
+    if (v >= 1e12) return '$' + (v / 1e12).toFixed(2) + 'T';
+    if (v >= 1e9) return '$' + (v / 1e9).toFixed(2) + 'B';
+    if (v >= 1e6) return '$' + (v / 1e6).toFixed(2) + 'M';
+    return '$' + v.toLocaleString();
+  }
+  function pctHtml(v) {
+    if (v == null) return '<span style="color:#6b7280">—</span>';
+    const positive = v >= 0;
+    const color = positive ? '#3fa06e' : '#c05a52';
+    const arrow = positive ? '▲' : '▼';
+    return '<span class="pct" style="color:' + color + '">' + arrow + ' ' + Math.abs(v).toFixed(2) + '%</span>';
+  }
+  function momentumSignal(coin) {
+    const h1 = coin.price_change_percentage_1h_in_currency;
+    const h24 = coin.price_change_percentage_24h_in_currency;
+    const d7 = coin.price_change_percentage_7d_in_currency;
+    if (h1 == null || h24 == null) return { label: 'No data', color: '#6b7280' };
+    const aligned = (h1 >= 0) === (h24 >= 0) && (d7 == null || (h24 >= 0) === (d7 >= 0));
+    const strength = Math.abs(h1) + Math.abs(h24) * 0.5;
+    if (aligned && h24 > 0) return { label: strength > 5 ? 'Strong bullish momentum' : 'Bullish momentum', color: '#3fa06e' };
+    if (aligned && h24 < 0) return { label: strength > 5 ? 'Strong bearish momentum' : 'Bearish momentum', color: '#c05a52' };
+    return { label: 'Mixed signals', color: '#e0b84d' };
+  }
+
+  function render() {
+    const dataset = activeTab === 'crypto' ? coins : (activeTab === 'commodities' ? commodities : stocks);
+    let filtered = dataset.filter(c =>
+      c.name.toLowerCase().includes(search.toLowerCase()) ||
+      c.symbol.toLowerCase().includes(search.toLowerCase())
+    );
+    if (showOnlyWatchlist) filtered = filtered.filter(c => watchlist.has(c.id));
+    const sorted = filtered.slice().sort((a, b) => {
+      let av = a[sortKey], bv = b[sortKey];
+      if (av == null) av = sortDir === 'asc' ? Infinity : -Infinity;
+      if (bv == null) bv = sortDir === 'asc' ? Infinity : -Infinity;
+      if (typeof av === 'string') return sortDir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
+      return sortDir === 'asc' ? av - bv : bv - av;
+    });
+
+    document.querySelectorAll('th[data-sort]').forEach(th => {
+      th.classList.toggle('active', th.dataset.sort === sortKey);
+    });
+
+    const isCrypto = activeTab === 'crypto';
+    const hasIconImage = activeTab === 'crypto';
+
+    const watchBtn = document.getElementById('watchlist-toggle');
+    if (watchBtn) watchBtn.textContent = showOnlyWatchlist ? '★ My List' : '☆ My List';
+    if (watchBtn) watchBtn.classList.toggle('tab-active', showOnlyWatchlist);
+
+    if (loading && dataset.length === 0) {
+      let html = '';
+      for (let i = 0; i < 10; i++) {
+        html += '<tr><td colspan="11"><div class="skel" style="width:' + (60 + (i % 4) * 10) + '%"></div></td></tr>';
+      }
+      tbody.innerHTML = html;
+      return;
+    }
+
+    if (sorted.length === 0) {
+      const msg = showOnlyWatchlist ? 'No favorites yet — click the star on any row to add one.' : 'No results found for "' + search + '"';
+      tbody.innerHTML = '<tr><td colspan="11" style="padding:40px 14px;text-align:center;color:#6b7280;">' + msg + '</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = sorted.map(coin => {
+      const sig = momentumSignal(coin);
+      const flash = prevPrices[coin.id] != null && prevPrices[coin.id] !== coin.current_price
+        ? (coin.current_price > prevPrices[coin.id] ? ' flash-up' : ' flash-down')
+        : '';
+      const isStock = activeTab === 'stocks';
+      const stockDomain = isStock ? STOCK_DOMAINS[coin.symbol] : null;
+      const iconHtml = hasIconImage
+        ? '<img class="coin-img" src="' + coin.image + '" width="22" height="22" alt="" />'
+        : stockDomain
+          ? '<img class="coin-img" src="https://logo.clearbit.com/' + stockDomain + '?size=44" width="22" height="22" alt="" onerror="this.outerHTML=\'<span style=&quot;font-size:20px;width:22px;text-align:center;display:inline-block;&quot;>' + coin.image + '</span>\'" />'
+          : '<span style="font-size:20px;width:22px;text-align:center;display:inline-block;">' + coin.image + '</span>';
+      const rankCell = isCrypto ? coin.market_cap_rank : '—';
+      const capCell = isCrypto ? fmtBig(coin.market_cap) : '—';
+      const volCell = isCrypto ? fmtBig(coin.total_volume) : '—';
+      const isStarred = watchlist.has(coin.id);
+      const explain = PLAIN_EXPLAIN[coin.id] || PLAIN_EXPLAIN[coin.symbol.toUpperCase()];
+      const explainHtml = explain ? '<div style="font-size:11px;color:#5b6472;margin-top:2px;font-family:inherit;">' + explain + '</div>' : '';
+      const buyCell = '<td class="buy-col-cell"><a href="' + AFFILIATE_LINK + '" target="_blank" rel="noopener sponsored" class="buy-btn">Buy →</a></td>';
+      return '<tr class="' + flash.trim() + '">' +
+        '<td><button class="star-btn" data-id="' + coin.id.replace(/"/g, '&quot;') + '" style="background:none;border:none;cursor:pointer;font-size:16px;color:' + (isStarred ? '#c9a35a' : '#3a4250') + ';padding:0;">' + (isStarred ? '★' : '☆') + '</button></td>' +
+        '<td class="mono" style="color:#6b7280;font-size:13px;">' + rankCell + '</td>' +
+        '<td><div class="coin-row">' + iconHtml +
+          '<div><div class="coin-name">' + coin.name + '</div><div class="coin-sym mono">' + coin.symbol + '</div>' + explainHtml + '</div></div></td>' +
+        '<td class="mono" style="text-align:right;font-size:14px;">' + fmtPrice(coin.current_price) + '</td>' +
+        '<td class="mono" style="text-align:right;font-size:13px;">' + pctHtml(coin.price_change_percentage_1h_in_currency) + '</td>' +
+        '<td class="mono" style="text-align:right;font-size:13px;">' + pctHtml(coin.price_change_percentage_24h_in_currency) + '</td>' +
+        '<td class="mono hide-mobile" style="text-align:right;font-size:13px;">' + pctHtml(coin.price_change_percentage_7d_in_currency) + '</td>' +
+        '<td><span class="pill" style="color:' + sig.color + ';background:' + sig.color + '18;">' + sig.label + '</span></td>' +
+        '<td class="mono hide-mobile" style="text-align:right;font-size:13px;color:#c7cdd6;">' + capCell + '</td>' +
+        '<td class="mono hide-mobile" style="text-align:right;font-size:13px;color:#c7cdd6;">' + volCell + '</td>' +
+        buyCell +
+        '</tr>';
+    }).join('');
+
+    tbody.querySelectorAll('.star-btn').forEach(btn => {
+      btn.addEventListener('click', () => toggleWatch(btn.dataset.id));
+    });
+
+    const dataLen = dataset.length;
+    const sourceLabel = isCrypto ? 'CoinGecko' : (activeTab === 'commodities' ? 'Gold-API' : 'Stooq');
+    const unitLabel = isCrypto ? ' coins' : (activeTab === 'commodities' ? ' commodities' : ' stocks');
+    footerText.textContent = 'Data provided by ' + sourceLabel + ' · ' + sorted.length + ' of ' + dataLen + unitLabel;
+  }
+
+  async function fetchCoins(retry) {
+    retry = retry || 0;
+    try {
+      const res1 = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=1h,24h,7d&x_cg_demo_api_key=CG-UqyWN8wBBXgztfisfqw6NEJn');
+      if (!res1.ok) throw new Error('Error del servidor (' + res1.status + ')');
+      const page1 = await res1.json();
+
+      await new Promise(r => setTimeout(r, 1200));
+
+      let page2 = [];
+      try {
+        const res2 = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=6&sparkline=false&price_change_percentage=1h,24h,7d&x_cg_demo_api_key=CG-UqyWN8wBBXgztfisfqw6NEJn');
+        if (res2.ok) page2 = await res2.json();
+      } catch (e2) { /* si la segunda página falla, seguimos solo con las primeras 250 */ }
+
+      const data = page1.concat(page2);
+
+      const newPrev = {};
+      coins.forEach(c => { newPrev[c.id] = c.current_price; });
+      prevPrices = newPrev;
+
+      coins = data;
+      loading = false;
+      errorBanner.style.display = 'none';
+      statusText.textContent = 'Updated ' + new Date().toLocaleTimeString('en-US');
+      updateStatStrip();
+      if (activeTab === 'crypto') render();
+      setTimeout(() => { prevPrices = {}; }, 900);
+    } catch (e) {
+      if (retry < 3) {
+        setTimeout(() => fetchCoins(retry + 1), 1200);
+        return;
+      }
+      loading = false;
+      if (activeTab === 'crypto') {
+        if (coins.length > 0) {
+          // We already have data on screen — don't blank it out, just note it's stale.
+          errorBanner.style.display = 'block';
+          errorBanner.className = 'banner banner-info';
+          errorBanner.textContent = 'Showing the last prices we could load — reconnecting in the background…';
+        } else {
+          coins = CRYPTO_FALLBACK.map(c => ({ ...c }));
+          errorBanner.style.display = 'block';
+          errorBanner.className = 'banner banner-info';
+          errorBanner.textContent = 'Showing reference prices while we reconnect to live data…';
+        }
+        render();
+      }
+      setTimeout(() => fetchCoins(0), 8000);
+    }
+  }
+
+  // Materias primas: precios spot vía gold-api.com (gratuita, sin clave).
+  // Al no dar variación %, calculamos el cambio comparando con la lectura anterior propia.
+  let commodityHistory = {};
+
+  async function fetchCommodities(retry) {
+    retry = retry || 0;
+    try {
+      const results = await Promise.all(
+        COMMODITY_META.map(m =>
+          fetch('https://api.gold-api.com/price/' + m.symbol)
+            .then(r => { if (!r.ok) throw new Error('bad'); return r.json(); })
+            .then(json => ({ symbol: m.symbol, price: json.price }))
+            .catch(() => ({ symbol: m.symbol, price: null }))
+        )
+      );
+
+      const anyOk = results.some(r => r.price != null);
+      if (!anyOk) throw new Error('No commodities data');
+
+      const newPrev = {};
+      commodities.forEach(c => { newPrev[c.id] = c.current_price; });
+      prevPrices = activeTab === 'commodities' ? newPrev : prevPrices;
+
+      commodities = COMMODITY_META.map((m, i) => {
+        const price = results[i].price != null ? results[i].price : COMMODITY_FALLBACK[m.symbol];
+        const hist = commodityHistory[m.symbol] || { first: price, last: price, t: Date.now() };
+        const pctSinceLoad = hist.first ? ((price - hist.first) / hist.first) * 100 : 0;
+        commodityHistory[m.symbol] = { first: hist.first, last: price, t: hist.t };
+        return {
+          id: m.symbol,
+          symbol: m.symbol,
+          name: m.name,
+          image: m.image,
+          current_price: price,
+          price_change_percentage_1h_in_currency: null,
+          price_change_percentage_24h_in_currency: pctSinceLoad,
+          price_change_percentage_7d_in_currency: null,
+          market_cap: null,
+          total_volume: null,
+        };
+      });
+
+      commoditiesLoaded = true;
+      loading = false;
+      updateGoldStat();
+      if (activeTab === 'commodities') {
+        errorBanner.style.display = 'none';
+        statusText.textContent = 'Updated ' + new Date().toLocaleTimeString('en-US');
+        render();
+        setTimeout(() => { prevPrices = {}; }, 900);
+      }
+    } catch (e) {
+      if (retry < 2) {
+        setTimeout(() => fetchCommodities(retry + 1), 1500);
+        return;
+      }
+      // Fallback a precios de referencia si no hay conexión
+      commodities = COMMODITY_META.map(m => ({
+        id: m.symbol, symbol: m.symbol, name: m.name, image: m.image,
+        current_price: COMMODITY_FALLBACK[m.symbol],
+        price_change_percentage_1h_in_currency: null,
+        price_change_percentage_24h_in_currency: null,
+        price_change_percentage_7d_in_currency: null,
+        market_cap: null, total_volume: null,
+      }));
+      commoditiesLoaded = true;
+      loading = false;
+      updateGoldStat();
+      if (activeTab === 'commodities') {
+        errorBanner.style.display = 'block';
+        errorBanner.textContent = 'Could not connect to live commodities data. Showing reference prices.';
+        render();
+      }
+    }
+  }
+
+  function updateGoldStat() {
+    const gold = commodities.find(c => c.id === 'XAU');
+    if (gold) document.getElementById('stat-gold').textContent = fmtPrice(gold.current_price);
+  }
+
+  // Stocks: prices via Stooq (free CSV API, no key). Only changes during US market hours.
+  let stockHistory = {};
+
+  async function fetchStocks(retry) {
+    retry = retry || 0;
+    try {
+      const BATCH = 80;
+      const priceMap = {};
+      for (let i = 0; i < STOCK_META.length; i += BATCH) {
+        const batch = STOCK_META.slice(i, i + BATCH);
+        const symbolsParam = batch.map(s => s.symbol.toLowerCase() + '.us').join(',');
+        try {
+          const res = await fetch('https://stooq.com/q/l/?s=' + symbolsParam + '&f=sd2t2ohlcv&h&e=csv');
+          if (res.ok) {
+            const text = await res.text();
+            const lines = text.trim().split('\n').slice(1);
+            lines.forEach(line => {
+              const cols = line.split(',');
+              const sym = (cols[0] || '').replace('.US', '').toUpperCase();
+              const close = parseFloat(cols[6]);
+              if (sym && !isNaN(close)) priceMap[sym] = close;
+            });
+          }
+        } catch (batchErr) { /* seguimos con el resto de lotes aunque uno falle */ }
+        if (i + BATCH < STOCK_META.length) await new Promise(r => setTimeout(r, 800));
+      }
+
+      const anyOk = Object.keys(priceMap).length > 0;
+      if (!anyOk) throw new Error('No stock data');
+
+      const newPrev = {};
+      stocks.forEach(c => { newPrev[c.id] = c.current_price; });
+      if (activeTab === 'stocks') prevPrices = newPrev;
+
+      stocks = STOCK_META.map(m => {
+        const price = priceMap[m.symbol] != null ? priceMap[m.symbol] : STOCK_FALLBACK[m.symbol];
+        const hist = stockHistory[m.symbol] || { first: price };
+        const pctSinceLoad = hist.first ? ((price - hist.first) / hist.first) * 100 : 0;
+        stockHistory[m.symbol] = { first: hist.first };
+        return {
+          id: m.symbol,
+          symbol: m.symbol,
+          name: m.name,
+          image: '📈',
+          current_price: price,
+          price_change_percentage_1h_in_currency: null,
+          price_change_percentage_24h_in_currency: pctSinceLoad,
+          price_change_percentage_7d_in_currency: null,
+          market_cap: null,
+          total_volume: null,
+        };
+      });
+
+      stocksLoaded = true;
+      loading = false;
+      if (activeTab === 'stocks') {
+        errorBanner.style.display = 'none';
+        statusText.textContent = 'Updated ' + new Date().toLocaleTimeString('en-US');
+        render();
+        setTimeout(() => { prevPrices = {}; }, 900);
+      }
+    } catch (e) {
+      if (retry < 2) {
+        setTimeout(() => fetchStocks(retry + 1), 1500);
+        return;
+      }
+      stocks = STOCK_META.map(m => ({
+        id: m.symbol, symbol: m.symbol, name: m.name, image: '📈',
+        current_price: STOCK_FALLBACK[m.symbol],
+        price_change_percentage_1h_in_currency: null,
+        price_change_percentage_24h_in_currency: null,
+        price_change_percentage_7d_in_currency: null,
+        market_cap: null, total_volume: null,
+      }));
+      stocksLoaded = true;
+      loading = false;
+      if (activeTab === 'stocks') {
+        errorBanner.style.display = 'block';
+        errorBanner.textContent = 'Could not connect to live stock data. Showing reference prices.';
+        render();
+      }
+    }
+  }
+
+  document.querySelectorAll('th[data-sort]').forEach(th => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.sort;
+      if (sortKey === key) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+      else { sortKey = key; sortDir = 'asc'; }
+      render();
+    });
+  });
+
+  searchInput.addEventListener('input', (e) => {
+    search = e.target.value;
+    render();
+  });
+
+  document.getElementById('watchlist-toggle').addEventListener('click', () => {
+    showOnlyWatchlist = !showOnlyWatchlist;
+    render();
+  });
+
+  document.querySelectorAll('.tab-btn:not(.tab-link-external)').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeTab = btn.dataset.tab;
+      document.querySelectorAll('.tab-btn:not(.tab-link-external)').forEach(b => b.classList.toggle('tab-active', b === btn));
+
+      sortKey = activeTab === 'crypto' ? 'market_cap_rank' : 'current_price';
+      sortDir = 'asc';
+      search = '';
+      searchInput.value = '';
+
+      if (activeTab === 'crypto') {
+        document.getElementById('page-title').textContent = 'InvestingNoobs';
+        searchInput.placeholder = 'Search by name or symbol (BTC, ETH, SOL...)';
+        document.getElementById('th-24h').textContent = '24h';
+        loading = coins.length === 0;
+        errorBanner.style.display = 'none';
+      } else if (activeTab === 'commodities') {
+        document.getElementById('page-title').textContent = 'Commodities';
+        searchInput.placeholder = 'Search by name or symbol (Gold, Silver...)';
+        document.getElementById('th-24h').textContent = 'Since load';
+        loading = !commoditiesLoaded;
+        errorBanner.style.display = 'none';
+        if (!commoditiesLoaded) fetchCommodities();
+      } else if (activeTab === 'stocks') {
+        document.getElementById('page-title').textContent = 'Stocks';
+        searchInput.placeholder = 'Search by name or symbol (TSLA, AAPL...)';
+        document.getElementById('th-24h').textContent = 'Since load';
+        loading = !stocksLoaded;
+        errorBanner.style.display = 'none';
+        if (!stocksLoaded) fetchStocks();
+      }
+      render();
+    });
+  });
+
+  // Drag-to-scroll: lets people click and drag the table sideways to reach
+  // columns cut off on smaller screens (like the Buy button).
+  const tableScroll = document.getElementById('table-scroll');
+  let isDragging = false, dragStartX = 0, scrollStartX = 0;
+  tableScroll.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    tableScroll.classList.add('dragging');
+    dragStartX = e.pageX;
+    scrollStartX = tableScroll.scrollLeft;
+  });
+  window.addEventListener('mouseup', () => {
+    isDragging = false;
+    tableScroll.classList.remove('dragging');
+  });
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    tableScroll.scrollLeft = scrollStartX - (e.pageX - dragStartX);
+  });
+
+  fetchCoins();
+  setTimeout(() => fetchCommodities(), 2500);
+  setInterval(() => fetchCoins(0), 10000);
+  setInterval(() => { if (commoditiesLoaded) fetchCommodities(0); }, 30000);
+  setInterval(() => { if (stocksLoaded) fetchStocks(0); }, 30000);
+})();
+</script>
+</body>
+</html>
