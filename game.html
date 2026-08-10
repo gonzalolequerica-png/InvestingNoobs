@@ -5233,7 +5233,10 @@ function applySaveObject(obj){
   }
 }
 function deleteSaveGame(slot){
-  try{ localStorage.removeItem(slotKey(slot)); }catch(e){}
+  try{
+    localStorage.removeItem(slotKey(slot));
+    if((slot||activeSlot)===1) localStorage.removeItem('fundTycoonSave_v1');
+  }catch(e){}
 }
 // ══════════════ MODAL DE CONFIRMACIÓN PERSONALIZADO ══════════════
 // Sustituye a window.confirm(), que puede estar bloqueado en entornos
