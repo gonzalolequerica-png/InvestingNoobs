@@ -411,15 +411,15 @@
   lessons.forEach(lesson => {
     const head = lesson.querySelector('.lesson-head');
     head.addEventListener('click', () => {
-      const isOpen = lesson.classList.contains('open');
-      // Close other open lessons for a cleaner single-focus feel
-      lessons.forEach(l => { if (l !== lesson) l.classList.remove('open'); });
-      lesson.classList.toggle('open', !isOpen);
+      const id = lesson.dataset.id;
+      completed.add(id);
+      save();
+      render();
+      window.location.href = 'article.html?id=' + encodeURIComponent(id);
+    });
+  });
 
-      if (!isOpen) {
-        completed.add(lesson.dataset.id);
-        save();
-        render();
+  render();
       }
     });
   });
