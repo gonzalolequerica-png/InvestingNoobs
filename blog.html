@@ -363,6 +363,8 @@
 
 </div>
 
+<section class="final-exam" style="max-width:900px;margin:56px auto;padding:28px;border:1px solid #c9a35a;border-radius:16px;background:#111923;text-align:center"><div style="font-size:28px">🎓</div><h2>Final Knowledge Test</h2><p>Complete the final assessment after reading all lessons. Score 80% or higher to receive your personalized certificate.</p><a href="test.html" class="buy-btn">Take the final test →</a></section>
+
 <footer>
   InvestingNoobs · Educational content, not investment advice
   <br style="margin-bottom:8px;">
@@ -372,59 +374,13 @@
 </footer>
 
 <script>
-(function () {
-  const TOTAL = 27;
-  let completed = new Set();
-  try {
-    const saved = JSON.parse(localStorage.getItem('in_course_progress') || '[]');
-    completed = new Set(saved);
-  } catch (e) { /* ignore */ }
-
-  const lessons = Array.from(document.querySelectorAll('.lesson'));
-  const progressFill = document.getElementById('progress-fill');
-  const progressCount = document.getElementById('progress-count');
-  const completionBanner = document.getElementById('completion-banner');
-  const modules = Array.from(document.querySelectorAll('.module'));
-
-  function save() {
-    try { localStorage.setItem('in_course_progress', JSON.stringify(Array.from(completed))); } catch (e) { /* ignore */ }
-  }
-
-  function render() {
-    lessons.forEach(lesson => {
-      const id = lesson.dataset.id;
-      lesson.classList.toggle('done', completed.has(id));
-    });
-
-    modules.forEach(mod => {
-      const modLessons = mod.querySelectorAll('.lesson');
-      const doneCount = Array.from(modLessons).filter(l => completed.has(l.dataset.id)).length;
-      mod.querySelector('.module-done').textContent = doneCount;
-    });
-
-    const count = completed.size;
-    progressCount.textContent = count;
-    progressFill.style.width = (count / TOTAL * 100) + '%';
-    completionBanner.style.display = count >= TOTAL ? 'block' : 'none';
-  }
-
-  lessons.forEach(lesson => {
-    const head = lesson.querySelector('.lesson-head');
-    head.addEventListener('click', () => {
-      const id = lesson.dataset.id;
-      completed.add(id);
-      save();
-      render();
-      window.location.href = 'article.html?id=' + encodeURIComponent(id);
-    });
-  });
-
-  render();
-      }
-    });
-  });
-
-  render();
+(function(){
+ const TOTAL=27; let completed=new Set();
+ try{completed=new Set(JSON.parse(localStorage.getItem("in_course_progress")||"[]"))}catch(e){}
+ const lessons=[...document.querySelectorAll(".lesson")], fill=document.getElementById("progress-fill"), countEl=document.getElementById("progress-count"), banner=document.getElementById("completion-banner"), modules=[...document.querySelectorAll(".module")];
+ function save(){try{localStorage.setItem("in_course_progress",JSON.stringify([...completed]))}catch(e){}}
+ function render(){lessons.forEach(l=>l.classList.toggle("done",completed.has(l.dataset.id)));modules.forEach(m=>{const n=m.querySelectorAll(".lesson");const d=[...n].filter(l=>completed.has(l.dataset.id)).length;const el=m.querySelector(".module-done");if(el)el.textContent=d});if(countEl)countEl.textContent=completed.size;if(fill)fill.style.width=(completed.size/TOTAL*100)+"%";if(banner)banner.style.display=completed.size>=TOTAL?"block":"none"}
+ lessons.forEach(l=>{const h=l.querySelector(".lesson-head");if(h)h.addEventListener("click",()=>{completed.add(l.dataset.id);save();render();location.href="article.html?id="+encodeURIComponent(l.dataset.id)})}); render();
 })();
 </script>
 </body>
