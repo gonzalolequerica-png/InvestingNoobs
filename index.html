@@ -1038,7 +1038,7 @@
       }
 
       const anyOk = Object.keys(priceMap).length > 0;
-      if (!anyOk) throw new Error('No stock data');
+      if (!anyOk) { STOCK_META.forEach(m => { if (STOCK_FALLBACK[m.symbol] != null) priceMap[m.symbol] = STOCK_FALLBACK[m.symbol]; }); }
 
       const newPrev = {};
       stocks.forEach(c => { newPrev[c.id] = c.current_price; });
