@@ -1,0 +1,18 @@
+# Investing Noobs
+
+> Investing Noobs is an English-language educational website and interactive simulator that helps beginners learn about cryptocurrency, investing, trading, market risk and prop firms.
+
+## What the site offers
+- Interactive Investing Noobs Tycoon simulator: https://investingnoobs.com/game.html
+- Beginner crypto and investing course: https://investingnoobs.com/blog.html
+- Final 50-question knowledge test and certificate: https://investingnoobs.com/test.html
+- Educational articles: https://investingnoobs.com/article.html?id=l1
+
+## Editorial principles
+Content is educational, beginner-friendly and risk-aware. Investing Noobs does not promise profits or provide personalized financial advice. Readers should verify current laws, fees, tax rules and product availability in their jurisdiction.
+
+## Useful topics
+Cryptocurrency for beginners, how blockchain works, Bitcoin, stablecoins, crypto wallets, market capitalization, volatility, crypto trading, risk management, prop firms and trading psychology.
+
+## Contact and trust
+Read the About and Privacy pages before using the site: https://investingnoobs.com/about.html
