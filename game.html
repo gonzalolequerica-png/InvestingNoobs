@@ -5401,7 +5401,7 @@ function toggleMarketMode(){
 function startMenuMusic(){
   const menu=document.getElementById('mainMenu');
   if(!menuMusicEnabled||gameStarted||(menu&&menu.classList.contains('hide')))return;
-  const audio=document.getElementById('menuMusic');if(!audio)return;
+  const audio=document.getElementById('menuMusic'),btn=document.getElementById('menuMusicBtn');if(!audio)return;
   audio.muted=false;
   audio.onplay=()=>{if(!menuMusicEnabled||gameStarted)audio.pause();};
   audio.volume=.35;
