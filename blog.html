@@ -10,7 +10,39 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; }
+      <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://investingnoobs.com/#organization",
+          "name": "InvestingNoobs",
+          "url": "https://investingnoobs.com/",
+          "description": "Educational resources for beginners learning about cryptocurrency, investing and trading."
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://investingnoobs.com/#website",
+          "name": "InvestingNoobs",
+          "url": "https://investingnoobs.com/",
+          "publisher": {"@id": "https://investingnoobs.com/#organization"},
+          "inLanguage": "en"
+        },
+        {
+          "@type": "CollectionPage",
+          "@id": "https://investingnoobs.com/blog.html#webpage",
+          "url": "https://investingnoobs.com/blog.html",
+          "name": "Crypto Investing and Trading Guides for Beginners",
+          "description": "A structured beginner course covering cryptocurrency, Bitcoin, blockchain, DeFi, stocks, commodities and prop firms.",
+          "isPartOf": {"@id": "https://investingnoobs.com/#website"},
+          "about": ["cryptocurrency", "Bitcoin", "investing", "trading", "blockchain", "DeFi", "stocks", "commodities", "prop firms"],
+          "inLanguage": "en"
+        }
+      ]
+    }
+    </script>
+* { box-sizing: border-box; }
   body {
     margin: 0;
     background: #0b0f14;
