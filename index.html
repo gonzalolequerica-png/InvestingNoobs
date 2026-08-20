@@ -119,7 +119,7 @@
         <span id="refresh-icon">⟳</span>
         <span id="status-text">Loading…</span>
       </div>
-      <div style="margin-top:2px;opacity:0.7;" id="refresh-label">Auto-refresh every 10s</div>
+      <div style="margin-top:2px;opacity:0.7;" id="refresh-label">Crypto refresh every 5s · stocks/commodities every 15s</div>
     </div>
   </div>
 
@@ -1177,9 +1177,9 @@
 
   fetchCoins();
   setTimeout(() => fetchCommodities(), 2500);
-  setInterval(() => fetchCoins(0), 10000);
-  setInterval(() => { if (commoditiesLoaded) fetchCommodities(0); }, 30000);
-  setInterval(() => { if (stocksLoaded) fetchStocks(0); }, 30000);
+  setInterval(() => fetchCoins(0), 5000);
+  setInterval(() => { if (commoditiesLoaded) fetchCommodities(0); }, 15000);
+  setInterval(() => { if (stocksLoaded) fetchStocks(0); }, 15000);
 })();
 </script>
 </body>
