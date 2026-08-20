@@ -452,7 +452,7 @@
 
 <script>
 (function(){
- const TOTAL=50; let completed=new Set();
+ const TOTAL=document.querySelectorAll('.lesson').length; let completed=new Set();
  try{completed=new Set(JSON.parse(localStorage.getItem("in_course_progress")||"[]"))}catch(e){}
  const lessons=[...document.querySelectorAll(".lesson")], fill=document.getElementById("progress-fill"), countEl=document.getElementById("progress-count"), banner=document.getElementById("completion-banner"), modules=[...document.querySelectorAll(".module")];
  function save(){try{localStorage.setItem("in_course_progress",JSON.stringify([...completed]))}catch(e){}}
