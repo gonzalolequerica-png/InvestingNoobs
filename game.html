@@ -5659,3 +5659,24 @@ showMainMenu();
 </script>
 </body>
 </html>
+
+<style id="mobile-responsive-fix">
+@media (max-width: 600px){
+  html,body{width:100%;min-width:0;overflow:hidden;}
+  body{font-size:14px;touch-action:manipulation;}
+  .app{width:100%;max-width:none;height:100dvh;padding-bottom:env(safe-area-inset-bottom);}
+  .topbar{height:56px;margin:4px 5px 2px;padding:6px 9px;border-radius:11px;}
+  .topbar .cash{font-size:12px;}.topbar .nw{font-size:7px;}.topbar .rank{font-size:9px;}.topbar .day{font-size:8px;}
+  button,.btn,[role="button"],a{min-height:42px;}
+  .mainScene{min-height:0;overflow:hidden;}
+  .bottomNav{height:auto;min-height:68px;padding:5px 4px calc(5px + env(safe-area-inset-bottom));gap:3px;}
+  .bottomNav>*{min-width:0;flex:1;}
+  .bottomNav button{padding:5px 2px;font-size:10px;}
+  .bottomNav img,.bottomNav svg{max-width:30px;max-height:30px;}
+  .modal,.panel,.drawer,.shop-panel{max-width:calc(100vw - 18px);width:calc(100% - 18px);max-height:80dvh;overflow:auto;}
+  .grid,.cards,.market-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;}
+  input,select{font-size:16px;max-width:100%;}
+}
+@media (max-width:380px){.bottomNav button{font-size:9px;}.bottomNav img,.bottomNav svg{max-width:25px;max-height:25px;}.grid,.cards,.market-grid{grid-template-columns:1fr;}}
+@media (orientation:landscape) and (max-height:520px){.topbar{height:44px;}.bottomNav{min-height:54px;}.bottomNav img,.bottomNav svg{max-height:22px;}.modal,.panel,.drawer,.shop-panel{max-height:70dvh;}}
+</style>
