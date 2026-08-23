@@ -5680,3 +5680,27 @@ showMainMenu();
 @media (max-width:380px){.bottomNav button{font-size:9px;}.bottomNav img,.bottomNav svg{max-width:25px;max-height:25px;}.grid,.cards,.market-grid{grid-template-columns:1fr;}}
 @media (orientation:landscape) and (max-height:520px){.topbar{height:44px;}.bottomNav{min-height:54px;}.bottomNav img,.bottomNav svg{max-height:22px;}.modal,.panel,.drawer,.shop-panel{max-height:70dvh;}}
 </style>
+
+<style id="mobile-fit-final">
+@media (max-width:600px){
+  *,*::before,*::after{max-width:100%;}
+  html,body{width:100vw!important;max-width:100vw!important;overflow-x:hidden!important;}
+  .app,.screen{width:100vw!important;max-width:100vw!important;margin:0!important;}
+  .screen{overflow:hidden!important;}
+  .mainScene{width:100%!important;max-width:100%!important;}
+  .bottomnav{display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;width:calc(100% - 10px)!important;max-width:calc(100% - 10px)!important;margin:4px 5px 5px!important;padding:4px 2px!important;height:74px!important;min-height:74px!important;gap:1px!important;border-radius:14px!important;}
+  .bottomnav>.bnav{width:100%!important;height:64px!important;min-width:0!important;padding:2px 0!important;gap:2px!important;font-size:clamp(7px,2.3vw,10px)!important;line-height:10px!important;white-space:normal!important;overflow:hidden!important;}
+  .bottomnav>.bnav .icon{width:28px!important;height:28px!important;flex-basis:28px!important;font-size:17px!important;border-radius:8px!important;}
+  .bottomnav>.bnav .nbadge{right:1px!important;top:0!important;font-size:7px!important;padding:0 3px!important;}
+  .statsRow{width:100%!important;max-width:100%!important;gap:3px!important;padding:4px 4px!important;}
+  .statPill{min-width:0!important;padding:4px 2px!important;overflow:hidden!important;}
+  .statPill .sl{font-size:6px!important;white-space:nowrap!important;}
+  .statPill .sv{font-size:9px!important;white-space:nowrap!important;}
+  .alanBox{width:100%!important;max-width:100%!important;padding:6px 8px!important;}
+  .scrollArea{width:100%!important;max-width:100%!important;overflow-x:hidden!important;padding-left:5px!important;padding-right:5px!important;}
+  .assetCard,.card,.panel,.modal,.drawer,.shop-panel{width:100%!important;max-width:100%!important;min-width:0!important;}
+  .qrow{flex-wrap:wrap!important;}
+  .qbtn{min-width:0!important;}
+  #charSVG{max-width:100%!important;min-width:0!important;}
+}
+</style>
