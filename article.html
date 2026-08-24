@@ -206,3 +206,25 @@ function improve(){document.querySelectorAll("img").forEach(function(img){if(!im
   setTimeout(guard,900);
 })();
 </script>
+
+
+<style id="codex-article-mobile">
+@media(max-width:700px){
+  .article-shell,.article-card,main{width:100%!important;max-width:100%!important;box-sizing:border-box}
+  .article-shell,.article-card{padding:20px!important}
+  h1{font-size:clamp(2rem,9vw,4rem)!important;line-height:1.08}
+  p,li{font-size:1rem!important;line-height:1.7}
+  .actions{display:flex;flex-wrap:wrap;gap:10px}
+}
+</style>
+<script id="codex-article-route">
+(function(){
+  var p=new URLSearchParams(location.search), raw=(p.get('id')||'').trim().toLowerCase();
+  var suffix=raw.slice(1), digits=suffix.length>0&&suffix.split('').every(function(c){return c>='0'&&c<='9';});
+  if(!raw){location.replace('blog.html');return;}
+  if(!(raw.charAt(0)==='l'&&digits&&typeof ARTICLES!=='undefined'&&ARTICLES[raw])){
+    var r=document.getElementById('article'); if(r)r.innerHTML='<h1>Choose a lesson</h1><p>Select a valid lesson from the course to read the complete article.</p><div class="actions"><a class="btn primary" href="blog.html">Back to lessons</a></div>';
+    document.querySelectorAll('.learning-value-pack,.decision-checklist').forEach(function(x){x.remove();});
+  }
+})();
+</script>
