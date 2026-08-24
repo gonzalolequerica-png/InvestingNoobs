@@ -55,3 +55,25 @@ function addValue(){if(document.querySelector(".learning-value-pack"))return;var
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",addValue);else addValue();setTimeout(addValue,700);
 })();
 </script>
+
+<style id="mobile-navigation-polish">
+html{scroll-behavior:smooth}body{overflow-x:hidden}img,svg,video{max-width:100%;height:auto}pre,code{max-width:100%;overflow-x:auto}table{display:block;max-width:100%;overflow-x:auto}button,a{touch-action:manipulation}
+@media(max-width:700px){
+ body{font-size:16px;line-height:1.65;padding-bottom:env(safe-area-inset-bottom)}
+ main,.article,.article-content,.article-body{width:100%!important;max-width:100%!important;box-sizing:border-box;padding-left:16px!important;padding-right:16px!important}
+ h1{font-size:clamp(28px,8vw,44px)!important;line-height:1.1!important;overflow-wrap:anywhere}
+ h2{font-size:clamp(22px,6vw,30px)!important;line-height:1.2!important}
+ h3{font-size:20px!important}
+ p,li{overflow-wrap:anywhere}
+ header,nav{max-width:100%!important}
+ nav{display:flex;flex-wrap:wrap;gap:8px!important;align-items:center}
+ nav a,header a,button{min-height:44px;padding:10px 12px}
+ .article-hero,.hero{padding:28px 16px!important}
+ .article-card,.lesson-card,.learning-value-pack{margin-left:0!important;margin-right:0!important;border-radius:14px!important}
+ .learning-value-grid{grid-template-columns:1fr!important}
+ .article-actions{display:grid!important;grid-template-columns:1fr 1fr;gap:8px}
+ .article-actions a,.article-actions button{width:100%;text-align:center}
+ .progress,.progress-bar{max-width:100%!important}
+}
+@media(max-width:390px){main,.article,.article-content,.article-body{padding-left:12px!important;padding-right:12px!important}.article-actions{grid-template-columns:1fr}.learning-value-pack{padding:14px!important}}
+</style>
