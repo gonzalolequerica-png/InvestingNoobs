@@ -464,3 +464,27 @@
 <!-- course-version-50 -->
 <!-- sanitized-course-56 -->
 </html>
+
+<style id="codex-responsive-course">
+@media (max-width:700px){
+  body{overflow-x:hidden}
+  main,.course-shell,.container{width:100%!important;max-width:100%!important;padding-left:16px!important;padding-right:16px!important;box-sizing:border-box}
+  h1{font-size:clamp(2.2rem,10vw,4rem)!important;line-height:1.05}
+  .lesson-card,.lesson-row,.course-card{width:100%!important;min-width:0!important;margin-left:0!important;margin-right:0!important}
+  .lesson-card a,.lesson-row a{display:flex!important;align-items:center!important;min-height:64px!important}
+  .module,.module-header{width:100%!important}
+}
+</style>
+<script id="codex-course-link-guard">
+(function(){
+  document.addEventListener('click',function(event){
+    var link=event.target.closest('a[href*="article.html"]');
+    if(!link)return;
+    var href=link.getAttribute('href')||'';
+    if(href.indexOf('?id=')<0){
+      var id=link.getAttribute('data-id')||link.dataset&&link.dataset.id;
+      if(id)link.href='article.html?id='+encodeURIComponent(String(id).toLowerCase());
+    }
+  },true);
+})();
+</script>
