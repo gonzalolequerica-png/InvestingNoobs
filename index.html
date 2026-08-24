@@ -1184,3 +1184,16 @@
 </script>
 </body>
 </html>
+
+
+<script id="codex-seo-upgrade">
+(function(){
+  var metas=[
+    ['description','InvestingNoobs teaches crypto, stocks, commodities and personal finance through clear lessons, practical examples and an interactive investing game.'],
+    ['robots','index,follow,max-image-preview:large']
+  ];
+  metas.forEach(function(pair){var m=document.querySelector('meta[name="'+pair[0]+'"]')||document.createElement('meta');m.name=pair[0];m.content=pair[1];if(!m.parentNode)document.head.appendChild(m);});
+  var ld={"@context":"https://schema.org","@type":"EducationalOrganization","name":"InvestingNoobs","url":"https://investingnoobs.com/","description":"Beginner-friendly financial education for crypto, stocks and commodities.","sameAs":[]};
+  var s=document.createElement('script');s.type='application/ld+json';s.textContent=JSON.stringify(ld);document.head.appendChild(s);
+})();
+</script>
