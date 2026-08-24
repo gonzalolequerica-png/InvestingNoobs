@@ -87,3 +87,22 @@ function addDepth(){if(document.querySelector(".decision-checklist"))return;var 
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",addDepth);else addDepth();setTimeout(addDepth,900);
 })();
 </script>
+
+<style id="professional-visual-polish">
+:root{--brand-gold:#eab54d;--brand-blue:#6ea8ff;--surface:#121a29;--surface-soft:rgba(255,255,255,.045)}
+body{background:radial-gradient(circle at 15% 0%,rgba(84,126,210,.12),transparent 35%),radial-gradient(circle at 85% 100%,rgba(234,181,77,.08),transparent 38%),#080d16;color:#e7edf7}
+header{border-bottom:1px solid rgba(255,255,255,.09)!important;background:rgba(8,13,22,.86)!important;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+main,.article,.article-content,.article-body{color:#dbe5f2}
+h1,h2,h3{letter-spacing:-.025em;color:#f5f7fb}
+h1{font-weight:800;text-wrap:balance}
+p,li{color:#b9c6d7}
+a{color:var(--brand-blue);text-underline-offset:3px;transition:color .2s,opacity .2s}
+a:hover{color:#b6d1ff}
+button,.btn{border:1px solid rgba(234,181,77,.38)!important;border-radius:10px!important;background:linear-gradient(135deg,#26354c,#172238)!important;color:#f5f7fb!important;box-shadow:0 4px 14px rgba(0,0,0,.2);transition:transform .18s,box-shadow .18s,border-color .18s}
+button:hover,.btn:hover{transform:translateY(-1px);border-color:var(--brand-gold)!important;box-shadow:0 8px 22px rgba(0,0,0,.28)}
+.article-card,.lesson-card,.learning-value-pack,.decision-checklist{box-shadow:0 14px 34px rgba(0,0,0,.22)!important}
+.learning-value-pack,.decision-checklist{border-color:rgba(234,181,77,.28)!important}
+blockquote{margin:22px 0;padding:16px 18px;border-left:4px solid var(--brand-gold);border-radius:0 10px 10px 0;background:var(--surface-soft);color:#dbe5f2}
+hr{border:0;border-top:1px solid rgba(255,255,255,.1);margin:30px 0}
+@media(max-width:700px){h1{font-size:clamp(30px,9vw,48px)!important}h2{font-size:clamp(23px,7vw,32px)!important}p,li{font-size:16px!important}.article-card,.lesson-card{padding:16px!important}}
+</style>
