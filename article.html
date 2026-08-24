@@ -114,3 +114,11 @@ function applySEO(){var title=(document.querySelector("h1")||{}).textContent||"I
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",applySEO);else applySEO();setTimeout(applySEO,800);
 })();
 </script>
+
+<style id="accessibility-performance">
+:focus-visible{outline:3px solid #eab54d!important;outline-offset:3px!important}html{scroll-padding-top:76px}img{content-visibility:auto}button,a{min-height:44px}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+</style>
+<script id="accessibility-performance-script">
+(function(){
+function improve(){document.querySelectorAll("img").forEach(function(img){if(!img.loading)img.loading="lazy";if(!img.decoding)img.decoding="async"});document.querySelectorAll("a").forEach(function(a){if(!a.getAttribute("aria-label")&&a.textContent.trim())a.setAttribute("aria-label",a.textContent.trim())});var main=document.querySelector("main,article,.article-content,.article-body");if(main&&!main.id)main.id="main-content";if(main&&!document.querySelector('a[href="#main-content"]')){var skip=document.createElement("a");skip.href="#main-content";skip.textContent="Skip to article";skip.style.cssText="position:fixed;left:10px;top:-60px;z-index:9999;padding:10px 14px;background:#eab54d;color:#101722;border-radius:8px;font-weight:700;transition:top .2s";skip.addEventListener("focus",function(){skip.style.top="10px"});main.parentNode.insertBefore(skip,main)}}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",improve);else improve();setTimeout(improve,700)})();
+</script>
