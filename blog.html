@@ -491,3 +491,38 @@
 <!-- codex-test-xyz -->
 
           <style id="codex-mobile-polish">body{overflow-x:hidden} @media(max-width:700px){main{padding:16px!important}.lesson-card,.lesson-row{width:100%!important;min-width:0!important}}</style>
+
+          
+<style id="all-lessons-directory">
+.all-lessons-directory{max-width:980px;margin:56px auto 80px;padding:0 20px}
+.all-lessons-directory h2{font-size:clamp(1.8rem,4vw,2.6rem);margin:0 0 10px}
+.all-lessons-directory p{color:#9fb0c9;margin:0 0 22px}
+.all-lessons-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.all-lessons-grid a{display:flex;align-items:center;gap:12px;min-height:58px;padding:14px 16px;border:1px solid #2c3a50;border-radius:14px;background:#121a27;color:#f4f6fb;text-decoration:none}
+.all-lessons-grid a:hover{border-color:#d6a84d;transform:translateY(-1px)}
+.all-lessons-grid small{color:#d6a84d;min-width:34px}
+@media(max-width:650px){.all-lessons-directory{padding:0 16px}.all-lessons-grid{grid-template-columns:1fr}}
+</style>
+<script id="all-lessons-directory-script">
+(function(){
+  function build(){
+    if(document.querySelector('.all-lessons-directory'))return;
+    var lessons=[].slice.call(document.querySelectorAll('.lesson[data-id]'));
+    var seen={}; lessons=lessons.filter(function(x){if(seen[x.dataset.id])return false;seen[x.dataset.id]=true;return true;}).sort(function(a,b){return Number(a.dataset.id.slice(1))-Number(b.dataset.id.slice(1));});
+    if(!lessons.length)return;
+    var box=document.createElement('section');box.className='all-lessons-directory';
+    box.innerHTML='<h2>All 50 learning articles</h2><p>Open any lesson directly. Every article includes practical examples, risks and a short exercise.</p><div class="all-lessons-grid"></div>';
+    var grid=box.querySelector('.all-lessons-grid');
+    lessons.forEach(function(item){
+      var title=item.querySelector('.lesson-title'); var a=document.createElement('a');
+      a.href='article.html?id='+encodeURIComponent(item.dataset.id);
+      a.innerHTML='<small>'+item.dataset.id.toUpperCase()+'</small><span></span>';
+      a.querySelector('span').textContent=title?title.textContent.trim():'Learning article';
+      grid.appendChild(a);
+    });
+    document.body.appendChild(box);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);else build();
+  setTimeout(build,700);
+})();
+</script>
