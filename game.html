@@ -5704,3 +5704,7 @@ showMainMenu();
   #charSVG{max-width:100%!important;min-width:0!important;}
 }
 </style>
+
+<script id="home-visual-fix">
+(function(){const homeImages={home1b:"Cuarto 1_1.png",home1:"Apartamento alquiler v2 - amanecer.png",home5:"Apartamento alquiler v2 - dia.png",home2:"Cuarto 1_3.png",home6:"Apartamento alquiler v2 - anochecer.png",home3:"Cuarto 1_2.png",home7:"Cuarto 1_4.png",home8:"Cuarto 1_3.png",home4:"Cuarto 1_4.png",home9:"Cuarto 1_2.png"};function applyPurchasedHome(){const layer=document.getElementById("roomPhotoLayer"),home=window.state&&state.shop&&state.shop.equipped&&state.shop.equipped.inmueble;if(!layer||!home)return;const file=homeImages[home]||homeImages.home1b;layer.style.backgroundImage="url("+JSON.stringify(file)+")";layer.style.backgroundSize="cover";layer.classList.add("show");layer.dataset.home=home;}window.addEventListener("load",()=>setTimeout(applyPurchasedHome,250));setInterval(applyPurchasedHome,700);})();
+</script>
