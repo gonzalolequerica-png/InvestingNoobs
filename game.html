@@ -5723,3 +5723,20 @@ showMainMenu();
  setTimeout(sync,300);setInterval(sync,500);
 })();
 </script>
+
+<script id="save-delete-fix">
+(function(){
+  window.deleteSaveGame=function(slot){
+    const n=slot||activeSlot;
+    try{
+      localStorage.removeItem(slotKey(n));
+      localStorage.removeItem(backupSlotKey(n));
+      localStorage.removeItem("fundTycoonSave_v1");
+      if(Number(activeSlot)===Number(n)){
+        localStorage.removeItem(ACTIVE_SLOT_KEY);
+        activeSlot=1;
+      }
+    }catch(e){console.error("Error deleting save",e);}
+  };
+})();
+</script>
