@@ -77,3 +77,13 @@ html{scroll-behavior:smooth}body{overflow-x:hidden}img,svg,video{max-width:100%;
 }
 @media(max-width:390px){main,.article,.article-content,.article-body{padding-left:12px!important;padding-right:12px!important}.article-actions{grid-template-columns:1fr}.learning-value-pack{padding:14px!important}}
 </style>
+
+<style id="educational-depth">
+.decision-checklist{max-width:820px;margin:20px auto;padding:20px;border-radius:16px;border:1px solid rgba(75,170,130,.35);background:linear-gradient(135deg,rgba(12,35,35,.9),rgba(13,24,35,.95))}.decision-checklist h3{margin:0 0 12px;color:#7ee2b8}.decision-checklist ol{margin:0;padding-left:22px;color:#d2e5df}.decision-checklist li{margin:8px 0;line-height:1.55}.decision-checklist .note{margin-top:14px;padding:11px;border-left:3px solid #eab54d;color:#cbd5e1;font-size:13px}
+</style>
+<script id="educational-depth-script">
+(function(){
+function addDepth(){if(document.querySelector(".decision-checklist"))return;var host=document.querySelector("main,article,.article-content,.article-body")||document.body;var box=document.createElement("section");box.className="decision-checklist";box.innerHTML="<h3>Apply the idea before you act</h3><ol><li>Define the decision: what exactly are you considering buying, selling or changing?</li><li>Write the evidence: separate a measured fact from an opinion, prediction or marketing claim.</li><li>Measure the downside: how much money, time or opportunity could you lose?</li><li>Choose a rule: decide in advance what would make you continue, reduce exposure or stop.</li><li>Review later: compare the result with your original reasoning, not only with the price.</li></ol><p class='note'><strong>Educational note:</strong> This material explains concepts and is not personal financial advice. Check fees, liquidity, regulation and your own risk tolerance before acting.</p>";host.appendChild(box)}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",addDepth);else addDepth();setTimeout(addDepth,900);
+})();
+</script>
