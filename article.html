@@ -106,3 +106,11 @@ blockquote{margin:22px 0;padding:16px 18px;border-left:4px solid var(--brand-gol
 hr{border:0;border-top:1px solid rgba(255,255,255,.1);margin:30px 0}
 @media(max-width:700px){h1{font-size:clamp(30px,9vw,48px)!important}h2{font-size:clamp(23px,7vw,32px)!important}p,li{font-size:16px!important}.article-card,.lesson-card{padding:16px!important}}
 </style>
+
+<script id="article-seo-enhancement">
+(function(){
+function meta(name,content,property){var sel=property?'meta[property="'+property+'"]':'meta[name="'+name+'"]';var el=document.head.querySelector(sel)||document.head.appendChild(Object.assign(document.createElement("meta"),property?{property:property}:{name:name}));el.content=content}
+function applySEO(){var title=(document.querySelector("h1")||{}).textContent||"Investing and Crypto Education";title=title.trim();var desc="Learn "+title+" with clear examples, practical risks, investor terminology and a short exercise from InvestingNoobs.";document.title=title+" | InvestingNoobs";meta("description",desc);meta("robots","index,follow,max-image-preview:large");meta("author","InvestingNoobs");meta("",title,"og:title");meta("",desc,"og:description");meta("twitter:card","summary");var link=document.head.querySelector('link[rel="canonical"]')||document.head.appendChild(document.createElement("link"));link.rel="canonical";link.href=location.origin+location.pathname+location.search;var ld={ "@context":"https://schema.org","@type":"Article","headline":title,"description":desc,"author":{"@type":"Organization","name":"InvestingNoobs"},"publisher":{"@type":"Organization","name":"InvestingNoobs"},"mainEntityOfPage":{"@type":"WebPage","@id":location.href},"dateModified":new Date().toISOString().slice(0,10)};var script=document.getElementById("article-jsonld")||document.head.appendChild(document.createElement("script"));script.id="article-jsonld";script.type="application/ld+json";script.textContent=JSON.stringify(ld)}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",applySEO);else applySEO();setTimeout(applySEO,800);
+})();
+</script>
