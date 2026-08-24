@@ -162,3 +162,25 @@ function improve(){document.querySelectorAll("img").forEach(function(img){if(!im
   setTimeout(guard,900);
 })();
 </script>
+
+<script id="article-route-guard-final">
+(function(){
+  function guard(){
+    var params=new URLSearchParams(location.search);
+    var raw=(params.get('id')||params.get('lesson')||params.get('article')||(location.hash||'').replace(/^#/,'')||'').trim().toLowerCase();
+    var suffix=raw.slice(1);
+    var digits=suffix.length>0 && suffix.split('').every(function(ch){return ch>='0'&&ch<='9';});
+    var valid=raw.charAt(0)==='l' && digits && typeof ARTICLES!=='undefined' && ARTICLES[raw];
+    if(valid){
+      if(params.get('id')!==raw) history.replaceState(null,'','article.html?id='+encodeURIComponent(raw));
+      return;
+    }
+    document.querySelectorAll('.learning-value-pack,.decision-checklist').forEach(function(el){el.remove();});
+    var root=document.getElementById('article');
+    if(!raw){ location.replace('blog.html'); return; }
+    if(root) root.innerHTML='<h1>Choose a lesson</h1><p>This article link is no longer valid. Return to the course and choose a lesson.</p><div class="actions"><a class="btn primary" href="blog.html">Back to lessons</a></div>';
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',guard); else guard();
+  setTimeout(guard,900);
+})();
+</script>
