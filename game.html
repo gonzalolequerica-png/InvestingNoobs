@@ -5740,3 +5740,12 @@ showMainMenu();
   };
 })();
 </script>
+
+<script id="home-visual-absolute-fix">
+(function(){
+ const base="https://gonzalolequerica-png.github.io/InvestingNoobs/";
+ const files={home1b:"Cuarto%201_1.png",home1:"Apartamento%20alquiler%20v2%20-%20amanecer.png",home5:"Apartamento%20alquiler%20v2%20-%20dia.png",home2:"Cuarto%201_3.png",home6:"Apartamento%20alquiler%20v2%20-%20anochecer.png",home3:"Cuarto%201_2.png",home7:"Cuarto%201_4.png",home8:"Cuarto%201_3.png",home4:"Cuarto%201_4.png",home9:"Cuarto%201_2.png"};
+ function syncHome(){if(typeof state==="undefined")return;const layer=document.getElementById("roomPhotoLayer"),home=state.shop&&state.shop.equipped&&state.shop.equipped.inmueble;if(!layer||!home)return;layer.style.backgroundImage="url('"+base+(files[home]||files.home1b)+"')";layer.style.backgroundSize="cover";layer.style.backgroundPosition="center";layer.classList.add("show");}
+ setTimeout(syncHome,300);setInterval(syncHome,500);
+})();
+</script>
