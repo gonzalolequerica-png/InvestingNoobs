@@ -5762,3 +5762,14 @@ showMainMenu();
   .dSceneWrap{min-height:42vh!important}
 }
 </style>
+
+
+<script id="translation-encoding-fix">
+(function(){
+var f={'VariaciÃ³n':'Variación','PrÃ©stamos':'Préstamos','PÃ©rdida mÃ¡xima':'Pérdida máxima','PosiciÃ³n':'Posición','LÃ­mite de pÃ©rdida':'Límite de pérdida','MisiÃ³n completada':'Misión completada','DÃ­a':'Día','DÃ­as activos':'Días activos'};
+var add={'Variación':['Change','涨跌'],'Préstamos':['Loans','贷款'],'Pérdida máxima':['Maximum loss','最大亏损'],'Posición':['Position','仓位'],'Límite de pérdida':['Loss limit','亏损限额'],'Misión completada':['Mission completed','任务完成'],'Día':['Day','天'],'Días activos':['Active days','活跃天数'],'De la calle al mundo':['From the street to the world','从街头走向世界']};
+Object.keys(add).forEach(function(k){if(typeof UI_TRANSLATIONS!=='undefined'&&!UI_TRANSLATIONS[k])UI_TRANSLATIONS[k]=add[k];});
+function fix(){var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),n;while(n=w.nextNode()){var v=n.nodeValue;Object.keys(f).forEach(function(k){v=v.split(k).join(f[k]);});n.nodeValue=v;}}
+setTimeout(fix,100);setInterval(fix,1500);
+})();
+</script>
