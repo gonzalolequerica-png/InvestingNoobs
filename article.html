@@ -148,7 +148,7 @@ function improve(){document.querySelectorAll("img").forEach(function(img){if(!im
   function guard(){
     var params=new URLSearchParams(location.search);
     var raw=(params.get('id')||params.get('lesson')||params.get('article')||(location.hash||'').replace(/^#/,'')||'').trim().toLowerCase();
-    var valid=raw.length>1 && raw.charAt(0)==='l' && /^\\d+$/.test(raw.slice(1)) && typeof ARTICLES!=='undefined' && ARTICLES[raw];
+    var valid=raw.length>1 && raw.charAt(0)==='l' && /^\d+$/.test(raw.slice(1)) && typeof ARTICLES!=='undefined' && ARTICLES[raw];
     if(valid){
       if(params.get('id')!==raw) history.replaceState(null,'','article.html?id='+encodeURIComponent(raw));
       return;
