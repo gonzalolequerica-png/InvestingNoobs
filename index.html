@@ -248,6 +248,7 @@
   let prevPrices = {};
   let commoditiesLoaded = false;
   let stocksLoaded = false;
+let binanceMap = {};
   let watchlist = new Set();
   try {
     const saved = JSON.parse(localStorage.getItem('ct_watchlist') || '[]');
@@ -879,7 +880,7 @@
     });
 
     const dataLen = dataset.length;
-    const sourceLabel = isCrypto ? 'CoinGecko' : (activeTab === 'commodities' ? 'Gold-API' : 'Stooq');
+    const sourceLabel = isCrypto ? 'CoinGecko + Binance' : (activeTab === 'commodities' ? 'Gold-API' : 'Stooq');
     const unitLabel = isCrypto ? ' coins' : (activeTab === 'commodities' ? ' commodities' : ' stocks');
     footerText.textContent = 'Data provided by ' + sourceLabel + ' · ' + sorted.length + ' of ' + dataLen + unitLabel;
   }
@@ -936,7 +937,45 @@
     }
   }
 
-  // Materias primas: precios spot vía gold-api.com (gratuita, sin clave).
+  // Binance (gratuita, sin clave) para refrescar precio y variación 24h de las
+// monedas que cotizan en USDT, dando una capa extra de actualidad sobre CoinGecko.
+async function fetchBinance() {
+try {
+const res = await fetch('https://api.binance.com/api/v3/ticker/24hr');
+if (!res.ok) throw new Error('Binance error ' + res.status);
+const data = await res.json();
+const map = {};
+data.forEach(t => {
+if (t.symbol && t.symbol.endsWith('USDT')) {
+const base = t.symbol.slice(0, -4);
+const price = parseFloat(t.lastPrice);
+const change = parseFloat(t.priceChangePercent);
+if (!isNaN(price)) map[base] = { price: price, change: isNaN(change) ? null : change };
+}
+});
+binanceMap = map;
+applyBinanceOverlay();
+} catch (e) { /* si Binance falla, seguimos mostrando los datos de CoinGecko */ }
+}
+
+function applyBinanceOverlay() {
+if (!coins.length || !Object.keys(binanceMap).length) return;
+let changed = false;
+coins.forEach(c => {
+const b = binanceMap[c.symbol.toUpperCase()];
+if (b) {
+if (c.current_price !== b.price) changed = true;
+c.current_price = b.price;
+if (b.change != null) c.price_change_percentage_24h_in_currency = b.change;
+}
+});
+if (changed) {
+updateStatStrip();
+if (activeTab === 'crypto') { statusText.textContent = 'Updated ' + new Date().toLocaleTimeString('en-US'); render(); }
+}
+}
+
+// Materias primas: precios spot vía gold-api.com (gratuita, sin clave).
   // Al no dar variación %, calculamos el cambio comparando con la lectura anterior propia.
   let commodityHistory = {};
 
@@ -1176,8 +1215,10 @@
   });
 
   fetchCoins();
+  fetchBinance();
   setTimeout(() => fetchCommodities(), 2500);
   setInterval(() => fetchCoins(0), 5000);
+  setInterval(() => fetchBinance(), 4000);
   setInterval(() => { if (commoditiesLoaded) fetchCommodities(0); }, 15000);
   setInterval(() => { if (stocksLoaded) fetchStocks(0); }, 15000);
 })();
