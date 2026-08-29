@@ -548,3 +548,4 @@
 <script>
 (function(){function show(){if(document.querySelector('.all-50-lessons'))return;var x=[].slice.call(document.querySelectorAll('.lesson[data-id]')).sort(function(a,b){return Number(a.dataset.id.slice(1))-Number(b.dataset.id.slice(1));});var b=document.createElement('section');b.className='all-50-lessons';b.innerHTML='<h2>All 50 learning articles</h2><p>Choose any lesson to open the complete article.</p><div class="all-50-lessons-grid"></div>';var g=b.querySelector('div');x.forEach(function(i){var a=document.createElement('a');a.href='article.html?id='+i.dataset.id;a.textContent=i.dataset.id.toUpperCase()+' — '+((i.querySelector('.lesson-title')||{}).textContent||'Learning article').trim();g.appendChild(a)});document.body.appendChild(b)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',show);else show();setTimeout(show,800)})();
 </script>
+<style id="no-default-article">.seo-article{display:none!important}</style>
