@@ -856,7 +856,7 @@ let binanceMap = {};
       const capCell = isCrypto ? fmtBig(coin.market_cap) : '—';
       const volCell = isCrypto ? fmtBig(coin.total_volume) : '—';
       const isStarred = watchlist.has(coin.id);
-      const explain = PLAIN_EXPLAIN[coin.id] || PLAIN_EXPLAIN[coin.symbol.toUpperCase()];
+      const explain = coin.note || PLAIN_EXPLAIN[coin.id] || PLAIN_EXPLAIN[coin.symbol.toUpperCase()];
       const explainHtml = explain ? '<div style="font-size:11px;color:#5b6472;margin-top:2px;font-family:inherit;">' + explain + '</div>' : '';
       const buyCell = '<td class="buy-col-cell"><a href="' + AFFILIATE_LINK + '" target="_blank" rel="noopener sponsored" class="buy-btn">Buy →</a></td>';
       return '<tr class="' + flash.trim() + '">' +
@@ -880,7 +880,7 @@ let binanceMap = {};
     });
 
     const dataLen = dataset.length;
-    const sourceLabel = isCrypto ? 'CoinGecko + Binance' : (activeTab === 'commodities' ? 'Gold-API' : 'Stooq');
+    const sourceLabel = isCrypto ? 'CoinGecko + Binance' : (activeTab === 'commodities' ? 'Gold-API' : 'Yahoo Finance');
     const unitLabel = isCrypto ? ' coins' : (activeTab === 'commodities' ? ' commodities' : ' stocks');
     footerText.textContent = 'Data provided by ' + sourceLabel + ' · ' + sorted.length + ' of ' + dataLen + unitLabel;
   }
@@ -999,21 +999,22 @@ if (activeTab === 'crypto') { statusText.textContent = 'Updated ' + new Date().t
       prevPrices = activeTab === 'commodities' ? newPrev : prevPrices;
 
       commodities = COMMODITY_META.map((m, i) => {
-        const price = results[i].price != null ? results[i].price : COMMODITY_FALLBACK[m.symbol];
-        const hist = commodityHistory[m.symbol] || { first: price, last: price, t: Date.now() };
-        const pctSinceLoad = hist.first ? ((price - hist.first) / hist.first) * 100 : 0;
-        commodityHistory[m.symbol] = { first: hist.first, last: price, t: hist.t };
-        return {
-          id: m.symbol,
-          symbol: m.symbol,
-          name: m.name,
-          image: m.image,
-          current_price: price,
-          price_change_percentage_1h_in_currency: null,
-          price_change_percentage_24h_in_currency: pctSinceLoad,
-          price_change_percentage_7d_in_currency: null,
-          market_cap: null,
-          total_volume: null,
+        const isLive = results[i].price != null;
+       const price = isLive ? results[i].price : COMMODITY_FALLBACK[m.symbol];
+       const hist = commodityHistory[m.symbol] || { first: price, last: price, t: Date.now() };
+       const pctSinceLoad = hist.first ? ((price - hist.first) / hist.first) * 100 : 0;
+       commodityHistory[m.symbol] = { first: hist.first, last: price, t: hist.t };
+       return {
+        id: m.symbol,
+        symbol: m.symbol,
+        name: m.name,
+        image: m.image,
+        current_price: price,
+        price_change_percentage_1h_in_currency: null,
+        price_change_percentage_24h_in_currency: isLive ? pctSinceLoad : null,
+        price_change_percentage_7d_in_currency: null,
+        market_cap: null,
+        total_volume: null, note: isLive ? null : 'Reference price — no live feed available for this metal.',
         };
       });
 
@@ -1038,7 +1039,7 @@ if (activeTab === 'crypto') { statusText.textContent = 'Updated ' + new Date().t
         price_change_percentage_1h_in_currency: null,
         price_change_percentage_24h_in_currency: null,
         price_change_percentage_7d_in_currency: null,
-        market_cap: null, total_volume: null,
+        market_cap: null, total_volume: null, note: 'Reference price — no live feed available for this metal.',
       }));
       commoditiesLoaded = true;
       loading = false;
@@ -1056,32 +1057,36 @@ if (activeTab === 'crypto') { statusText.textContent = 'Updated ' + new Date().t
     if (gold) document.getElementById('stat-gold').textContent = fmtPrice(gold.current_price);
   }
 
-  // Stocks: prices via Stooq (free CSV API, no key). Only changes during US market hours.
+  // Stocks: prices via Yahoo Finance (free JSON API, no key). Only changes during US market hours.
   let stockHistory = {};
 
   async function fetchStocks(retry) {
     retry = retry || 0;
     try {
-      const BATCH = 80;
-      const priceMap = {};
-      for (let i = 0; i < STOCK_META.length; i += BATCH) {
-        const batch = STOCK_META.slice(i, i + BATCH);
-        const symbolsParam = batch.map(s => s.symbol.toLowerCase() + '.us').join(',');
-        try {
-          const res = await fetch('https://stooq.com/q/l/?s=' + symbolsParam + '&f=sd2t2ohlcv&h&e=csv');
-          if (res.ok) {
-            const text = await res.text();
-            const lines = text.trim().split('\n').slice(1);
-            lines.forEach(line => {
-              const cols = line.split(',');
-              const sym = (cols[0] || '').replace('.US', '').toUpperCase();
-              const close = parseFloat(cols[6]);
-              if (sym && !isNaN(close)) priceMap[sym] = close;
-            });
-          }
-        } catch (batchErr) { /* seguimos con el resto de lotes aunque uno falle */ }
-        if (i + BATCH < STOCK_META.length) await new Promise(r => setTimeout(r, 800));
+const BATCH = 40;
+     const priceMap = {};
+     for (let i = 0; i < STOCK_META.length; i += BATCH) {
+      const batch = STOCK_META.slice(i, i + BATCH);
+      const symbolsParam = batch.map(s => s.symbol).join(',');
+      let json = null;
+      try {
+       const res = await fetch('https://query1.finance.yahoo.com/v7/finance/quote?symbols=' + encodeURIComponent(symbolsParam));
+       if (res.ok) json = await res.json();
+      } catch (batchErr) { /* probamos el dominio alternativo */ }
+      if (!json) {
+       try {
+        const res2 = await fetch('https://query2.finance.yahoo.com/v7/finance/quote?symbols=' + encodeURIComponent(symbolsParam));
+        if (res2.ok) json = await res2.json();
+       } catch (batchErr2) { /* seguimos aunque falle este lote */ }
       }
+      const list = (json && json.quoteResponse && json.quoteResponse.result) || [];
+      list.forEach(q => {
+       const sym = (q.symbol || '').toUpperCase();
+       const price = q.regularMarketPrice;
+       if (sym && typeof price === 'number' && !isNaN(price)) priceMap[sym] = price;
+      });
+      if (i + BATCH < STOCK_META.length) await new Promise(r => setTimeout(r, 500));
+     }
 
       const anyOk = Object.keys(priceMap).length > 0;
       if (!anyOk) { STOCK_META.forEach(m => { if (STOCK_FALLBACK[m.symbol] != null) priceMap[m.symbol] = STOCK_FALLBACK[m.symbol]; }); }
