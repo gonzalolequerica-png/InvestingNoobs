@@ -275,3 +275,7 @@ function improve(){document.querySelectorAll("img").forEach(function(img){if(!im
 <script id="article-default-entry">
 (function(){if(!new URLSearchParams(location.search).get('id')){location.replace('article.html?id=l1');}})();
 </script>
+
+<script id="last-article-fix">
+(function(){var p=new URLSearchParams(location.search),n=Number((p.get('id')||'').slice(1));if(n>=50){document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){document.querySelectorAll('a[href*="id=l51"]').forEach(function(a){a.remove();});},300);});}})();
+</script>
