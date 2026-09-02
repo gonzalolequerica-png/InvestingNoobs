@@ -1031,23 +1031,20 @@
   async function fetchStocks(retry) {
     retry = retry || 0;
     try {
-      const BATCH = 80;
+      const BATCH = 12;
       const priceMap = {};
       for (let i = 0; i < STOCK_META.length; i += BATCH) {
         const batch = STOCK_META.slice(i, i + BATCH);
-        const symbolsParam = batch.map(s => s.symbol.toLowerCase() + '.us').join(',');
-        try {
-          const res = await fetch('https://stooq.com/q/l/?s=' + symbolsParam + '&f=sd2t2ohlcv&h&e=csv');
-          if (res.ok) {
-            const text = await res.text();
-            const lines = text.trim().split('\n').slice(1);
-            lines.forEach(line => {
-              const cols = line.split(',');
-              const sym = (cols[0] || '').replace('.US', '').toUpperCase();
-              const close = parseFloat(cols[6]);
-              if (sym && !isNaN(close)) priceMap[sym] = close;
-            });
-          }
+          const symbolsParam = batch.map(s => s.symbol.toUpperCase()).join(',');
+          try {
+          const responses = await Promise.all(batch.map(async s => {
+            const res = await fetch('https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(s.symbol) + '?range=1d&interval=1d');
+            if (!res.ok) return null;
+            const json = await res.json();
+            const meta = json.chart && json.chart.result && json.chart.result[0] && json.chart.result[0].meta;
+            return meta && Number.isFinite(meta.regularMarketPrice) ? { symbol: s.symbol, price: meta.regularMarketPrice } : null;
+          }));
+          responses.forEach(v => { if (v) priceMap[v.symbol] = v.price; });
         } catch (batchErr) { /* seguimos con el resto de lotes aunque uno falle */ }
         if (i + BATCH < STOCK_META.length) await new Promise(r => setTimeout(r, 800));
       }
