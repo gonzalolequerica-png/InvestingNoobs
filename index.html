@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" /><link rel="icon" type="image/svg+xml" href="logo.svg"><link rel="apple-touch-icon" href="logo.svg">
+<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230b0f14%22/><text x=%2250%25%22 y=%2258%25%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23c9a35a%22>◆</text></svg>">
-<title>Investing Noobs — Crypto, Investing &Buy us a coffee Trading for Beginners</title><meta name="description" content="Learn cryptocurrency, investing, trading and risk management with the Investing Noobs interactive simulator, beginner course, articles and final test."><meta name="author" content="Investing Noobs"><meta name="robots" content="index,follow,max-image-preview:large"><link rel="canonical" href="https://investingnoobs.com/"><meta property="og:type" content="website"><meta property="og:title" content="Investing Noobs — Learn Crypto & Investing"><meta property="og:description" content="A beginner-friendly crypto and investing simulator, course, guides, FAQ and knowledge test."><meta property="og:url" content="https://investingnoobs.com/"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Investing Noobs","alternateName":"Investing Noobs Tycoon","url":"https://investingnoobs.com/","description":"Beginner-friendly cryptocurrency, investing and trading education with an interactive simulator, articles and a final knowledge test.","inLanguage":"en","logo":"https://investingnoobs.com/logo.svg","publisher":{"@type":"Organization","name":"Investing Noobs","url":"https://investingnoobs.com/"}}</script>
+<title>InvestingNoobs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -88,20 +88,30 @@
     0%, 100% { box-shadow: 0 0 0 0 rgba(201,163,90,0.55), 0 2px 8px rgba(201,163,90,0.35); }
     50% { box-shadow: 0 0 0 6px rgba(201,163,90,0), 0 2px 14px rgba(201,163,90,0.55); }
   }
-  #tabs { padding:5px; background:linear-gradient(135deg,#101720,#0d1219); border:1px solid #273241; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,.18); }
-  #tabs > .tab-btn { flex:1 1 0; min-width:0; text-align:center; justify-content:center; }
-  .tab-btn { position:relative; background:transparent; border:1px solid transparent; color:#8995a5; padding:10px 17px; border-radius:8px; font-size:13px; font-weight:650; cursor:pointer; font-family:inherit; transition:color .2s,background .2s,border-color .2s,transform .2s,box-shadow .2s; }
-  .tab-btn:hover { color:#f1f4f7; background:rgba(255,255,255,.05); transform:translateY(-1px); }
-  .tab-btn.tab-active { background:linear-gradient(135deg,#c9a35a,#9c702d); border-color:#f0ca79; color:#10151c; box-shadow:0 5px 14px rgba(201,163,90,.25),inset 0 1px rgba(255,255,255,.35); }
-  .tab-btn.tab-active::after { content:""; position:absolute; left:20%; right:20%; bottom:3px; height:2px; border-radius:2px; background:#fff4cc; opacity:.8; }
-  .tab-link-external { color:#aab5c4; margin-left:0!important; }
-  @media(max-width:560px){#tabs{gap:3px!important}.tab-btn{padding:9px 6px;font-size:11px}.tab-link-external{padding-inline:5px!important}}
+  .tab-btn { background: #12161d; border: 1px solid #242b35; color: #8b93a0; padding: 9px 18px; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+  .tab-btn:hover { color: #c7cdd6; }
+  .tab-btn.tab-active { background: #1c1710; border-color: #c9a35a; color: #c9a35a; }
   .blog-post { border: 1px solid #242b35; border-radius: 6px; padding: 24px 26px; margin-bottom: 18px; background: #10141a; }
   .blog-title { font-size: 17px; color: #eceef1; margin: 0 0 12px; }
   .blog-p { font-size: 14px; line-height: 1.7; color: #a9b0bb; margin: 0 0 10px; }
   .blog-p:last-child { margin-bottom: 0; }
 </style>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4483309337875295" crossorigin="anonymous"></script>
+<style id="clean-interface-refresh">
+  :root { --surface: #111821; --surface-2: #151d28; --line: #293442; --gold: #d6ad58; }
+  body { background: radial-gradient(circle at 50% -10%, #17212d 0, #0b0f14 42%); }
+  #wrap { max-width: 1160px; padding: 42px 28px 72px; }
+  #brand { letter-spacing: -.025em; }
+  .tabs { border: 1px solid var(--line); background: rgba(17,24,33,.82); padding: 5px; gap: 5px; box-shadow: 0 12px 34px rgba(0,0,0,.16); }
+  .tabs button { min-height: 42px; border-radius: 9px; transition: background .18s ease, color .18s ease, transform .18s ease; }
+  .tabs button:hover { transform: translateY(-1px); }
+  .tabs button.active { background: linear-gradient(135deg,#d6ad58,#b98a36); color: #111821; box-shadow: 0 6px 18px rgba(214,173,88,.2); }
+  .support, .notice { border-radius: 12px; border-color: var(--line); box-shadow: 0 10px 28px rgba(0,0,0,.12); }
+  .support { background: linear-gradient(110deg, rgba(21,29,40,.96), rgba(17,24,33,.96)); }
+  input, #table-scroll { border-color: var(--line); background: rgba(17,24,33,.9); border-radius: 10px; }
+  #table-scroll { overflow-x: auto; box-shadow: 0 10px 28px rgba(0,0,0,.12); }
+  table thead th { background: #121923; }
+  @media (max-width: 700px) { #wrap { padding: 24px 14px 48px; } .tabs { display: grid; grid-template-columns: repeat(2, 1fr); } .tabs button { width: 100%; } }
+</style>
 </head>
 <body>
 <div id="wrap">
@@ -111,7 +121,7 @@
         <span style="width:16px;height:1px;background:#c9a35a;display:inline-block;"></span>
         LIVE MARKET DATA
       </div>
-      <div style="display:flex;align-items:center;gap:12px;"><img src="logo.svg" alt="Investing Noobs logo" width="52" height="52" style="border-radius:14px;box-shadow:0 0 24px rgba(201,163,90,.25);"><h1 class="serif" id="page-title" style="font-size:clamp(30px,5vw,46px);font-weight:600;margin:0 0 6px;letter-spacing:-0.01em;">Investing Noobs</h1></div>
+      <h1 class="serif" id="page-title" style="font-size:clamp(30px,5vw,46px);font-weight:600;margin:0 0 6px;letter-spacing:-0.01em;">InvestingNoobs</h1>
       <p style="font-size:13px;color:#8b93a0;margin:0;max-width:420px;line-height:1.5;">Built for people who don't know much about this yet: a simple way to check prices, without the jargon.</p>
     </div>
     <div style="text-align:right;font-size:12px;color:#8b93a0;" class="mono">
@@ -119,7 +129,7 @@
         <span id="refresh-icon">⟳</span>
         <span id="status-text">Loading…</span>
       </div>
-      <div style="margin-top:2px;opacity:0.7;" id="refresh-label">Crypto refresh every 5s · stocks/commodities every 15s</div>
+      <div style="margin-top:2px;opacity:0.7;" id="refresh-label">Auto-refresh every 10s</div>
     </div>
   </div>
 
@@ -127,7 +137,6 @@
     <button data-tab="crypto" class="tab-btn tab-active">Cryptocurrencies</button>
     <button data-tab="commodities" class="tab-btn">Commodities</button>
     <button data-tab="stocks" class="tab-btn">Stocks</button>
-    <a href="game.html" class="tab-btn tab-link-external" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">🎮 Game <span style="font-size:9px;background:#3fa06e;color:#0b0f14;padding:1px 6px;border-radius:10px;font-weight:700;letter-spacing:0.02em;">NEW</span></a>
     <a href="blog.html" class="tab-btn tab-link-external" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-left:auto;">Learn <span style="font-size:11px;opacity:0.6;">↗</span></a>
   </div>
 
@@ -223,8 +232,6 @@
     </p>
   </div>
 
-<section aria-labelledby="learning-resources" style="margin-top:38px;padding:24px;border:1px solid #2d3949;border-radius:12px;background:linear-gradient(135deg,#111923,#0d131b);"><h2 id="learning-resources" class="serif" style="margin:0 0 8px;color:#e8bd64;font-size:25px;">Crypto & Investing Learning Resources</h2><p style="color:#aeb8c6;line-height:1.6;margin:0 0 18px;">Explore beginner-friendly guides about cryptocurrency, Bitcoin, trading risk and proprietary trading firms.</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;"><a href="crypto-investing-guide.html" style="color:#e1bb68;">How to start crypto investing</a><a href="bitcoin-for-beginners.html" style="color:#e1bb68;">Bitcoin for beginners</a><a href="prop-firm-guide.html" style="color:#e1bb68;">What is a prop firm?</a><a href="crypto-faq.html" style="color:#e1bb68;">Crypto FAQ</a><a href="crypto-glossary.html" style="color:#e1bb68;">Crypto glossary</a><a href="blog.html" style="color:#e1bb68;">Full learning course</a></div></section>
-
   <div style="margin-top:40px;padding-top:20px;border-top:1px solid #242b35;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-size:12px;">
     <a href="about.html" style="color:#8b93a0;text-decoration:none;">About us</a>
     <a href="privacidad.html" style="color:#8b93a0;text-decoration:none;">Privacy Policy</a>
@@ -234,8 +241,8 @@
 <script>
 (function () {
   // ⚠️ EDIT ME: paste your exchange affiliate link here before launch.
-  // Example: 'https://cryptofundtrader.com?_by=investingnoobs49'
-  const AFFILIATE_LINK = 'https://cryptofundtrader.com?_by=investingnoobs49';
+  // Example: 'https://accounts.binance.com/register?ref=YOURCODE'
+  const AFFILIATE_LINK = 'https://accounts.binance.com/register?ref=YOURCODE';
 
   let coins = [];
   let commodities = [];
@@ -248,7 +255,6 @@
   let prevPrices = {};
   let commoditiesLoaded = false;
   let stocksLoaded = false;
-let binanceMap = {};
   let watchlist = new Set();
   try {
     const saved = JSON.parse(localStorage.getItem('ct_watchlist') || '[]');
@@ -856,7 +862,7 @@ let binanceMap = {};
       const capCell = isCrypto ? fmtBig(coin.market_cap) : '—';
       const volCell = isCrypto ? fmtBig(coin.total_volume) : '—';
       const isStarred = watchlist.has(coin.id);
-      const explain = coin.note || PLAIN_EXPLAIN[coin.id] || PLAIN_EXPLAIN[coin.symbol.toUpperCase()];
+      const explain = PLAIN_EXPLAIN[coin.id] || PLAIN_EXPLAIN[coin.symbol.toUpperCase()];
       const explainHtml = explain ? '<div style="font-size:11px;color:#5b6472;margin-top:2px;font-family:inherit;">' + explain + '</div>' : '';
       const buyCell = '<td class="buy-col-cell"><a href="' + AFFILIATE_LINK + '" target="_blank" rel="noopener sponsored" class="buy-btn">Buy →</a></td>';
       return '<tr class="' + flash.trim() + '">' +
@@ -880,7 +886,7 @@ let binanceMap = {};
     });
 
     const dataLen = dataset.length;
-    const sourceLabel = isCrypto ? 'CoinGecko + Binance' : (activeTab === 'commodities' ? 'Gold-API' : 'Yahoo Finance');
+    const sourceLabel = isCrypto ? 'CoinGecko' : (activeTab === 'commodities' ? 'Gold-API' : 'Stooq');
     const unitLabel = isCrypto ? ' coins' : (activeTab === 'commodities' ? ' commodities' : ' stocks');
     footerText.textContent = 'Data provided by ' + sourceLabel + ' · ' + sorted.length + ' of ' + dataLen + unitLabel;
   }
@@ -888,7 +894,7 @@ let binanceMap = {};
   async function fetchCoins(retry) {
     retry = retry || 0;
     try {
-      const res1 = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=1h,24h,7d&x_cg_demo_api_key=CG-UqyWN8wBBXgztfisfqw6NEJn');
+      const res1 = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false&price_change_percentage=1h,24h,7d');
       if (!res1.ok) throw new Error('Error del servidor (' + res1.status + ')');
       const page1 = await res1.json();
 
@@ -896,7 +902,7 @@ let binanceMap = {};
 
       let page2 = [];
       try {
-        const res2 = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=6&sparkline=false&price_change_percentage=1h,24h,7d&x_cg_demo_api_key=CG-UqyWN8wBBXgztfisfqw6NEJn');
+        const res2 = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=6&sparkline=false&price_change_percentage=1h,24h,7d');
         if (res2.ok) page2 = await res2.json();
       } catch (e2) { /* si la segunda página falla, seguimos solo con las primeras 250 */ }
 
@@ -937,45 +943,7 @@ let binanceMap = {};
     }
   }
 
-  // Binance (gratuita, sin clave) para refrescar precio y variación 24h de las
-// monedas que cotizan en USDT, dando una capa extra de actualidad sobre CoinGecko.
-async function fetchBinance() {
-try {
-const res = await fetch('https://api.binance.com/api/v3/ticker/24hr');
-if (!res.ok) throw new Error('Binance error ' + res.status);
-const data = await res.json();
-const map = {};
-data.forEach(t => {
-if (t.symbol && t.symbol.endsWith('USDT')) {
-const base = t.symbol.slice(0, -4);
-const price = parseFloat(t.lastPrice);
-const change = parseFloat(t.priceChangePercent);
-if (!isNaN(price)) map[base] = { price: price, change: isNaN(change) ? null : change };
-}
-});
-binanceMap = map;
-applyBinanceOverlay();
-} catch (e) { /* si Binance falla, seguimos mostrando los datos de CoinGecko */ }
-}
-
-function applyBinanceOverlay() {
-if (!coins.length || !Object.keys(binanceMap).length) return;
-let changed = false;
-coins.forEach(c => {
-const b = binanceMap[c.symbol.toUpperCase()];
-if (b) {
-if (c.current_price !== b.price) changed = true;
-c.current_price = b.price;
-if (b.change != null) c.price_change_percentage_24h_in_currency = b.change;
-}
-});
-if (changed) {
-updateStatStrip();
-if (activeTab === 'crypto') { statusText.textContent = 'Updated ' + new Date().toLocaleTimeString('en-US'); render(); }
-}
-}
-
-// Materias primas: precios spot vía gold-api.com (gratuita, sin clave).
+  // Materias primas: precios spot vía gold-api.com (gratuita, sin clave).
   // Al no dar variación %, calculamos el cambio comparando con la lectura anterior propia.
   let commodityHistory = {};
 
@@ -999,22 +967,21 @@ if (activeTab === 'crypto') { statusText.textContent = 'Updated ' + new Date().t
       prevPrices = activeTab === 'commodities' ? newPrev : prevPrices;
 
       commodities = COMMODITY_META.map((m, i) => {
-        const isLive = results[i].price != null;
-       const price = isLive ? results[i].price : COMMODITY_FALLBACK[m.symbol];
-       const hist = commodityHistory[m.symbol] || { first: price, last: price, t: Date.now() };
-       const pctSinceLoad = hist.first ? ((price - hist.first) / hist.first) * 100 : 0;
-       commodityHistory[m.symbol] = { first: hist.first, last: price, t: hist.t };
-       return {
-        id: m.symbol,
-        symbol: m.symbol,
-        name: m.name,
-        image: m.image,
-        current_price: price,
-        price_change_percentage_1h_in_currency: null,
-        price_change_percentage_24h_in_currency: isLive ? pctSinceLoad : null,
-        price_change_percentage_7d_in_currency: null,
-        market_cap: null,
-        total_volume: null, note: isLive ? null : 'Reference price — no live feed available for this metal.',
+        const price = results[i].price != null ? results[i].price : COMMODITY_FALLBACK[m.symbol];
+        const hist = commodityHistory[m.symbol] || { first: price, last: price, t: Date.now() };
+        const pctSinceLoad = hist.first ? ((price - hist.first) / hist.first) * 100 : 0;
+        commodityHistory[m.symbol] = { first: hist.first, last: price, t: hist.t };
+        return {
+          id: m.symbol,
+          symbol: m.symbol,
+          name: m.name,
+          image: m.image,
+          current_price: price,
+          price_change_percentage_1h_in_currency: null,
+          price_change_percentage_24h_in_currency: pctSinceLoad,
+          price_change_percentage_7d_in_currency: null,
+          market_cap: null,
+          total_volume: null,
         };
       });
 
@@ -1039,7 +1006,7 @@ if (activeTab === 'crypto') { statusText.textContent = 'Updated ' + new Date().t
         price_change_percentage_1h_in_currency: null,
         price_change_percentage_24h_in_currency: null,
         price_change_percentage_7d_in_currency: null,
-        market_cap: null, total_volume: null, note: 'Reference price — no live feed available for this metal.',
+        market_cap: null, total_volume: null,
       }));
       commoditiesLoaded = true;
       loading = false;
@@ -1057,39 +1024,35 @@ if (activeTab === 'crypto') { statusText.textContent = 'Updated ' + new Date().t
     if (gold) document.getElementById('stat-gold').textContent = fmtPrice(gold.current_price);
   }
 
-  // Stocks: prices via Yahoo Finance (free JSON API, no key). Only changes during US market hours.
+  // Stocks: prices via Stooq (free CSV API, no key). Only changes during US market hours.
   let stockHistory = {};
 
   async function fetchStocks(retry) {
     retry = retry || 0;
     try {
-const BATCH = 40;
-     const priceMap = {};
-     for (let i = 0; i < STOCK_META.length; i += BATCH) {
-      const batch = STOCK_META.slice(i, i + BATCH);
-      const symbolsParam = batch.map(s => s.symbol).join(',');
-      let json = null;
-      try {
-       const res = await fetch('https://query1.finance.yahoo.com/v7/finance/quote?symbols=' + encodeURIComponent(symbolsParam));
-       if (res.ok) json = await res.json();
-      } catch (batchErr) { /* probamos el dominio alternativo */ }
-      if (!json) {
-       try {
-        const res2 = await fetch('https://query2.finance.yahoo.com/v7/finance/quote?symbols=' + encodeURIComponent(symbolsParam));
-        if (res2.ok) json = await res2.json();
-       } catch (batchErr2) { /* seguimos aunque falle este lote */ }
+      const BATCH = 80;
+      const priceMap = {};
+      for (let i = 0; i < STOCK_META.length; i += BATCH) {
+        const batch = STOCK_META.slice(i, i + BATCH);
+        const symbolsParam = batch.map(s => s.symbol.toLowerCase() + '.us').join(',');
+        try {
+          const res = await fetch('https://stooq.com/q/l/?s=' + symbolsParam + '&f=sd2t2ohlcv&h&e=csv');
+          if (res.ok) {
+            const text = await res.text();
+            const lines = text.trim().split('\n').slice(1);
+            lines.forEach(line => {
+              const cols = line.split(',');
+              const sym = (cols[0] || '').replace('.US', '').toUpperCase();
+              const close = parseFloat(cols[6]);
+              if (sym && !isNaN(close)) priceMap[sym] = close;
+            });
+          }
+        } catch (batchErr) { /* seguimos con el resto de lotes aunque uno falle */ }
+        if (i + BATCH < STOCK_META.length) await new Promise(r => setTimeout(r, 800));
       }
-      const list = (json && json.quoteResponse && json.quoteResponse.result) || [];
-      list.forEach(q => {
-       const sym = (q.symbol || '').toUpperCase();
-       const price = q.regularMarketPrice;
-       if (sym && typeof price === 'number' && !isNaN(price)) priceMap[sym] = price;
-      });
-      if (i + BATCH < STOCK_META.length) await new Promise(r => setTimeout(r, 500));
-     }
 
       const anyOk = Object.keys(priceMap).length > 0;
-      if (!anyOk) { STOCK_META.forEach(m => { if (STOCK_FALLBACK[m.symbol] != null) priceMap[m.symbol] = STOCK_FALLBACK[m.symbol]; }); }
+      if (!anyOk) throw new Error('No stock data');
 
       const newPrev = {};
       stocks.forEach(c => { newPrev[c.id] = c.current_price; });
@@ -1220,26 +1183,11 @@ const BATCH = 40;
   });
 
   fetchCoins();
-  fetchBinance();
   setTimeout(() => fetchCommodities(), 2500);
-  setInterval(() => fetchCoins(0), 5000);
-  setInterval(() => fetchBinance(), 4000);
-  setInterval(() => { if (commoditiesLoaded) fetchCommodities(0); }, 15000);
-  setInterval(() => { if (stocksLoaded) fetchStocks(0); }, 15000);
+  setInterval(() => fetchCoins(0), 10000);
+  setInterval(() => { if (commoditiesLoaded) fetchCommodities(0); }, 30000);
+  setInterval(() => { if (stocksLoaded) fetchStocks(0); }, 30000);
 })();
 </script>
 </body>
 </html>
-
-
-<script id="codex-seo-upgrade">
-(function(){
-  var metas=[
-    ['description','InvestingNoobs teaches crypto, stocks, commodities and personal finance through clear lessons, practical examples and an interactive investing game.'],
-    ['robots','index,follow,max-image-preview:large']
-  ];
-  metas.forEach(function(pair){var m=document.querySelector('meta[name="'+pair[0]+'"]')||document.createElement('meta');m.name=pair[0];m.content=pair[1];if(!m.parentNode)document.head.appendChild(m);});
-  var ld={"@context":"https://schema.org","@type":"EducationalOrganization","name":"InvestingNoobs","url":"https://investingnoobs.com/","description":"Beginner-friendly financial education for crypto, stocks and commodities.","sameAs":[]};
-  var s=document.createElement('script');s.type='application/ld+json';s.textContent=JSON.stringify(ld);document.head.appendChild(s);
-})();
-</script>
