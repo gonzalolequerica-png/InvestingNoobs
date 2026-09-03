@@ -203,8 +203,8 @@
               <th data-sort="price_change_percentage_24h_in_currency" style="text-align:right;" id="th-24h">24h</th>
               <th data-sort="price_change_percentage_7d_in_currency" style="text-align:right;" class="hide-mobile">7d</th>
               <th style="text-align:left;">Momentum</th>
-              <th data-sort="market_cap" style="text-align:right;" class="hide-mobile">Market Cap</th>
-              <th data-sort="total_volume" style="text-align:right;" class="hide-mobile">Volume 24h</th>
+              <th data-sort="market_cap" style="text-align:right;" class="hide-mobile" id="th-mcap">Market Cap</th>
+              <th data-sort="total_volume" style="text-align:right;" class="hide-mobile" id="th-vol">Volume 24h</th>
               <th class="buy-col-cell"></th>
             </tr>
           </thead>
@@ -809,6 +809,12 @@
       c.name.toLowerCase().includes(search.toLowerCase()) ||
       c.symbol.toLowerCase().includes(search.toLowerCase())
     );
+   const hideCapVol = activeTab === 'commodities';
+   const colspanVal = hideCapVol ? 9 : 11;
+   const thMcap = document.getElementById('th-mcap');
+   const thVol = document.getElementById('th-vol');
+   if (thMcap) thMcap.style.display = hideCapVol ? 'none' : '';
+   if (thVol) thVol.style.display = hideCapVol ? 'none' : '';
     if (showOnlyWatchlist) filtered = filtered.filter(c => watchlist.has(c.id));
     const sorted = filtered.slice().sort((a, b) => {
       let av = a[sortKey], bv = b[sortKey];
@@ -832,7 +838,7 @@
     if (loading && dataset.length === 0) {
       let html = '';
       for (let i = 0; i < 10; i++) {
-        html += '<tr><td colspan="11"><div class="skel" style="width:' + (60 + (i % 4) * 10) + '%"></div></td></tr>';
+        html += '<tr><td colspan="' + colspanVal + '"><div class="skel" style="width:' + (60 + (i % 4) * 10) + '%"></div></td></tr>';
       }
       tbody.innerHTML = html;
       return;
@@ -840,7 +846,7 @@
 
     if (sorted.length === 0) {
       const msg = showOnlyWatchlist ? 'No favorites yet — click the star on any row to add one.' : 'No results found for "' + search + '"';
-      tbody.innerHTML = '<tr><td colspan="11" style="padding:40px 14px;text-align:center;color:#6b7280;">' + msg + '</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="' + colspanVal + '" style="padding:40px 14px;text-align:center;color:#6b7280;">' + msg + '</td></tr>';
       return;
     }
 
@@ -873,8 +879,7 @@
         '<td class="mono" style="text-align:right;font-size:13px;">' + pctHtml(coin.price_change_percentage_24h_in_currency) + '</td>' +
         '<td class="mono hide-mobile" style="text-align:right;font-size:13px;">' + pctHtml(coin.price_change_percentage_7d_in_currency) + '</td>' +
         '<td><span class="pill" style="color:' + sig.color + ';background:' + sig.color + '18;">' + sig.label + '</span></td>' +
-        '<td class="mono hide-mobile" style="text-align:right;font-size:13px;color:#c7cdd6;">' + capCell + '</td>' +
-        '<td class="mono hide-mobile" style="text-align:right;font-size:13px;color:#c7cdd6;">' + volCell + '</td>' +
+(hideCapVol ? '' : ('<td class="mono hide-mobile" style="text-align:right;font-size:13px;color:#c7cdd6;">' + capCell + '</td>' + '<td class="mono hide-mobile" style="text-align:right;font-size:13px;color:#c7cdd6;">' + volCell + '</td>')) +
         buyCell +
         '</tr>';
     }).join('');
