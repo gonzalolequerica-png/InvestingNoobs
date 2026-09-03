@@ -303,18 +303,9 @@
     { symbol: 'XAG', name: 'Silver', image: '🥈' },
     { symbol: 'XPT', name: 'Platinum', image: '⚪' },
     { symbol: 'XPD', name: 'Palladium', image: '⚙️' },
-    { symbol: 'XCU', name: 'Copper', image: '🟠' },
-    { symbol: 'XRH', name: 'Rhodium', image: '💠' },
-    { symbol: 'XAL', name: 'Aluminum', image: '🔩' },
-    { symbol: 'XNI', name: 'Nickel', image: '⛓️' },
-    { symbol: 'XZN', name: 'Zinc', image: '🔘' },
-    { symbol: 'XPB', name: 'Lead', image: '⚫' },
-    { symbol: 'XSN', name: 'Tin', image: '🥫' },
-    { symbol: 'XIR', name: 'Iridium', image: '💎' },
-  ];
+];
   const COMMODITY_FALLBACK = {
-    XAU: 2648.30, XAG: 30.85, XPT: 985.40, XPD: 1015.20, XCU: 4.28, XRH: 5250.00,
-    XAL: 2.55, XNI: 7.10, XZN: 1.32, XPB: 0.98, XSN: 14.20, XIR: 4650.00,
+   XAU: 2648.30, XAG: 30.85, XPT: 985.40, XPD: 1015.20,
   };
 
   // Minimal fallback so the crypto tab is never fully empty, even if the very
@@ -798,7 +789,13 @@
     const h1 = coin.price_change_percentage_1h_in_currency;
     const h24 = coin.price_change_percentage_24h_in_currency;
     const d7 = coin.price_change_percentage_7d_in_currency;
-    if (h1 == null || h24 == null) return { label: 'No data', color: '#6b7280' };
+    if (h24 == null) return { label: 'No data', color: '#6b7280' };
+   if (h1 == null) {
+   const strength0 = Math.abs(h24);
+   if (h24 > 0) return { label: strength0 > 3 ? 'Strong bullish momentum' : 'Bullish momentum', color: '#3fa06e' };
+   if (h24 < 0) return { label: strength0 > 3 ? 'Strong bearish momentum' : 'Bearish momentum', color: '#c05a52' };
+   return { label: 'Neutral', color: '#8b93a0' };
+   }
     const aligned = (h1 >= 0) === (h24 >= 0) && (d7 == null || (h24 >= 0) === (d7 >= 0));
     const strength = Math.abs(h1) + Math.abs(h24) * 0.5;
     if (aligned && h24 > 0) return { label: strength > 5 ? 'Strong bullish momentum' : 'Bullish momentum', color: '#3fa06e' };
