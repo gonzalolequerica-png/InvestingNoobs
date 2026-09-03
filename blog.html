@@ -52,6 +52,7 @@
     footer{padding:24px 20px 38px;border-top:1px solid rgba(255,255,255,.1);text-align:center;color:#718096;font:12px 'IBM Plex Mono',monospace}footer a{color:var(--blue);margin:0 7px;text-decoration:none}
     @media(max-width:620px){.topbar{height:58px;padding:0 15px}.brand{font-size:12px}.back{font-size:11px}.hero{padding:52px 15px 25px}.eyebrow{font-size:10px;letter-spacing:.12em;gap:8px}.eyebrow::before,.eyebrow::after{width:14px}h1{font-size:clamp(2.35rem,12vw,3.5rem)}.hero-copy{font-size:16px}.progress-card{margin-top:28px;padding:15px}.progress-label{font-size:11px}.progress-label span:last-child{white-space:nowrap}main{padding:28px 15px 65px}.module{margin-bottom:30px}.module-head{align-items:flex-end}.module-title{font-size:21px;line-height:1.1}.module-number{width:25px;height:25px;font-size:12px}.module-progress{font-size:11px}.lesson{min-height:64px;padding:14px 13px;gap:11px}.lesson-title{font-size:15px}.lesson-arrow{font-size:16px}.final-card{padding:23px 17px;margin-top:35px}.final-card h2{font-size:25px}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+    .premium-upgrade{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:24px auto 0}.premium-upgrade span{padding:7px 11px;border:1px solid rgba(234,181,77,.28);border-radius:999px;background:rgba(234,181,77,.07);color:#d9e3ef;font:11px 'IBM Plex Mono',monospace;letter-spacing:.03em}.premium-upgrade span:first-child{color:var(--gold);border-color:rgba(234,181,77,.55)}.hero h1{background:linear-gradient(100deg,#f6f8fc 22%,#e9bd65 78%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 12px 40px rgba(234,181,77,.12)}.progress-card{border-color:rgba(234,181,77,.3);box-shadow:0 18px 45px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.05)}.module-head{position:relative}.module-head:after{content:"";position:absolute;left:0;bottom:-1px;width:72px;height:2px;background:var(--gold)}.lesson{background:linear-gradient(120deg,rgba(25,36,53,.98),rgba(13,20,30,.98));box-shadow:0 7px 18px rgba(0,0,0,.12)}.lesson:hover,.lesson:focus-visible{box-shadow:0 16px 32px rgba(0,0,0,.32),0 0 0 1px rgba(234,181,77,.18)}.final-card{box-shadow:0 18px 45px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.05)}
   </style>
 </head>
 <body>
@@ -64,6 +65,7 @@
     <div class="eyebrow">Learn · self-paced course</div>
     <h1>The InvestingNoobs Course</h1>
     <p class="hero-copy">50 practical lessons to help you understand crypto, investing and trading fundamentals. Open any lesson to read the complete article, then use the progress bar to continue where you left off.</p>
+    <div class="premium-upgrade" aria-label="Course highlights"><span>50 guided lessons</span><span>Practical examples</span><span>Free access</span><span>Learn at your pace</span></div>
     <div class="progress-card" aria-label="Course progress">
       <div class="progress-label"><span>Your progress</span><span><strong id="progress-count">0</strong> / 50 lessons</span></div>
       <div class="progress-track"><div id="progress-fill" class="progress-fill"></div></div>
