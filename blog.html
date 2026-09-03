@@ -1,551 +1,230 @@
-<!DOCTYPE html>
-<html lang="es">
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230b0f14%22/><text x=%2250%25%22 y=%2258%25%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23c9a35a%22>◆</text></svg>">
-<title>Learn Crypto: What Are Cryptocurrencies? Types, Bitcoin, DeFi and Web3 | InvestingNoobs</title>
-<meta name="description" content="Learn what cryptocurrencies are, the main types of crypto assets, Bitcoin, altcoins, stablecoins, DeFi, NFTs and Web3 in this beginner-friendly guide.">
-<meta name="keywords" content="qué son las criptomonedas, tipos de criptomonedas, Bitcoin, altcoins, stablecoins, DeFi, NFT, blockchain, invertir en criptomonedas">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-        <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Organization",
-          "@id": "https://investingnoobs.com/#organization",
-          "name": "InvestingNoobs",
-          "url": "https://investingnoobs.com/",
-          "description": "Educational resources for beginners learning about cryptocurrency, investing and trading."
-        },
-        {
-          "@type": "WebSite",
-          "@id": "https://investingnoobs.com/#website",
-          "name": "InvestingNoobs",
-          "url": "https://investingnoobs.com/",
-          "publisher": {"@id": "https://investingnoobs.com/#organization"},
-          "inLanguage": "en"
-        },
-        {
-          "@type": "CollectionPage",
-          "@id": "https://investingnoobs.com/blog.html#webpage",
-          "url": "https://investingnoobs.com/blog.html",
-          "name": "Crypto Investing and Trading Guides for Beginners",
-          "description": "A structured beginner course covering cryptocurrency, Bitcoin, blockchain, DeFi, stocks, commodities and prop firms.",
-          "isPartOf": {"@id": "https://investingnoobs.com/#website"},
-          "about": ["cryptocurrency", "Bitcoin", "investing", "trading", "blockchain", "DeFi", "stocks", "commodities", "prop firms"],
-          "inLanguage": "en"
-        }
-      ]
-    }
-    </script>
-* { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: #0b0f14;
-    color: #eceef1;
-    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crypto & Investing Course: 50 Beginner Lessons | InvestingNoobs</title>
+  <meta name="description" content="Learn crypto, investing and trading with 50 practical beginner lessons covering Bitcoin, Ethereum, stocks, commodities, DeFi, prop firms, risk management and portfolio basics.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://investingnoobs.com/blog.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Crypto & Investing Course: 50 Beginner Lessons">
+  <meta property="og:description" content="A practical, jargon-free course for learning crypto, investing and trading fundamentals. Open any lesson and read the complete article.">
+  <meta property="og:url" content="https://investingnoobs.com/blog.html">
+  <meta name="twitter:card" content="summary">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Course",
+    "name":"InvestingNoobs Crypto & Investing Course",
+    "description":"50 practical lessons for learning crypto, investing and trading fundamentals.",
+    "provider":{"@type":"Organization","name":"InvestingNoobs","url":"https://investingnoobs.com"},
+    "isAccessibleForFree":true,
+    "inLanguage":"en",
+    "numberOfCredits":50
   }
-  ::selection { background: #c9a35a; color: #0b0f14; }
-  .mono { font-family: 'IBM Plex Mono', 'Courier New', monospace; }
-  .serif { font-family: 'Fraunces', Georgia, serif; }
-  a { color: #c9a35a; }
-  #top-bar {
-    border-bottom: 1px solid #242b35;
-    padding: 18px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    background: rgba(11,15,20,0.92);
-    backdrop-filter: blur(8px);
-    z-index: 10;
-  }
-  #top-bar a.brand { color: #eceef1; text-decoration: none; font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600; letter-spacing: 0.02em; }
-  #top-bar a.back { color: #8b93a0; text-decoration: none; font-size: 13px; font-family: 'IBM Plex Mono', monospace; }
-  #top-bar a.back:hover { color: #c9a35a; }
-
-  #hero {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 56px 24px 36px;
-    text-align: center;
-  }
-  .eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    color: #c9a35a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 18px;
-  }
-  .eyebrow span.rule { width: 16px; height: 1px; background: #c9a35a; display: inline-block; }
-  #hero h1 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(32px, 5.5vw, 50px); margin: 0 0 16px; letter-spacing: -0.01em; line-height: 1.05; }
-  #hero p { font-size: 15.5px; color: #a9b0bb; line-height: 1.6; max-width: 560px; margin: 0 auto; }
-
-
-  .seo-article { max-width: 860px; margin: 0 auto 28px; padding: 0 24px; }
-  .seo-article-inner { background: #10141a; border: 1px solid #242b35; border-radius: 8px; padding: 28px clamp(20px, 5vw, 46px); }
-  .seo-article h2 { font-family: 'Fraunces', Georgia, serif; font-size: clamp(24px, 4vw, 34px); line-height: 1.15; margin: 0 0 14px; color: #eceef1; }
-  .seo-article h3 { font-family: 'Fraunces', Georgia, serif; font-size: 21px; margin: 28px 0 9px; color: #e8c27a; }
-  .seo-article p, .seo-article li { color: #a9b0bb; font-size: 14px; line-height: 1.75; }
-  .seo-article p { margin: 0 0 13px; }
-  .seo-article ul { padding-left: 22px; margin: 8px 0 16px; }
-  .seo-article strong { color: #eceef1; }
-  .seo-article .article-lead { font-size: 16px; color: #cbd1d9; }
-  .seo-article .article-note { border-left: 3px solid #c9a35a; padding: 12px 16px; margin: 20px 0; background: #161206; }
-  .seo-article .article-note p { margin: 0; }
-  .seo-article .article-sources { font-size: 12px; border-top: 1px solid #242b35; padding-top: 16px; margin-top: 24px; }
-
-
-  .lesson-article { margin-top: 16px; padding: 15px 16px; border-left: 3px solid #c9a35a; background: #161206; border-radius: 4px; }
-  .lesson-article h4 { margin: 0 0 7px; color: #e8c27a; font-family: 'Fraunces', Georgia, serif; font-size: 16px; }
-  .lesson-article p { color: #b8bec8; font-size: 13px; line-height: 1.7; margin: 0; }
-
-  /* Progress bar */
-  #progress-wrap { max-width: 640px; margin: 28px auto 0; padding: 0 24px; }
-  #progress-label { display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #8b93a0; margin-bottom: 8px; }
-  #progress-label strong { color: #c9a35a; }
-  #progress-track { height: 8px; border-radius: 4px; background: #1a1f28; overflow: hidden; border: 1px solid #242b35; }
-  #progress-fill { height: 100%; background: linear-gradient(90deg, #a9812f, #c9a35a, #e8c27a); width: 0%; transition: width 0.4s ease; }
-
-  #content { max-width: 720px; margin: 0 auto; padding: 48px 24px 100px; }
-
-  .module { margin-bottom: 40px; }
-  .module-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid #1a1f28; }
-  .module-title { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 20px; color: #eceef1; display: flex; align-items: center; gap: 10px; }
-  .module-num { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #0b0f14; background: #c9a35a; width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
-  .module-count { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #6b7280; }
-
-  .lesson { border: 1px solid #242b35; border-radius: 6px; margin-bottom: 10px; background: #10141a; overflow: hidden; transition: border-color 0.15s; }
-  .lesson.done { border-color: #3a4534; }
-  .lesson-head { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 16px 18px; cursor: pointer; user-select: none; text-align:center; }
-  .lesson-head:hover { background: rgba(255,255,255,0.02); }
-  .lesson-check { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid #3a4250; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; color: transparent; transition: all 0.15s; }
-  .lesson.done .lesson-check { background: #3fa06e; border-color: #3fa06e; color: #0b0f14; }
-  .lesson-title { font-size: 14.5px; font-weight: 600; color: #eceef1; flex: 0 1 auto; text-align:center; }
-  .lesson-arrow { font-size: 12px; color: #6b7280; transition: transform 0.2s; flex-shrink: 0; }
-  .lesson.open .lesson-arrow { transform: rotate(90deg); }
-  .lesson-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-  .lesson.open .lesson-body { max-height: none; overflow: visible; }
-  .lesson-body-inner { padding: 0 22px 22px; font-size: 13.5px; line-height: 1.7; color: #a9b0bb; text-align:center; }
-  .lesson-body-inner p { margin: 0 0 10px; }
-  .lesson-body-inner p:last-child { margin-bottom: 0; }
-
-  #completion-banner { display: none; text-align: center; border: 1.5px solid #c9a35a; border-radius: 8px; padding: 32px 26px; margin-top: 20px; background: linear-gradient(180deg, #161206, #10141a 70%); }
-  #completion-banner .icon { font-size: 34px; margin-bottom: 8px; }
-  #completion-banner h3 { font-family: 'Fraunces', Georgia, serif; font-size: 21px; font-weight: 600; margin: 0 0 8px; color: #eceef1; }
-  #completion-banner p { font-size: 13.5px; color: #a9b0bb; margin: 0 0 18px; }
-  .buy-btn {
-    display: inline-block;
-    background: linear-gradient(135deg, #e8c27a, #c9a35a 60%, #a9812f);
-    color: #0b0f14;
-    padding: 10px 22px;
-    border-radius: 5px;
-    font-size: 13px;
-    font-weight: 700;
-    text-decoration: none;
-  }
-
-  footer { border-top: 1px solid #242b35; padding: 28px 24px; text-align: center; font-size: 12px; color: #5b6472; }
-  footer a { color: #8b93a0; text-decoration: none; margin: 0 10px; }
-
-  .seo-article { max-width: 920px; margin: 0 auto 34px; padding: 0 24px; }
-  .seo-article-inner { background: linear-gradient(145deg,#141a23,#0f131a); border: 1px solid #37404d; border-radius: 14px; padding: 36px clamp(22px,6vw,58px); box-shadow: 0 18px 50px rgba(0,0,0,.28), inset 0 1px rgba(255,255,255,.04); }
-  .seo-article h2 { font-family:'Fraunces',Georgia,serif; font-size:clamp(27px,4.5vw,42px); line-height:1.08; margin:0 0 16px; color:#f4f6f8; letter-spacing:-.02em; }
-  .seo-article h3 { font-family:'Fraunces',Georgia,serif; font-size:22px; margin:32px 0 10px; color:#e8c27a; }
-  .seo-article p,.seo-article li { color:#b6bec9; font-size:14px; line-height:1.8; }
-  .seo-article p { margin:0 0 14px; }.seo-article ul{padding-left:24px;margin:10px 0 18px}.seo-article strong{color:#f0f2f5}
-  .seo-article .article-lead{font-size:17px;color:#d4dae2;line-height:1.7}.seo-article .article-note{border-left:3px solid #e8c27a;padding:14px 18px;margin:24px 0;background:linear-gradient(90deg,#241d0b,transparent);border-radius:0 8px 8px 0}.seo-article .article-note p{margin:0}
-  .lesson-article{margin:16px auto 0;padding:18px 22px;border-left:3px solid #c9a35a;max-width:620px;text-align:center;background:linear-gradient(135deg,#1b1609,#12161d);border-radius:0 8px 8px 0;box-shadow:inset 0 1px rgba(255,255,255,.03)}.lesson-article h4{margin:0 0 8px;color:#e8c27a;text-align:center;font-family:'Fraunces',Georgia,serif;font-size:17px}.lesson-article p{color:#b8c0ca;font-size:13.5px;line-height:1.75;margin:0}
-
-
-  /* Premium lesson redesign */
-  #content{max-width:900px;padding:56px 24px 110px}
-  .module{margin:0 auto 30px;max-width:760px}
-  .module-head{align-items:center;margin-bottom:18px;padding:0 2px 14px;border-bottom:1px solid rgba(201,163,90,.28)}
-  .module-title{font-size:24px;letter-spacing:-.015em}
-  .module-count{font-size:12px;color:#9ca5b2}
-  .lesson{margin-bottom:12px;border:1px solid #293241;border-radius:12px;background:linear-gradient(145deg,#151b25,#10151d);box-shadow:0 5px 18px rgba(0,0,0,.16);transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
-  .lesson:hover{transform:translateY(-2px);border-color:#596577;box-shadow:0 10px 26px rgba(0,0,0,.26)}
-  .lesson.open{border-color:#c9a35a;box-shadow:0 12px 30px rgba(0,0,0,.3),0 0 0 1px rgba(201,163,90,.12)}
-  .lesson-head{min-height:64px;padding:16px 20px;justify-content:flex-start;text-align:left;gap:14px}
-  .lesson-title{font-size:15px;text-align:left;flex:1;color:#f1f3f5}
-  .lesson-arrow{width:24px;height:24px;border:1px solid #3c4655;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;transition:transform .25s,border-color .2s;color:#c9a35a}
-  .lesson.open .lesson-arrow{transform:rotate(90deg);border-color:#c9a35a}
-  .lesson-check{width:24px;height:24px}
-  .lesson-body{transition:max-height .35s ease}
-  .lesson-body-inner{padding:0 24px 24px;text-align:left;color:#b8c1cd}
-  .lesson-article{margin:2px auto 0;padding:22px 28px;border:1px solid rgba(201,163,90,.25);border-left:4px solid #c9a35a;border-radius:10px;background:linear-gradient(135deg,rgba(31,28,18,.8),rgba(17,22,30,.85));text-align:center;max-width:680px}
-  .lesson-article h4{margin:0 0 11px;text-align:center;font-family:'Fraunces',Georgia,serif;font-size:21px;line-height:1.2;color:#e8c27a}
-  .lesson-article p{margin:0;text-align:center;font-size:14px;line-height:1.8;color:#c4ccd6}
-  @media(max-width:600px){#content{padding:36px 14px 80px}.module-title{font-size:20px}.lesson-head{padding:15px 14px}.lesson-body-inner{padding:0 14px 16px}.lesson-article{padding:18px 16px}.lesson-article h4{font-size:19px}}
-
-
-  /* Final layout correction */
-  #content{display:block!important}
-  .module{display:block!important;width:100%!important;max-width:760px!important;margin:0 auto 34px!important}
-  .module-head{display:flex!important;width:100%!important;align-items:center!important;justify-content:space-between!important}
-  .lesson{display:block!important;width:100%!important;min-height:0!important;position:relative!important}
-  .lesson-head{display:flex!important;width:100%!important;min-height:64px!important;align-items:center!important}
-  .lesson-title{display:block!important;white-space:normal!important;word-break:normal!important}
-  .lesson-body{display:block!important;width:100%!important}
-
-
-  /* One clean horizontal row per lesson */
-  .module{display:block!important;width:100%!important;max-width:760px!important;margin:0 auto 34px!important}
-  .module-head{display:block!important;width:100%!important;margin-bottom:16px!important}
-  .module-head .module-title,.module-head .module-count{display:flex!important}
-  .lesson{display:block!important;width:100%!important;max-width:100%!important;margin:0 0 10px!important}
-  .lesson-head{display:flex!important;flex-flow:row nowrap!important;align-items:center!important;justify-content:flex-start!important;width:100%!important;min-height:64px!important;padding:16px 20px!important}
-  .lesson-title{display:block!important;flex:1 1 auto!important;min-width:0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;text-align:left!important}
-  .lesson-check{flex:0 0 24px!important}
-  .lesson-arrow{flex:0 0 24px!important;margin-left:auto!important}
-  @media(max-width:600px){.lesson-head{padding:14px!important}.lesson-title{font-size:14px!important}}
-
-</style>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4483309337875295" crossorigin="anonymous"></script>
-<link rel="canonical" href="https://investingnoobs.com/blog.html" />
-<meta name="robots" content="index,follow,max-image-preview:large" />
-<meta name="author" content="InvestingNoobs" />
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="InvestingNoobs" />
-<meta property="og:title" content="Crypto Investing & Trading Guides for Beginners | InvestingNoobs" />
-<meta property="og:description" content="Clear beginner guides to cryptocurrency, Bitcoin, blockchain, DeFi, stocks, commodities and prop firms." />
-<meta property="og:url" content="https://investingnoobs.com/blog.html" />
-<meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Crypto Investing & Trading Guides for Beginners" />
-<meta name="twitter:description" content="Learn crypto, investing and trading with practical, beginner-friendly guides from InvestingNoobs." />
+  </script>
+  <style>
+    :root{--bg:#080d15;--surface:#111925;--surface-2:#151f2e;--line:#29374a;--muted:#9eafc4;--text:#f4f6fa;--gold:#eab54d;--green:#3fa06e;--blue:#8bb8ff}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:80px}
+    body{margin:0;min-width:0;background:radial-gradient(circle at 50% -12%,rgba(74,112,180,.15),transparent 34%),var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.5;overflow-x:hidden}
+    a{color:inherit}
+    .topbar{height:64px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(18px,5vw,64px);background:rgba(8,13,21,.88);backdrop-filter:blur(14px);position:sticky;top:0;z-index:10}
+    .brand,.back{font:600 13px 'IBM Plex Mono',monospace;text-decoration:none}
+    .brand{letter-spacing:.04em}.brand::first-letter{color:var(--gold)}.back{color:var(--gold)}
+    .hero{max-width:940px;margin:0 auto;padding:76px 20px 34px;text-align:center}
+    .eyebrow{display:flex;align-items:center;justify-content:center;gap:12px;color:var(--gold);font:500 12px 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase}
+    .eyebrow::before,.eyebrow::after{content:"";display:block;width:22px;height:1px;background:var(--gold)}
+    h1,h2{font-family:Fraunces,Georgia,serif;letter-spacing:-.035em}
+    h1{font-size:clamp(2.6rem,7vw,5rem);line-height:1.02;margin:22px 0 20px}
+    .hero-copy{max-width:690px;margin:0 auto;color:#b9c9df;font-size:clamp(1rem,2vw,1.2rem);line-height:1.75}
+    .progress-card{max-width:800px;margin:36px auto 0;padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:rgba(17,25,37,.78);text-align:left;box-shadow:0 14px 34px rgba(0,0,0,.2)}
+    .progress-label{display:flex;justify-content:space-between;gap:16px;color:var(--muted);font:12px 'IBM Plex Mono',monospace;margin-bottom:9px}.progress-label strong{color:var(--gold)}
+    .progress-track{height:9px;background:#1c2634;border:1px solid #2c394b;border-radius:99px;overflow:hidden}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#b9892d,var(--gold));transition:width .25s ease}
+    main{max-width:980px;margin:0 auto;padding:36px 20px 90px}
+    .module{margin:0 0 38px}.module-head{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid rgba(234,181,77,.3);padding:0 2px 12px;margin-bottom:14px}.module-title{display:flex;align-items:center;gap:11px;font:600 25px Fraunces,Georgia,serif}.module-number{width:28px;height:28px;border-radius:50%;display:inline-grid;place-items:center;background:var(--gold);color:#111925;font:700 13px 'IBM Plex Mono',monospace;flex:0 0 auto}.module-progress{color:var(--muted);font:12px 'IBM Plex Mono',monospace;white-space:nowrap}.module-progress strong{color:var(--gold)}
+    .lesson-list{display:grid;gap:10px}.lesson{display:flex;align-items:center;gap:14px;min-width:0;min-height:68px;padding:15px 18px;border:1px solid var(--line);border-radius:13px;background:linear-gradient(145deg,var(--surface-2),var(--surface));text-decoration:none;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}.lesson:hover,.lesson:focus-visible{transform:translateY(-2px);border-color:var(--gold);box-shadow:0 10px 24px rgba(0,0,0,.25);outline:none}.lesson.is-complete{border-color:rgba(63,160,110,.55)}.lesson-check{width:25px;height:25px;border:1px solid #435168;border-radius:50%;display:grid;place-items:center;color:transparent;flex:0 0 auto;font-size:14px}.lesson.is-complete .lesson-check{background:var(--green);border-color:var(--green);color:#07120d}.lesson-text{min-width:0;flex:1}.lesson-number{display:block;color:var(--gold);font:11px 'IBM Plex Mono',monospace;margin-bottom:2px}.lesson-title{display:block;color:var(--text);font-size:16px;font-weight:700;white-space:normal;overflow-wrap:anywhere}.lesson-arrow{color:var(--gold);font-size:18px;flex:0 0 auto}
+    .final-card{margin:50px 0 0;padding:28px;border:1px solid rgba(234,181,77,.38);border-radius:16px;text-align:center;background:linear-gradient(145deg,rgba(31,27,16,.85),rgba(17,25,37,.9))}.final-card h2{font-size:30px;margin:5px 0 8px}.final-card p{margin:0 auto 18px;max-width:650px;color:#bdc9d8}.button{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:11px 17px;border:1px solid var(--gold);border-radius:10px;background:#20304a;color:#fff;text-decoration:none;font-weight:700}.button:hover,.button:focus-visible{background:#2a3d5c;outline:3px solid rgba(234,181,77,.28);outline-offset:2px}
+    footer{padding:24px 20px 38px;border-top:1px solid rgba(255,255,255,.1);text-align:center;color:#718096;font:12px 'IBM Plex Mono',monospace}footer a{color:var(--blue);margin:0 7px;text-decoration:none}
+    @media(max-width:620px){.topbar{height:58px;padding:0 15px}.brand{font-size:12px}.back{font-size:11px}.hero{padding:52px 15px 25px}.eyebrow{font-size:10px;letter-spacing:.12em;gap:8px}.eyebrow::before,.eyebrow::after{width:14px}h1{font-size:clamp(2.35rem,12vw,3.5rem)}.hero-copy{font-size:16px}.progress-card{margin-top:28px;padding:15px}.progress-label{font-size:11px}.progress-label span:last-child{white-space:nowrap}main{padding:28px 15px 65px}.module{margin-bottom:30px}.module-head{align-items:flex-end}.module-title{font-size:21px;line-height:1.1}.module-number{width:25px;height:25px;font-size:12px}.module-progress{font-size:11px}.lesson{min-height:64px;padding:14px 13px;gap:11px}.lesson-title{font-size:15px}.lesson-arrow{font-size:16px}.final-card{padding:23px 17px;margin-top:35px}.final-card h2{font-size:25px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+  </style>
 </head>
 <body>
+  <header class="topbar">
+    <a class="brand" href="index.html">◆ InvestingNoobs</a>
+    <a class="back" href="index.html">← Back to tracker</a>
+  </header>
 
-<div id="top-bar">
-  <a class="brand mono" href="index.html">◆ InvestingNoobs</a>
-  <a class="back" href="index.html">← Back to tracker</a>
-</div>
-
-<div id="hero">
-  <div class="eyebrow"><span class="rule"></span>LEARN · A SELF-PACED COURSE<span class="rule"></span></div>
-  <h1 class="serif">The InvestingNoobs Course</h1>
-  <p>50 lessons, no jargon. Click each one to open it, work through the modules in order, and track your progress as you go.</p>
-</div>
-     <div id="progress-wrap">
-  <div id="progress-label">
-    <span>Your progress</span>
-    <span><strong id="progress-count">0</strong> / 50 lessons</span>
-  </div>
-  <div id="progress-track"><div id="progress-fill"></div></div>
-</div>
-
-<div id="content">
-
-  <!-- MODULE 1 -->
-  <div class="module" data-module="1">
-    <div class="module-head">
-      <div class="module-title"><span class="module-num">1</span>Start Here</div>
-      <div class="module-count mono"><span class="module-done">0</span>/4</div>
-
-    <div class="lesson" data-id="l1">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l1'"><div class="lesson-check">✓</div><div class="lesson-title">What is a cryptocurrency?</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>What is a cryptocurrency?</h4><p>Cryptocurrencies are digital assets recorded on a blockchain. Bitcoin, Ethereum and altcoins serve different purposes. Before buying, study the project's utility, liquidity, tokenomics, custody model and risks. Educational information is not a promise of returns.</p></div></div></div></div>
-
-    <div class="lesson" data-id="l2">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l2'"><div class="lesson-check">✓</div><div class="lesson-title">What does it mean to buy company stock?</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>Investing in stocks: a beginner's guide</h4><p>Buying a stock means owning a small economic interest in a company. Its price can depend on earnings, debt, growth, interest rates and expectations. Analyze the business rather than only the chart, and remember that a well-known company can still lose value.</p></div></div></div></div>
-
-    <div class="lesson" data-id="l3">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l3'"><div class="lesson-check">✓</div><div class="lesson-title">Why invest in gold and other metals?</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>Gold and precious metals</h4><p>Gold can diversify a portfolio and sometimes act as a refuge during economic uncertainty, but it is not risk-free. Its price fluctuates and it may not generate regular income. Compare physical gold, funds and exchange-traded products, including storage costs and liquidity.</p></div></div></div></div>
-
-    <div class="lesson" data-id="l4">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l4'"><div class="lesson-check">✓</div><div class="lesson-title">Crypto vs stocks: what's the difference?</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>Cryptocurrency versus stocks</h4><p>Cryptocurrencies often have higher volatility and depend on networks, protocols and communities. Stocks represent companies and may provide specific economic rights. A useful comparison includes risk, time horizon, liquidity, regulation, custody and the possibility of a total loss.</p></div></div></div></div>
-  </div>
-
-  <!-- MODULE 2 -->
-  <div class="module" data-module="2">
-    <div class="module-head">
-      <div class="module-title"><span class="module-num">2</span>How Markets Work</div>
-      <div class="module-count mono"><span class="module-done">0</span>/4</div>
-
-    <div class="lesson" data-id="l5">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l5'"><div class="lesson-check">✓</div><div class="lesson-title">What is market capitalization?</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>Understanding crypto market capitalization</h4><p>Market capitalization is generally calculated by multiplying price by circulating supply. It helps compare the relative size of projects, but it does not measure quality, revenue or security. Also check fully diluted valuation, locked tokens and holder concentration.</p></div></div></div></div>
-
-    <div class="lesson" data-id="l6">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l6'"><div class="lesson-check">✓</div><div class="lesson-title">What does "volatility" mean?</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>Volatility and price risk</h4><p>Volatility measures how much and how quickly a price moves. In crypto, it can rise because of news, liquidations, low liquidity or large wallets. A suitable position size should allow you to withstand normal market swings without making emotional decisions.</p></div></div></div></div>
-
-    <div class="lesson" data-id="l7">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l7'"><div class="lesson-check">✓</div><div class="lesson-title">What is inflation?</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>Inflation and purchasing power</h4><p>Inflation reduces purchasing power when prices rise across the economy. No asset automatically protects against it. Separate nominal returns from real returns and consider costs, taxes, time horizon and risk before choosing an investment.</p></div></div></div></div>
-
-    <div class="lesson" data-id="l8">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l8'"><div class="lesson-check">✓</div><div class="lesson-title">What are fees and why do they matter?</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>Fees, spreads and slippage</h4><p>A trade may include a commission, the difference between buying and selling prices, and slippage when execution differs from the displayed price. These costs reduce results, especially when trading frequently or in illiquid markets. Compare fees and confirm the final amount before executing.</p></div></div></div></div>
-  </div>
-
-  <!-- MODULE 3 -->
-  <div class="module" data-module="3">
-    <div class="module-head">
-      <div class="module-title"><span class="module-num">3</span>Going Deeper into Crypto</div>
-      <div class="module-count mono"><span class="module-done">0</span>/4</div>
-
-    <div class="lesson" data-id="l9">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l9'"><div class="lesson-check">✓</div><div class="lesson-title">What is an exchange?</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>How to choose a crypto exchange</h4><p>An exchange lets users buy, sell and sometimes custody digital assets. Review security, applicable regulation, transparency, withdrawal methods, fees and customer support. An exchange does not remove market risk, and keeping assets there creates counterparty risk.</p></div></div></div></div>
-
-    <div class="lesson" data-id="l10">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l10'"><div class="lesson-check">✓</div><div class="lesson-title">What is a wallet?</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>Crypto wallets and custody</h4><p>A wallet manages the keys that control assets on a blockchain. Hot wallets are convenient but connected to the internet; cold wallets reduce online exposure. Make secure backups, verify addresses carefully and never share your recovery phrase.</p></div></div></div></div>
-
-    <div class="lesson" data-id="l11">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l11'"><div class="lesson-check">✓</div><div class="lesson-title">What is the Bitcoin "halving"?</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>What is Bitcoin halving?</h4><p>The Bitcoin halving periodically reduces the reward for creating new bitcoins. It is a protocol rule, not a guarantee that the price will rise. Its market effect depends on supply, demand, liquidity, competition and investor expectations.</p></div></div></div></div>
-
-    <div class="lesson" data-id="l12">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l12'"><div class="lesson-check">✓</div><div class="lesson-title">What are stablecoins?</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>Stablecoins: uses and risks</h4><p>Stablecoins aim to track the value of a currency such as the dollar or euro. They can help with payments and trading, but they depend on reserves, issuers, contracts and regulation. Understand how a stablecoin is created, redeemed and kept near its target price.</p></div></div></div></div>
-  </div>
-
-  <!-- MODULE 4 -->
-  <div class="module" data-module="4">
-    <div class="module-head">
-      <div class="module-title"><span class="module-num">4</span>Smart Habits &amp; Risk</div>
-      <div class="module-count mono"><span class="module-done">0</span>/7</div>
-
-    <div class="lesson" data-id="l13">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l13'"><div class="lesson-check">✓</div><div class="lesson-title">How much money should I start investing with?</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>How much money should you invest at first?</h4><p>Start only with money you do not need for housing, debt or essential expenses. Set a budget, time horizon and maximum loss before buying. Learning with a small amount is usually more important than chasing fast profits.</p></div></div></div></div>
-
-    <div class="lesson" data-id="l14">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l14'"><div class="lesson-check">✓</div><div class="lesson-title">Is gold a safe investment right now?</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>Is gold a safe investment?</h4><p>Gold can reduce dependence on a single asset, but its price can fall and its costs matter. Safe does not mean guaranteed. Decide what role it should play in a portfolio and compare that role with your goals and risk tolerance.</p></div></div></div></div>
-
-    <div class="lesson" data-id="l15">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l15'"><div class="lesson-check">✓</div><div class="lesson-title">First steps so you don't get lost</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>First steps for new investors</h4><p>Learn the basics, choose a reputable provider, activate two-factor authentication and start with limited exposure. Keep a record of transactions and avoid decisions driven by pressure, rumors or promises of guaranteed gains.</p></div></div></div></div>
-
-    <div class="lesson" data-id="l16">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l16'"><div class="lesson-check">✓</div><div class="lesson-title">Common beginner mistakes</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>Common beginner mistakes</h4><p>Frequent mistakes include investing without research, using excessive leverage, chasing rising prices, revenge trading and ignoring fees. A written process and clear limits can reduce emotional decisions, although they cannot eliminate market risk.</p></div></div></div></div>
-
-    <div class="lesson" data-id="l17">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l17'"><div class="lesson-check">✓</div><div class="lesson-title">Diversifying: not all eggs in one basket</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>Diversification and portfolio management</h4><p>Diversification spreads exposure across assets, sectors or networks. It does not guarantee profits or prevent all losses, especially when markets fall together. Review correlations, liquidity, time horizon and the maximum weight of each position.</p></div></div></div></div>
-
-    <div class="lesson" data-id="l18">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l18'"><div class="lesson-check">✓</div><div class="lesson-title">Technical vs fundamental analysis</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>Technical and fundamental analysis</h4><p>Technical analysis studies price, volume and market structure. Fundamental analysis examines utility, revenue, users, team, competition and tokenomics. Both are imperfect tools: they help organize hypotheses, not predict the future with certainty.</p></div></div></div></div>
+  <section class="hero">
+    <div class="eyebrow">Learn · self-paced course</div>
+    <h1>The InvestingNoobs Course</h1>
+    <p class="hero-copy">50 practical lessons to help you understand crypto, investing and trading fundamentals. Open any lesson to read the complete article, then use the progress bar to continue where you left off.</p>
+    <div class="progress-card" aria-label="Course progress">
+      <div class="progress-label"><span>Your progress</span><span><strong id="progress-count">0</strong> / 50 lessons</span></div>
+      <div class="progress-track"><div id="progress-fill" class="progress-fill"></div></div>
     </div>
-  </div>
+  </section>
 
+  <main id="main-content">
+    <section class="module" data-module="1">
+      <div class="module-head"><h2 class="module-title"><span class="module-number">1</span>Start Here</h2><div class="module-progress"><strong>0</strong> / 4</div></div>
+      <div class="lesson-list">
+        <a class="lesson" data-lesson-id="l1" href="article.html?id=l1"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 01</span><span class="lesson-title">What is a cryptocurrency?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l2" href="article.html?id=l2"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 02</span><span class="lesson-title">What does it mean to buy company stock?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l3" href="article.html?id=l3"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 03</span><span class="lesson-title">Why invest in gold and other metals?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l4" href="article.html?id=l4"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 04</span><span class="lesson-title">Crypto vs stocks: what's the difference?</span></span><span class="lesson-arrow">→</span></a>
+      </div>
+    </section>
 
+    <section class="module" data-module="2">
+      <div class="module-head"><h2 class="module-title"><span class="module-number">2</span>How Markets Work</h2><div class="module-progress"><strong>0</strong> / 4</div></div>
+      <div class="lesson-list">
+        <a class="lesson" data-lesson-id="l5" href="article.html?id=l5"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 05</span><span class="lesson-title">What is market capitalization?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l6" href="article.html?id=l6"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 06</span><span class="lesson-title">What does “volatility” mean?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l7" href="article.html?id=l7"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 07</span><span class="lesson-title">What is inflation?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l8" href="article.html?id=l8"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 08</span><span class="lesson-title">What are fees and why do they matter?</span></span><span class="lesson-arrow">→</span></a>
+      </div>
+    </section>
 
+    <section class="module" data-module="3">
+      <div class="module-head"><h2 class="module-title"><span class="module-number">3</span>Going Deeper into Crypto</h2><div class="module-progress"><strong>0</strong> / 4</div></div>
+      <div class="lesson-list">
+        <a class="lesson" data-lesson-id="l9" href="article.html?id=l9"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 09</span><span class="lesson-title">What is an exchange?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l10" href="article.html?id=l10"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 10</span><span class="lesson-title">What is a wallet?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l11" href="article.html?id=l11"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 11</span><span class="lesson-title">What is the Bitcoin “halving”?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l12" href="article.html?id=l12"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 12</span><span class="lesson-title">What are stablecoins?</span></span><span class="lesson-arrow">→</span></a>
+      </div>
+    </section>
 
+    <section class="module" data-module="4">
+      <div class="module-head"><h2 class="module-title"><span class="module-number">4</span>Smart Habits &amp; Risk</h2><div class="module-progress"><strong>0</strong> / 6</div></div>
+      <div class="lesson-list">
+        <a class="lesson" data-lesson-id="l13" href="article.html?id=l13"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 13</span><span class="lesson-title">How much money should I start investing with?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l14" href="article.html?id=l14"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 14</span><span class="lesson-title">Is gold a safe investment right now?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l15" href="article.html?id=l15"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 15</span><span class="lesson-title">First steps so you don’t get lost</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l16" href="article.html?id=l16"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 16</span><span class="lesson-title">Common beginner mistakes</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l17" href="article.html?id=l17"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 17</span><span class="lesson-title">Diversifying: not all eggs in one basket</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l18" href="article.html?id=l18"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 18</span><span class="lesson-title">Technical vs fundamental analysis</span></span><span class="lesson-arrow">→</span></a>
+      </div>
+    </section>
 
-  <!-- MODULE 5 -->
-  <div class="module" data-module="5">
-    <div class="module-head">
-      <div class="module-title"><span class="module-num">5</span>Prop Firms &amp; Professional Trading</div>
-      <div class="module-count mono"><span class="module-done">0</span>/8</div>
+    <section class="module" data-module="5">
+      <div class="module-head"><h2 class="module-title"><span class="module-number">5</span>Prop Firms &amp; Professional Trading</h2><div class="module-progress"><strong>0</strong> / 9</div></div>
+      <div class="lesson-list">
+        <a class="lesson" data-lesson-id="l19" href="article.html?id=l19"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 19</span><span class="lesson-title">What is a prop firm?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l20" href="article.html?id=l20"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 20</span><span class="lesson-title">Leverage and margin</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l21" href="article.html?id=l21"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 21</span><span class="lesson-title">Stop-loss and risk management</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l22" href="article.html?id=l22"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 22</span><span class="lesson-title">Drawdown and maximum loss</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l23" href="article.html?id=l23"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 23</span><span class="lesson-title">Spot, futures and CFDs</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l24" href="article.html?id=l24"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 24</span><span class="lesson-title">How to compare a prop firm</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l25" href="article.html?id=l25"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 25</span><span class="lesson-title">Recognising scams and misleading claims</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l26" href="article.html?id=l26"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 26</span><span class="lesson-title">Trading psychology</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l27" href="article.html?id=l27"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 27</span><span class="lesson-title">Building a trading plan</span></span><span class="lesson-arrow">→</span></a>
+      </div>
+    </section>
 
-    <div class="lesson" data-id="l19">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l19'"><div class="lesson-check">✓</div><div class="lesson-title">What is a prop firm?</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>What is a prop firm?</h4><p>A proprietary trading firm may offer access to capital after an evaluation. Its rules can include a profit target, daily loss limit, total drawdown, minimum trading days and strategy restrictions. Read the agreement, fees and payout conditions before participating.</p></div></div></div></div>
-    </div>
+    <section class="module" data-module="6">
+      <div class="module-head"><h2 class="module-title"><span class="module-number">6</span>Crypto Essentials</h2><div class="module-progress"><strong>0</strong> / 7</div></div>
+      <div class="lesson-list">
+        <a class="lesson" data-lesson-id="l28" href="article.html?id=l28"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 28</span><span class="lesson-title">How to keep crypto safe</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l29" href="article.html?id=l29"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 29</span><span class="lesson-title">What is DeFi?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l30" href="article.html?id=l30"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 30</span><span class="lesson-title">Stablecoins: how to evaluate them</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l31" href="article.html?id=l31"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 31</span><span class="lesson-title">What is Bitcoin?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l32" href="article.html?id=l32"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 32</span><span class="lesson-title">What is Ethereum?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l33" href="article.html?id=l33"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 33</span><span class="lesson-title">How does blockchain work?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l34" href="article.html?id=l34"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 34</span><span class="lesson-title">What is staking?</span></span><span class="lesson-arrow">→</span></a>
+      </div>
+    </section>
 
-    <div class="lesson" data-id="l20">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l20'"><div class="lesson-check">✓</div><div class="lesson-title">Leverage and margin</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>Leverage and margin</h4><p>Leverage increases the size of a position while margin acts as collateral. It multiplies profits and losses and can cause rapid liquidation. Always calculate risk against total capital and understand what happens when the market moves against you.</p></div></div></div></div>
+    <section class="module" data-module="7">
+      <div class="module-head"><h2 class="module-title"><span class="module-number">7</span>DeFi &amp; On-chain Skills</h2><div class="module-progress"><strong>0</strong> / 6</div></div>
+      <div class="lesson-list">
+        <a class="lesson" data-lesson-id="l35" href="article.html?id=l35"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 35</span><span class="lesson-title">What is a crypto token?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l36" href="article.html?id=l36"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 36</span><span class="lesson-title">What is a smart contract?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l37" href="article.html?id=l37"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 37</span><span class="lesson-title">What is a DAO?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l38" href="article.html?id=l38"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 38</span><span class="lesson-title">What is a crypto bridge?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l39" href="article.html?id=l39"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 39</span><span class="lesson-title">What is a liquidity pool?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l40" href="article.html?id=l40"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 40</span><span class="lesson-title">What is yield farming?</span></span><span class="lesson-arrow">→</span></a>
+      </div>
+    </section>
 
-    <div class="lesson" data-id="l21">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l21'"><div class="lesson-check">✓</div><div class="lesson-title">Stop-loss and risk management</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>Stop-loss and risk management</h4><p>A stop-loss defines the point where a trade idea is no longer valid. In fast markets it may execute at a different price. Professional risk management combines position size, risk per trade, maximum daily loss and regular review.</p></div></div></div></div>
+    <section class="module" data-module="8">
+      <div class="module-head"><h2 class="module-title"><span class="module-number">8</span>Trading &amp; Portfolio Skills</h2><div class="module-progress"><strong>0</strong> / 6</div></div>
+      <div class="lesson-list">
+        <a class="lesson" data-lesson-id="l41" href="article.html?id=l41"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 41</span><span class="lesson-title">What is a bull market?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l42" href="article.html?id=l42"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 42</span><span class="lesson-title">What is dollar-cost averaging?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l43" href="article.html?id=l43"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 43</span><span class="lesson-title">What is a limit order?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l44" href="article.html?id=l44"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 44</span><span class="lesson-title">What is technical analysis?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l45" href="article.html?id=l45"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 45</span><span class="lesson-title">What is fundamental analysis?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l46" href="article.html?id=l46"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 46</span><span class="lesson-title">What is portfolio rebalancing?</span></span><span class="lesson-arrow">→</span></a>
+      </div>
+    </section>
 
-    <div class="lesson" data-id="l22">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l22'"><div class="lesson-check">✓</div><div class="lesson-title">Drawdown and maximum loss</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>Drawdown and maximum loss</h4><p>Drawdown is the decline from a previous account peak. Prop firms may use static or trailing limits calculated from balance or equity. A profitable strategy can still breach a rule if the position size is too large.</p></div></div></div></div>
+    <section class="module" data-module="9">
+      <div class="module-head"><h2 class="module-title"><span class="module-number">9</span>Safety &amp; Long-Term Habits</h2><div class="module-progress"><strong>0</strong> / 4</div></div>
+      <div class="lesson-list">
+        <a class="lesson" data-lesson-id="l47" href="article.html?id=l47"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 47</span><span class="lesson-title">How do crypto taxes work?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l48" href="article.html?id=l48"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 48</span><span class="lesson-title">How to avoid phishing scams</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l49" href="article.html?id=l49"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 49</span><span class="lesson-title">What is a rug pull?</span></span><span class="lesson-arrow">→</span></a>
+        <a class="lesson" data-lesson-id="l50" href="article.html?id=l50"><span class="lesson-check">✓</span><span class="lesson-text"><span class="lesson-number">LESSON 50</span><span class="lesson-title">How to build a long-term investing routine</span></span><span class="lesson-arrow">→</span></a>
+      </div>
+    </section>
 
-    <div class="lesson" data-id="l23">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l23'"><div class="lesson-check">✓</div><div class="lesson-title">Spot, futures and CFDs</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>Spot, futures and CFDs</h4><p>Spot trading involves the asset itself; futures and CFDs are derivatives with additional funding, leverage and liquidation risks. Check the provider, collateral, expiry, fees and legal protections that apply in your jurisdiction.</p></div></div></div></div>
+    <section class="final-card">
+      <div aria-hidden="true" style="font-size:30px">🎓</div>
+      <h2>Ready for the final test?</h2>
+      <p>Review the lessons at your own pace, then take the knowledge test when you feel ready.</p>
+      <a class="button" href="test.html">Take the final test →</a>
+    </section>
+  </main>
 
-    <div class="lesson" data-id="l24">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l24'"><div class="lesson-check">✓</div><div class="lesson-title">How to compare a prop firm</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>How to compare a prop firm</h4><p>Compare the target, daily and total drawdown, price, minimum days, news and overnight rules, copying restrictions, platform and withdrawal policy. Look for clear terms and a verifiable company. Marketing claims do not replace reading the agreement.</p></div></div></div></div>
+  <footer>
+    InvestingNoobs · Educational content, not investment advice<br>
+    <a href="index.html">Tracker</a><a href="about.html">About us</a><a href="privacidad.html">Privacy</a>
+  </footer>
 
-    <div class="lesson" data-id="l25">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l25'"><div class="lesson-check">✓</div><div class="lesson-title">Recognising scams and misleading claims</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>How to identify crypto scams</h4><p>Be cautious about guaranteed profits, urgency, anonymous influencers, new websites and requests for keys. Verify the domain, company, terms and independent sources. Never send a recovery phrase or install remote-access software for someone claiming to be a mentor.</p></div></div></div></div>
+  <script>
+    (() => {
+      const KEY = 'in_course_progress';
+      const lessons = [...document.querySelectorAll('.lesson[data-lesson-id]')];
+      const ids = new Set(lessons.map(item => item.dataset.lessonId));
+      const count = document.getElementById('progress-count');
+      const fill = document.getElementById('progress-fill');
+      let completed = new Set();
+      try {
+        const saved = JSON.parse(localStorage.getItem(KEY) || '[]');
+        if (Array.isArray(saved)) completed = new Set(saved.filter(id => ids.has(id)));
+      } catch (_) {}
 
-    <div class="lesson" data-id="l26">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l26'"><div class="lesson-check">✓</div><div class="lesson-title">Trading psychology</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>Trading psychology</h4><p>Discipline means following a process after both wins and losses. FOMO, fear and revenge trading can change your risk. Use breaks, a journal, a trading limit and a maximum loss; if you cannot follow them, reduce exposure or stop.</p></div></div></div></div>
+      function save() {
+        try { localStorage.setItem(KEY, JSON.stringify([...completed])); } catch (_) {}
+      }
 
-    <div class="lesson" data-id="l27">
-      <div class="lesson-head" onclick="window.location.href='article.html?id=l27'"><div class="lesson-check">✓</div><div class="lesson-title">Building a trading plan</div><div class="lesson-arrow">▶</div></div>
-      <div class="lesson-body"><div class="lesson-body-inner"><div class="lesson-article"><h4>How to build a trading plan</h4><p>A plan should define the market, strategy, entry, exit, position size, risk, schedule and review process. Test it with simulation or historical data first. Change one variable at a time and measure results, costs and drawdown before increasing size.</p></div></div></div></div>
-    </div>
-  </div>
+      function render() {
+        const total = lessons.length;
+        lessons.forEach(item => item.classList.toggle('is-complete', completed.has(item.dataset.lessonId)));
+        document.querySelectorAll('.module').forEach(module => {
+          const items = [...module.querySelectorAll('.lesson[data-lesson-id]')];
+          const done = items.filter(item => completed.has(item.dataset.lessonId)).length;
+          const label = module.querySelector('.module-progress');
+          if (label) label.innerHTML = '<strong>' + done + '</strong> / ' + items.length;
+        });
+        if (count) count.textContent = completed.size;
+        if (fill) fill.style.width = (completed.size / total * 100) + '%';
+      }
 
-    <div class="module" data-module="9">
-    <div class="module-head"><div class="module-title"><span class="module-num">9</span>More Crypto & Investing Skills</div><div class="module-count mono"><span class="module-done">0</span>/20</div></div>
-    <div class="lesson" data-id="l31"><div class="lesson-head" onclick="window.location.href='article.html?id=l31'"><div class="lesson-check">✓</div><div class="lesson-title">What is Bitcoin?</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l32"><div class="lesson-head" onclick="window.location.href='article.html?id=l32'"><div class="lesson-check">✓</div><div class="lesson-title">What is Ethereum?</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l33"><div class="lesson-head" onclick="window.location.href='article.html?id=l33'"><div class="lesson-check">✓</div><div class="lesson-title">How does blockchain work?</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l34"><div class="lesson-head" onclick="window.location.href='article.html?id=l34'"><div class="lesson-check">✓</div><div class="lesson-title">What is staking?</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l35"><div class="lesson-head" onclick="window.location.href='article.html?id=l35'"><div class="lesson-check">✓</div><div class="lesson-title">What is a crypto token?</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l36"><div class="lesson-head" onclick="window.location.href='article.html?id=l36'"><div class="lesson-check">✓</div><div class="lesson-title">What is a smart contract?</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l37"><div class="lesson-head" onclick="window.location.href='article.html?id=l37'"><div class="lesson-check">✓</div><div class="lesson-title">What is a DAO?</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l38"><div class="lesson-head" onclick="window.location.href='article.html?id=l38'"><div class="lesson-check">✓</div><div class="lesson-title">What is a crypto bridge?</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l39"><div class="lesson-head" onclick="window.location.href='article.html?id=l39'"><div class="lesson-check">✓</div><div class="lesson-title">What is a liquidity pool?</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l40"><div class="lesson-head" onclick="window.location.href='article.html?id=l40'"><div class="lesson-check">✓</div><div class="lesson-title">What is yield farming?</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l41"><div class="lesson-head" onclick="window.location.href='article.html?id=l41'"><div class="lesson-check">✓</div><div class="lesson-title">What is a bull market?</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l42"><div class="lesson-head" onclick="window.location.href='article.html?id=l42'"><div class="lesson-check">✓</div><div class="lesson-title">What is dollar-cost averaging?</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l43"><div class="lesson-head" onclick="window.location.href='article.html?id=l43'"><div class="lesson-check">✓</div><div class="lesson-title">What is a limit order?</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l44"><div class="lesson-head" onclick="window.location.href='article.html?id=l44'"><div class="lesson-check">✓</div><div class="lesson-title">What is technical analysis?</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l45"><div class="lesson-head" onclick="window.location.href='article.html?id=l45'"><div class="lesson-check">✓</div><div class="lesson-title">What is fundamental analysis?</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l46"><div class="lesson-head" onclick="window.location.href='article.html?id=l46'"><div class="lesson-check">✓</div><div class="lesson-title">What is portfolio rebalancing?</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l47"><div class="lesson-head" onclick="window.location.href='article.html?id=l47'"><div class="lesson-check">✓</div><div class="lesson-title">How do crypto taxes work?</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l48"><div class="lesson-head" onclick="window.location.href='article.html?id=l48'"><div class="lesson-check">✓</div><div class="lesson-title">How to avoid phishing scams</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l49"><div class="lesson-head" onclick="window.location.href='article.html?id=l49'"><div class="lesson-check">✓</div><div class="lesson-title">What is a rug pull?</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l50"><div class="lesson-head" onclick="window.location.href='article.html?id=l50'"><div class="lesson-check">✓</div><div class="lesson-title">How to build a long-term investing routine?</div><div class="lesson-arrow">▶</div></div></div>
-  </div>
-
-  <div class="module" data-module="8">
-    <div class="module-head"><div class="module-title"><span class="module-num">8</span>Advanced Crypto Basics</div><div class="module-count mono"><span class="module-done">0</span>/3</div></div>
-    <div class="lesson" data-id="l28"><div class="lesson-head" onclick="window.location.href='article.html?id=l28'"><div class="lesson-check">✓</div><div class="lesson-title">How to keep crypto safe</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l29"><div class="lesson-head" onclick="window.location.href='article.html?id=l29'"><div class="lesson-check">✓</div><div class="lesson-title">What is DeFi?</div><div class="lesson-arrow">▶</div></div></div>
-    <div class="lesson" data-id="l30"><div class="lesson-head" onclick="window.location.href='article.html?id=l30'"><div class="lesson-check">✓</div><div class="lesson-title">Stablecoins: how to evaluate them</div><div class="lesson-arrow">▶</div></div></div>
-  </div>
-
-<div id="completion-banner">
-    <div class="icon">🎓</div>
-    <h3>Course complete!</h3>
-    <p>You've been through all 50 lessons. Head back to the tracker and put it to use.</p>
-    <a href="index.html" class="buy-btn">← Back to the tracker</a>
-  </div>
-
-</div>
-
-<section class="final-exam" style="max-width:900px;margin:56px auto;padding:28px;border:1px solid #c9a35a;border-radius:16px;background:#111923;text-align:center"><div style="font-size:28px">🎓</div><h2>Final Knowledge Test</h2><p>Complete the final assessment after reading all lessons. Score 80% or higher to receive your personalized certificate.</p><a href="test.html" class="buy-btn">Take the final test →</a></section>
-
-<footer>
-  InvestingNoobs · Educational content, not investment advice
-  <br style="margin-bottom:8px;">
-  <a href="index.html">Tracker</a>
-  <a href="about.html">About us</a>
-  <a href="privacidad.html">Privacy</a>
-</footer>
-
-<script>
-(function(){
- const TOTAL=document.querySelectorAll('.lesson').length; let completed=new Set();
- try{completed=new Set(JSON.parse(localStorage.getItem("in_course_progress")||"[]"))}catch(e){}
- const lessons=[...document.querySelectorAll(".lesson")], fill=document.getElementById("progress-fill"), countEl=document.getElementById("progress-count"), banner=document.getElementById("completion-banner"), modules=[...document.querySelectorAll(".module")];
- function save(){try{localStorage.setItem("in_course_progress",JSON.stringify([...completed]))}catch(e){}}
- function render(){lessons.forEach(l=>l.classList.toggle("done",completed.has(l.dataset.id)));modules.forEach(m=>{const n=m.querySelectorAll(".lesson");const d=[...n].filter(l=>completed.has(l.dataset.id)).length;const el=m.querySelector(".module-done");if(el)el.textContent=d});if(countEl)countEl.textContent=completed.size;if(fill)fill.style.width=(completed.size/TOTAL*100)+"%";if(banner)banner.style.display=completed.size>=TOTAL?"block":"none"}
- lessons.forEach(l=>{const h=l.querySelector(".lesson-head");if(h)h.addEventListener("click",()=>{completed.add(l.dataset.id);save();render();location.href="article.html?id="+encodeURIComponent(l.dataset.id)})}); render();
-})();
-</script>
+      lessons.forEach(item => item.addEventListener('click', () => {
+        completed.add(item.dataset.lessonId);
+        save();
+        render();
+      }));
+      render();
+    })();
+  </script>
 </body>
-<!-- course-version-50 -->
-<!-- sanitized-course-56 -->
 </html>
-
-<style id="codex-responsive-course">
-@media (max-width:700px){
-  body{overflow-x:hidden}
-  main,.course-shell,.container{width:100%!important;max-width:100%!important;padding-left:16px!important;padding-right:16px!important;box-sizing:border-box}
-  h1{font-size:clamp(2.2rem,10vw,4rem)!important;line-height:1.05}
-  .lesson-card,.lesson-row,.course-card{width:100%!important;min-width:0!important;margin-left:0!important;margin-right:0!important}
-  .lesson-card a,.lesson-row a{display:flex!important;align-items:center!important;min-height:64px!important}
-  .module,.module-header{width:100%!important}
-}
-</style>
-<script id="codex-course-link-guard">
-(function(){
-  document.addEventListener('click',function(event){
-    var link=event.target.closest('a[href*="article.html"]');
-    if(!link)return;
-    var href=link.getAttribute('href')||'';
-    if(href.indexOf('?id=')<0){
-      var id=link.getAttribute('data-id')||link.dataset&&link.dataset.id;
-      if(id)link.href='article.html?id='+encodeURIComponent(String(id).toLowerCase());
-    }
-  },true);
-})();
-</script>
-<!-- codex-test-xyz -->
-
-          <style id="codex-mobile-polish">body{overflow-x:hidden} @media(max-width:700px){main{padding:16px!important}.lesson-card,.lesson-row{width:100%!important;min-width:0!important}}</style>
-
-          
-<style id="all-lessons-directory">
-.all-lessons-directory{max-width:980px;margin:56px auto 80px;padding:0 20px}
-.all-lessons-directory h2{font-size:clamp(1.8rem,4vw,2.6rem);margin:0 0 10px}
-.all-lessons-directory p{color:#9fb0c9;margin:0 0 22px}
-.all-lessons-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.all-lessons-grid a{display:flex;align-items:center;gap:12px;min-height:58px;padding:14px 16px;border:1px solid #2c3a50;border-radius:14px;background:#121a27;color:#f4f6fb;text-decoration:none}
-.all-lessons-grid a:hover{border-color:#d6a84d;transform:translateY(-1px)}
-.all-lessons-grid small{color:#d6a84d;min-width:34px}
-@media(max-width:650px){.all-lessons-directory{padding:0 16px}.all-lessons-grid{grid-template-columns:1fr}}
-</style>
-<script id="all-lessons-directory-script">
-(function(){
-  function build(){
-    if(document.querySelector('.all-lessons-directory'))return;
-    var lessons=[].slice.call(document.querySelectorAll('.lesson[data-id]'));
-    var seen={}; lessons=lessons.filter(function(x){if(seen[x.dataset.id])return false;seen[x.dataset.id]=true;return true;}).sort(function(a,b){return Number(a.dataset.id.slice(1))-Number(b.dataset.id.slice(1));});
-    if(!lessons.length)return;
-    var box=document.createElement('section');box.className='all-lessons-directory';
-    box.innerHTML='<h2>All 50 learning articles</h2><p>Open any lesson directly. Every article includes practical examples, risks and a short exercise.</p><div class="all-lessons-grid"></div>';
-    var grid=box.querySelector('.all-lessons-grid');
-    lessons.forEach(function(item){
-      var title=item.querySelector('.lesson-title'); var a=document.createElement('a');
-      a.href='article.html?id='+encodeURIComponent(item.dataset.id);
-      a.innerHTML='<small>'+item.dataset.id.toUpperCase()+'</small><span></span>';
-      a.querySelector('span').textContent=title?title.textContent.trim():'Learning article';
-      grid.appendChild(a);
-    });
-    document.body.appendChild(box);
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);else build();
-  setTimeout(build,700);
-})();
-</script>
-
-          
-<style id="all-50-lessons">
-.all-50-lessons{max-width:980px;margin:48px auto;padding:0 18px}.all-50-lessons-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.all-50-lessons a{display:block;padding:16px;border:1px solid #314158;border-radius:12px;background:#121a27;color:#fff;text-decoration:none}.all-50-lessons a:hover{border-color:#d6a84d}@media(max-width:650px){.all-50-lessons-grid{grid-template-columns:1fr}}
-</style>
-<script id="all-50-lessons-script">
-(function(){
- function show(){
-  if(document.querySelector('.all-50-lessons'))return;
-  var items=[].slice.call(document.querySelectorAll('.lesson[data-id]')).sort(function(a,b){return Number(a.dataset.id.slice(1))-Number(b.dataset.id.slice(1));});
-  var box=document.createElement('section');box.className='all-50-lessons';box.innerHTML='<h2>All 50 learning articles</h2><p>Choose any lesson to open the complete article.</p><div class="all-50-lessons-grid"></div>';
-  var grid=box.querySelector('div');
-  items.forEach(function(item){var a=document.createElement('a');a.href='article.html?id='+item.dataset.id;a.textContent=item.dataset.id.toUpperCase()+' — '+((item.querySelector('.lesson-title')||{}).textContent||'Learning article').trim();grid.appendChild(a);});
-  document.body.appendChild(box);
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',show);else show();setTimeout(show,1000);
-})();
-</script>
-
-          <!-- published-course-index-v2 -->
-
-          
-<style>.all-50-lessons{max-width:980px;margin:48px auto;padding:0 18px}.all-50-lessons-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.all-50-lessons a{display:block;padding:16px;border:1px solid #314158;border-radius:12px;background:#121a27;color:#fff;text-decoration:none}.all-50-lessons a:hover{border-color:#d6a84d}@media(max-width:650px){.all-50-lessons-grid{grid-template-columns:1fr}}</style>
-<script>
-(function(){function show(){if(document.querySelector('.all-50-lessons'))return;var x=[].slice.call(document.querySelectorAll('.lesson[data-id]')).sort(function(a,b){return Number(a.dataset.id.slice(1))-Number(b.dataset.id.slice(1));});var b=document.createElement('section');b.className='all-50-lessons';b.innerHTML='<h2>All 50 learning articles</h2><p>Choose any lesson to open the complete article.</p><div class="all-50-lessons-grid"></div>';var g=b.querySelector('div');x.forEach(function(i){var a=document.createElement('a');a.href='article.html?id='+i.dataset.id;a.textContent=i.dataset.id.toUpperCase()+' — '+((i.querySelector('.lesson-title')||{}).textContent||'Learning article').trim();g.appendChild(a)});document.body.appendChild(b)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',show);else show();setTimeout(show,800)})();
-</script>
-<style id="no-default-article">.seo-article{display:none!important}</style>
