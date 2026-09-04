@@ -10,6 +10,7 @@
 - [Lesson 19: What is a prop firm?](https://investingnoobs.com/article.html?id=l19): evaluation rules, fees and risk.
 - [Lesson 50: How to build a long-term investing routine](https://investingnoobs.com/article.html?id=l50): final process chapter.
 - [50-question final assessment](https://investingnoobs.com/test.html): one practical question for each lesson; 80% required to pass.
+- [Decision Lab](https://investingnoobs.com/decisionlab.html): build a virtual allocation and practise five risk-management decisions with transparent feedback.
 - [Paper trading simulator](https://investingnoobs.com/simulator.html): practise portfolio decisions, buying and selling with virtual money, trade journaling and position sizing.
 - [Live market tracker](https://investingnoobs.com/): crypto, stocks and commodity reference prices.
 
