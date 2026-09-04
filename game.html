@@ -4404,7 +4404,34 @@ Object.assign(UI_TRANSLATIONS,{
 });
 const translatedNodes=new WeakMap();
 const RUNTIME_TRANSLATIONS={en:[[/\bMisi�n completada\b/g,'Mission completed'],[/\bRecompensa\b/g,'Reward'],[/\bDía\b/g,'Day'],[/\bCap�tulo\b/gi,'Chapter'],[/\bNivel\b/g,'Level'],[/\bSin abrir\b/g,'Not opened'],[/\bcomprado y equipado\b/g,'purchased and equipped'],[/\bequipado\b/g,'equipped'],[/\bDesbloqueado\b/g,'Unlocked'],[/\bReclamado\b/g,'Claimed'],[/�LISTO!/g,'READY!'],[/\bSe desbloquea en el capítulo\b/g,'Unlocks in chapter'],[/\bIngresos pasivos\b/g,'Passive income'],[/\bpor día\b/g,'per day'],[/\bganancia\b/gi,'profit'],[/\bp�rdida\b/gi,'loss'],[/\bbeneficio\b/gi,'profit'],[/\bcomprar\b/gi,'buy'],[/\bvender\b/gi,'sell'],[/\bmercado\b/gi,'market'],[/\bcapital\b/gi,'capital'],[/\bpatrimonio\b/gi,'net worth'],[/\bobjetivo\b/gi,'target'],[/\bprogreso\b/gi,'progress'],[/\bcompletada\b/gi,'completed'],[/\bcompletado\b/gi,'completed'],[/\bTienda\b/g,'Shop'],[/\bPropiedad\b/g,'Property'],[/\bVeh�culos\b/g,'Vehicles'],[/\bJoyas\b/g,'Jewelry'],[/Mascotas [Ee]x�ticas/g,'Exotic pets']],zh:[[/\bMisi�n completada\b/g,'任务已完�ˆ�'],[/\bRecompensa\b/g,'奖励'],[/\bDía\b/g,'天'],[/\bCap�tulo\b/gi,'章节'],[/\bNivel\b/g,'等级'],[/\bSin abrir\b/g,'未开启'],[/\bcomprado y equipado\b/g,'已购买并装备'],[/\bequipado\b/g,'已装备'],[/\bDesbloqueado\b/g,'已解锁'],[/\bReclamado\b/g,'已领取'],[/�LISTO!/g,'完�ˆ�！'],[/\bSe desbloquea en el capítulo\b/g,'在章节中解锁'],[/\bIngresos pasivos\b/g,'被动收入'],[/\bpor día\b/g,'每日'],[/\bganancia\b/gi,'收�›�'],[/\bp�rdida\b/gi,'损失'],[/\bbeneficio\b/gi,'�ˆ�润'],[/\bcomprar\b/gi,'买入'],[/\bvender\b/gi,'卖出'],[/\bmercado\b/gi,'市场'],[/\bcapital\b/gi,'�„金'],[/\bpatrimonio\b/gi,'�„产'],[/\bobjetivo\b/gi,'�›�标'],[/\bprogreso\b/gi,'�›度'],[/\bcompletada\b/gi,'已完�ˆ�'],[/\bcompletado\b/gi,'已完�ˆ�'],[/\bTienda\b/g,'商店'],[/\bPropiedad\b/g,'�ˆ�产'],[/\bVeh�culos\b/g,'车辆'],[/\bJoyas\b/g,'珠宝'],[/Mascotas [Ee]x�ticas/g,'珍稀宠物']]};
-function translateRuntimeText(value,lang){if(lang==='es'||typeof value!=='string')return value;let out=value;(RUNTIME_TRANSLATIONS[lang]||[]).forEach(([re,to])=>{out=out.replace(re,to);});return out;}
+function translateRuntimeText(value,lang){
+  if(lang==='es'||typeof value!=='string')return value;
+  let out=value;
+  (RUNTIME_TRANSLATIONS[lang]||[]).forEach(([re,to])=>{out=out.replace(re,to);});
+  if(lang==='en'){
+    // Fallbacks for saved news and dynamically generated panels from older saves.
+    out=out
+      .replace(/\bOreX Miner(?:\u00eda|\uFFFDa)\b/g,'OreX Mining')
+      .replace(/\$10B · La persona más rica del mundo/g,'$10B · The richest person in the world')
+      .replace(/\bCompra un reto sobre una cuenta y\b/gi,'Buy a challenge on an account and')
+      .replace(/\bop(?:\u00e9|\uFFFD)rala\b/gi,'trade it')
+      .replace(/\bdesde la pesta(?:\u00f1|\uFFFD)a\b/gi,'from the')
+      .replace(/\bInvertir\b/g,'Trade')
+      .replace(/\beligiendo esta cuenta como fuente de capital\b/gi,'choosing this account as your capital source')
+      .replace(/\bSi alcanzas\b/gi,'If you reach')
+      .replace(/\bsin tocar el l(?:\u00ed|\uFFFD)mite de p(?:\u00e9|\uFFFD)rdida\b/gi,'without touching the loss limit')
+      .replace(/\bla cuenta se financia\b/gi,'the account gets funded')
+      .replace(/\by puedes retirar tu parte del profit cuando quieras\b/gi,'and you can withdraw your share of the profit whenever you want')
+      .replace(/\bSi tocas el l(?:\u00ed|\uFFFD)mite, pierdes el reto entero\b/gi,'If you hit the limit, you lose the whole challenge')
+      .replace(/\bAdopci(?:\u00f3|\uFFFD)n soberana\b/g,'Sovereign adoption')
+      .replace(/\bEso es lo que mueve el precio de verdad\b/g,'That is what truly moves price')
+      .replace(/\bUn pa(?:\u00ed|\uFFFD)s entero apostando por ello\b/g,'An entire country betting on it')
+      .replace(/\bDeFi es el futuro de las finanzas\b/g,'DeFi is the future of finance')
+      .replace(/\bEl que entra antes, gana m(?:\u00e1|\uFFFD)s\b/g,'Those who enter early can earn more')
+      .replace(/\bAdopci(?:\u00f3|\uFFFD)n\b/g,'adoption');
+  }
+  return out;
+}
 RUNTIME_TRANSLATIONS.en.push(
   [/\bCallejero\b/g,'Street hustler'],[/\bTrader novato\b/g,'Rookie trader'],[/\bGestor junior\b/g,'Junior manager'],[/\bGestor de fondo\b/g,'Fund manager'],[/\bMagnate\b/g,'Tycoon'],[/\bMillonario\b/g,'Millionaire'],[/\bMulti-millonario\b/g,'Multimillionaire'],[/\b�lite global\b/g,'Global elite'],[/\bEl más rico\b/g,'The richest'],
   [/\bAnalistas predicen nuevo ATH para\b/g,'Analysts predict a new ATH for'],[/\bGobierno anuncia revisi�n fiscal de cripto\b/g,'Government announces a crypto tax review'],[/\bBanco central baja tipos de inter�s\b/g,'Central bank cuts interest rates'],[/\bOPEP reduce producci�n de petr�leo\b/g,'OPEC cuts oil production'],[/\bEuropa aprueba incentivos verdes\b/g,'Europe approves green incentives'],[/\bsupera expectativas de beneficios\b/g,'beats earnings expectations'],[/\bInflaci�n dispara bonos y hunde acciones\b/g,'Inflation boosts bonds and sinks stocks'],[/\bMercado inmobiliario en máximos histúricos\b/g,'Real estate market hits all-time highs'],[/\bTensiones geopol�ticas elevan el oro\b/g,'Geopolitical tensions lift gold'],[/\bNFTs vuelven a estar de moda\b/g,'NFTs become popular again'],[/\bEmpresa aeroespacial anuncia turismo lunar\b/g,'Aerospace company announces lunar tourism'],[/\bFED sube tipos de emergencia\b/g,'FED raises rates in an emergency'],
