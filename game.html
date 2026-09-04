@@ -1,4 +1,31 @@
 
+<script id="chart-close-observer-fix">
+(function(){
+  function enhanceChartClose(){
+    var modal=document.getElementById("chartModal");
+    if(!modal) return;
+    var close=modal.querySelector('button[onclick="closeChart()"]');
+    if(!close || close.dataset.chartCloseEnhanced==="1") return;
+    close.dataset.chartCloseEnhanced="1";
+    close.className="chart-close-button";
+    close.setAttribute("aria-label","Close chart");
+    close.setAttribute("title","Close chart");
+    close.innerHTML="&#215;";
+  }
+  function startChartCloseObserver(){
+    if(!document.body || window.__chartCloseObserverStarted) return;
+    window.__chartCloseObserverStarted=true;
+    var style=document.createElement("style");
+    style.textContent="#chartModal .chart-close-button{margin-left:auto;position:sticky;top:0;z-index:3;flex:0 0 44px;width:44px;height:44px;display:grid;place-items:center;padding:0;border:1px solid rgba(245,158,11,.58);border-radius:12px;background:linear-gradient(145deg,#1d2a40,#111a28);color:#f8fafc;font-size:30px;font-weight:300;line-height:1;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.28);touch-action:manipulation}.chart-close-button:hover{border-color:#f59e0b;background:#2b3b56;transform:translateY(-1px)}.chart-close-button:focus-visible{outline:3px solid rgba(34,211,238,.7);outline-offset:3px}@media(max-width:600px){#chartModal{padding:12px!important}.chart-close-button{width:42px!important;height:42px!important;font-size:28px!important;border-radius:11px!important}}";
+    document.head.appendChild(style);
+    enhanceChartClose();
+    new MutationObserver(enhanceChartClose).observe(document.body,{childList:true,subtree:true});
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",startChartCloseObserver);
+  else startChartCloseObserver();
+})();
+</script>
+
 <script id="chart-close-button-boot-fix">
 (function(){
   function installChartCloseButton(){
