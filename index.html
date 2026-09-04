@@ -3,8 +3,31 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230b0f14%22/><text x=%2250%25%22 y=%2258%25%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23c9a35a%22>◆</text></svg>">
-<title>InvestingNoobs</title>
+<title>InvestingNoobs | Live Crypto, Stock &amp; Commodity Prices</title>
+<meta name="description" content="Track live crypto, stock and commodity prices in one simple dashboard. Search assets, compare market moves and learn investing basics without jargon.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://investingnoobs.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="InvestingNoobs">
+<meta property="og:title" content="InvestingNoobs | Live Crypto, Stock &amp; Commodity Prices">
+<meta property="og:description" content="A simple market tracker for crypto, stocks and commodities, plus a free beginner investing course.">
+<meta property="og:url" content="https://investingnoobs.com/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="InvestingNoobs | Live Market Tracker">
+<meta name="twitter:description" content="Track crypto, stock and commodity prices, then learn the basics with a free practical course.">
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebSite",
+  "name":"InvestingNoobs",
+  "url":"https://investingnoobs.com/",
+  "description":"A simple market tracker and beginner investing course for crypto, stocks and commodities.",
+  "inLanguage":"en",
+  "publisher":{"@type":"Organization","name":"InvestingNoobs","url":"https://investingnoobs.com/"}
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -111,11 +134,60 @@
   #table-scroll { overflow-x: auto; box-shadow: 0 10px 28px rgba(0,0,0,.12); }
   table thead th { background: #121923; }
   @media (max-width: 700px) { #wrap { padding: 24px 14px 48px; } .tabs { display: grid; grid-template-columns: repeat(2, 1fr); } .tabs button { width: 100%; } }
+  .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+  #tabs{width:100%;align-items:stretch}
+  #tabs .tab-btn{min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+  #tabs .tab-link-external{flex:1 1 auto}
+  .market-toolbar{align-items:stretch}
+  .market-toolbar .tab-btn{min-height:46px}
+  .star-btn{min-width:40px;min-height:40px}
+  .buy-btn{min-height:40px;align-items:center;justify-content:center}
+  @media (max-width:700px){
+    #wrap{width:100%;padding:26px 12px 56px;overflow:hidden}
+    .tracker-header{align-items:flex-start!important;gap:18px!important}
+    .tracker-header>div:last-child{width:100%;text-align:left!important}
+    .tracker-header>div:last-child>div{justify-content:flex-start!important}
+    #tabs{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px!important;padding:5px!important;margin-bottom:18px!important}
+    #tabs>*{min-width:0;width:100%;margin-left:0!important;padding:9px 6px!important;font-size:12px!important;text-align:center;white-space:normal}
+    #tabs>a:nth-child(4){grid-column:1}
+    #tabs>a:nth-child(5){grid-column:2 / span 2}
+    #stat-strip{grid-template-columns:repeat(2,minmax(0,1fr))!important;border-radius:12px!important}
+    #stat-strip .stat-cell{min-width:0;padding:12px 10px}
+    .stat-label{font-size:9px;letter-spacing:.06em}
+    .stat-value{font-size:13px}
+    .support-banner{padding:15px!important;gap:12px!important}
+    .support-banner>div:first-child{min-width:0!important}
+    .support-banner .buy-btn{width:100%;font-size:13px!important}
+    .market-toolbar{display:grid!important;grid-template-columns:minmax(0,1fr) auto;gap:8px!important}
+    #search-box{min-width:0;padding:11px 12px}
+    #search-input{font-size:13px;min-width:0}
+    #watchlist-toggle{padding:9px 10px!important;font-size:12px}
+    #table-container{border-radius:12px}
+    #table-scroll{overflow-x:visible!important;cursor:default!important}
+    #table-scroll table{width:100%!important;min-width:0!important}
+    #table-scroll thead{display:none}
+    #table-scroll tbody,#table-scroll tr,#table-scroll td{display:block}
+    #table-scroll tbody tr{position:relative;min-height:76px;padding:13px 11px;border-bottom:1px solid #222c38}
+    #table-scroll tbody tr:last-child{border-bottom:0}
+    #table-scroll tbody tr td{padding:0!important}
+    #table-scroll tbody tr td:nth-child(1){position:absolute;left:8px;top:17px;display:block!important}
+    #table-scroll tbody tr td:nth-child(2),#table-scroll tbody tr td:nth-child(5),#table-scroll tbody tr td:nth-child(7),#table-scroll tbody tr td:nth-child(8),#table-scroll tbody tr td:nth-child(9),#table-scroll tbody tr td:nth-child(10){display:none!important}
+    #table-scroll tbody tr td:nth-child(3){padding:0 88px 7px 39px!important;min-height:28px}
+    #table-scroll tbody tr td:nth-child(4){position:absolute;right:78px;top:16px;display:block!important;font-size:13px!important;white-space:nowrap}
+    #table-scroll tbody tr td:nth-child(6){padding-left:39px!important;text-align:left!important;font-size:12px!important}
+    #table-scroll tbody tr td:nth-child(6)::before{content:'24h ';color:#7d8b9b;font-family:system-ui,sans-serif;font-size:11px}
+    #table-scroll tbody tr td:nth-child(11){position:absolute;right:10px;top:13px;display:block!important;background:transparent!important;box-shadow:none!important}
+    .coin-row{gap:8px}
+    .coin-name{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .coin-sym{font-size:10px}
+    .buy-col-cell .buy-btn{padding:8px 9px!important;font-size:11px;animation:none}
+    .skel{margin-top:18px}
+  }
 </style>
 </head>
 <body>
 <div id="wrap">
-  <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:20px;">
+  <header class="tracker-header" role="banner" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:20px;">
     <div>
       <div class="mono" style="font-size:11px;letter-spacing:0.18em;color:#c9a35a;margin-bottom:10px;display:flex;align-items:center;gap:8px;">
         <span style="width:16px;height:1px;background:#c9a35a;display:inline-block;"></span>
@@ -131,15 +203,15 @@
       </div>
       <div style="margin-top:2px;opacity:0.7;" id="refresh-label">Auto-refresh every 10s</div>
     </div>
-  </div>
+  </header>
 
-  <div id="tabs" style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
-    <button data-tab="crypto" class="tab-btn tab-active">Cryptocurrencies</button>
-    <button data-tab="commodities" class="tab-btn">Commodities</button>
-    <button data-tab="stocks" class="tab-btn">Stocks</button>
+  <nav id="tabs" aria-label="Market sections" style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+    <button type="button" data-tab="crypto" class="tab-btn tab-active">Cryptocurrencies</button>
+    <button type="button" data-tab="commodities" class="tab-btn">Commodities</button>
+    <button type="button" data-tab="stocks" class="tab-btn">Stocks</button>
     <a href="game.html" class="tab-btn tab-link-external" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">🎮 Game <span style="font-size:11px;opacity:0.6;">↗</span></a>
     <a href="blog.html" class="tab-btn tab-link-external" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-left:auto;">Learn <span style="font-size:11px;opacity:0.6;">↗</span></a>
-  </div>
+  </nav>
 
   <div id="stat-strip" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:#242b35;border:1px solid #242b35;border-radius:6px;overflow:hidden;margin-bottom:20px;">
     <div class="stat-cell">
@@ -164,7 +236,7 @@
     </div>
   </div>
 
-  <div style="margin-bottom:20px;border:1.5px solid #c9a35a;border-radius:8px;padding:18px 22px;background:linear-gradient(180deg, #161206, #10141a 70%);box-shadow:0 0 0 4px rgba(201,163,90,0.08), 0 8px 24px -14px rgba(201,163,90,0.3);display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:space-between;">
+  <aside class="support-banner" aria-label="Support InvestingNoobs" style="margin-bottom:20px;border:1.5px solid #c9a35a;border-radius:8px;padding:18px 22px;background:linear-gradient(180deg, #161206, #10141a 70%);box-shadow:0 0 0 4px rgba(201,163,90,0.08), 0 8px 24px -14px rgba(201,163,90,0.3);display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:space-between;">
     <div style="display:flex;align-items:center;gap:14px;flex:1;min-width:240px;">
       <div style="font-size:28px;">☕</div>
       <div>
@@ -173,10 +245,10 @@
       </div>
     </div>
     <a href="https://www.buymeacoffee.com/investingnoobs" target="_blank" rel="noopener" class="buy-btn" style="font-size:13.5px;padding:10px 22px;flex-shrink:0;">☕ Buy us a coffee</a>
-  </div>
+  </aside>
 
   <div id="market-view">
-    <div style="display:flex;gap:10px;margin-bottom:20px;">
+    <div class="market-toolbar" style="display:flex;gap:10px;margin-bottom:20px;">
       <div id="search-box" style="margin-bottom:0;flex:1;">
         <span>🔍</span>
         <input id="search-input" placeholder="Search by name or symbol (BTC, ETH, SOL...)" />
@@ -193,6 +265,7 @@
     <div id="table-container">
       <div id="table-scroll">
         <table>
+          <caption class="sr-only">Live market prices and recent performance</caption>
           <thead>
             <tr>
               <th style="width:32px;"></th>
@@ -203,8 +276,8 @@
               <th data-sort="price_change_percentage_24h_in_currency" style="text-align:right;" id="th-24h">24h</th>
               <th data-sort="price_change_percentage_7d_in_currency" style="text-align:right;" class="hide-mobile">7d</th>
               <th style="text-align:left;">Momentum</th>
-              <th data-sort="market_cap" style="text-align:right;" class="hide-mobile" id="th-mcap">Market Cap</th>
-              <th data-sort="total_volume" style="text-align:right;" class="hide-mobile" id="th-vol">Volume 24h</th>
+              <th data-sort="market_cap" style="text-align:right;" class="hide-mobile">Market Cap</th>
+              <th data-sort="total_volume" style="text-align:right;" class="hide-mobile">Volume 24h</th>
               <th class="buy-col-cell"></th>
             </tr>
           </thead>
@@ -303,9 +376,18 @@
     { symbol: 'XAG', name: 'Silver', image: '🥈' },
     { symbol: 'XPT', name: 'Platinum', image: '⚪' },
     { symbol: 'XPD', name: 'Palladium', image: '⚙️' },
-];
+    { symbol: 'XCU', name: 'Copper', image: '🟠' },
+    { symbol: 'XRH', name: 'Rhodium', image: '💠' },
+    { symbol: 'XAL', name: 'Aluminum', image: '🔩' },
+    { symbol: 'XNI', name: 'Nickel', image: '⛓️' },
+    { symbol: 'XZN', name: 'Zinc', image: '🔘' },
+    { symbol: 'XPB', name: 'Lead', image: '⚫' },
+    { symbol: 'XSN', name: 'Tin', image: '🥫' },
+    { symbol: 'XIR', name: 'Iridium', image: '💎' },
+  ];
   const COMMODITY_FALLBACK = {
-   XAU: 2648.30, XAG: 30.85, XPT: 985.40, XPD: 1015.20,
+    XAU: 2648.30, XAG: 30.85, XPT: 985.40, XPD: 1015.20, XCU: 4.28, XRH: 5250.00,
+    XAL: 2.55, XNI: 7.10, XZN: 1.32, XPB: 0.98, XSN: 14.20, XIR: 4650.00,
   };
 
   // Minimal fallback so the crypto tab is never fully empty, even if the very
@@ -789,13 +871,7 @@
     const h1 = coin.price_change_percentage_1h_in_currency;
     const h24 = coin.price_change_percentage_24h_in_currency;
     const d7 = coin.price_change_percentage_7d_in_currency;
-    if (h24 == null) return { label: 'No data', color: '#6b7280' };
-   if (h1 == null) {
-   const strength0 = Math.abs(h24);
-   if (h24 > 0) return { label: strength0 > 3 ? 'Strong bullish momentum' : 'Bullish momentum', color: '#3fa06e' };
-   if (h24 < 0) return { label: strength0 > 3 ? 'Strong bearish momentum' : 'Bearish momentum', color: '#c05a52' };
-   return { label: 'Neutral', color: '#8b93a0' };
-   }
+    if (h1 == null || h24 == null) return { label: 'No data', color: '#6b7280' };
     const aligned = (h1 >= 0) === (h24 >= 0) && (d7 == null || (h24 >= 0) === (d7 >= 0));
     const strength = Math.abs(h1) + Math.abs(h24) * 0.5;
     if (aligned && h24 > 0) return { label: strength > 5 ? 'Strong bullish momentum' : 'Bullish momentum', color: '#3fa06e' };
@@ -809,12 +885,6 @@
       c.name.toLowerCase().includes(search.toLowerCase()) ||
       c.symbol.toLowerCase().includes(search.toLowerCase())
     );
-   const hideCapVol = activeTab === 'commodities';
-   const colspanVal = hideCapVol ? 9 : 11;
-   const thMcap = document.getElementById('th-mcap');
-   const thVol = document.getElementById('th-vol');
-   if (thMcap) thMcap.style.display = hideCapVol ? 'none' : '';
-   if (thVol) thVol.style.display = hideCapVol ? 'none' : '';
     if (showOnlyWatchlist) filtered = filtered.filter(c => watchlist.has(c.id));
     const sorted = filtered.slice().sort((a, b) => {
       let av = a[sortKey], bv = b[sortKey];
@@ -838,7 +908,7 @@
     if (loading && dataset.length === 0) {
       let html = '';
       for (let i = 0; i < 10; i++) {
-        html += '<tr><td colspan="' + colspanVal + '"><div class="skel" style="width:' + (60 + (i % 4) * 10) + '%"></div></td></tr>';
+        html += '<tr><td colspan="11"><div class="skel" style="width:' + (60 + (i % 4) * 10) + '%"></div></td></tr>';
       }
       tbody.innerHTML = html;
       return;
@@ -846,7 +916,7 @@
 
     if (sorted.length === 0) {
       const msg = showOnlyWatchlist ? 'No favorites yet — click the star on any row to add one.' : 'No results found for "' + search + '"';
-      tbody.innerHTML = '<tr><td colspan="' + colspanVal + '" style="padding:40px 14px;text-align:center;color:#6b7280;">' + msg + '</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="11" style="padding:40px 14px;text-align:center;color:#6b7280;">' + msg + '</td></tr>';
       return;
     }
 
@@ -879,7 +949,8 @@
         '<td class="mono" style="text-align:right;font-size:13px;">' + pctHtml(coin.price_change_percentage_24h_in_currency) + '</td>' +
         '<td class="mono hide-mobile" style="text-align:right;font-size:13px;">' + pctHtml(coin.price_change_percentage_7d_in_currency) + '</td>' +
         '<td><span class="pill" style="color:' + sig.color + ';background:' + sig.color + '18;">' + sig.label + '</span></td>' +
-(hideCapVol ? '' : ('<td class="mono hide-mobile" style="text-align:right;font-size:13px;color:#c7cdd6;">' + capCell + '</td>' + '<td class="mono hide-mobile" style="text-align:right;font-size:13px;color:#c7cdd6;">' + volCell + '</td>')) +
+        '<td class="mono hide-mobile" style="text-align:right;font-size:13px;color:#c7cdd6;">' + capCell + '</td>' +
+        '<td class="mono hide-mobile" style="text-align:right;font-size:13px;color:#c7cdd6;">' + volCell + '</td>' +
         buyCell +
         '</tr>';
     }).join('');

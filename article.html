@@ -3,15 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>Crypto &amp; Investing Learning Article | InvestingNoobs</title>
   <meta name="description" content="Practical crypto, investing and trading education for beginners, with examples, risks, checklists and exercises.">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="https://investingnoobs.com/article.html">
   <meta property="og:type" content="article">
+  <meta property="og:site_name" content="InvestingNoobs">
+  <meta property="og:locale" content="en_US">
   <meta property="og:title" content="Crypto &amp; Investing Learning Article | InvestingNoobs">
   <meta property="og:description" content="Practical crypto, investing and trading education for beginners.">
   <meta property="og:url" content="https://investingnoobs.com/article.html">
   <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Crypto &amp; Investing Learning Article | InvestingNoobs">
+  <meta name="twitter:description" content="Practical crypto, investing and trading education for beginners.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -29,7 +34,10 @@
      .lesson-art{margin:0 0 30px;overflow:hidden;border:1px solid rgba(234,189,100,.3);border-radius:15px;background:#0a111c;box-shadow:0 13px 36px rgba(0,0,0,.23)}.lesson-art svg{display:block;width:100%;height:auto;aspect-ratio:3.08}.lesson-art figcaption{padding:9px 14px;color:#93a5ba;font:11px 'IBM Plex Mono',monospace;letter-spacing:.04em}.lesson-art .art-title{font-weight:600}
      .longform{margin:34px 0 6px;padding:31px 0 8px;border-top:1px solid rgba(234,181,77,.28)}.longform-kicker{margin:0 0 9px;color:var(--gold);font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase}.longform-intro{margin:0 0 8px;color:#dce6f2;font-size:1.18rem;line-height:1.75}.longform-section{padding:25px 0;border-bottom:1px solid rgba(255,255,255,.1)}.longform-section:last-child{border-bottom:0}.longform-section h2{margin:0 0 13px;font-size:clamp(1.45rem,3vw,2rem)}.longform-section p{max-width:74ch;margin:0 0 15px;color:#bdcad9;font-size:1.03rem;line-height:1.86}.longform-section p:last-child{margin-bottom:0}
      @media(max-width:620px){.lesson-art{border-radius:12px;margin-bottom:24px}.lesson-art figcaption{font-size:10px}.longform{margin-top:27px;padding-top:25px}.longform-intro{font-size:1.05rem}.longform-section{padding:21px 0}.longform-section p{font-size:1rem;line-height:1.78}}
-   </style>
+    .actions{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .actions .button{min-width:0}
+    @media(max-width:620px){body{font-size:16px}.topbar{gap:12px}.brand,.back{font-size:11px}.topbar .back{white-space:nowrap}.actions{display:grid;grid-template-columns:1fr 1fr}.actions .button{width:100%;font-size:13px}.lesson-art svg{min-height:130px}.longform-section p{max-width:none}}
+  </style>
 </head>
 <body>
   <header class="topbar"><a class="brand" href="index.html">◆ InvestingNoobs</a><a class="back" href="blog.html">← All lessons</a></header>
@@ -100,7 +108,7 @@
     document.title=item.t+' | InvestingNoobs';document.querySelector('meta[name="description"]').content=item.s;document.querySelector('meta[property="og:title"]').content=item.t;document.querySelector('meta[property="og:description"]').content=item.s;document.querySelector('link[rel="canonical"]').href='https://investingnoobs.com/article.html?id='+id;document.querySelector('meta[property="og:url"]').content=location.href;
     const guide=item.g.map(p=>'<p>'+esc(p)+'</p>').join(''),checks=item.c.map(p=>'<li>'+esc(p)+'</li>').join(''),source=item.src?'<div class="sources"><h3>Further reading</h3><ul><li><a href="'+esc(item.src[0])+'" target="_blank" rel="noopener">'+esc(item.src[1])+'</a></li></ul></div>':'';
     root.innerHTML='<div class="eyebrow">INVESTINGNOOBS LEARNING SERIES</div><h1>'+esc(item.t)+'</h1><div class="rule"></div><p class="lesson-name">Lesson '+String(n).padStart(2,'0')+' · practical guide</p><p class="summary">'+esc(item.s)+'</p><section class="section"><h2>How it works</h2>'+guide+'</section><div class="example"><h3>Worked example</h3><p>'+esc(item.e)+'</p></div><div class="checklist"><h3>Before you act</h3><ul>'+checks+'</ul></div><div class="exercise"><h3>Practice this lesson</h3><p>'+esc(item.x)+'</p></div>'+source+'<p class="disclaimer"><strong>Educational content only:</strong> This guide is not personal financial, legal or tax advice. Markets involve risk, including the possible loss of capital. Verify current rules, fees and product availability in your country.</p><div class="actions"><a class="button" href="'+(previous?'article.html?id='+previous:'blog.html')+'">← '+(previous?'Previous article':'All lessons')+'</a><a class="button primary" href="'+(next?'article.html?id='+next:'test.html')+'">'+(next?'Next article →':'Take the final test →')+'</a></div>';
-    markRead();const ld={'@context':'https://schema.org','@type':'Article','headline':item.t,'description':item.s,'author':{'@type':'Organization','name':'InvestingNoobs'},'publisher':{'@type':'Organization','name':'InvestingNoobs'},'mainEntityOfPage':{'@type':'WebPage','@id':location.href},'inLanguage':'en'};const script=document.createElement('script');script.type='application/ld+json';script.textContent=JSON.stringify(ld);document.head.appendChild(script);
+    const articleUrl=location.origin+location.pathname+'?id='+encodeURIComponent(id);document.title=item.t+' | InvestingNoobs';const canonical=document.querySelector('link[rel="canonical"]');if(canonical)canonical.href=articleUrl;const ogTitle=document.querySelector('meta[property="og:title"]');if(ogTitle)ogTitle.content=item.t+' | InvestingNoobs';const ogDescription=document.querySelector('meta[property="og:description"]');if(ogDescription)ogDescription.content=item.s;const ogUrl=document.querySelector('meta[property="og:url"]');if(ogUrl)ogUrl.content=articleUrl;const twTitle=document.querySelector('meta[name="twitter:title"]');if(twTitle)twTitle.content=item.t+' | InvestingNoobs';const twDescription=document.querySelector('meta[name="twitter:description"]');if(twDescription)twDescription.content=item.s;markRead();const ld={'@context':'https://schema.org','@type':'Article','headline':item.t,'description':item.s,'url':articleUrl,'author':{'@type':'Organization','name':'InvestingNoobs'},'publisher':{'@type':'Organization','name':'InvestingNoobs','url':'https://investingnoobs.com/'},'mainEntityOfPage':{'@type':'WebPage','@id':articleUrl},'isPartOf':{'@type':'Course','name':'InvestingNoobs Crypto & Investing Course','url':'https://investingnoobs.com/blog.html'},'inLanguage':'en'};const breadcrumb={'@context':'https://schema.org','@type':'BreadcrumbList','itemListElement':[{'@type':'ListItem','position':1,'name':'InvestingNoobs','item':'https://investingnoobs.com/'},{'@type':'ListItem','position':2,'name':'Crypto & Investing Course','item':'https://investingnoobs.com/blog.html'},{'@type':'ListItem','position':3,'name':item.t,'item':articleUrl}]};[ld,breadcrumb].forEach(data=>{const script=document.createElement('script');script.type='application/ld+json';script.textContent=JSON.stringify(data);document.head.appendChild(script)});
   }
   render();
   </script>
