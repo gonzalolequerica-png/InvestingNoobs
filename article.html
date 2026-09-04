@@ -27,7 +27,8 @@
      @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
      h1{background:linear-gradient(100deg,#f7f9fc 18%,#e8bd69 82%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 12px 40px rgba(234,181,77,.12)}article{box-shadow:0 22px 65px rgba(0,0,0,.34),inset 0 1px rgba(255,255,255,.04)}.course-context,.example,.checklist,.exercise,.sources,.advice{box-shadow:0 9px 24px rgba(0,0,0,.12)}
      .lesson-art{margin:0 0 30px;overflow:hidden;border:1px solid rgba(234,189,100,.38);border-radius:15px;background:#0a111c;box-shadow:0 16px 42px rgba(0,0,0,.28)}.lesson-art svg{display:block;width:100%;height:auto;aspect-ratio:2.8}.lesson-art figcaption{padding:10px 15px;color:#93a5ba;font:11px 'IBM Plex Mono',monospace;letter-spacing:.04em}.lesson-art .art-title{font-weight:600}
-     @media(max-width:620px){.lesson-art{border-radius:12px;margin-bottom:24px}.lesson-art figcaption{font-size:10px}}
+     .longform{margin:34px 0 6px;padding:31px 0 8px;border-top:1px solid rgba(234,181,77,.28)}.longform-kicker{margin:0 0 9px;color:var(--gold);font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase}.longform-intro{margin:0 0 8px;color:#dce6f2;font-size:1.18rem;line-height:1.75}.longform-section{padding:25px 0;border-bottom:1px solid rgba(255,255,255,.1)}.longform-section:last-child{border-bottom:0}.longform-section h2{margin:0 0 13px;font-size:clamp(1.45rem,3vw,2rem)}.longform-section p{max-width:74ch;margin:0 0 15px;color:#bdcad9;font-size:1.03rem;line-height:1.86}.longform-section p:last-child{margin-bottom:0}
+     @media(max-width:620px){.lesson-art{border-radius:12px;margin-bottom:24px}.lesson-art figcaption{font-size:10px}.longform{margin-top:27px;padding-top:25px}.longform-intro{font-size:1.05rem}.longform-section{padding:21px 0}.longform-section p{font-size:1rem;line-height:1.78}}
    </style>
 </head>
 <body>
@@ -36,6 +37,7 @@
   <footer>InvestingNoobs · Educational content, not investment advice<br><a href="index.html">Tracker</a><a href="blog.html">Course</a><a href="privacidad.html">Privacy</a></footer>
   <script src="lesson-art.js"></script>
   <script src="lesson-details.js"></script>
+  <script src="lesson-longform.js"></script>
   <script>
   const A={
     l1:{t:'What is a cryptocurrency?',s:'A cryptocurrency is a digital asset transferred between addresses on a blockchain. To evaluate it, look past the price: understand the network, the asset’s purpose, the people who control it and the risks that could destroy demand.',g:[`A blockchain is a shared record maintained by a network of computers. The network, its native asset and the organisation or community building around it are related, but they are not the same thing. A token can have a useful application while giving holders no claim on its revenue.`,`Before buying, identify the consensus method, supply schedule, use case, liquidity, holder concentration and custody process. A popular token can still have weak security, concentrated ownership or no durable demand.`],e:'If a token trades at €2 and 10 million units circulate, its approximate market capitalisation is €20 million. That measures size, not quality, safety or fair value.',c:['What does the network do in one sentence?','Who can issue tokens or change the rules?','How would I store it and recover access?','What fact would invalidate my thesis?'],x:'Choose one cryptocurrency. Write its network, asset, use, supply, main holders, custody method and three risks. Mark each fact as verified, assumed or unknown.',src:['https://www.cftc.gov/LearnAndProtect/AdvisoriesAndArticles/understand_risks_of_virtual_currency.html','CFTC: Understand virtual-currency risks']},
@@ -152,6 +154,19 @@
     const figure=document.createElement('figure');figure.className='lesson-art';figure.setAttribute('role','img');figure.setAttribute('aria-label',heading.textContent.trim()+' illustration');
     figure.innerHTML=`<svg viewBox="0 0 1200 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="art-bg-${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#182538"/><stop offset="1" stop-color="#0b111c"/></linearGradient><radialGradient id="art-glow-${id}"><stop stop-color="${accent}" stop-opacity=".22"/><stop offset="1" stop-color="${accent}" stop-opacity="0"/></radialGradient><pattern id="art-grid-${id}" width="42" height="42" patternUnits="userSpaceOnUse"><path d="M42 0H0V42" fill="none" stroke="#9ab0ca" stroke-opacity=".08"/></pattern></defs><rect width="1200" height="360" fill="url(#art-bg-${id})"/><rect width="1200" height="360" fill="url(#art-grid-${id})"/><circle cx="930" cy="175" r="250" fill="url(#art-glow-${id})"/><path d="M74 286h1052" stroke="${accent}" stroke-opacity=".22"/><g aria-hidden="true">${motif[key]}</g><text x="74" y="84" fill="${accent}" font-family="'IBM Plex Mono',monospace" font-size="16" letter-spacing="4">INVESTINGNOOBS / ${esc(item.label).toUpperCase()}</text><text x="74" y="142" fill="#f4f6fa" font-family="Arial,sans-serif" font-size="31" font-weight="700">LESSON ${String(n).padStart(2,'0')}</text><text x="74" y="185" fill="#b8c7da" font-family="Arial,sans-serif" font-size="19">${esc(short)}</text><text x="74" y="232" fill="#8193aa" font-family="'IBM Plex Mono',monospace" font-size="13" letter-spacing="2">PRACTICAL INVESTING EDUCATION</text></svg><figcaption><span class="art-title">${esc(item.label)}</span> · topic illustration for this lesson</figcaption>`;
     heading.before(figure);
+  })();
+  </script>
+  <script>
+  (()=>{
+    const all=window.INVESTINGNOOBS_LONGFORM||{},id=new URLSearchParams(location.search).get('id')||'',content=all[id],article=document.getElementById('article');
+    if(!content||!article||article.querySelector('.longform'))return;
+    const block=document.createElement('section');block.className='longform';block.setAttribute('aria-labelledby','longform-heading');
+    const kicker=document.createElement('p');kicker.className='longform-kicker';kicker.textContent='Long-form explainer';block.appendChild(kicker);
+    const heading=document.createElement('h2');heading.id='longform-heading';heading.textContent='The full guide';block.appendChild(heading);
+    const intro=document.createElement('p');intro.className='longform-intro';intro.textContent='Read this lesson as a chapter: understand the mechanism, test the assumptions and apply the idea with a clear risk limit.';block.appendChild(intro);
+    content.sections.forEach(section=>{const item=document.createElement('section');item.className='longform-section';const title=document.createElement('h2');title.textContent=section.h;item.appendChild(title);(section.p||[]).forEach(copy=>{const paragraph=document.createElement('p');paragraph.textContent=copy;item.appendChild(paragraph)});block.appendChild(item)});
+    const context=article.querySelector('.course-context'),anchor=context&&context.parentElement||article.querySelector('.summary');
+    if(anchor)anchor.insertAdjacentElement('afterend',block);else article.prepend(block);
   })();
   </script>
   <script src="lesson-art-premium.js"></script>
