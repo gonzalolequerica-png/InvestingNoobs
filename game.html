@@ -1383,7 +1383,24 @@ function repairVisibleText(value){
     ['Holdings: �','Holdings: —'],['Cartera: �','Cartera: —'],['LONG � Buy','LONG · Buy'],['SHORT � Open','SHORT · Open'],
     [' � ',' · '],['� ','· ']
   ];
-  return fixes.reduce((out,[bad,good])=>out.split(bad).join(good),value);
+  // Algunos textos de partidas antiguas contienen el carácter de reemplazo
+  // (�) en lugar de una letra acentuada. Son valores ya guardados, por lo que
+  // no basta con traducir el HTML nuevo: hay que normalizarlos al mostrarlos.
+  const replacementFixes=[
+    ['\uFFFD&rdenes','\u00F3rdenes'],['Correcci\uFFFDn','Correcci\u00F3n'],['perdi\uFFFD','perdi\u00F3'],
+    ['m\uFFFDtodo','m\u00E9todo'],['S\uFFFD','S\u00ED'],['raz\uFFFDn','raz\u00F3n'],['se\uFFFDal','se\u00F1al'],
+    ['d\uFFFDlares','d\u00F3lares'],['tambi\uFFFDn','tambi\u00E9n'],['deber\uFFFDas','deber\u00EDas'],
+    ['m\uFFFDltiples','m\u00FAltiples'],['diversificaci\uFFFDn','diversificaci\u00F3n'],
+    ['proh\uFFFDbe','proh\u00EDbe'],['construcci\uFFFDn','construcci\u00F3n'],['Matem\uFFFDticas','Matem\u00E1ticas'],
+    ['cl\uFFFDnico','cl\u00EDnico'],['r\uFFFDcord','r\u00E9cord'],['r\uFFFDpido','r\u00E1pido'],
+    ['geopol\uFFFDticas','geopol\u00EDticas'],['Regulaci\uFFFDn','Regulaci\u00F3n'],
+    ['m\uFFFDximo','m\u00E1ximo'],['hist\uFFFDrico','hist\u00F3rico'],
+    ['pr\uFFFDximos','pr\u00F3ximos'],['inter\uFFFDs','inter\u00E9s'],['integraci\uFFFDn','integraci\u00F3n'],['adopci\uFFFDn','adopci\u00F3n'],
+    ['h\uFFFDdrica','h\u00EDdrica'],['pr\uFFFDximo','pr\u00F3ximo'],['r\uFFFDpida','r\u00E1pida'],
+    ['a\uFFFDn','a\u00FAn'],['a\uFFFDo','a\u00F1o'],['p\uFFFDnico','p\u00E1nico'],['p\uFFFDblico','p\u00FAblico'],
+    ['oficial del pa\uFFFDs','oficial del pa\u00EDs'],['pa\uFFFDs','pa\u00EDs'],['econom\uFFFDa','econom\u00EDa'],['cu\uFFFDntica','cu\u00E1ntica']
+  ];
+  return fixes.concat(replacementFixes).reduce((out,[bad,good])=>out.split(bad).join(good),value);
 }
 function repairEncoding(value){
   if(typeof value!=='string')return value;
