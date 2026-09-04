@@ -1,0 +1,83 @@
+# InvestingNoobs Academy
+
+> InvestingNoobs Academy is a free, browser-based course for learning cryptocurrency, investing and trading fundamentals. It is designed for complete beginners and teaches a repeatable, risk-aware process rather than predictions or guaranteed returns.
+
+## Learning path
+
+Read the 50 chapters in order. Each chapter includes a plain-English explanation, a worked example, a pre-action checklist, a practice exercise and further reading. The final assessment contains one practical question for each lesson and requires 80% to pass.
+
+### 01–10 · Foundations and market language
+
+- [01 What is a cryptocurrency?](https://investingnoobs.com/article.html?id=l1)
+- [02 What does it mean to buy company stock?](https://investingnoobs.com/article.html?id=l2)
+- [03 Why invest in gold and other metals?](https://investingnoobs.com/article.html?id=l3)
+- [04 Crypto vs stocks: what is the difference?](https://investingnoobs.com/article.html?id=l4)
+- [05 What is market capitalization?](https://investingnoobs.com/article.html?id=l5)
+- [06 What does volatility mean?](https://investingnoobs.com/article.html?id=l6)
+- [07 What is inflation?](https://investingnoobs.com/article.html?id=l7)
+- [08 What are fees and why do they matter?](https://investingnoobs.com/article.html?id=l8)
+- [09 What is an exchange?](https://investingnoobs.com/article.html?id=l9)
+- [10 What is a wallet?](https://investingnoobs.com/article.html?id=l10)
+
+### 11–20 · Market mechanics and risk
+
+- [11 What is the Bitcoin halving?](https://investingnoobs.com/article.html?id=l11)
+- [12 What are stablecoins?](https://investingnoobs.com/article.html?id=l12)
+- [13 How much money should I start investing with?](https://investingnoobs.com/article.html?id=l13)
+- [14 Is gold a safe investment right now?](https://investingnoobs.com/article.html?id=l14)
+- [15 First steps so you do not get lost](https://investingnoobs.com/article.html?id=l15)
+- [16 Common beginner mistakes](https://investingnoobs.com/article.html?id=l16)
+- [17 Diversification: not all eggs in one basket](https://investingnoobs.com/article.html?id=l17)
+- [18 Technical vs fundamental analysis](https://investingnoobs.com/article.html?id=l18)
+- [19 What is a prop firm?](https://investingnoobs.com/article.html?id=l19)
+- [20 Leverage and margin](https://investingnoobs.com/article.html?id=l20)
+
+### 21–30 · Trading discipline and crypto infrastructure
+
+- [21 Stop-loss and risk management](https://investingnoobs.com/article.html?id=l21)
+- [22 Drawdown and maximum loss](https://investingnoobs.com/article.html?id=l22)
+- [23 Spot, futures and CFDs](https://investingnoobs.com/article.html?id=l23)
+- [24 How to compare a prop firm](https://investingnoobs.com/article.html?id=l24)
+- [25 Recognising scams and misleading claims](https://investingnoobs.com/article.html?id=l25)
+- [26 Trading psychology](https://investingnoobs.com/article.html?id=l26)
+- [27 Building a trading plan](https://investingnoobs.com/article.html?id=l27)
+- [28 How to keep crypto safe](https://investingnoobs.com/article.html?id=l28)
+- [29 What is DeFi?](https://investingnoobs.com/article.html?id=l29)
+- [30 Stablecoins: how to evaluate them](https://investingnoobs.com/article.html?id=l30)
+
+### 31–40 · Bitcoin, Ethereum and DeFi
+
+- [31 What is Bitcoin?](https://investingnoobs.com/article.html?id=l31)
+- [32 What is Ethereum?](https://investingnoobs.com/article.html?id=l32)
+- [33 How does blockchain work?](https://investingnoobs.com/article.html?id=l33)
+- [34 What is staking?](https://investingnoobs.com/article.html?id=l34)
+- [35 What is a crypto token?](https://investingnoobs.com/article.html?id=l35)
+- [36 What is a smart contract?](https://investingnoobs.com/article.html?id=l36)
+- [37 What is a DAO?](https://investingnoobs.com/article.html?id=l37)
+- [38 What is a crypto bridge?](https://investingnoobs.com/article.html?id=l38)
+- [39 What is a liquidity pool?](https://investingnoobs.com/article.html?id=l39)
+- [40 What is yield farming?](https://investingnoobs.com/article.html?id=l40)
+
+### 41–50 · Research, execution and long-term habits
+
+- [41 What is a bull market?](https://investingnoobs.com/article.html?id=l41)
+- [42 What is dollar-cost averaging?](https://investingnoobs.com/article.html?id=l42)
+- [43 What is a limit order?](https://investingnoobs.com/article.html?id=l43)
+- [44 What is technical analysis?](https://investingnoobs.com/article.html?id=l44)
+- [45 What is fundamental analysis?](https://investingnoobs.com/article.html?id=l45)
+- [46 What is portfolio rebalancing?](https://investingnoobs.com/article.html?id=l46)
+- [47 How do crypto taxes work?](https://investingnoobs.com/article.html?id=l47)
+- [48 How to avoid crypto phishing scams](https://investingnoobs.com/article.html?id=l48)
+- [49 What is a rug pull?](https://investingnoobs.com/article.html?id=l49)
+- [50 How to build a long-term investing routine](https://investingnoobs.com/article.html?id=l50)
+
+## Primary pages
+
+- [Course index](https://investingnoobs.com/blog.html)
+- [50-question final assessment](https://investingnoobs.com/test.html)
+- [Live market tracker](https://investingnoobs.com/)
+- [About and data sources](https://investingnoobs.com/about.html)
+
+## Editorial policy
+
+InvestingNoobs is educational content, not personal financial, legal or tax advice. Markets can be volatile, prices and data can be delayed, and users can lose some or all of their capital. Readers should verify current rules, fees, product availability and tax treatment with authoritative sources in their country.

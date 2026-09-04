@@ -1,18 +1,21 @@
 # InvestingNoobs
 
-> InvestingNoobs is a free, beginner-friendly website for understanding crypto, stocks, commodities and trading risk. It combines a live market tracker with a 50-lesson practical course in plain English.
+> InvestingNoobs is a free, browser-based learning hub for cryptocurrency, investing and trading. It combines a live market tracker with InvestingNoobs Academy: 50 practical lessons that move from market vocabulary to research, execution, DeFi, prop-firm risk, portfolio construction, security and long-term habits.
 
-## Primary pages
+## Start here
 
-- [Live market tracker](https://investingnoobs.com/): crypto, stock and commodity prices with search and watchlist tools.
-- [Crypto & investing course](https://investingnoobs.com/blog.html): 50 guided lessons from foundations to DeFi, prop firms, risk and long-term habits.
-- [Final assessment](https://investingnoobs.com/test.html): a 50-question educational assessment covering the course.
-- [About InvestingNoobs](https://investingnoobs.com/about.html): project purpose and market-data sources.
+- [Free crypto and trading course](https://investingnoobs.com/blog.html): the 50-lesson roadmap and progress tracker.
+- [Full course index](https://investingnoobs.com/llms-full.txt): every lesson title and direct article URL.
+- [Lesson 1: What is a cryptocurrency?](https://investingnoobs.com/article.html?id=l1): beginner starting point.
+- [Lesson 19: What is a prop firm?](https://investingnoobs.com/article.html?id=l19): evaluation rules, fees and risk.
+- [Lesson 50: How to build a long-term investing routine](https://investingnoobs.com/article.html?id=l50): final process chapter.
+- [50-question final assessment](https://investingnoobs.com/test.html): one practical question for each lesson; 80% required to pass.
+- [Live market tracker](https://investingnoobs.com/): crypto, stocks and commodity reference prices.
 
-## Course topics
+## What the course teaches
 
-The course explains cryptocurrency, Bitcoin, Ethereum, wallets, exchanges, stablecoins, blockchain, DeFi, smart contracts, liquidity pools, stocks, commodities, inflation, market capitalisation, volatility, fees, portfolio construction, technical and fundamental analysis, prop firms, leverage, drawdown, trading psychology, scams, taxes and long-term investing routines.
+Cryptocurrency, Bitcoin, Ethereum, blockchain, exchanges, wallets, stablecoins, market capitalisation, inflation, volatility, fees, stocks, commodities, diversification, technical analysis, fundamental analysis, order types, leverage, margin, stop-losses, drawdown, prop firms, trading psychology, DeFi, smart contracts, DAOs, bridges, liquidity pools, yield farming, portfolio rebalancing, crypto records, phishing and rug-pull risk.
 
 ## Editorial principles
 
-Content is educational, beginner-friendly and risk-aware. It does not provide personalised financial, legal or tax advice. Market data can be delayed or unavailable and should be checked against an authoritative provider before making a decision.
+The lessons are written in plain English with definitions, worked examples, checklists, exercises and further reading. They are educational, not personal financial, legal or tax advice. No page promises profits or guarantees that a strategy will work. Verify current market data, regulation, fees and tax treatment with authoritative sources before acting.

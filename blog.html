@@ -30,7 +30,12 @@
     "url":"https://investingnoobs.com/blog.html",
     "isAccessibleForFree":true,
     "inLanguage":"en",
-    "numberOfCredits":50,
+    "educationalLevel":"Beginner to intermediate",
+    "timeRequired":"PT12H",
+    "keywords":"crypto course, cryptocurrency for beginners, trading course, Bitcoin, Ethereum, DeFi, risk management, technical analysis",
+    "about":["cryptocurrency","investing","trading","portfolio risk management"],
+    "coursePrerequisites":"No prior trading or investing experience required",
+    "teaches":"How crypto markets, stocks, commodities, DeFi, prop-firm rules, trading execution, portfolio construction and risk management work",
     "hasCourseInstance":{"@type":"CourseInstance","courseMode":"online","isAccessibleForFree":true}
   }
   </script>
@@ -44,9 +49,20 @@
     ]
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {"@type":"Question","name":"Is the InvestingNoobs crypto course free?","acceptedAnswer":{"@type":"Answer","text":"Yes. The 50 lessons and final assessment are available in the browser without a download or paid subscription."}},
+      {"@type":"Question","name":"Do I need trading experience to start?","acceptedAnswer":{"@type":"Answer","text":"No. The course starts with basic vocabulary and builds toward market analysis, execution and risk management."}},
+      {"@type":"Question","name":"Does the course promise trading profits?","acceptedAnswer":{"@type":"Answer","text":"No. Investing and trading involve uncertainty and possible loss. The course teaches a decision process and is not personal financial advice."}}
+    ]
+  }
+  </script>
   <style>
     :root{--bg:#080d15;--surface:#111925;--surface-2:#151f2e;--line:#29374a;--muted:#9eafc4;--text:#f4f6fa;--gold:#eab54d;--green:#3fa06e;--blue:#8bb8ff}
-    *{box-sizing:border-box}
+    *{box-sizing:border-box}.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     html{scroll-behavior:smooth;scroll-padding-top:80px}
     body{margin:0;min-width:0;background:radial-gradient(circle at 50% -12%,rgba(74,112,180,.15),transparent 34%),var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.5;overflow-x:hidden}
     a{color:inherit}
@@ -60,18 +76,20 @@
     h1{font-size:clamp(2.6rem,7vw,5rem);line-height:1.02;margin:22px 0 20px}
     .hero-copy{max-width:690px;margin:0 auto;color:#b9c9df;font-size:clamp(1rem,2vw,1.2rem);line-height:1.75}
     .progress-card{max-width:800px;margin:36px auto 0;padding:18px 20px;border:1px solid var(--line);border-radius:14px;background:rgba(17,25,37,.78);text-align:left;box-shadow:0 14px 34px rgba(0,0,0,.2)}
+    .study-panel{max-width:800px;margin:18px auto 0;padding:18px 20px;border:1px solid rgba(139,184,255,.22);border-radius:14px;background:linear-gradient(145deg,rgba(20,31,47,.88),rgba(12,19,29,.9));text-align:left}.study-kicker{margin:0 0 5px;color:var(--blue);font:500 11px 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase}.study-title{margin:0;color:var(--text);font:700 19px Fraunces,Georgia,serif}.study-copy{margin:4px 0 15px;color:#b9c9df;font-size:14px}.path-pills{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}.path-pills span{padding:6px 9px;border:1px solid rgba(234,181,77,.28);border-radius:999px;color:#dce5f1;font:11px 'IBM Plex Mono',monospace}.path-pills span:first-child{border-color:rgba(234,181,77,.6);color:var(--gold)}.course-tools{display:grid;grid-template-columns:minmax(0,1fr) 190px auto;gap:9px;align-items:center}.search-field{position:relative}.search-field input,.module-select,.reset-filter{width:100%;min-height:42px;border:1px solid #3a4c63;border-radius:9px;background:#0a111b;color:var(--text);font:14px Arial,Helvetica,sans-serif}.search-field input{padding:10px 12px 10px 37px}.search-field input::placeholder{color:#7e90a7}.search-field:before{content:'⌕';position:absolute;left:13px;top:7px;color:var(--gold);font-size:21px;pointer-events:none}.search-field input:focus,.module-select:focus,.reset-filter:focus{outline:3px solid rgba(139,184,255,.2);border-color:var(--blue)}.module-select{padding:0 10px}.reset-filter{padding:0 13px;cursor:pointer;background:#1b2a40;border-color:#52647c;white-space:nowrap}.reset-filter:hover{border-color:var(--gold);color:#ffe3a1}.lesson-status{margin:11px 0 0;color:#8fa1b7;font:11px 'IBM Plex Mono',monospace}.lesson.is-hidden{display:none!important}.no-results{display:none;margin:14px 0 0;padding:18px;border:1px dashed #40526a;border-radius:12px;color:#aebed1;text-align:center}.no-results.is-visible{display:block}
     .progress-label{display:flex;justify-content:space-between;gap:16px;color:var(--muted);font:12px 'IBM Plex Mono',monospace;margin-bottom:9px}.progress-label strong{color:var(--gold)}
     .progress-track{height:9px;background:#1c2634;border:1px solid #2c394b;border-radius:99px;overflow:hidden}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#b9892d,var(--gold));transition:width .25s ease}
     main{max-width:980px;margin:0 auto;padding:36px 20px 90px}
     .module{margin:0 0 38px}.module-head{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid rgba(234,181,77,.3);padding:0 2px 12px;margin-bottom:14px}.module-title{display:flex;align-items:center;gap:11px;font:600 25px Fraunces,Georgia,serif}.module-number{width:28px;height:28px;border-radius:50%;display:inline-grid;place-items:center;background:var(--gold);color:#111925;font:700 13px 'IBM Plex Mono',monospace;flex:0 0 auto}.module-progress{color:var(--muted);font:12px 'IBM Plex Mono',monospace;white-space:nowrap}.module-progress strong{color:var(--gold)}
     .lesson-list{display:grid;gap:10px}.lesson{display:flex;align-items:center;gap:14px;min-width:0;min-height:68px;padding:15px 18px;border:1px solid var(--line);border-radius:13px;background:linear-gradient(145deg,var(--surface-2),var(--surface));text-decoration:none;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}.lesson:hover,.lesson:focus-visible{transform:translateY(-2px);border-color:var(--gold);box-shadow:0 10px 24px rgba(0,0,0,.25);outline:none}.lesson.is-complete{border-color:rgba(63,160,110,.55)}.lesson-check{width:25px;height:25px;border:1px solid #435168;border-radius:50%;display:grid;place-items:center;color:transparent;flex:0 0 auto;font-size:14px}.lesson.is-complete .lesson-check{background:var(--green);border-color:var(--green);color:#07120d}.lesson-text{min-width:0;flex:1}.lesson-number{display:block;color:var(--gold);font:11px 'IBM Plex Mono',monospace;margin-bottom:2px}.lesson-title{display:block;color:var(--text);font-size:16px;font-weight:700;white-space:normal;overflow-wrap:anywhere}.lesson-arrow{color:var(--gold);font-size:18px;flex:0 0 auto}
     .final-card{margin:50px 0 0;padding:28px;border:1px solid rgba(234,181,77,.38);border-radius:16px;text-align:center;background:linear-gradient(145deg,rgba(31,27,16,.85),rgba(17,25,37,.9))}.final-card h2{font-size:30px;margin:5px 0 8px}.final-card p{margin:0 auto 18px;max-width:650px;color:#bdc9d8}.button{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:11px 17px;border:1px solid var(--gold);border-radius:10px;background:#20304a;color:#fff;text-decoration:none;font-weight:700}.button:hover,.button:focus-visible{background:#2a3d5c;outline:3px solid rgba(234,181,77,.28);outline-offset:2px}
+    .outcomes{margin:50px 0 0;padding:28px;border:1px solid rgba(139,184,255,.2);border-radius:16px;background:linear-gradient(145deg,rgba(18,29,45,.86),rgba(12,19,29,.92))}.outcomes-heading{max-width:680px}.outcomes h2,.faq-section h2{font:600 clamp(1.7rem,4vw,2.5rem) Fraunces,Georgia,serif;margin:4px 0 8px;color:var(--text)}.outcomes-heading>p:last-child{color:#b9c9df;margin:0;line-height:1.7}.outcome-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:22px}.outcome-grid article{padding:18px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(255,255,255,.035)}.outcome-grid span{color:var(--gold);font:600 11px 'IBM Plex Mono',monospace}.outcome-grid h3{font:700 17px Arial,Helvetica,sans-serif;margin:9px 0 5px}.outcome-grid p{margin:0;color:#aebed1;font-size:14px;line-height:1.6}.faq-section{margin:48px 0 0;padding:0 4px}.faq-section details{margin:9px 0;border:1px solid var(--line);border-radius:11px;background:rgba(17,25,37,.7);overflow:hidden}.faq-section summary{padding:16px 18px;color:#e8eef7;font-weight:700;cursor:pointer;list-style:none}.faq-section summary::-webkit-details-marker{display:none}.faq-section summary:after{content:'+';float:right;color:var(--gold);font:600 18px 'IBM Plex Mono',monospace}.faq-section details[open] summary:after{content:'−'}.faq-section details p{margin:0;padding:0 18px 17px;color:#afbed0;line-height:1.7}
     footer{padding:24px 20px 38px;border-top:1px solid rgba(255,255,255,.1);text-align:center;color:#718096;font:12px 'IBM Plex Mono',monospace}footer a{color:var(--blue);margin:0 7px;text-decoration:none}
     @media(max-width:620px){.topbar{height:58px;padding:0 15px}.brand{font-size:12px}.back{font-size:11px}.hero{padding:52px 15px 25px}.eyebrow{font-size:10px;letter-spacing:.12em;gap:8px}.eyebrow::before,.eyebrow::after{width:14px}h1{font-size:clamp(2.35rem,12vw,3.5rem)}.hero-copy{font-size:16px}.progress-card{margin-top:28px;padding:15px}.progress-label{font-size:11px}.progress-label span:last-child{white-space:nowrap}main{padding:28px 15px 65px}.module{margin-bottom:30px}.module-head{align-items:flex-end}.module-title{font-size:21px;line-height:1.1}.module-number{width:25px;height:25px;font-size:12px}.module-progress{font-size:11px}.lesson{min-height:64px;padding:14px 13px;gap:11px}.lesson-title{font-size:15px}.lesson-arrow{font-size:16px}.final-card{padding:23px 17px;margin-top:35px}.final-card h2{font-size:25px}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
     .premium-upgrade{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:24px auto 0}.premium-upgrade span{padding:7px 11px;border:1px solid rgba(234,181,77,.28);border-radius:999px;background:rgba(234,181,77,.07);color:#d9e3ef;font:11px 'IBM Plex Mono',monospace;letter-spacing:.03em}.premium-upgrade span:first-child{color:var(--gold);border-color:rgba(234,181,77,.55)}.hero h1{background:linear-gradient(100deg,#f6f8fc 22%,#e9bd65 78%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 12px 40px rgba(234,181,77,.12)}.progress-card{border-color:rgba(234,181,77,.3);box-shadow:0 18px 45px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.05)}.module-head{position:relative}.module-head:after{content:"";position:absolute;left:0;bottom:-1px;width:72px;height:2px;background:var(--gold)}.lesson{background:linear-gradient(120deg,rgba(25,36,53,.98),rgba(13,20,30,.98));box-shadow:0 7px 18px rgba(0,0,0,.12)}.lesson:hover,.lesson:focus-visible{box-shadow:0 16px 32px rgba(0,0,0,.32),0 0 0 1px rgba(234,181,77,.18)}.final-card{box-shadow:0 18px 45px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.05)}
     .lesson-title{overflow-wrap:anywhere}.lesson:focus-visible{outline:3px solid rgba(234,181,77,.45);outline-offset:3px}.button{touch-action:manipulation}
-    @media(max-width:620px){.hero{padding-top:45px}.hero-copy{max-width:38rem}.progress-card{position:relative}.lesson-list{gap:9px}.lesson{width:100%;min-width:0}.lesson-text{overflow:hidden}.lesson-title{font-size:15px;line-height:1.35}.lesson-arrow{width:28px;height:28px;display:grid;place-items:center;border:1px solid rgba(234,181,77,.3);border-radius:50%}.final-card{width:100%}}
+    @media(max-width:620px){.hero{padding-top:45px}.hero-copy{max-width:38rem}.progress-card{position:relative}.study-panel{padding:16px 14px}.study-title{font-size:18px}.path-pills{gap:6px}.path-pills span{font-size:10px}.course-tools{grid-template-columns:1fr 1fr}.search-field,.reset-filter{grid-column:1/-1}.module-select{min-width:0}.lesson-list{gap:9px}.lesson{width:100%;min-width:0}.lesson-text{overflow:hidden}.lesson-title{font-size:15px;line-height:1.35}.lesson-arrow{width:28px;height:28px;display:grid;place-items:center;border:1px solid rgba(234,181,77,.3);border-radius:50%}.outcomes{padding:21px 16px}.outcome-grid{grid-template-columns:1fr;gap:9px}.outcome-grid article{padding:15px}.faq-section{padding:0}.faq-section h2{font-size:1.9rem}.final-card{width:100%}}
   </style>
 </head>
 <body>
@@ -89,6 +107,19 @@
       <div class="progress-label"><span>Your progress</span><span><strong id="progress-count">0</strong> / 50 lessons</span></div>
       <div class="progress-track"><div id="progress-fill" class="progress-fill"></div></div>
     </div>
+    <section class="study-panel" aria-labelledby="study-panel-title">
+      <p class="study-kicker">Your learning roadmap</p>
+      <h2 class="study-title" id="study-panel-title">Learn the mechanism before you risk money</h2>
+      <p class="study-copy">Move from foundations to research, execution and risk. Every chapter includes an explanation, an example, a checklist and a practical exercise.</p>
+      <div class="path-pills" aria-label="Course stages"><span>01 Foundations</span><span>02 Markets</span><span>03 Analysis</span><span>04 Risk</span><span>05 Practice</span></div>
+      <div class="course-tools" aria-label="Find a lesson">
+        <label class="search-field"><span class="sr-only">Search lessons</span><input id="lesson-search" type="search" placeholder="Search lessons, topics or keywords" autocomplete="off"></label>
+        <label><span class="sr-only">Filter by module</span><select id="module-filter" class="module-select"><option value="all">All modules</option><option value="1">01 · Start Here</option><option value="2">02 · How Markets Work</option><option value="3">03 · Going Deeper into Crypto</option><option value="4">04 · Smart Habits &amp; Risk</option><option value="5">05 · Prop Firms &amp; Professional Trading</option><option value="6">06 · Crypto Essentials</option><option value="7">07 · DeFi &amp; On-chain Skills</option><option value="8">08 · Trading &amp; Portfolio Skills</option><option value="9">09 · Safety &amp; Long-Term Habits</option></select></label>
+        <button class="reset-filter" id="reset-filter" type="button">Reset</button>
+      </div>
+      <p class="lesson-status" id="lesson-status" role="status" aria-live="polite">Showing all 50 lessons</p>
+      <p class="no-results" id="no-results">No lesson matches that search. Try a different word or reset the filters.</p>
+    </section>
   </section>
 
   <main id="main-content">
@@ -196,6 +227,18 @@
       </div>
     </section>
 
+    <section class="outcomes" aria-labelledby="outcomes-title">
+      <div class="outcomes-heading"><p class="study-kicker">What you will be able to do</p><h2 id="outcomes-title">Turn market noise into a repeatable process</h2><p>By the end, you will be able to explain what you own, measure the real cost, test a thesis, size risk and recognise when the correct decision is to wait.</p></div>
+      <div class="outcome-grid"><article><span>01</span><h3>Understand the asset</h3><p>Separate a coin, stock, commodity, fund, derivative and wallet from the story built around its price.</p></article><article><span>02</span><h3>Read the trade-off</h3><p>Compare liquidity, spread, leverage, custody, drawdown and the downside before thinking about upside.</p></article><article><span>03</span><h3>Build your rules</h3><p>Finish with a research note, a risk limit, a journal routine and a final assessment that tests real decisions.</p></article></div>
+    </section>
+
+    <section class="faq-section" aria-labelledby="faq-title">
+      <p class="study-kicker">Course FAQ</p><h2 id="faq-title">Questions beginners ask before they start</h2>
+      <details><summary>Is this crypto course free?</summary><p>Yes. Every lesson and the final assessment are available in the browser without a download or paid subscription.</p></details>
+      <details><summary>Do I need trading experience?</summary><p>No. Start with lesson 1 and move in order. The course explains the vocabulary first, then introduces markets, analysis, execution and risk.</p></details>
+      <details><summary>Does completing it make me a profitable trader?</summary><p>No course can promise that. Investing and trading involve uncertainty and possible loss. This course teaches a safer decision process, not guaranteed returns or personal financial advice.</p></details>
+    </section>
+
     <section class="final-card">
       <div aria-hidden="true" style="font-size:30px">🎓</div>
       <h2>Ready for the final test?</h2>
@@ -216,6 +259,11 @@
       const ids = new Set(lessons.map(item => item.dataset.lessonId));
       const count = document.getElementById('progress-count');
       const fill = document.getElementById('progress-fill');
+      const search = document.getElementById('lesson-search');
+      const moduleFilter = document.getElementById('module-filter');
+      const reset = document.getElementById('reset-filter');
+      const status = document.getElementById('lesson-status');
+      const noResults = document.getElementById('no-results');
       let completed = new Set();
       try {
         const saved = JSON.parse(localStorage.getItem(KEY) || '[]');
@@ -228,7 +276,18 @@
 
       function render() {
         const total = lessons.length;
+        const query = (search && search.value || '').trim().toLowerCase();
+        const module = moduleFilter && moduleFilter.value || 'all';
+        let visible = 0;
         lessons.forEach(item => item.classList.toggle('is-complete', completed.has(item.dataset.lessonId)));
+        lessons.forEach(item => {
+          const title = item.querySelector('.lesson-title')?.textContent.toLowerCase() || '';
+          const number = item.querySelector('.lesson-number')?.textContent.toLowerCase() || '';
+          const parentModule = item.closest('.module')?.dataset.module || '';
+          const matches = (!query || title.includes(query) || number.includes(query)) && (module === 'all' || module === parentModule);
+          item.classList.toggle('is-hidden', !matches);
+          if (matches) visible++;
+        });
         document.querySelectorAll('.module').forEach(module => {
           const items = [...module.querySelectorAll('.lesson[data-lesson-id]')];
           const done = items.filter(item => completed.has(item.dataset.lessonId)).length;
@@ -237,6 +296,8 @@
         });
         if (count) count.textContent = completed.size;
         if (fill) fill.style.width = (completed.size / total * 100) + '%';
+        if (status) status.textContent = query || module !== 'all' ? 'Showing ' + visible + ' of ' + total + ' lessons' : 'Showing all ' + total + ' lessons';
+        if (noResults) noResults.classList.toggle('is-visible', visible === 0);
       }
 
       lessons.forEach(item => item.addEventListener('click', () => {
@@ -244,6 +305,8 @@
         save();
         render();
       }));
+      [search, moduleFilter].forEach(control => control && control.addEventListener('input', render));
+      reset && reset.addEventListener('click', () => { if (search) search.value = ''; if (moduleFilter) moduleFilter.value = 'all'; render(); search && search.focus(); });
       render();
     })();
   </script>
