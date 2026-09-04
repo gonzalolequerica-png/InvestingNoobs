@@ -4489,7 +4489,16 @@ function translateRuntimeText(value,lang){
       .replace(/\bEl euro cae a m(?:\u00ed|\uFFFD)nimos de 20 a(?:\u00f1|\uFFFD)os frente al d(?:\u00f3|\uFFFD)lar\b/gi,'The euro falls to a 20-year low against the dollar')
       .replace(/\bONU declara emergencia h(?:\u00ed|\uFFFD)drica global\b/gi,'The UN declares a global water emergency')
       .replace(/\bLos futuros del agua se convierten en el activo m(?:\u00e1|\uFFFD)s demandado\b/gi,'Water futures become the most demanded asset')
-      .replace(/\bAdopci(?:\u00f3|\uFFFD)n\b/g,'adoption');
+      .replace(/\bAdopci(?:\u00f3|\uFFFD)n\b/g,'adoption')
+      .replace(/\bAlcista\b/g,'Bullish')
+      .replace(/\bBajista\b/g,'Bearish')
+      .replace(/\bPara(?:\u00ed|\uFFFD)so fiscal descubierto\b/gi,'Tax haven discovered')
+      .replace(/Tax scandal\. Bolsas caen 20%\./gi,'Tax scandal. Stocks fall 20%.')
+      .replace(/Los esc(?:\u00e1|\u00fa|\uFFFD)ndalos crean p(?:\u00e1|\uFFFD)nico\. Y el p(?:\u00e1|\uFFFD)nico, ya sabes, crea oportunidades\./gi,'Scandals create panic. And panic, as you know, creates opportunities.')
+      .replace(/\bMoonX anuncia empresa espacial\b/gi,'MoonX announces space company')
+      .replace(/Un partnership estrat(?:\u00e9|\u00fa|\uFFFD)gico puede cambiar el valor de un activo en horas/gi,'A strategic partnership can change an asset\'s value in hours')
+      .replace(/El Salvador adopta SolarX como segunda moneda legal del pa(?:\u00eds|\uFFFDs)/gi,'El Salvador adopts SolarX as its second legal tender')
+      .replace(/M(?:\u00f3|\uFFFD)viles, relojes, ropa, coches y joyas\. (\d+) art(?:\u00ed|\uFFFD)culo\(s\) en tu colecci(?:\u00f3|\uFFFD)n · \+(\d+)% style/gi,'Phones, watches, clothes, cars and jewelry. $1 item(s) in your collection · +$2% style');
   }
   return out;
 }
