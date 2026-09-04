@@ -1406,7 +1406,8 @@ function repairVisibleText(value){
     ['baj\u00B7','baj\u00F3'],['vend\u00ED\u00B7','vendi\u00F3'],['vend\u00ED\uFFFD','vendi\u00F3'],['recuper\u00B7','recuper\u00F3'],
     ['tecnol\uFFFDgico','tecnol\u00F3gico'],['Inflaci\uFFFDn','Inflaci\u00F3n'],['Coalici\uFFFDn','Coalici\u00F3n'],
     ['d\uFFFDlar','d\u00F3lar'],['Recesi\uFFFDn','Recesi\u00F3n'],['Inversi\uFFFDn','Inversi\u00F3n'],
-    ['prohibici\uFFFDn','prohibici\u00F3n'],['Energ\uFFFDas','Energ\u00EDas'],['recibir\uFFFDn','recibir\u00E1n']
+    ['prohibici\uFFFDn','prohibici\u00F3n'],['Energ\uFFFDas','Energ\u00EDas'],['energ\uFFFDas','energ\u00EDas'],['recibir\uFFFDn','recibir\u00E1n'],
+    ['recesi\uFFFDn','recesi\u00F3n'],['transici\uFFFDn','transici\u00F3n']
   ];
   return fixes.concat(replacementFixes).reduce((out,[bad,good])=>out.split(bad).join(good),value);
 }
