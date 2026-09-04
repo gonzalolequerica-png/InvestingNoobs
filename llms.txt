@@ -12,7 +12,7 @@
 - [50-question final assessment](https://investingnoobs.com/test.html): one practical question for each lesson; 80% required to pass.
 - [Investor Passport](https://investingnoobs.com/passport.html): choose a starting level and goal to receive a personalised three-step route through the course and practice tools.
 - [Decision Lab](https://investingnoobs.com/decisionlab.html): build a virtual allocation and practise five risk-management decisions with transparent feedback.
-- [Paper trading simulator](https://investingnoobs.com/simulator.html): practise portfolio decisions, buying and selling with virtual money, trade journaling and position sizing.
+- [Portfolio Blueprint](https://investingnoobs.com/portfolio.html): turn an allocation idea into an explainable, risk-first practice blueprint with concentration and fee checks.
 - [Live market tracker](https://investingnoobs.com/): crypto, stocks and commodity reference prices.
 
 ## What the course teaches
