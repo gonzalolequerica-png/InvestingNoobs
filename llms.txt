@@ -11,6 +11,7 @@
 - [Lesson 50: How to build a long-term investing routine](https://investingnoobs.com/article.html?id=l50): final process chapter.
 - [50-question final assessment](https://investingnoobs.com/test.html): one practical question for each lesson; 80% required to pass.
 - [Investor Passport](https://investingnoobs.com/passport.html): choose a starting level and goal to receive a personalised three-step route through the course and practice tools.
+- [Research Room](https://investingnoobs.com/research.html): build an evidence-based thesis for a crypto, stock or commodity with a practical checklist.
 - [Decision Lab](https://investingnoobs.com/decisionlab.html): build a virtual allocation and practise five risk-management decisions with transparent feedback.
 - [Portfolio Blueprint](https://investingnoobs.com/portfolio.html): turn an allocation idea into an explainable, risk-first practice blueprint with concentration and fee checks.
 - [Live market tracker](https://investingnoobs.com/): crypto, stocks and commodity reference prices.
