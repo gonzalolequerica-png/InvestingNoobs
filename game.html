@@ -958,6 +958,22 @@ body{background:radial-gradient(ellipse at 15% 0%,rgba(99,102,241,.10),transpare
     .buyBtn,.sellBtn,.shortTradeBtn{font-size:9px;}
   }
 </style>
+<style id="mobile-sparkline-fix">
+@media (max-width: 440px) {
+  .assetCard .sparkWrap {
+    height: 84px !important;
+    min-height: 84px !important;
+    overflow: hidden !important;
+  }
+  .assetCard .sparkWrap > svg {
+    width: 100% !important;
+    height: 84px !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    display: block !important;
+  }
+}
+</style>
 </head>
 <body>
 <a href="index.html" class="site-return-link" aria-label="Back to InvestingNoobs">← InvestingNoobs</a>
