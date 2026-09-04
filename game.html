@@ -1,3 +1,24 @@
+
+<script id="chart-close-button-fix">
+(function(){
+  if(window.__chartCloseButtonFixed || typeof window.openChart !== "function") return;
+  window.__chartCloseButtonFixed = true;
+  var originalOpenChart = window.openChart;
+  var style = document.createElement("style");
+  style.textContent = "#chartModal .chart-close-button{margin-left:auto;position:sticky;top:0;z-index:3;flex:0 0 44px;width:44px;height:44px;display:grid;place-items:center;padding:0;border:1px solid rgba(245,158,11,.58);border-radius:12px;background:linear-gradient(145deg,#1d2a40,#111a28);color:#f8fafc;font-size:30px;font-weight:300;line-height:1;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.28);touch-action:manipulation}.chart-close-button:hover{border-color:#f59e0b;background:#2b3b56;transform:translateY(-1px)}.chart-close-button:focus-visible{outline:3px solid rgba(34,211,238,.7);outline-offset:3px}@media(max-width:600px){#chartModal{padding:12px!important}.chart-close-button{width:42px!important;height:42px!important;font-size:28px!important;border-radius:11px!important}}";
+  document.head.appendChild(style);
+  window.openChart = function(id, periods){
+    originalOpenChart.call(this, id, periods);
+    var modal = document.getElementById("chartModal");
+    var close = modal && modal.querySelector('button[onclick="closeChart()"]');
+    if(!close) return;
+    close.className = "chart-close-button";
+    close.setAttribute("aria-label","Close chart");
+    close.setAttribute("title","Close chart");
+    close.innerHTML = "&#215;";
+  };
+})();
+</script>
 <!DOCTYPE html>
 <html lang="es">
 <head>
