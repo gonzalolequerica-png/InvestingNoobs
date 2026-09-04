@@ -21,6 +21,9 @@
     @media(max-width:640px){.topbar{height:58px;padding:0 15px}.brand,.back{font-size:11px}main{padding:42px 14px 65px}.details{grid-template-columns:1fr;padding:20px}.course-progress{top:66px}.card{padding:20px 16px}.question{padding:19px 15px}.question strong{font-size:16px}.answer,.lesson-link{margin-left:0}.module-head{align-items:flex-start}.module-count{padding-top:6px}}
     @media print{body{background:#fff;color:#111}.topbar,.hero,.details,.course-progress,#quiz,.submit-wrap,.disclaimer,footer{display:none!important}main{padding:0;max-width:none}.result{display:block!important}.certificate{box-shadow:none}}
     .question-nav-wrap{position:sticky;top:143px;z-index:4;margin:0 auto 27px;padding:12px 15px;background:rgba(16,24,35,.92);border:1px solid rgba(139,184,255,.2);border-radius:12px;backdrop-filter:blur(14px)}.question-nav-label{display:flex;justify-content:space-between;gap:10px;margin-bottom:8px;color:#8fa1b7;font:11px 'IBM Plex Mono',monospace}.question-nav-label strong{color:var(--blue)}.question-nav{display:flex;flex-wrap:wrap;gap:5px}.question-nav button{width:27px;height:27px;padding:0;border:1px solid #3b4c62;border-radius:7px;background:#121d2b;color:#9fb0c5;font:600 10px 'IBM Plex Mono',monospace;cursor:pointer}.question-nav button:hover,.question-nav button:focus-visible{border-color:var(--gold);color:#ffe3a1;outline:2px solid rgba(234,189,100,.2);outline-offset:1px}.question-nav button.is-answered{border-color:rgba(69,197,138,.7);background:rgba(69,197,138,.14);color:#92e7bd}@media(max-width:640px){.question-nav-wrap{top:130px;padding:10px 11px}.question-nav{gap:4px}.question-nav button{width:25px;height:25px;font-size:9px}}
+    .site-nav{display:flex;align-items:center;gap:3px;padding:4px;border:1px solid rgba(139,184,255,.18);border-radius:11px;background:rgba(17,25,37,.72)}.site-nav a{padding:7px 10px;border-radius:7px;color:#afbed1;font:600 11px 'IBM Plex Mono',monospace;text-decoration:none;transition:background .18s,color .18s}.site-nav a:hover,.site-nav a:focus-visible,.site-nav a[aria-current=page]{background:rgba(234,181,77,.13);color:var(--gold);outline:none}.site-nav a:focus-visible{box-shadow:0 0 0 2px rgba(234,181,77,.35)}.draft-note{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:9px auto 24px;color:#8fa1b7;font:11px 'IBM Plex Mono',monospace;text-align:center}.draft-note button{border:0;background:none;color:var(--blue);font:inherit;text-decoration:underline;cursor:pointer}.draft-note button:hover,.draft-note button:focus-visible{color:var(--gold)}
+    @media(max-width:640px){.site-nav{display:none}.draft-note{margin-bottom:20px}}
+    .brand{color:var(--text)}
   </style>
 </head>
 <body>
@@ -28,6 +31,7 @@
   <main>
     <section class="hero"><div class="eyebrow">InvestingNoobs Academy · final assessment</div><h1>Prove what you have learned</h1><p>One practical question for each of the 50 lessons. Take your time, use the course articles as your reference, and submit when you are ready.</p><div class="hero-note">50 questions · 80% required to pass · educational assessment</div></section>
     <section class="card details" aria-label="Candidate details"><div class="field"><label for="name">Full name <span aria-hidden="true">*</span></label><input id="name" autocomplete="name" placeholder="Your full name" required></div><div class="field"><label for="email">Email address <span class="hero-note">(optional)</span></label><input id="email" type="email" autocomplete="email" placeholder="you@example.com"></div></section>
+    <p class="draft-note" id="draft-status" role="status" aria-live="polite"><span>Answers are saved on this device.</span><button id="clear-draft" type="button">Clear saved draft</button></p>
     <section class="course-progress" aria-label="Assessment progress"><div class="progress-label"><span>Assessment progress</span><span><strong id="answered">0</strong> / 50 answered</span></div><div class="track"><div id="fill" class="fill"></div></div></section>
     <section class="question-nav-wrap" aria-label="Jump to a question"><div class="question-nav-label"><span>Assessment map</span><strong>40 / 50 correct to pass</strong></div><div class="question-nav" id="question-nav"></div></section>
     <form id="quiz" novalidate></form>
@@ -108,6 +112,19 @@
     });
     const update=()=>nav.querySelectorAll('button').forEach((button,index)=>button.classList.toggle('is-answered',Boolean(document.querySelector('input[name="q'+index+'"]:checked'))));
     document.getElementById('quiz').addEventListener('change',update);update();
+  })();
+  </script>
+  <script>
+  (()=>{
+    const topbar=document.querySelector('.topbar');
+    if(topbar&&!topbar.querySelector('.site-nav')){const nav=document.createElement('nav');nav.className='site-nav';nav.setAttribute('aria-label','Academy navigation');nav.innerHTML='<a href="blog.html">Course</a><a href="test.html" aria-current="page">Assessment</a><a href="index.html">Tracker</a><a href="game.html">Game</a>';const back=topbar.querySelector('.back');if(back)topbar.insertBefore(nav,back);else topbar.appendChild(nav)}
+    const key='in_assessment_draft_v1',name=document.getElementById('name'),email=document.getElementById('email'),status=document.getElementById('draft-status'),clear=document.getElementById('clear-draft'),quiz=document.getElementById('quiz');
+    if(!quiz||!status)return;
+    const message=text=>{const label=status.querySelector('span');if(label)label.textContent=text};
+    const save=()=>{const answers={};quiz.querySelectorAll('input[type="radio"]:checked').forEach(input=>{answers[input.name]=input.value});try{localStorage.setItem(key,JSON.stringify({name:name?.value||'',email:email?.value||'',answers,savedAt:Date.now()}));message('Draft saved locally.')}catch(_){message('Progress is active for this visit.')}};
+    try{const saved=JSON.parse(localStorage.getItem(key)||'null');if(saved&&typeof saved==='object'){if(name)name.value=saved.name||'';if(email)email.value=saved.email||'';Object.entries(saved.answers||{}).forEach(([field,value])=>{const input=quiz.querySelector('input[name="'+field+'"][value="'+value+'"]');if(input){input.checked=true;input.dispatchEvent(new Event('change',{bubbles:true}))}});if(Object.keys(saved.answers||{}).length)message('Draft restored from this device.')}}catch(_){}
+    [name,email].filter(Boolean).forEach(field=>field.addEventListener('input',save));quiz.querySelectorAll('input[type="radio"]').forEach(input=>input.addEventListener('change',save));
+    clear?.addEventListener('click',()=>{try{localStorage.removeItem(key)}catch(_){}if(name)name.value='';if(email)email.value='';quiz.querySelectorAll('input[type="radio"]').forEach(input=>{input.checked=false});if(typeof updateProgress==='function')updateProgress();message('Saved draft cleared.');name?.focus()});
   })();
   </script>
 </body>

@@ -90,10 +90,14 @@
     .premium-upgrade{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:24px auto 0}.premium-upgrade span{padding:7px 11px;border:1px solid rgba(234,181,77,.28);border-radius:999px;background:rgba(234,181,77,.07);color:#d9e3ef;font:11px 'IBM Plex Mono',monospace;letter-spacing:.03em}.premium-upgrade span:first-child{color:var(--gold);border-color:rgba(234,181,77,.55)}.hero h1{background:linear-gradient(100deg,#f6f8fc 22%,#e9bd65 78%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 12px 40px rgba(234,181,77,.12)}.progress-card{border-color:rgba(234,181,77,.3);box-shadow:0 18px 45px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.05)}.module-head{position:relative}.module-head:after{content:"";position:absolute;left:0;bottom:-1px;width:72px;height:2px;background:var(--gold)}.lesson{background:linear-gradient(120deg,rgba(25,36,53,.98),rgba(13,20,30,.98));box-shadow:0 7px 18px rgba(0,0,0,.12)}.lesson:hover,.lesson:focus-visible{box-shadow:0 16px 32px rgba(0,0,0,.32),0 0 0 1px rgba(234,181,77,.18)}.final-card{box-shadow:0 18px 45px rgba(0,0,0,.25),inset 0 1px rgba(255,255,255,.05)}
     .lesson-title{overflow-wrap:anywhere}.lesson:focus-visible{outline:3px solid rgba(234,181,77,.45);outline-offset:3px}.button{touch-action:manipulation}
     @media(max-width:620px){.hero{padding-top:45px}.hero-copy{max-width:38rem}.progress-card{position:relative}.study-panel{padding:16px 14px}.study-title{font-size:18px}.path-pills{gap:6px}.path-pills span{font-size:10px}.course-tools{grid-template-columns:1fr 1fr}.search-field,.reset-filter{grid-column:1/-1}.module-select{min-width:0}.lesson-list{gap:9px}.lesson{width:100%;min-width:0}.lesson-text{overflow:hidden}.lesson-title{font-size:15px;line-height:1.35}.lesson-arrow{width:28px;height:28px;display:grid;place-items:center;border:1px solid rgba(234,181,77,.3);border-radius:50%}.outcomes{padding:21px 16px}.outcome-grid{grid-template-columns:1fr;gap:9px}.outcome-grid article{padding:15px}.faq-section{padding:0}.faq-section h2{font-size:1.9rem}.final-card{width:100%}}
+    .site-nav{display:flex;align-items:center;gap:3px;padding:4px;border:1px solid rgba(139,184,255,.18);border-radius:11px;background:rgba(17,25,37,.72)}.site-nav a{padding:7px 10px;border-radius:7px;color:#afbed1;font:600 11px 'IBM Plex Mono',monospace;text-decoration:none;transition:background .18s,color .18s}.site-nav a:hover,.site-nav a:focus-visible,.site-nav a[aria-current=page]{background:rgba(234,181,77,.13);color:var(--gold);outline:none}.site-nav a:focus-visible{box-shadow:0 0 0 2px rgba(234,181,77,.35)}
+    .continue-row{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 16px;padding:12px 13px;border:1px solid rgba(63,160,110,.35);border-radius:10px;background:rgba(20,64,53,.18)}.continue-copy{min-width:0}.continue-kicker{margin:0 0 2px;color:#7ee2b8;font:500 10px 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase}.continue-title{display:block;overflow:hidden;color:#edf8f2;font-weight:700;text-overflow:ellipsis;white-space:nowrap}.continue-row .button{min-height:38px;padding:8px 12px;white-space:nowrap;font-size:12px}
+    @media(max-width:620px){.site-nav{display:none}.continue-row{align-items:stretch;flex-direction:column;gap:9px}.continue-row .button{width:100%}.continue-title{white-space:normal}}
   </style>
 </head>
 <body>
   <header class="topbar">
+    <nav class="site-nav" aria-label="Academy navigation"><a href="blog.html" aria-current="page">Course</a><a href="test.html">Assessment</a><a href="index.html">Tracker</a><a href="game.html">Game</a></nav>
     <a class="brand" href="index.html">◆ InvestingNoobs</a>
     <a class="back" href="index.html">← Back to tracker</a>
   </header>
@@ -112,6 +116,7 @@
       <h2 class="study-title" id="study-panel-title">Learn the mechanism before you risk money</h2>
       <p class="study-copy">Move from foundations to research, execution and risk. Every chapter includes an explanation, an example, a checklist and a practical exercise.</p>
       <div class="path-pills" aria-label="Course stages"><span>01 Foundations</span><span>02 Markets</span><span>03 Analysis</span><span>04 Risk</span><span>05 Practice</span></div>
+      <div class="continue-row"><div class="continue-copy"><p class="continue-kicker">Recommended next step</p><strong class="continue-title" id="continue-title">Start with lesson 01</strong></div><a class="button" id="continue-link" href="article.html?id=l1">Open lesson &rarr;</a></div>
       <div class="course-tools" aria-label="Find a lesson">
         <label class="search-field"><span class="sr-only">Search lessons</span><input id="lesson-search" type="search" placeholder="Search lessons, topics or keywords" autocomplete="off"></label>
         <label><span class="sr-only">Filter by module</span><select id="module-filter" class="module-select"><option value="all">All modules</option><option value="1">01 · Start Here</option><option value="2">02 · How Markets Work</option><option value="3">03 · Going Deeper into Crypto</option><option value="4">04 · Smart Habits &amp; Risk</option><option value="5">05 · Prop Firms &amp; Professional Trading</option><option value="6">06 · Crypto Essentials</option><option value="7">07 · DeFi &amp; On-chain Skills</option><option value="8">08 · Trading &amp; Portfolio Skills</option><option value="9">09 · Safety &amp; Long-Term Habits</option></select></label>
@@ -264,6 +269,13 @@
       const reset = document.getElementById('reset-filter');
       const status = document.getElementById('lesson-status');
       const noResults = document.getElementById('no-results');
+      const continueTitle = document.getElementById('continue-title');
+      const continueLink = document.getElementById('continue-link');
+      const keywordMap = {
+        l1:'crypto cryptocurrency bitcoin blockchain wallet digital asset',l2:'shares equity company stock ownership dividends valuation',l3:'gold silver metals commodity inflation hedge diversification',l4:'crypto stocks commodities markets comparison asset classes',
+        l5:'market cap capitalization size valuation circulating supply',l6:'volatility risk price swings uncertainty standard deviation',l7:'inflation purchasing power central bank money rates',l8:'fees spread commission slippage trading costs',l9:'bull bear cycle market psychology sentiment',l10:'bitcoin ethereum altcoin layer one token network',l11:'halving bitcoin supply issuance cycle mining',l12:'stablecoin dollar euro reserves peg redemption',l13:'budget savings starting amount capital emergency fund',l14:'gold safe haven metals portfolio diversification',l15:'beginner first steps investing checklist provider custody',l16:'mistakes fomo leverage scams emotional trading',l17:'diversification portfolio correlation concentration',l18:'technical fundamental analysis charts research',l19:'prop firm funded trading evaluation drawdown payout',l20:'trading plan strategy rules journal execution',
+        l21:'risk reward position sizing stop loss',l22:'leverage margin liquidation derivatives futures',l23:'market order limit order execution spread',l24:'liquidity volume slippage market depth',l25:'support resistance trend chart technical analysis',l26:'candlestick chart time frame price action',l27:'moving average indicator signal false signals',l28:'fundamental research revenue users token utility',l29:'on chain data wallet activity blockchain analytics',l30:'tokenomics supply unlock vesting dilution',l31:'smart contract code audit security risk',l32:'defi decentralized finance lending liquidity pools',l33:'yield staking apy apr impermanent loss',l34:'dex swap gas fees slippage',l35:'wallet seed phrase private key custody',l36:'phishing scams security two factor authentication',l37:'exchange counterparty custody withdrawal',l38:'regulation tax records compliance crypto',l39:'stablecoin depeg failure counterparty',l40:'portfolio allocation rebalance investing',l41:'dollar cost averaging recurring investment',l42:'long term investing compound returns',l43:'trading psychology discipline emotions',l44:'backtesting strategy data overfitting',l45:'trading journal review performance',l46:'prop firm rules news overnight consistency',l47:'risk management daily loss drawdown',l48:'portfolio plan goals time horizon',l49:'due diligence checklist red flags',l50:'final review learning assessment certificate'
+      };
       let completed = new Set();
       try {
         const saved = JSON.parse(localStorage.getItem(KEY) || '[]');
@@ -281,10 +293,12 @@
         let visible = 0;
         lessons.forEach(item => item.classList.toggle('is-complete', completed.has(item.dataset.lessonId)));
         lessons.forEach(item => {
+          const id = item.dataset.lessonId;
           const title = item.querySelector('.lesson-title')?.textContent.toLowerCase() || '';
           const number = item.querySelector('.lesson-number')?.textContent.toLowerCase() || '';
           const parentModule = item.closest('.module')?.dataset.module || '';
-          const matches = (!query || title.includes(query) || number.includes(query)) && (module === 'all' || module === parentModule);
+          const keywords = keywordMap[id] || '';
+          const matches = (!query || title.includes(query) || number.includes(query) || keywords.includes(query)) && (module === 'all' || module === parentModule);
           item.classList.toggle('is-hidden', !matches);
           if (matches) visible++;
         });
@@ -294,6 +308,18 @@
           const label = module.querySelector('.module-progress');
           if (label) label.innerHTML = '<strong>' + done + '</strong> / ' + items.length;
         });
+        const next = lessons.find(item => !completed.has(item.dataset.lessonId));
+        if (continueTitle && continueLink) {
+          if (next) {
+            continueTitle.textContent = next.querySelector('.lesson-title')?.textContent.trim() || 'Continue the course';
+            continueLink.href = next.getAttribute('href');
+            continueLink.textContent = 'Open lesson →';
+          } else {
+            continueTitle.textContent = 'Take the final assessment';
+            continueLink.href = 'test.html';
+            continueLink.textContent = 'Start assessment →';
+          }
+        }
         if (count) count.textContent = completed.size;
         if (fill) fill.style.width = (completed.size / total * 100) + '%';
         if (status) status.textContent = query || module !== 'all' ? 'Showing ' + visible + ' of ' + total + ' lessons' : 'Showing all ' + total + ' lessons';

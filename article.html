@@ -6,6 +6,8 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>Crypto &amp; Investing Learning Article | InvestingNoobs</title>
   <meta name="description" content="Practical crypto, investing and trading education for beginners, with examples, risks, checklists and exercises.">
+  <meta name="author" content="InvestingNoobs">
+  <meta name="theme-color" content="#080d15">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="https://investingnoobs.com/article.html">
   <meta property="og:type" content="article">
@@ -38,6 +40,9 @@
     .actions{display:flex;align-items:center;justify-content:space-between;gap:12px}
     .actions .button{min-width:0}
     @media(max-width:620px){body{font-size:16px}.topbar{gap:12px}.brand,.back{font-size:11px}.topbar .back{white-space:nowrap}.actions{display:grid;grid-template-columns:1fr 1fr}.actions .button{width:100%;font-size:13px}.lesson-art svg{min-height:130px}.longform-section p{max-width:none}}
+    .site-nav{display:flex;align-items:center;gap:3px;padding:4px;border:1px solid rgba(139,184,255,.18);border-radius:11px;background:rgba(17,25,37,.72)}.site-nav a{padding:7px 10px;border-radius:7px;color:#afbed1;font:600 11px 'IBM Plex Mono',monospace;text-decoration:none;transition:background .18s,color .18s}.site-nav a:hover,.site-nav a:focus-visible,.site-nav a[aria-current=page]{background:rgba(234,181,77,.13);color:var(--gold);outline:none}.site-nav a:focus-visible{box-shadow:0 0 0 2px rgba(234,181,77,.35)}.article-toc{margin:0 0 26px;padding:16px 18px;border:1px solid rgba(139,184,255,.2);border-radius:12px;background:rgba(52,91,145,.1)}.article-toc-title{margin:0 0 9px;color:var(--blue);font:600 11px 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase}.article-toc-list{display:flex;flex-wrap:wrap;gap:7px 16px;margin:0;padding:0;list-style:none}.article-toc a{color:#cbdcf2;font-size:13px;text-underline-offset:3px}.article-toc a:hover,.article-toc a:focus-visible{color:var(--gold)}
+    @media(max-width:620px){.site-nav{display:none}.article-toc{padding:15px 16px}.article-toc-list{display:grid;gap:8px}.article-toc a{font-size:14px}}
+    .brand{color:var(--text)}
   </style>
 </head>
 <body>
@@ -202,6 +207,23 @@
     const fill=document.getElementById('reading-fill'),percent=document.getElementById('reading-percent');
     function updateReading(){const max=document.documentElement.scrollHeight-window.innerHeight;const value=max>0?Math.min(100,Math.max(0,window.scrollY/max*100)):100;fill.style.width=value+'%';percent.textContent=Math.round(value)+'%'}
     window.addEventListener('scroll',updateReading,{passive:true});window.addEventListener('resize',updateReading);updateCompletion();updateReading();
+  })();
+  </script>
+  <script>
+  (()=>{
+    const topbar=document.querySelector('.topbar');
+    if(topbar&&!topbar.querySelector('.site-nav')){const nav=document.createElement('nav');nav.className='site-nav';nav.setAttribute('aria-label','Academy navigation');nav.innerHTML='<a href="blog.html" aria-current="page">Course</a><a href="test.html">Assessment</a><a href="index.html">Tracker</a><a href="game.html">Game</a>';const back=topbar.querySelector('.back');if(back)topbar.insertBefore(nav,back);else topbar.appendChild(nav)}
+    const article=document.getElementById('article');
+    if(!article)return;
+    const headings=[...article.querySelectorAll('h2')].filter(heading=>!heading.closest('.course-context')&&!heading.closest('.article-toc'));
+    if(headings.length<2)return;
+    const slug=text=>text.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+    const toc=document.createElement('nav');toc.className='article-toc';toc.setAttribute('aria-label','On this lesson');
+    const title=document.createElement('p');title.className='article-toc-title';title.textContent='On this lesson';toc.appendChild(title);
+    const list=document.createElement('ul');list.className='article-toc-list';
+    headings.forEach((heading,index)=>{if(!heading.id)heading.id='section-'+(index+1)+'-'+slug(heading.textContent).slice(0,42);const item=document.createElement('li');const link=document.createElement('a');link.href='#'+heading.id;link.textContent=heading.textContent.trim();item.appendChild(link);list.appendChild(item)});
+    toc.appendChild(list);
+    const progress=article.querySelector('.reading-progress');if(progress)progress.insertAdjacentElement('afterend',toc);else{const meta=article.querySelector('.article-meta');if(meta)meta.insertAdjacentElement('afterend',toc);else article.prepend(toc)}
   })();
   </script>
  </body>
