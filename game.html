@@ -1407,7 +1407,10 @@ function repairTextNodes(root=document){
 }
 document.addEventListener('DOMContentLoaded',()=>{
   repairTextNodes();
-  new MutationObserver(mutations=>{mutations.forEach(m=>m.addedNodes.forEach(n=>{
+  // Solo observamos nodos nuevos. Las traducciones modifican nodos de texto y
+  // no deben volver a disparar el observador sobre sí mismas: antes esto podía
+  // crear un ciclo de trabajo y dejar los botones sin respuesta.
+  new MutationObserver(mutations=>{mutations.filter(m=>m.type==='childList'&&m.addedNodes.length).forEach(m=>m.addedNodes.forEach(n=>{
     if(n.nodeType===Node.TEXT_NODE){const fixed=repairEncoding(n.nodeValue);if(fixed!==n.nodeValue)n.nodeValue=fixed;}
     else if(n.nodeType===Node.ELEMENT_NODE)repairTextNodes(n);
   }));
@@ -4964,6 +4967,8 @@ RUNTIME_TRANSLATIONS.zh.push(
 ['en','zh'].forEach(l=>RUNTIME_TRANSLATIONS[l].sort((a,b)=>b[0].source.length-a[0].source.length));
 
 RUNTIME_TRANSLATIONS.en.push(
+  [/^Cargando\.\.\.$/g,'Loading...'],
+  [/^Toca para hablar(?: con ([^\s]+))? →$/g,'Tap to talk$1 →'],
   [/Marcar completada/g,'Mark completed'],
   [/OreX Miner�a/g,'OreX Mining'],
   [/L�nea de Cr�dito Revolving/g,'Revolving Credit Line'],
