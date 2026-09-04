@@ -1398,7 +1398,12 @@ function repairVisibleText(value){
     ['pr\uFFFDximos','pr\u00F3ximos'],['inter\uFFFDs','inter\u00E9s'],['integraci\uFFFDn','integraci\u00F3n'],['adopci\uFFFDn','adopci\u00F3n'],
     ['h\uFFFDdrica','h\u00EDdrica'],['pr\uFFFDximo','pr\u00F3ximo'],['r\uFFFDpida','r\u00E1pida'],
     ['a\uFFFDn','a\u00FAn'],['a\uFFFDo','a\u00F1o'],['p\uFFFDnico','p\u00E1nico'],['p\uFFFDblico','p\u00FAblico'],
-    ['oficial del pa\uFFFDs','oficial del pa\u00EDs'],['pa\uFFFDs','pa\u00EDs'],['econom\uFFFDa','econom\u00EDa'],['cu\uFFFDntica','cu\u00E1ntica']
+    ['oficial del pa\uFFFDs','oficial del pa\u00EDs'],['pa\uFFFDs','pa\u00EDs'],['econom\uFFFDa','econom\u00EDa'],['cu\uFFFDntica','cu\u00E1ntica'],
+    ['pol\uFFFDtica','pol\u00EDtica'],['capitalizaci\uFFFDn','capitalizaci\u00F3n'],['bill\uFFFDn','bill\u00F3n'],
+    ['gan\uFFFD','gan\u00F3'],['ten\uFFFDa','ten\u00EDa'],['sab\uFFFDa','sab\u00EDa'],['m\uFFFDnimos','m\u00EDnimos'],
+    ['inflaci\uFFFDn','inflaci\u00F3n'],['inversi\uFFFDn','inversi\u00F3n'],['hab\uFFFDan','hab\u00EDan'],
+    ['geopol\uFFFDtico','geopol\u00EDtico'],['pas\uFFFD','pas\u00F3'],['pas\u00ED','pas\u00F3'],
+    ['baj\u00B7','baj\u00F3'],['vend\u00ED\u00B7','vendi\u00F3'],['vend\u00ED\uFFFD','vendi\u00F3'],['recuper\u00B7','recuper\u00F3']
   ];
   return fixes.concat(replacementFixes).reduce((out,[bad,good])=>out.split(bad).join(good),value);
 }
