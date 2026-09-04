@@ -4428,6 +4428,11 @@ function translateRuntimeText(value,lang){
       .replace(/\bUn pa(?:\u00ed|\uFFFD)s entero apostando por ello\b/g,'An entire country betting on it')
       .replace(/\bDeFi es el futuro de las finanzas\b/g,'DeFi is the future of finance')
       .replace(/\bEl que entra antes, gana m(?:\u00e1|\uFFFD)s\b/g,'Those who enter early can earn more')
+      .replace(/\bTus negocios generan (\d+) days de bonus\b/g,'Your businesses generate $1 days of bonus')
+      .replace(/\bEsto es lo bueno de m(?:\u00fa|\uFFFD)ltiples negocios\b/g,'This is the strength of multiple businesses')
+      .replace(/\bLa diversificaci(?:\u00f3|\uFFFD)n te protege\b/g,'Diversification protects you')
+      .replace(/\bUn partnership estrat(?:\u00e9|\uFFFD)gico puede cambiar el valor de un activo en horas\b/g,'A strategic partnership can change an asset\'s value in hours')
+      .replace(/\bEl precio, ya lo ves\b/g,'The price tells the story')
       .replace(/\bAdopci(?:\u00f3|\uFFFD)n\b/g,'adoption');
   }
   return out;
