@@ -1403,7 +1403,10 @@ function repairVisibleText(value){
     ['gan\uFFFD','gan\u00F3'],['ten\uFFFDa','ten\u00EDa'],['sab\uFFFDa','sab\u00EDa'],['m\uFFFDnimos','m\u00EDnimos'],
     ['inflaci\uFFFDn','inflaci\u00F3n'],['inversi\uFFFDn','inversi\u00F3n'],['hab\uFFFDan','hab\u00EDan'],
     ['geopol\uFFFDtico','geopol\u00EDtico'],['pas\uFFFD','pas\u00F3'],['pas\u00ED','pas\u00F3'],
-    ['baj\u00B7','baj\u00F3'],['vend\u00ED\u00B7','vendi\u00F3'],['vend\u00ED\uFFFD','vendi\u00F3'],['recuper\u00B7','recuper\u00F3']
+    ['baj\u00B7','baj\u00F3'],['vend\u00ED\u00B7','vendi\u00F3'],['vend\u00ED\uFFFD','vendi\u00F3'],['recuper\u00B7','recuper\u00F3'],
+    ['tecnol\uFFFDgico','tecnol\u00F3gico'],['Inflaci\uFFFDn','Inflaci\u00F3n'],['Coalici\uFFFDn','Coalici\u00F3n'],
+    ['d\uFFFDlar','d\u00F3lar'],['Recesi\uFFFDn','Recesi\u00F3n'],['Inversi\uFFFDn','Inversi\u00F3n'],
+    ['prohibici\uFFFDn','prohibici\u00F3n'],['Energ\uFFFDas','Energ\u00EDas'],['recibir\uFFFDn','recibir\u00E1n']
   ];
   return fixes.concat(replacementFixes).reduce((out,[bad,good])=>out.split(bad).join(good),value);
 }
