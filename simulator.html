@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Paper Trading Simulator for Beginners | InvestingNoobs</title>
+  <meta name="description" content="Practice crypto, stock and commodity trading with a free paper trading simulator. Learn position sizing, risk management and portfolio basics without risking real money.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://investingnoobs.com/simulator.html">
+  <meta property="og:title" content="Paper Trading Simulator for Beginners | InvestingNoobs">
+  <meta property="og:description" content="Build a virtual portfolio, place practice trades and learn risk management without using real money.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://investingnoobs.com/simulator.html">
+  <meta name="theme-color" content="#08111d">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebApplication",
+    "name":"InvestingNoobs Paper Trading Simulator",
+    "url":"https://investingnoobs.com/simulator.html",
+    "applicationCategory":"EducationalApplication",
+    "operatingSystem":"Any",
+    "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+    "description":"A free educational paper trading simulator for learning portfolio construction and risk management with virtual money."
+  }
+  </script>
+  <style>
+    :root{--bg:#070d15;--panel:#101a28;--panel2:#142135;--line:#263b55;--text:#f4f6f8;--muted:#9cacbf;--gold:#e7b85e;--gold2:#f7d58b;--cyan:#4ed3df;--green:#34c38f;--red:#ff6c81;--purple:#b69cff;--shadow:0 24px 70px rgba(0,0,0,.28)}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:radial-gradient(circle at 12% 0%,rgba(52,211,153,.08),transparent 32rem),radial-gradient(circle at 100% 8%,rgba(231,184,94,.08),transparent 28rem),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}
+    a{color:inherit}
+    .shell{width:min(1180px,calc(100% - 32px));margin:0 auto}
+    .topbar{border-bottom:1px solid rgba(156,172,191,.18);background:rgba(7,13,21,.82);backdrop-filter:blur(16px);position:sticky;top:0;z-index:10}
+    .topbar-inner{min-height:68px;display:flex;align-items:center;gap:20px}
+    .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;letter-spacing:.01em}
+    .brand-mark{width:25px;height:25px;border:1px solid var(--gold);border-radius:8px;display:grid;place-items:center;color:var(--gold);font-size:13px;transform:rotate(45deg)}
+    .brand-mark span{transform:rotate(-45deg)}
+    .nav{display:flex;align-items:center;gap:6px;margin-left:auto}
+    .nav a{color:var(--muted);text-decoration:none;font-size:13px;padding:9px 12px;border-radius:10px}
+    .nav a:hover,.nav a:focus-visible{color:var(--text);background:rgba(78,211,223,.1);outline:none}
+    .nav .active{color:var(--gold2);border:1px solid rgba(231,184,94,.35);background:rgba(231,184,94,.08)}
+    .pill{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;color:var(--green);font-size:11px;border:1px solid rgba(52,195,143,.3);background:rgba(52,195,143,.08);white-space:nowrap}
+    .hero{padding:58px 0 30px;display:grid;grid-template-columns:1.1fr .9fr;align-items:end;gap:32px}
+    .eyebrow{color:var(--gold);font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:700}
+    h1,h2,h3{margin:0;font-family:Georgia,"Times New Roman",serif;letter-spacing:-.025em}
+    h1{font-size:clamp(38px,6vw,70px);line-height:1.02;margin-top:13px;max-width:700px}
+    .hero p{color:#c6d3e3;max-width:640px;font-size:17px;margin:20px 0 0}
+    .hero-note{border:1px solid rgba(78,211,223,.22);border-radius:18px;padding:20px;background:linear-gradient(145deg,rgba(20,33,53,.9),rgba(12,20,32,.76));box-shadow:var(--shadow)}
+    .hero-note strong{display:block;color:var(--cyan);font-size:13px;margin-bottom:7px}
+    .hero-note p{font-size:13px;margin:0;color:var(--muted)}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+    .stat{border:1px solid var(--line);background:rgba(16,26,40,.86);border-radius:15px;padding:15px 16px;min-width:0}
+    .stat-label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+    .stat-value{font-size:20px;font-weight:800;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .positive{color:var(--green)}.negative{color:var(--red)}.gold{color:var(--gold2)}
+    .workspace{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);gap:18px;align-items:start;padding:16px 0 50px}
+    .panel{background:linear-gradient(145deg,rgba(16,26,40,.96),rgba(11,18,29,.96));border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow)}
+    .panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:22px 22px 15px;border-bottom:1px solid rgba(156,172,191,.13)}
+    .panel-head h2{font-size:25px}.panel-head p{margin:4px 0 0;color:var(--muted);font-size:12px}
+    .market-body{padding:18px 22px 22px}
+    .ticket{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:15px;border:1px solid rgba(78,211,223,.18);background:rgba(20,33,53,.55);border-radius:15px}
+    label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;display:block;margin-bottom:6px}
+    select,input{width:100%;border:1px solid #324962;border-radius:10px;background:#0a1320;color:var(--text);padding:11px 12px;font:inherit;font-size:14px;outline:none}
+    select:focus,input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(78,211,223,.12)}
+    .full{grid-column:1/-1}.amount-row{display:flex;gap:7px}.amount-row input{flex:1;min-width:0}.quick{padding:0 10px;border-radius:9px;background:#17263a;color:var(--gold2);border:1px solid #304865;cursor:pointer;font-size:11px}.quick:hover{border-color:var(--gold)}
+    .quote{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:15px 0 13px;padding:14px 15px;border-radius:13px;background:rgba(7,13,21,.64);border:1px solid rgba(156,172,191,.13)}
+    .quote-name{font-weight:800}.quote-name small{display:block;color:var(--muted);font-size:10px;font-weight:500;margin-top:2px}.quote-price{text-align:right;font-weight:800}.quote-price small{display:block;font-size:11px;margin-top:2px}
+    .chart{height:188px;border:1px solid rgba(156,172,191,.14);border-radius:13px;background:linear-gradient(180deg,rgba(7,13,21,.76),rgba(11,25,37,.84));overflow:hidden;padding:8px}.chart canvas{width:100%;height:100%;display:block}
+    .action-row{display:flex;gap:9px;margin-top:13px}.primary,.secondary,.danger{border:0;border-radius:11px;padding:12px 15px;font:inherit;font-weight:800;cursor:pointer;transition:transform .16s ease,filter .16s ease}.primary{background:linear-gradient(135deg,#36c892,#129b71);color:#03130e;flex:1}.secondary{background:#17263a;color:var(--text);border:1px solid #38516e}.danger{background:rgba(255,108,129,.1);border:1px solid rgba(255,108,129,.4);color:#ff9aaa}.primary:hover,.secondary:hover,.danger:hover{filter:brightness(1.1);transform:translateY(-1px)}button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+    .quote-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:18px}.quote-btn{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:10px;border:1px solid #263b55;background:#0c1726;border-radius:11px;color:var(--text);cursor:pointer;text-align:left}.quote-btn:hover,.quote-btn.selected{border-color:var(--gold);background:rgba(231,184,94,.08)}.quote-btn strong{font-size:12px}.quote-btn span{font-size:11px;color:var(--muted)}
+    .side{display:grid;gap:18px}.side .panel-body{padding:18px 20px 20px}.side h2{font-size:24px}.side p{font-size:13px;color:#c1cedd;margin:8px 0 0}.rule-list{display:grid;gap:10px;margin-top:15px}.rule{display:flex;gap:10px;padding:11px;border-radius:12px;background:rgba(20,33,53,.62);border:1px solid rgba(156,172,191,.12)}.rule b{color:var(--gold2);font-size:12px}.rule span{font-size:12px;color:var(--muted)}
+    .formula{margin-top:15px;padding:13px;border:1px dashed rgba(231,184,94,.45);border-radius:12px;color:var(--gold2);font-family:ui-monospace,SFMono-Regular,monospace;font-size:12px;text-align:center}
+    .portfolio,.history{margin-top:18px}.table-wrap{overflow-x:auto}.table{width:100%;border-collapse:collapse;font-size:12px}.table th{color:var(--muted);font-weight:600;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.1em}.table th,.table td{padding:12px 10px;border-bottom:1px solid rgba(156,172,191,.12);white-space:nowrap}.table td:first-child,.table th:first-child{padding-left:0}.empty{color:var(--muted);font-size:13px;padding:16px 0}.mini-action{border:1px solid #38516e;background:#152338;color:var(--text);border-radius:8px;padding:5px 8px;font-size:11px;cursor:pointer}.mini-action:hover{border-color:var(--gold)}
+    .risk-output{min-height:43px;margin-top:12px;border-radius:11px;background:rgba(7,13,21,.6);border:1px solid rgba(156,172,191,.14);padding:11px;color:var(--muted);font-size:12px}.risk-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.risk-grid .full{grid-column:1/-1}.learn-more{display:inline-flex;margin-top:15px;color:var(--cyan);font-size:12px;text-decoration:none}.learn-more:hover{text-decoration:underline}
+    .footer{border-top:1px solid rgba(156,172,191,.15);padding:25px 0 36px;color:var(--muted);font-size:11px}.footer strong{color:#dce5ee}.footer-links{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px}.footer a{color:var(--muted);text-decoration:none}.footer a:hover{color:var(--text)}
+    .toast{position:fixed;right:18px;bottom:18px;max-width:330px;padding:13px 15px;border-radius:12px;background:#17263a;border:1px solid var(--cyan);box-shadow:var(--shadow);font-size:12px;opacity:0;transform:translateY(10px);pointer-events:none;transition:.22s ease;z-index:20}.toast.show{opacity:1;transform:none}
+    @media(max-width:850px){.hero{grid-template-columns:1fr;padding-top:40px}.hero-note{max-width:600px}.workspace{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:560px){.shell{width:min(100% - 20px,1180px)}.topbar-inner{min-height:60px;gap:10px}.nav{gap:0}.nav a{font-size:11px;padding:8px 7px}.pill{display:none}h1{font-size:42px}.hero p{font-size:15px}.stats{gap:8px}.stat{padding:12px}.stat-value{font-size:16px}.panel-head{padding:17px 15px 13px}.panel-head h2{font-size:22px}.market-body{padding:14px 15px 17px}.ticket{grid-template-columns:1fr;padding:12px}.full{grid-column:auto}.quote-list{grid-template-columns:1fr}.chart{height:165px}.action-row{flex-direction:column}.risk-grid{grid-template-columns:1fr}.risk-grid .full{grid-column:auto}.table{font-size:11px}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <a class="brand" href="index.html" aria-label="InvestingNoobs home"><span class="brand-mark"><span>↗</span></span> InvestingNoobs</a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="index.html">Tracker</a><a href="blog.html">Learn</a><a href="game.html">Game</a><a href="simulator.html" class="active" aria-current="page">Practice</a>
+      </nav>
+      <span class="pill">● Virtual money only</span>
+    </div>
+  </header>
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">InvestingNoobs · Practice Lab</div>
+        <h1>Learn to trade before you risk a cent.</h1>
+        <p>Build a portfolio with virtual money, place simple practice orders and see how position sizing changes your results. Every decision is saved in this browser so you can learn by doing.</p>
+      </div>
+      <aside class="hero-note"><strong>Educational simulation</strong><p>Prices are illustrative and the market moves are simulated. This lab does not execute trades, connect to a broker or provide financial advice.</p></aside>
+    </section>
+    <section class="stats" aria-label="Practice account summary">
+      <div class="stat"><div class="stat-label">Cash available</div><div class="stat-value gold" id="cashValue">$10,000.00</div></div>
+      <div class="stat"><div class="stat-label">Portfolio value</div><div class="stat-value" id="equityValue">$10,000.00</div></div>
+      <div class="stat"><div class="stat-label">Total P/L</div><div class="stat-value" id="pnlValue">$0.00</div></div>
+      <div class="stat"><div class="stat-label">Open positions</div><div class="stat-value" id="positionsValue">0</div></div>
+    </section>
+    <section class="workspace">
+      <div>
+        <article class="panel">
+          <div class="panel-head"><div><h2>Practice market</h2><p>Choose an asset and place a virtual market order.</p></div><span class="pill">Updates every 5s</span></div>
+          <div class="market-body">
+            <div class="ticket">
+              <div><label for="assetSelect">Asset</label><select id="assetSelect" aria-label="Choose an asset"></select></div>
+              <div><label for="sideSelect">Action</label><select id="sideSelect"><option value="buy">Buy / add to position</option><option value="sell">Sell / reduce position</option></select></div>
+              <div class="full"><label for="amountInput">Order value in USD</label><div class="amount-row"><input id="amountInput" type="number" min="1" step="1" value="500" inputmode="decimal"><button class="quick" type="button" data-amount="100">$100</button><button class="quick" type="button" data-amount="500">$500</button><button class="quick" type="button" data-amount="1000">$1k</button></div></div>
+            </div>
+            <div class="quote"><div class="quote-name" id="selectedName">Bitcoin <small>BTC · Crypto</small></div><div class="quote-price" id="selectedPrice">$100,000.00<small class="positive">▲ 0.00%</small></div></div>
+            <div class="chart"><canvas id="priceChart" aria-label="Illustrative price chart"></canvas></div>
+            <div class="action-row"><button class="primary" id="orderButton" type="button">Place demo order</button><button class="secondary" id="resetButton" type="button">Reset session</button></div>
+            <div class="quote-list" id="quoteList" aria-label="Market watchlist"></div>
+          </div>
+        </article>
+        <article class="panel portfolio">
+          <div class="panel-head"><div><h2>Your paper portfolio</h2><p>Track average cost, current value and unrealised P/L.</p></div></div>
+          <div class="market-body table-wrap"><table class="table"><thead><tr><th>Asset</th><th>Units</th><th>Avg. cost</th><th>Value</th><th>P/L</th><th></th></tr></thead><tbody id="portfolioBody"></tbody></table></div>
+        </article>
+        <article class="panel history">
+          <div class="panel-head"><div><h2>Trade journal</h2><p>A record of your decisions, not a prediction engine.</p></div></div>
+          <div class="market-body table-wrap"><table class="table"><thead><tr><th>Time</th><th>Action</th><th>Asset</th><th>Amount</th><th>Price</th></tr></thead><tbody id="historyBody"></tbody></table></div>
+        </article>
+      </div>
+      <aside class="side">
+        <article class="panel"><div class="panel-head"><div><h2>Risk checklist</h2><p>Use a process before you press buy.</p></div></div><div class="panel-body"><div class="rule-list"><div class="rule"><b>01</b><span>Define your time horizon and thesis before entering.</span></div><div class="rule"><b>02</b><span>Risk only a small, predefined amount per idea.</span></div><div class="rule"><b>03</b><span>Do not confuse a price move with proof that you are right.</span></div><div class="rule"><b>04</b><span>Review your journal for repeatable mistakes.</span></div></div><div class="formula">Position size = account risk ÷ stop distance</div><a class="learn-more" href="blog.html">Study the free investing course →</a></div></article>
+        <article class="panel"><div class="panel-head"><div><h2>Position-size coach</h2><p>Try the calculation with your own assumptions.</p></div></div><div class="panel-body"><div class="risk-grid"><div><label for="accountInput">Account size</label><input id="accountInput" type="number" value="10000" min="1"></div><div><label for="riskInput">Risk %</label><input id="riskInput" type="number" value="1" min="0.1" step="0.1"></div><div class="full"><label for="stopInput">Stop distance %</label><input id="stopInput" type="number" value="5" min="0.1" step="0.1"></div></div><div class="risk-output" id="riskOutput">Risking 1% with a 5% stop gives an illustrative position size of $2,000.00.</div></div></article>
+      </aside>
+    </section>
+  </main>
+  <footer class="footer"><div class="shell"><strong>InvestingNoobs Practice Lab</strong> · Built for learning, not financial advice.<div class="footer-links"><a href="index.html">Market tracker</a><a href="blog.html">Learning course</a><a href="game.html">Tycoon game</a><a href="privacidad.html">Privacy</a></div></div></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    (function(){
+      var assets={
+        BTC:{name:'Bitcoin',kind:'Crypto',price:100000,color:'#f7b955'},
+        ETH:{name:'Ethereum',kind:'Crypto',price:3500,color:'#9c9cff'},
+        AAPL:{name:'Apple',kind:'Stock',price:225,color:'#60a5fa'},
+        TSLA:{name:'Tesla',kind:'Stock',price:260,color:'#fb7185'},
+        GOLD:{name:'Gold',kind:'Commodity',price:3350,color:'#e7b85e'},
+        OIL:{name:'Crude oil',kind:'Commodity',price:70,color:'#34c38f'}
+      };
+      var keys=Object.keys(assets), selected='BTC', storageKey='investingnoobs-practice-v1';
+      var state={cash:10000,positions:{},trades:[],history:{}};
+      var $=function(id){return document.getElementById(id)};
+      function money(n){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:2}).format(Number(n)||0)}
+      function number(n){return new Intl.NumberFormat('en-US',{maximumFractionDigits:6}).format(Number(n)||0)}
+      function load(){try{var saved=JSON.parse(localStorage.getItem(storageKey)||'null');if(saved&&typeof saved.cash==='number'){state=saved}}catch(e){}}
+      function save(){try{localStorage.setItem(storageKey,JSON.stringify(state))}catch(e){}}
+      function currentPrice(key){return assets[key].price}
+      function seedHistory(key){if(state.history[key])return;var p=assets[key].price;state.history[key]=[];for(var i=0;i<34;i++){var wave=Math.sin(i*.58+key.length)*.025+Math.cos(i*.19)*.012;state.history[key].push(p*(1+wave-(34-i)*.002))}}
+      function formatDelta(value){var cls=value>=0?'positive':'negative';var arrow=value>=0?'▲':'▼';return '<small class="'+cls+'">'+arrow+' '+Math.abs(value).toFixed(2)+'%</small>'}
+      function totalValue(){var total=state.cash;keys.forEach(function(k){var pos=state.positions[k];if(pos)total+=pos.units*currentPrice(k)});return total}
+      function totalCost(){var n=0;keys.forEach(function(k){var p=state.positions[k];if(p)n+=p.units*p.avgCost});return n}
+      function renderAssetSelect(){var html='';keys.forEach(function(k){html+='<option value="'+k+'">'+assets[k].name+' ('+k+')</option>'});$('assetSelect').innerHTML=html;$('assetSelect').value=selected}
+      function renderSelected(){var a=assets[selected];seedHistory(selected);var hist=state.history[selected];var first=hist[0]||a.price;var delta=((a.price-first)/first)*100;$('selectedName').innerHTML=a.name+' <small>'+selected+' · '+a.kind+'</small>';$('selectedPrice').innerHTML=money(a.price)+formatDelta(delta);drawChart(hist,a.color)}
+      function renderQuotes(){var html='';keys.forEach(function(k){var a=assets[k];seedHistory(k);var start=state.history[k][0]||a.price;var delta=((a.price-start)/start)*100;html+='<button class="quote-btn '+(k===selected?'selected':'')+'" type="button" data-symbol="'+k+'"><span><strong>'+a.name+'</strong><br><span>'+k+' · '+a.kind+'</span></span><span style="text-align:right"><strong>'+money(a.price)+'</strong><br>'+formatDelta(delta)+'</span></button>'});$('quoteList').innerHTML=html;document.querySelectorAll('.quote-btn').forEach(function(btn){btn.addEventListener('click',function(){selected=btn.getAttribute('data-symbol');$('assetSelect').value=selected;renderSelected();renderQuotes()})})}
+      function renderStats(){var equity=totalValue(),cost=totalCost(),pnl=equity-10000;var positions=Object.keys(state.positions).filter(function(k){return state.positions[k].units>0}).length;$('cashValue').textContent=money(state.cash);$('equityValue').textContent=money(equity);$('pnlValue').textContent=money(pnl);$('pnlValue').className='stat-value '+(pnl>=0?'positive':'negative');$('positionsValue').textContent=positions}
+      function renderPortfolio(){var html='';keys.forEach(function(k){var pos=state.positions[k];if(!pos||pos.units<=0)return;var value=pos.units*currentPrice(k),pnl=value-pos.units*pos.avgCost;html+='<tr><td><strong>'+assets[k].name+'</strong><br><span style="color:var(--muted)">'+k+'</span></td><td>'+number(pos.units)+'</td><td>'+money(pos.avgCost)+'</td><td>'+money(value)+'</td><td class="'+(pnl>=0?'positive':'negative')+'">'+money(pnl)+'</td><td><button class="mini-action" type="button" data-sell="'+k+'">Sell</button></td></tr>'});$('portfolioBody').innerHTML=html||'<tr><td colspan="6" class="empty">No positions yet. Start with a small practice order.</td></tr>';document.querySelectorAll('[data-sell]').forEach(function(btn){btn.addEventListener('click',function(){selected=btn.getAttribute('data-sell');$('assetSelect').value=selected;$('sideSelect').value='sell';$('amountInput').value=500;renderSelected();renderQuotes();window.scrollTo({top:0,behavior:'smooth'})})})}
+      function renderHistory(){var html='';state.trades.slice(0,12).forEach(function(t){html+='<tr><td>'+t.time+'</td><td class="'+(t.side==='buy'?'positive':'negative')+'">'+(t.side==='buy'?'BUY':'SELL')+'</td><td>'+t.symbol+'</td><td>'+money(t.amount)+'</td><td>'+money(t.price)+'</td></tr>'});$('historyBody').innerHTML=html||'<tr><td colspan="5" class="empty">Your practice trades will appear here.</td></tr>'}
+      function renderAll(){renderStats();renderSelected();renderQuotes();renderPortfolio();renderHistory();updateRisk()}
+      function drawChart(values,color){var canvas=$('priceChart'),box=canvas.getBoundingClientRect(),dpr=window.devicePixelRatio||1,w=Math.max(260,Math.floor(box.width*dpr)),h=Math.max(130,Math.floor(box.height*dpr));canvas.width=w;canvas.height=h;var ctx=canvas.getContext('2d');ctx.clearRect(0,0,w,h);ctx.strokeStyle='rgba(156,172,191,.13)';ctx.lineWidth=1;for(var i=1;i<5;i++){var gy=(h/5)*i;ctx.beginPath();ctx.moveTo(0,gy);ctx.lineTo(w,gy);ctx.stroke()}var min=Math.min.apply(null,values),max=Math.max.apply(null,values),range=max-min||1;var pts=values.map(function(v,i){return{x:(i/(values.length-1))*w,y:h-((v-min)/range)*(h*.78)-h*.1}});var grad=ctx.createLinearGradient(0,0,0,h);grad.addColorStop(0,color+'66');grad.addColorStop(1,color+'00');ctx.beginPath();pts.forEach(function(p,i){if(i===0)ctx.moveTo(p.x,p.y);else ctx.lineTo(p.x,p.y)});ctx.lineTo(w,h);ctx.lineTo(0,h);ctx.closePath();ctx.fillStyle=grad;ctx.fill();ctx.beginPath();pts.forEach(function(p,i){if(i===0)ctx.moveTo(p.x,p.y);else ctx.lineTo(p.x,p.y)});ctx.strokeStyle=color;ctx.lineWidth=2.5*dpr;ctx.stroke();var last=pts[pts.length-1];ctx.beginPath();ctx.arc(last.x,last.y,4*dpr,0,Math.PI*2);ctx.fillStyle=color;ctx.fill()}
+      function toast(message){var el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(function(){el.classList.remove('show')},2600)}
+      function order(){var amount=Number($('amountInput').value),side=$('sideSelect').value,pos=state.positions[selected]||{units:0,avgCost:0};if(!amount||amount<=0){toast('Enter an amount greater than $0.');return}var price=currentPrice(selected),units=amount/price;if(side==='buy'){if(amount>state.cash){toast('That order is larger than your available cash.');return}state.cash-=amount;pos.avgCost=((pos.units*pos.avgCost)+(units*price))/(pos.units+units);pos.units+=units;state.positions[selected]=pos}else{if(!pos.units||units>pos.units){toast('You do not have enough of this asset to sell that amount.');return}state.cash+=amount;pos.units-=units;if(pos.units<0.0000001)delete state.positions[selected]}state.trades.unshift({time:new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}),side:side,symbol:selected,amount:amount,price:price});save();renderAll();toast((side==='buy'?'Bought ':'Sold ')+money(amount)+' of '+assets[selected].name+' in practice mode.')}
+      function updatePrices(){keys.forEach(function(k,i){var a=assets[k],move=(Math.sin(Date.now()/17000+i*1.8)*.004)+(Math.random()-.5)*.002;a.price=Math.max(a.price*(1+move),.01);if(state.history[k])state.history[k].push(a.price);if(state.history[k]&&state.history[k].length>40)state.history[k].shift()});renderAll()}
+      function updateRisk(){var account=Number($('accountInput').value)||0,risk=Number($('riskInput').value)||0,stop=Number($('stopInput').value)||0;var size=stop>0?account*(risk/100)/(stop/100):0;$('riskOutput').textContent=stop>0?'Risking '+risk+'% with a '+stop+'% stop gives an illustrative position size of '+money(size)+'.':'Enter a stop distance greater than 0%.'}
+      function reset(){if(!window.confirm('Reset this practice account and remove its trade journal?'))return;state={cash:10000,positions:{},trades:[],history:{}};keys.forEach(function(k){assets[k].price={BTC:100000,ETH:3500,AAPL:225,TSLA:260,GOLD:3350,OIL:70}[k]});save();renderAll();toast('Practice session reset to $10,000.00.')}
+      load();renderAssetSelect();renderAll();$('assetSelect').addEventListener('change',function(){selected=this.value;renderSelected();renderQuotes()});$('orderButton').addEventListener('click',order);$('resetButton').addEventListener('click',reset);document.querySelectorAll('.quick').forEach(function(btn){btn.addEventListener('click',function(){$('amountInput').value=btn.getAttribute('data-amount')})});['accountInput','riskInput','stopInput'].forEach(function(id){$(id).addEventListener('input',updateRisk)});window.addEventListener('resize',function(){drawChart(state.history[selected]||[assets[selected].price],assets[selected].color)});setInterval(updatePrices,5000);
+    })();
+  </script>
+</body>
+</html>
