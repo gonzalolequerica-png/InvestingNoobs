@@ -28,6 +28,10 @@ Alternatively, point `PLAYWRIGHT_MODULE` at an existing Playwright module.
 
 `ROOM_QA_URL` can point at the published game for the same browser checks.
 Screenshots go into ignored `test-results/`.
+`node tests/room-camera-smoke.cjs` checks camera preference persistence, reset,
+recovery from invalid preferences, and the outdoor night scene on mobile.
+Camera preferences are stored separately from the game save. Outdoor lamps
+share emissive materials and light-pool textures, without extra shadow lights.
 
 Tests use a separate browser profile and simulated game balances, never the
 player's browser or saved data. Checks cover:

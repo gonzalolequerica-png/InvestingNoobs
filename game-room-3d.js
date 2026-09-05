@@ -19,6 +19,12 @@ const icon = name => `<svg viewBox="0 0 20 20" aria-hidden="true">${ICONS[name]}
 const text = (el, value) => { if (el.textContent !== value) el.textContent = value; };
 const setAttr = (el, name, value) => { if (el.getAttribute(name) !== value) el.setAttribute(name, value); };
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+function savedCamera(){
+  try{const p=JSON.parse(localStorage.getItem('ct_room_camera')||'{}')||{};
+    return {focus:p.focus==='inside'?'inside':'all',zoom:Number.isFinite(p.zoom)?Math.max(.85,Math.min(1.1,p.zoom)):1,yaw:Number.isFinite(p.yaw)?Math.max(-.18,Math.min(.18,p.yaw)):0};
+  }catch{return {focus:'all',zoom:1,yaw:0};}
+}
+function rememberCamera(view){try{localStorage.setItem('ct_room_camera',JSON.stringify({focus:view.focus,zoom:view.zoom,yaw:view.yaw}));}catch{}}
 const VIEW_COPY={
   es:{settings:'Ajustar vista 3D',title:'Tu punto de vista',all:'Casa y paisaje',inside:'Solo interior',zoom:'Acercamiento',reset:'Restablecer vista',close:'Listo'},
   en:{settings:'Adjust 3D view',title:'Your viewpoint',all:'Home and landscape',inside:'Interior only',zoom:'Zoom',reset:'Reset view',close:'Done'},
@@ -43,12 +49,12 @@ if (bridge && host) {
   viewDialog.innerHTML='<form method="dialog"><h2 id="room-view-title"></h2><div class="room-view-options"><button type="button" data-view="all"></button><button type="button" data-view="inside"></button></div><label for="room-zoom"></label><input id="room-zoom" type="range" min="85" max="110" value="100" step="5"><output for="room-zoom">100%</output><button type="button" data-view-reset></button><button value="close" data-view-close></button></form>';
   viewDialog.setAttribute('aria-labelledby','room-view-title');document.body.append(viewDialog);
   const zoomInput=viewDialog.querySelector('input');
-  const resetView=()=>{if(room){room.yaw=0;room.zoom=1;room.focus='all';room.fit();}zoomInput.value='100';viewDialog.querySelector('output').textContent='100%';syncView();};
+  const resetView=()=>{if(room){room.yaw=0;room.zoom=1;room.focus='all';room.fit();rememberCamera(room);}zoomInput.value='100';viewDialog.querySelector('output').textContent='100%';syncView();};
   const syncView=()=>viewDialog.querySelectorAll('[data-view]').forEach(b=>setAttr(b,'aria-pressed',String(b.dataset.view===(room?.focus||'all'))));
   reset.addEventListener('click', resetView);
-  settings.addEventListener('click',()=>{syncView();viewDialog.showModal();});
-  viewDialog.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{if(room){room.focus=b.dataset.view;room.zoom=1;zoomInput.value='100';viewDialog.querySelector('output').textContent='100%';room.fit();syncView();}}));
-  zoomInput.addEventListener('input',()=>{if(room){room.zoom=Number(zoomInput.value)/100;room.fit();viewDialog.querySelector('output').textContent=zoomInput.value+'%';}});
+  settings.addEventListener('click',()=>{syncView();zoomInput.value=String(Math.round((room?.zoom||1)*100));viewDialog.querySelector('output').textContent=zoomInput.value+'%';viewDialog.showModal();});
+  viewDialog.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{if(room){room.focus=b.dataset.view;room.zoom=1;zoomInput.value='100';viewDialog.querySelector('output').textContent='100%';room.fit();rememberCamera(room);syncView();}}));
+  zoomInput.addEventListener('input',()=>{if(room){room.zoom=Number(zoomInput.value)/100;room.fit();rememberCamera(room);viewDialog.querySelector('output').textContent=zoomInput.value+'%';}});
   viewDialog.querySelector('[data-view-reset]').addEventListener('click',resetView);
   toggle.addEventListener('click', () => {
     mode = mode === '3d' ? '2d' : '3d';
@@ -471,6 +477,11 @@ function createRoom(T, host) {
   // Build each property once. Switching equipment swaps geometry atomically;
   // no image download, empty frame or fallback background between properties.
   const propertyViews = new Map();
+  const pathLamp=mat('#d5b77f',{emissive:'#ffd08a',emissiveIntensity:0,roughness:.35});
+  const pathGlowMap=texture(64,64,(ctx,w,h)=>{
+    const g=ctx.createRadialGradient(w/2,h/2,1,w/2,h/2,w/2);g.addColorStop(0,'rgba(255,222,156,.8)');g.addColorStop(1,'rgba(255,222,156,0)');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+  });
+  const pathGlow=new T.MeshBasicMaterial({map:pathGlowMap,transparent:true,opacity:0,depthWrite:false,blending:T.AdditiveBlending});materialCache.set('pathGlow',pathGlow);
   const propertyNames = {
     es:['Mi primer estudio','Mi apartamento','Mi ático de soltero','Mi casa','Mi casa con viñedo','Mi penthouse de lujo','Mi villa mediterránea','Mi palacio de cristal','Mi isla privada','Mi sede mundial'],
     en:['My first studio','My apartment','My bachelor loft','My house','My vineyard house','My luxury penthouse','My Mediterranean villa','My crystal palace','My private island','My global headquarters'],
@@ -481,6 +492,14 @@ function createRoom(T, host) {
     const interior=sub(group), exterior=sub(windowGroup), landscape=sub(group);
     const rural=tier===3||tier===4, seaside=tier===6||tier===8;
     if(rural||seaside) {
+      // Warm path lighting shares one material and does not add costly shadow lights.
+      for(const z of [-2.2,.1,2.35]){
+        const x=3.70;
+        cylinder(landscape,.035,.055,.41,[x,-.10,z],'#344b48',10);
+        cylinder(landscape,.085,.085,.12,[x,.16,z],pathLamp,12);
+        cylinder(landscape,.11,.11,.035,[x,.24,z],'#344b48',12);
+        const pool=new T.Mesh(new T.PlaneGeometry(1.0,1.0),pathGlow);pool.rotation.x=-Math.PI/2;pool.position.set(x,-.245,z);landscape.add(pool);surfaces.push(pool);
+      }
       // A real outdoor plot around the cutaway house, not a backdrop image.
       box(landscape,[10.2,.20,8.4],[.65,-.51,-.15],seaside?'#357f90':'#617d52',true);
       box(landscape,[8.0,.10,6.5],[.1,-.37,-.04],seaside?'#d7c396':'#859762',true);
@@ -682,7 +701,7 @@ function createRoom(T, host) {
       if(drag.moved){api.yaw=Math.max(-.18,Math.min(.18,drag.yaw+(e.clientX-drag.x)*.0018));fit();}
     } else if(e.pointerType==='mouse')canvas.style.cursor=pick(e)?'pointer':'grab';
   });
-  canvas.addEventListener('pointerup',e=>{if(drag&&!drag.moved){const action=pick(e);if(action)bridge.open(action);}drag=null;});
+  canvas.addEventListener('pointerup',e=>{if(drag&&!drag.moved){const action=pick(e);if(action)bridge.open(action);}if(drag?.moved)rememberCamera(api);drag=null;});
   canvas.addEventListener('pointercancel',()=>{drag=null;});
   canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();host.dispatchEvent(new Event('room-context-lost'));});
 
@@ -803,6 +822,8 @@ function createRoom(T, host) {
     sunlightMat.opacity=T.MathUtils.smoothstep(p,.04,.2)*(1-T.MathUtils.smoothstep(p,.56,.77))*.24;
     sunlight.rotation.z=-.35+p*.5;sunlight.position.x=.25+Math.sin(p*Math.PI)*.35;
     warmPool.material.opacity=.07+lampLight.intensity*.23;
+    const night=Math.min(1,lampLight.intensity/1.2);
+    pathLamp.emissiveIntensity=night*2.2;pathGlow.opacity=night*.50;
     const period=Math.min(3,Math.floor(phase*4));
     if(labels&&period!==phaseShown){phaseShown=period;text(clock,labels.phases[period]);}
   }
@@ -832,6 +853,6 @@ function createRoom(T, host) {
     geometryCache.forEach(g=>g.dispose());materialCache.forEach(m=>m.dispose());textures.forEach(t=>t.dispose());
     surfaces.forEach(m=>{m.geometry.dispose();});root.remove();
   }
-  const api={root,scene,camera,renderer,yaw:0,zoom:1,focus:'all',gender:'M',fit,localize,setHome,updateProgress,light,updateChart,animate,dispose};
+  const api={root,scene,camera,renderer,...savedCamera(),gender:'M',fit,localize,setHome,updateProgress,light,updateChart,animate,dispose};
   updateChart(bridge.snapshot());return api;
 }
