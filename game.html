@@ -5973,6 +5973,13 @@ function applyLanguage(){
   if(menuControl){menuControl.title=fixedLabels.menu;menuControl.setAttribute('aria-label',fixedLabels.menu);}
   if(advisorControl)advisorControl.title=fixedLabels.advisor;
   if(tutorialControl)tutorialControl.setAttribute('aria-label',fixedLabels.tutorial);
+  const statCopy=lang==='en'?{passive:'PASSIVE/DAY',bonus:'SELL BONUS',businesses:'BUSINESSES',prestige:'PRESTIGE',loading:'Loading...',talk:'Tap to talk →'}:lang==='zh'?{passive:'每日被动收入',bonus:'卖出加成',businesses:'企业',prestige:'声望',loading:'加载中...',talk:'点击对话 →'}:{passive:'PASIVO/DÍA',bonus:'BONO VENTA',businesses:'NEGOCIOS',prestige:'PRESTIGE',loading:'Cargando...',talk:'Toca para hablar →'};
+  const statNodes=document.querySelectorAll('.statsRow .statPill .sl');
+  [statCopy.passive,statCopy.bonus,statCopy.businesses,statCopy.prestige].forEach((label,i)=>{if(statNodes[i])statNodes[i].textContent=label;});
+  const alanMessage=document.getElementById('alanMsg');
+  const alanTalk=document.getElementById('alanTap');
+  if(alanMessage&&(!alanMessage.textContent.trim()||/^(Cargando|Loading|加载)/.test(alanMessage.textContent.trim())))alanMessage.textContent=statCopy.loading;
+  if(alanTalk&&(!alanTalk.textContent.trim()||/^(Toca|Tap|点击)/.test(alanTalk.textContent.trim())))alanTalk.textContent=statCopy.talk;
 }
 const GLOBAL_LANG_KEY='ct_language_pref';
 function setLanguage(lang){
@@ -6263,15 +6270,16 @@ function flashCashGain(elId){
 function updateTopBar(){
   updateStats();
   const dayStat=document.getElementById('dayStat');
-  if(dayStat)dayStat.textContent='Día '+state.day;
+  if(dayStat)dayStat.textContent=state.language==='en'?'Day '+state.day:state.language==='zh'?'第'+state.day+'天':'Día '+state.day;
   const nw=netWorth(),rank=getRank(nw),tp=calcTotalPassive()+state.passive;
   const pl=state.prestigeLevel||0;
   animateNumberRollUp('cashStat',state.cash);
-  animateNumberRollUp('nwStat',nw,v=>'Patrimonio: '+fmt(v));
+  animateNumberRollUp('nwStat',nw,v=>(state.language==='en'?'net worth':state.language==='zh'?'净资产':'Patrimonio')+': '+fmt(v));
   if(_lastCashSeen!==null&&state.cash>_lastCashSeen+0.001)flashCashGain('cashStat');
   _lastCashSeen=state.cash;
   // Este campo contiene la insignia P del Prestige; debe renderizarse como HTML.
-  document.getElementById('rankStat').innerHTML=rank.emoji+' '+rank.name+(pl>0?' <span class="prestige-badge">P'+pl+'</span>':'');
+  const rankZh=['街头新手','新手交易员','初级经理','基金经理','大亨','百万富翁','亿万富翁','全球精英','世界首富'],rankEn={'Callejero':'Street hustler','Trader novato':'Rookie trader','Gestor junior':'Junior manager','Gestor de fondo':'Fund manager','Magnate':'Tycoon','Millonario':'Millionaire','Multi-millonario':'Multimillionaire','�lite global':'Global elite','El más rico':'The richest'}; const rankLabel=state.language==='zh'?(rankZh[Math.max(0,RANKS.indexOf(rank))]||rank.name):state.language==='en'?(rankEn[rank.name]||translateRuntimeText(rank.name,'en')):rank.name;
+  document.getElementById('rankStat').innerHTML=rank.emoji+' '+rankLabel+(pl>0?' <span class="prestige-badge">P'+pl+'</span>':'');
   const goal=prestigeGoal();
   document.getElementById('progBar').style.width=Math.min(100,(nw/goal)*100).toFixed(4)+'%';
   document.getElementById('passiveStat').textContent=fmt(tp);
@@ -7029,7 +7037,10 @@ let saveToastTimer=null;
 function showSaveToast(msg){
   const t=document.getElementById('saveToast');
   if(!t)return;
-  t.textContent=msg;
+  let shown=repairEncoding(msg),toastLang=state.language||'es';
+  if(toastLang==='en')shown=shown.replace(/Ranura (\d+) cargada/g,'Slot $1 loaded').replace(/Ranura (\d+) borrada/g,'Slot $1 deleted').replace(/Partida guardada/g,'Game saved').replace(/Día/g,'Day').replace(/No se pudo guardar/g,'Could not save game');
+  else if(toastLang==='zh')shown=shown.replace(/Ranura (\d+) cargada/g,'已加载存档 $1').replace(/Ranura (\d+) borrada/g,'已删除存档 $1').replace(/Partida guardada/g,'游戏已保存').replace(/Día/g,'第').replace(/No se pudo guardar/g,'无法保存游戏');
+  t.textContent=shown;
   t.classList.add('show');
   clearTimeout(saveToastTimer);
   saveToastTimer=setTimeout(()=>t.classList.remove('show'),2600);
