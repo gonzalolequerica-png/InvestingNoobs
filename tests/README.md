@@ -36,6 +36,10 @@ player's browser or saved data. Checks cover:
 - Starting a new slot after loading an existing slot without inheriting its cash.
 
 Rendering caps pixel density and pauses its animation loop outside the home
-screen or in a hidden tab. Mobile uses 30fps scheduling and 512px shadow maps.
+screen or in a hidden tab. Mobile uses 30fps scheduling and 1024px shadow maps;
+desktop uses 2048px shadows. Shadow updates are throttled independently.
+Procedural wood, linen, plaster, environment reflections and contact shadows
+add material detail without external texture downloads. The room includes
+folded curtains, upholstered furniture and a rounded articulated character.
 These checks do not substitute for testing battery use on physical phones or
 for a future Google Play release audit.
