@@ -1365,3 +1365,50 @@
 </section>
 </body>
 </html>
+
+
+<style id="focused-home-refresh">
+  /* A clearer front door: one market bar, three learning pillars, tools below. */
+  #tabs{max-width:1000px;margin:0 auto 22px!important;align-items:stretch}
+  #tabs .tab-link-external[href="portfolio.html"],
+  #tabs .tab-link-external[href="research.html"],
+  #tabs .tab-link-external[href="passport.html"],
+  #tabs .tab-link-external[href="decisionlab.html"]{display:none!important}
+  #tabs .tab-link-external[href="blog.html"]{margin-left:0!important}
+  .start-paths{max-width:1000px;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0 auto 12px}
+  .start-paths .start-path:nth-child(3),.start-paths .start-path:nth-child(4),.start-paths .start-path:nth-child(6){display:none}
+  .start-path{min-height:148px;padding:21px 20px;border-radius:16px;background:linear-gradient(145deg,#121e2c,#101721);box-shadow:0 12px 26px rgba(0,0,0,.12)}
+  .start-path.path-highlight{background:linear-gradient(145deg,rgba(12,53,67,.78),#101a28);border-color:rgba(78,211,223,.52)}
+  .start-path strong{font-size:19px;line-height:1.16}
+  .start-tools{max-width:1000px;margin:0 auto 20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:#8493a5;font-size:12px}
+  .start-tools-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#d6ad58}
+  .start-tools a{color:#b9c9df;text-decoration:none;border-bottom:1px solid #364558;padding-bottom:2px}
+  .start-tools a:hover,.start-tools a:focus-visible{color:#4ed3df;border-color:#4ed3df}
+  .support-banner{max-width:1000px;margin:12px auto 18px!important;padding:12px 16px!important;border:1px solid #293442!important;background:rgba(17,24,33,.62)!important;box-shadow:none!important}
+  .seo-landing-copy{box-shadow:none!important}
+  @media(max-width:700px){
+    #tabs{margin-bottom:16px!important}
+    .start-paths{grid-template-columns:1fr;gap:9px;margin-bottom:10px}
+    .start-path{min-height:0;padding:16px 16px}
+    .start-path strong{font-size:17px}
+    .start-tools{margin-bottom:16px;gap:8px}
+    .support-banner{margin-top:10px!important}
+  }
+</style>
+<script>
+(() => {
+  const paths = document.querySelector('.start-paths');
+  if (!paths || paths.dataset.focusedHome) return;
+  paths.dataset.focusedHome = 'true';
+  const cards = Array.from(paths.querySelectorAll('.start-path'));
+  if (cards.length >= 6) {
+    const pillars = [cards[0], cards[1], cards[4]];
+    paths.replaceChildren(...pillars);
+    const tools = document.createElement('div');
+    tools.className = 'start-tools';
+    tools.setAttribute('aria-label', 'More learning tools');
+    tools.innerHTML = '<span class="start-tools-label">Go deeper</span><span aria-hidden="true">·</span><a href="decisionlab.html">Decision Lab</a><span aria-hidden="true">·</span><a href="passport.html">Investor Passport</a><span aria-hidden="true">·</span><a href="game.html">Play the Tycoon</a>';
+    paths.after(tools);
+  }
+})();
+</script>
