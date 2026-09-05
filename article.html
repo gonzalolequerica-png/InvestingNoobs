@@ -44,6 +44,10 @@
     @media(max-width:620px){.site-nav{display:none}.article-toc{padding:15px 16px}.article-toc-list{display:grid;gap:8px}.article-toc a{font-size:14px}}
     .brand{color:var(--text)}
   </style>
+<style id="lesson-audio-style">
+.lesson-audio{margin:25px 0 3px;padding:18px 19px;border:1px solid rgba(234,181,77,.32);border-radius:13px;background:linear-gradient(135deg,rgba(234,181,77,.09),rgba(52,91,145,.12));box-shadow:0 9px 24px rgba(0,0,0,.16)}
+.lesson-audio-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:13px}.lesson-audio-kicker{display:block;margin-bottom:4px;color:var(--gold);font:600 10px IBM Plex Mono,monospace;letter-spacing:.14em;text-transform:uppercase}.lesson-audio-title{display:block;color:var(--text);font-size:16px;font-weight:700;line-height:1.25}.lesson-audio-status{display:block;margin-top:4px;color:#9eafc4;font-size:12px;line-height:1.4}.lesson-audio-icon{display:grid;place-items:center;width:38px;height:38px;flex:0 0 38px;border:1px solid rgba(234,181,77,.42);border-radius:11px;background:#1c2b42;color:var(--gold);font-size:18px}.lesson-audio-actions{display:flex;gap:8px;flex-wrap:wrap}.lesson-audio-btn{min-height:38px;padding:8px 12px;border:1px solid #52647c;border-radius:9px;background:#1c2b42;color:#dce7f4;font:600 12px Arial,Helvetica,sans-serif;cursor:pointer;touch-action:manipulation}.lesson-audio-btn:hover,.lesson-audio-btn:focus-visible{border-color:var(--gold);color:#ffe3a1;outline:3px solid rgba(234,181,77,.2);outline-offset:2px}.lesson-audio-btn.primary{border-color:var(--gold);background:linear-gradient(135deg,#a87925,#eab54d);color:#0b1018}.lesson-audio-btn:disabled{opacity:.42;cursor:not-allowed}.lesson-audio-track{height:6px;margin-top:13px;border-radius:99px;background:#202c3b;overflow:hidden}.lesson-audio-fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#a87925,var(--gold));transition:width .2s linear}.lesson-audio-fallback{color:#c9d5e3;font-size:13px;line-height:1.65}.lesson-audio-fallback strong{display:block;color:var(--gold);margin-bottom:3px}@media(max-width:620px){.lesson-audio{padding:16px}.lesson-audio-head{gap:10px}.lesson-audio-title{font-size:15px}.lesson-audio-actions{display:grid;grid-template-columns:1fr 1fr}.lesson-audio-btn{width:100%}.lesson-audio-btn.primary{grid-column:1/-1}}
+</style>
 </head>
 <body>
   <header class="topbar"><a class="brand" href="index.html">◆ InvestingNoobs</a><a class="back" href="blog.html">← All lessons</a></header>
@@ -226,5 +230,58 @@
     const progress=article.querySelector('.reading-progress');if(progress)progress.insertAdjacentElement('afterend',toc);else{const meta=article.querySelector('.article-meta');if(meta)meta.insertAdjacentElement('afterend',toc);else article.prepend(toc)}
   })();
   </script>
- </body>
+ <script id="lesson-audio-script">
+(function(){
+  var lessonId=new URLSearchParams(location.search).get('id')||'';
+  var article=document.getElementById('article');
+  if(!article||!/^l(?:[1-9]|[1-4][0-9]|50)$/.test(lessonId))return;
+  var panel=document.createElement('section');
+  panel.className='lesson-audio';
+  panel.setAttribute('aria-label','Audio lesson');
+  panel.innerHTML='<div class="lesson-audio-head"><div><span class="lesson-audio-kicker">Listen</span><strong class="lesson-audio-title">Listen to this lesson</strong><span class="lesson-audio-status" id="lesson-audio-status">Read the guide with your browser voice.</span></div><span class="lesson-audio-icon" aria-hidden="true">◖</span></div><div class="lesson-audio-actions"><button class="lesson-audio-btn primary" id="lesson-audio-play" type="button">▶ Play lesson</button><button class="lesson-audio-btn" id="lesson-audio-pause" type="button">Ⅱ Pause</button><button class="lesson-audio-btn" id="lesson-audio-stop" type="button">■ Stop</button></div><div class="lesson-audio-track" role="progressbar" aria-label="Audio progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="lesson-audio-fill" id="lesson-audio-fill"></div></div>';
+  var progress=article.querySelector('.reading-progress');
+  if(progress)progress.insertAdjacentElement('afterend',panel);else article.prepend(panel);
+  var status=panel.querySelector('#lesson-audio-status'),fill=panel.querySelector('#lesson-audio-fill'),track=panel.querySelector('.lesson-audio-track'),play=panel.querySelector('#lesson-audio-play'),pause=panel.querySelector('#lesson-audio-pause'),stop=panel.querySelector('#lesson-audio-stop');
+  var synth=window.speechSynthesis;
+  if(!synth||typeof window.SpeechSynthesisUtterance!=='function'){
+    panel.innerHTML='<div class="lesson-audio-fallback"><strong>Audio not available in this browser</strong>Try opening this lesson in the latest Chrome, Safari or Edge to listen to it.</div>';
+    return;
+  }
+  var clone=article.cloneNode(true);
+  clone.querySelectorAll('.article-meta,.reading-progress,.article-tools,.article-toc,.lesson-audio,.next-step,.actions').forEach(function(el){el.remove()});
+  var rawText=clone.innerText.replace(/\s+/g,' ').trim();
+  var sentences=rawText.match(/[^.!?]+[.!?]+|[^.!?]+$/g)||[rawText];
+  var parts=[],current='';
+  sentences.forEach(function(sentence){sentence=sentence.trim();if(!sentence)return;if(current&&current.length+sentence.length+1>720){parts.push(current);current=sentence}else current+=(current?' ':'')+sentence});
+  if(current)parts.push(current);
+  var index=0,running=false,ignoreError=false;
+  function setProgress(value){var n=Math.max(0,Math.min(100,value));fill.style.width=n+'%';track.setAttribute('aria-valuenow',String(Math.round(n)));}
+  function setStatus(text){status.textContent=text;}
+  function voiceFor(){var voices=synth.getVoices?synth.getVoices():[];return voices.find(function(v){return /^en(-|_)/i.test(v.lang)})||voices.find(function(v){return /^en/i.test(v.lang)})||null;}
+  function speakNext(){
+    if(!running)return;
+    if(index>=parts.length){running=false;setProgress(100);setStatus('Finished · listen again anytime.');return;}
+    var utterance=new SpeechSynthesisUtterance(parts[index]);
+    utterance.lang='en-US';utterance.rate=.96;utterance.pitch=1;
+    var voice=voiceFor();if(voice)utterance.voice=voice;
+    var partIndex=index;
+    utterance.onstart=function(){setStatus('Playing · part '+(partIndex+1)+' of '+parts.length);};
+    utterance.onend=function(){if(!running)return;index=partIndex+1;setProgress(index/parts.length*100);speakNext();};
+    utterance.onerror=function(event){if(ignoreError||event.error==='interrupted'||event.error==='canceled')return;running=false;setStatus('Audio could not continue. Tap Play to try again.');};
+    synth.speak(utterance);
+  }
+  play.addEventListener('click',function(){
+    ignoreError=false;
+    if(running&&synth.paused){synth.resume();setStatus('Playing · resuming…');return;}
+    if(running)return;
+    if(index>=parts.length){index=0;setProgress(0);}
+    running=true;setStatus('Starting audio…');speakNext();
+  });
+  pause.addEventListener('click',function(){if(running&&!synth.paused){synth.pause();setStatus('Paused');}});
+  stop.addEventListener('click',function(){ignoreError=true;running=false;synth.cancel();index=0;setProgress(0);setStatus('Ready to listen.');window.setTimeout(function(){ignoreError=false;},120);});
+  window.addEventListener('pagehide',function(){ignoreError=true;running=false;synth.cancel();});
+  if(synth.addEventListener)synth.addEventListener('voiceschanged',function(){});
+})();
+</script>
+</body>
 </html>
