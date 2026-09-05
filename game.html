@@ -974,6 +974,18 @@ body{background:radial-gradient(ellipse at 15% 0%,rgba(99,102,241,.10),transpare
   }
 }
 </style>
+<style id="premium-scene-fix">
+#roomPhotoLayer,#roomPhotoLayerNext{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center 30%;background-repeat:no-repeat;pointer-events:none;transition:opacity .9s cubic-bezier(.22,.61,.36,1);}
+#roomPhotoLayer{opacity:1!important;}
+#roomPhotoLayerNext{opacity:0!important;}
+#roomPhotoLayer.photo-active,#roomPhotoLayerNext.photo-active{opacity:1!important;}
+#roomPhotoLayer.photo-hidden,#roomPhotoLayerNext.photo-hidden{opacity:0!important;}
+#roomPhotoLayer::after,#roomPhotoLayerNext::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,12,22,.08) 0%,rgba(7,12,22,.2) 52%,rgba(7,12,22,.72) 100%);pointer-events:none;}
+#mainScene{isolation:isolate;}
+button{transition:transform .16s ease,box-shadow .16s ease,filter .16s ease;}
+button:active{transform:translateY(1px);}
+@media (prefers-reduced-motion:reduce){#roomPhotoLayer,#roomPhotoLayerNext,button{transition:none!important;}}
+</style>
 </head>
 <body>
 <a href="index.html" class="site-return-link" aria-label="Back to InvestingNoobs">← InvestingNoobs</a>
@@ -1129,7 +1141,7 @@ body{background:radial-gradient(ellipse at 15% 0%,rgba(99,102,241,.10),transpare
   <button class="tutorialBtn" onclick="openTutorial()" aria-label="Abrir tutorial">?</button>
   <div id="screenMain" class="screen active">
     <div class="mainScene" id="mainScene">
-      <div id="roomPhotoLayer" class="roomPhoto1"></div>
+      <div id="roomPhotoLayer" class="roomPhoto1 photo-active"></div><div id="roomPhotoLayerNext" class="photo-hidden" aria-hidden="true"></div>
       <div class="weatherLayer" id="weatherLayer"><div class="sunOrb" id="sunOrb"></div><div class="stars"></div><div class="clouds"></div><div class="fogLayer"></div><div class="dayNightOverlay" id="dayNightOverlay"></div></div>
       <svg id="charSVG" viewBox="0 0 160 300" xmlns="http://www.w3.org/2000/svg"></svg>
       <img class="mainCharacterImage" id="mainCharacterImage" src="asset-personaje-trader.png" alt="Personaje trader">
@@ -6102,52 +6114,19 @@ function renderAlanSVG(svgId,small){
 // ══════════════ PERSONAJE JUGADOR ══════════════
 // La foto de fondo de la habitaci�n evoluciona seg�n cu�ntos artúculos de la Tienda
 // tienes comprados � de la habitaci�n vacía a la habitaci�n llena de cosas.
-function updateRoomPhoto(){
-  const layer=document.getElementById('roomPhotoLayer');
-  if(!layer)return;
-  // Las cuatro im�genes representan el avance de un día: poca luz al
-  // amanecer, luz creciente por la ma�ana, máxima luz y vuelta a la noche.
-  const elapsed=Date.now()-dayCycleStart;
-  const progress=Math.min(0.999,Math.max(0,elapsed/DAY_DURATION_MS));
-  const tier=Math.floor(progress*4)+1;
-  const cls='roomPhoto'+tier;
-  if(!layer.classList.contains(cls)){
-    layer.classList.remove('roomPhoto1','roomPhoto2','roomPhoto3','roomPhoto4');
-    layer.classList.add(cls);
-  }
-  const equippedHome=state.shop&&state.shop.equipped&&state.shop.equipped.inmueble;
-  const apartmentEquipped=equippedHome==='home1'||equippedHome==='home1b';
-  const penthouseEquipped=!!(state.shop&&state.shop.equipped&&state.shop.equipped.inmueble==='home5');
-  const ownedHouseEquipped=!!(state.shop&&state.shop.equipped&&state.shop.equipped.inmueble==='home2');
-  const vineyardHouseEquipped=!!(state.shop&&state.shop.equipped&&state.shop.equipped.inmueble==='home6');
-  const luxuryPenthouseEquipped=!!(state.shop&&state.shop.equipped&&state.shop.equipped.inmueble==='home3');
-  const mediterraneanVillaEquipped=!!(state.shop&&state.shop.equipped&&state.shop.equipped.inmueble==='home7');
-  const crystalPalaceEquipped=!!(state.shop&&state.shop.equipped&&state.shop.equipped.inmueble==='home8');
-  const privateIslandMansionEquipped=!!(state.shop&&state.shop.equipped&&state.shop.equipped.inmueble==='home4');
-  const globalResidentialComplexEquipped=!!(state.shop&&state.shop.equipped&&state.shop.equipped.inmueble==='home9');
-  layer.classList.toggle('roomApartment',apartmentEquipped);
-  layer.classList.toggle('roomPenthouse',penthouseEquipped);
-  layer.classList.toggle('roomOwnedHouse',ownedHouseEquipped);
-  layer.classList.toggle('roomVineyardHouse',vineyardHouseEquipped);
-  layer.classList.toggle('roomLuxuryPenthouse',luxuryPenthouseEquipped);
-  layer.classList.toggle('roomMediterraneanVilla',mediterraneanVillaEquipped);
-  layer.classList.toggle('roomCrystalPalace',crystalPalaceEquipped);
-  layer.classList.toggle('roomPrivateIslandMansion',privateIslandMansionEquipped);
-  layer.classList.toggle('roomGlobalResidentialComplex',globalResidentialComplexEquipped);
-  // Cada categor�a comprada/equipada deja un objeto visible en la habitaci�n.
-  // Se reconstruye aqu� para que comprar y equipar tengan efecto inmediato.
-  const props=[];
-  const propByCat={movil:['📱','tech','Tecnolog�a'],reloj:['⌚','time','Relojes'],ropa:['🧥','style','Estilo'],coche:['🚗','car','Veh�culos'],joya:['💎','gem','Joyas'],inmueble:['🏠','home','Hogar'],arte:['🖼️','art','Arte'],vino:['🍷','wine','Bodega'],mascota:['🐾','pet','Mascotas']};
-  // Los m�viles comprados se integran como objetos del escenario, no como tarjetas.
-  if(false&&state.shop&&state.shop.equipped){
-    SHOP_CATEGORIES.forEach(c=>{
-      const id=state.shop.equipped[c.id], item=id&&SHOP_ITEMS.find(x=>x.id===id), meta=propByCat[c.id];
-      if(item&&meta)props.push('<span class="roomProp '+meta[1]+'" title="'+item.name+'">'+meta[0]+'<small>'+meta[2]+'</small></span>');
-    });
-  }
-  layer.innerHTML=props.join('');
-  layer.classList.add('show');
-}
+const PREMIUM_ROOM_ASSETS={home1:['asset-apartamento-alquiler-Apartamento-alquiler-v2---amanecer.png','asset-apartamento-alquiler-Apartamento-alquiler-v2---dia.png','asset-apartamento-alquiler-Apartamento-alquiler-v2---anochecer.png','asset-apartamento-alquiler-Apartamento-alquiler-v2---noche.png'],home1b:['asset-apartamento-alquiler-Apartamento-alquiler-v2---amanecer.png','asset-apartamento-alquiler-Apartamento-alquiler-v2---dia.png','asset-apartamento-alquiler-Apartamento-alquiler-v2---anochecer.png','asset-apartamento-alquiler-Apartamento-alquiler-v2---noche.png'],home2:['asset-casa-en-propiedad-Casa-en-propiedad---amanecer.png','asset-casa-en-propiedad-Casa-en-propiedad---dia.png','asset-casa-en-propiedad-Casa-en-propiedad---anochecer.png','asset-casa-en-propiedad-Casa-en-propiedad---noche.png'],home3:['asset-penthouse-lujo-amanecer.png','asset-penthouse-lujo-dia.png','asset-penthouse-lujo-anochecer.png','asset-penthouse-lujo-noche.png'],home4:['asset-mansion-isla-nueva-amanecer.png','asset-mansion-isla-nueva-dia.png','asset-mansion-isla-nueva-anochecer.png','asset-mansion-isla-nueva-noche.png'],home5:['asset-atico-soltero-amanecer.png','asset-atico-soltero-dia.png','asset-atico-soltero-anochecer.png','asset-atico-soltero-noche.png'],home6:['asset-casa-vinedos-amanecer.png','asset-casa-vinedos-dia.png','asset-casa-vinedos-anochecer.png','asset-casa-vinedos-noche.png'],home7:['asset-villa-mediterranea-amanecer.png','asset-villa-mediterranea-dia.png','asset-villa-mediterranea-anochecer.png','asset-villa-mediterranea-noche.png'],home8:['asset-palacio-cristal-amanecer.png','asset-palacio-cristal-dia.png','asset-palacio-cristal-anochecer.png','asset-palacio-cristal-noche.png'],home9:['asset-complejo-mundial-amanecer.png','asset-complejo-mundial-dia.png','asset-complejo-mundial-anochecer.png','asset-complejo-mundial-noche.png']};
+let premiumRoomActiveId='roomPhotoLayer';
+let premiumRoomKey='';
+let premiumRoomPendingKey='';
+let premiumRoomToken=0;
+const premiumRoomCache=new Map();
+function premiumRoomHome(){return state&&state.shop&&state.shop.equipped&&state.shop.equipped.inmueble||'default';}
+function premiumRoomDefaultBackground(tier){const probe=document.createElement('div');probe.id='roomPhotoLayer';probe.className='roomPhoto'+tier;probe.style.cssText='position:absolute;visibility:hidden;inset:0;';document.body.appendChild(probe);const bg=getComputedStyle(probe).backgroundImage;probe.remove();return bg;}
+function premiumRoomBackground(home,tier){const set=PREMIUM_ROOM_ASSETS[home];return set?'url("'+set[tier-1]+'")':premiumRoomDefaultBackground(tier);}
+function premiumRoomPreload(src){if(!src||src==='none'||src.indexOf('data:')>=0)return Promise.resolve(true);const match=src.match(/url\(["']?([^"')]+)["']?\)/);if(!match)return Promise.resolve(true);const url=match[1];if(premiumRoomCache.has(url))return premiumRoomCache.get(url);const p=new Promise(resolve=>{const image=new Image();image.onload=()=>resolve(true);image.onerror=()=>resolve(false);image.src=url;});premiumRoomCache.set(url,p);return p;}
+function premiumRoomPreloadSet(home){const set=PREMIUM_ROOM_ASSETS[home]||[];set.forEach(src=>premiumRoomPreload('url("'+src+'")'));}
+function premiumRoomClasses(el,tier,home){if(!el)return;el.classList.remove('roomPhoto1','roomPhoto2','roomPhoto3','roomPhoto4','roomApartment','roomPenthouse','roomOwnedHouse','roomVineyardHouse','roomLuxuryPenthouse','roomMediterraneanVilla','roomCrystalPalace','roomPrivateIslandMansion','roomGlobalResidentialComplex');el.classList.add('roomPhoto'+tier);const map={home1:'roomApartment',home1b:'roomApartment',home2:'roomOwnedHouse',home3:'roomLuxuryPenthouse',home4:'roomPrivateIslandMansion',home5:'roomPenthouse',home6:'roomVineyardHouse',home7:'roomMediterraneanVilla',home8:'roomCrystalPalace',home9:'roomGlobalResidentialComplex'};if(map[home])el.classList.add(map[home]);}
+function updateRoomPhoto(){const layer=document.getElementById('roomPhotoLayer'),next=document.getElementById('roomPhotoLayerNext');if(!layer||!next)return;const elapsed=Date.now()-dayCycleStart;const progress=Math.min(.999,Math.max(0,elapsed/DAY_DURATION_MS));const tier=Math.min(4,Math.floor(progress*4)+1);const home=premiumRoomHome();const key=home+'|'+tier;premiumRoomClasses(layer,tier,home);premiumRoomClasses(next,tier,home);if(!layer.classList.contains('photo-active')&&!next.classList.contains('photo-active')){layer.classList.add('photo-active');next.classList.add('photo-hidden');}if(key===premiumRoomKey||key===premiumRoomPendingKey)return;if(!premiumRoomKey&&home==='default'){premiumRoomKey=key;return;}premiumRoomPendingKey=key;if(PREMIUM_ROOM_ASSETS[home])premiumRoomPreloadSet(home);const bg=premiumRoomBackground(home,tier);const token=++premiumRoomToken;premiumRoomPreload(bg).then(ok=>{if(token!==premiumRoomToken||!ok)return;premiumRoomKey=key;premiumRoomPendingKey='';const active=document.getElementById(premiumRoomActiveId)||layer;const incoming=active.id==='roomPhotoLayer'?next:layer;incoming.style.backgroundImage=bg;incoming.classList.remove('photo-hidden');incoming.classList.add('photo-active');active.classList.remove('photo-active');active.classList.add('photo-hidden');window.setTimeout(()=>{if(token!==premiumRoomToken)return;active.style.backgroundImage=bg;active.classList.remove('photo-hidden');active.classList.add('photo-active');incoming.classList.remove('photo-active');incoming.classList.add('photo-hidden');premiumRoomActiveId=active.id;},950);});}
 function renderCharacter(){
   updateRoomPhoto();
   const characterImage=document.getElementById('mainCharacterImage');
