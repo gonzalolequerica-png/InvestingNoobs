@@ -121,6 +121,8 @@ body.room-enabled:has(#screenMain.active) #askSteveBtn {width:36px;height:36px;m
 @media(prefers-reduced-motion:reduce) {.tycoon-room,.room-hotspot {transition:none!important;}}
 
 /* Two complete visual languages; the game state and navigation are shared. */
+body[data-game-theme] .app {padding-top:54px;}
+@media(max-width:700px){body[data-game-theme] .app{padding-top:52px;}}
 body[data-game-theme="2d"] {
   --bg:#100f22;--panel:#19172e;--panel2:#111024;--line:#7771b133;
   --accent:#a397ff;--gold:#ffc45a;--alan:#b6a9ff;--green:#10B981;--red:#F43F5E;
