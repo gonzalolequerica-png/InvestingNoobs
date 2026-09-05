@@ -7612,71 +7612,8 @@ setInterval(()=>repairTextNodes(),500);
 <script id="game-locale-polish-final">
 (function(){
   var maps={
-    en:[['Se desbloquea en el siguiente capítulo','Unlocks in the next chapter'],['Se desbloquea más adelante','Unlocks later'],['Cartera:','Holdings:'],['Cantidad en 
-</html>
-
-<script id="visible-text-encoding-repair">
-(function(){
-  function repair(value){
-    try{return decodeURIComponent(escape(value));}catch(e){return value;}
-  }
-  function run(){
-    var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),node;
-    while(node=walker.nextNode()){var fixed=repair(node.nodeValue);if(fixed!==node.nodeValue)node.nodeValue=fixed;}
-    document.querySelectorAll('input[placeholder],textarea[placeholder]').forEach(function(el){el.placeholder=repair(el.placeholder);});
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
-  setInterval(run,1200);
-})();
-</script>
-
-
-
-
-,'Amount in 
-</html>
-
-<script id="visible-text-encoding-repair">
-(function(){
-  function repair(value){
-    try{return decodeURIComponent(escape(value));}catch(e){return value;}
-  }
-  function run(){
-    var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),node;
-    while(node=walker.nextNode()){var fixed=repair(node.nodeValue);if(fixed!==node.nodeValue)node.nodeValue=fixed;}
-    document.querySelectorAll('input[placeholder],textarea[placeholder]').forEach(function(el){el.placeholder=repair(el.placeholder);});
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
-  setInterval(run,1200);
-})();
-</script>
-
-
-
-
-],['Vender todo','Sell all'],['Val.','Sell'],['Comprar','Buy'],['Caja (fondeada)','Funded cash'],['Sin abrir','Not open'],['Niv.','Lvl.'],['Día','Day'],['día','day']],
-    zh:[['Se desbloquea en el siguiente capítulo','在下一章解锁'],['Se desbloquea más adelante','稍后解锁'],['Personal','个人'],['Cartera:','持仓：'],['Cantidad en 
-</html>
-
-<script id="visible-text-encoding-repair">
-(function(){
-  function repair(value){
-    try{return decodeURIComponent(escape(value));}catch(e){return value;}
-  }
-  function run(){
-    var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),node;
-    while(node=walker.nextNode()){var fixed=repair(node.nodeValue);if(fixed!==node.nodeValue)node.nodeValue=fixed;}
-    document.querySelectorAll('input[placeholder],textarea[placeholder]').forEach(function(el){el.placeholder=repair(el.placeholder);});
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
-  setInterval(run,1200);
-})();
-</script>
-
-
-
-
-,'金额（$）'],['Vender todo','全部卖出'],['Val.','卖出'],['Comprar','买入'],['Caja (fondeada)','资金账户'],['Caja','现金'],['Sin abrir','未开启'],['Día','天'],['día','天'],['模🛒币','模因币'],['�Ƒ�源','能源'],['📈�地产','房地产'],['去中�Ƒ化金融','去中心化金融'],['可持续�Ƒ�源','可持续能源'],['交☰机器人','交易机器人'],['�‹机维修','手机维修'],['�˜频交☰','高频交易'],['�ƒ应链控�ˆ�','供应链控制'],['�„产','资产'],['�„金','资金']]
+    en:[['Se desbloquea en el siguiente capítulo','Unlocks in the next chapter'],['Se desbloquea más adelante','Unlocks later'],['Cartera:','Holdings:'],['Cantidad en $','Amount in $'],['Vender todo','Sell all'],['Val.','Sell'],['Comprar','Buy'],['Caja (fondeada)','Funded cash'],['Sin abrir','Not open'],['Niv.','Lvl.'],['Día','Day'],['día','day']],
+    zh:[['Se desbloquea en el siguiente capítulo','在下一章解锁'],['Se desbloquea más adelante','稍后解锁'],['Personal','个人'],['Cartera:','持仓：'],['Cantidad en $','金额（$）'],['Vender todo','全部卖出'],['Val.','卖出'],['Comprar','买入'],['Caja (fondeada)','资金账户'],['Caja','现金'],['Sin abrir','未开启'],['Día','天'],['día','天'],['模🛒币','模因币'],['�Ƒ�源','能源'],['📈�地产','房地产'],['去中�Ƒ化金融','去中心化金融'],['可持续�Ƒ�源','可持续能源'],['交☰机器人','交易机器人'],['�‹机维修','手机维修'],['�˜频交☰','高频交易'],['�ƒ应链控�ˆ�','供应链控制'],['�„产','资产'],['�„金','资金']]
   };
   var cleanZh=[
     ['起点','你从 $500 开始。理性投资，建立你的第一份资产。','我开始时比你还穷。看看我现在的样子。','你有500美元作为起点。先用小额资金进入市场，边做边学，再承担更大的风险。建立第一个业务，让被动收入帮助你成长。目标：净资产达到 $7,000。'],
@@ -7695,7 +7632,7 @@ setInterval(()=>repairTextNodes(),500);
     CHAPTERS.forEach(function(ch,i){var r=cleanZh[i];if(r){ch.title=r[0];ch.short=r[1];ch.quote=r[2];ch.dialog=r[3];}});
   }
   function walkText(lang){
-    var map=maps[lang]||[],root=document.body,walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),n;
+    var map=maps[lang]||[],walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),n;
     while(n=walker.nextNode()){
       if(n.parentElement&&n.parentElement.closest('select'))continue;
       var v=n.nodeValue||'';
@@ -7704,18 +7641,14 @@ setInterval(()=>repairTextNodes(),500);
         v=v.replace(/做多�买入/g,'做多 · 买入').replace(/做空�开仓/g,'做空 · 开仓').replace(/全�ƒ�卖出/g,'全部卖出');
         v=v.replace(/🔋一💳产解锁需净💳产s*($[d.,]+[KMB]?)/g,'🔒 资产解锁需净资产 $1');
         if(/^Días*d+/.test(v))v=v.replace(/^Días*(d+)/,'第$1天');
-      } else if(lang==='en'){
-        v=v.replace(/^Días*(d+)/,'Day $1');
-      }
+      }else if(lang==='en'&&/^Días*d+/.test(v))v=v.replace(/^Días*(d+)/,'Day $1');
       if(v!==n.nodeValue)n.nodeValue=v;
     }
   }
   function polish(){
     if(busy)return;busy=true;
     try{
-      var lang=language();
-      applyCleanZh();
-      walkText(lang);
+      var lang=language();applyCleanZh();walkText(lang);
       var img=document.getElementById('mainCharacterImage');
       if(img)img.alt=lang==='zh'?'主角':lang==='en'?'Trader character':'Personaje principal';
       if(lang==='zh'&&typeof updateAlanBox==='function'){
@@ -7727,7 +7660,7 @@ setInterval(()=>repairTextNodes(),500);
         var money=(next.textContent||'').match(/$[d.,]+[KMB]?/);
         next.textContent=money?'🔒 资产解锁需净资产 '+money[0]:'已达最高等级 · 全部解锁';
       }
-    }catch(e){} finally{busy=false;}
+    }catch(e){}finally{busy=false;}
   }
   function boot(){polish();new MutationObserver(function(){polish();}).observe(document.body,{childList:true,subtree:true,characterData:true});setInterval(polish,700);}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
@@ -7735,22 +7668,3 @@ setInterval(()=>repairTextNodes(),500);
 </script>
 </body>
 </html>
-
-<script id="visible-text-encoding-repair">
-(function(){
-  function repair(value){
-    try{return decodeURIComponent(escape(value));}catch(e){return value;}
-  }
-  function run(){
-    var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),node;
-    while(node=walker.nextNode()){var fixed=repair(node.nodeValue);if(fixed!==node.nodeValue)node.nodeValue=fixed;}
-    document.querySelectorAll('input[placeholder],textarea[placeholder]').forEach(function(el){el.placeholder=repair(el.placeholder);});
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
-  setInterval(run,1200);
-})();
-</script>
-
-
-
-
