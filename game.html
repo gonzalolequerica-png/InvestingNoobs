@@ -4515,12 +4515,12 @@ function renderStatsPanel(){
     '<div class="statCard"><b>'+fmt(s.maxNetWorth)+'</b><span>Patrimonio máximo</span></div>'+ 
     '<div class="statCard statWide"><b>'+formatPlayTime(s.playedMs)+'</b><span>Tiempo jugado</span></div></div>';
 }
-const LANGUAGE_LABELS={es:['Inicio','Invertir','Imperio','Banco','Fondeo','Noticias','Más'],en:['Home','Trade','Empire','Bank','Funding','News','More'],zh:['首页','交☰','帝�›�','银行','�„金账�ˆ�','新闻','�›�多']};
-const LANGUAGE_NAMES={es:'Espa�ol',en:'English',zh:'简体中文'};
+const LANGUAGE_LABELS={es:['Inicio','Invertir','Imperio','Banco','Fondeo','Noticias','Más'],en:['Home','Trade','Empire','Bank','Funding','News','More'],zh:['首页','交易','帝国','银行','资金','新闻','更多']};
+const LANGUAGE_NAMES={es:'Español',en:'English',zh:'简体中文'};
 const CORE_TRANSLATIONS={
-  es:{home:'Inicio',trade:'Invertir',empire:'Imperio',bank:'Banco',funding:'Fondeo',news:'Noticias',more:'Más',achievements:'Logros & Más',market:'Mercado',settings:'Ajustes',language:'Idioma',selectLanguage:'Elige el idioma de la interfaz'},
+  es:{home:'Inicio',trade:'Invertir',empire:'Imperio',bank:'Banco',funding:'Fondeo',news:'Noticias',more:'Más',achievements:'Logros y más',market:'Mercado',settings:'Ajustes',language:'Idioma',selectLanguage:'Elige el idioma de la interfaz'},
   en:{home:'Home',trade:'Trade',empire:'Empire',bank:'Bank',funding:'Funding',news:'News',more:'More',achievements:'Achievements & More',market:'Market',settings:'Settings',language:'Language',selectLanguage:'Choose the interface language'},
-  zh:{home:'首页',trade:'交☰',empire:'帝�›�',bank:'银行',funding:'�„金账�ˆ�',news:'新闻',more:'�›�多',achievements:'�ˆ�就与�›�多',market:'市场',settings:'设置',language:'语言',selectLanguage:'选�‹�界面语言'}
+  zh:{home:'首页',trade:'交易',empire:'帝国',bank:'银行',funding:'资金',news:'新闻',more:'更多',achievements:'成就与更多',market:'市场',settings:'设置',language:'语言',selectLanguage:'选择界面语言'}
 };
 const UI_TRANSLATIONS={
   'Beneficio total':['Total profit','总收�›�'],'Operaciones ganadoras':['Winning trades','�›ˆ�ˆ�交☰'],'Peor p�rdida':['Worst loss','最大亏损'],'Patrimonio máximo':['Highest net worth','最☰„产'],'Tiempo jugado':['Play time','游�ˆ�时间'],
@@ -5963,6 +5963,16 @@ function applyLanguage(){
   const homeLanguage=document.getElementById('languageHomeSelect');if(homeLanguage)homeLanguage.value=lang;
   const loginLanguage=document.getElementById('languageLoginSelect');if(loginLanguage)loginLanguage.value=lang;
   translateVisibleText();translatePlaceholders();
+  // Keep accessibility labels and fixed controls in the selected language.
+  const saveControl=document.querySelector('#inGameControls button[onclick^="saveGame"]');
+  const menuControl=document.querySelector('#inGameControls button[onclick^="openPauseMenu"]');
+  const advisorControl=document.getElementById('askSteveBtn');
+  const tutorialControl=document.querySelector('.tutorialBtn');
+  const fixedLabels=lang==='en'?{save:'Save game',menu:'Menu',advisor:'Ask advisor',tutorial:'Open tutorial'}:lang==='zh'?{save:'保存游戏',menu:'菜单',advisor:'咨询顾问',tutorial:'打开教程'}:{save:'Guardar partida',menu:'Menú',advisor:'Consultar al asesor',tutorial:'Abrir tutorial'};
+  if(saveControl)saveControl.title=fixedLabels.save;
+  if(menuControl){menuControl.title=fixedLabels.menu;menuControl.setAttribute('aria-label',fixedLabels.menu);}
+  if(advisorControl)advisorControl.title=fixedLabels.advisor;
+  if(tutorialControl)tutorialControl.setAttribute('aria-label',fixedLabels.tutorial);
 }
 const GLOBAL_LANG_KEY='ct_language_pref';
 function setLanguage(lang){
