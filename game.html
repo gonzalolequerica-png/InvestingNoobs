@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <script id="chart-close-observer-fix">
 (function(){
   function enhanceChartClose(){
@@ -75,12 +75,12 @@
   };
 })();
 </script>
-<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Investing Noobs Tycoon</title>
+<link rel="stylesheet" href="game-room-3d.css?v=20260905-1">
 <style>
 :root{
   --bg:#0B0F19;--panel:#131826;--panel2:#0D1220;--line:rgba(255,255,255,.08);
@@ -1534,7 +1534,7 @@ function repairEncoding(value){
 function repairTextNodes(root=document){
   const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
   const nodes=[];let node;while(node=walker.nextNode())nodes.push(node);
-  nodes.forEach(n=>{const fixed=repairEncoding(n.nodeValue);if(fixed!==n.nodeValue)n.nodeValue=fixed;});
+  nodes.forEach(n=>{if(n.parentElement?.closest('script,style,select,[data-room-ui]'))return;const fixed=repairEncoding(n.nodeValue);if(fixed!==n.nodeValue)n.nodeValue=fixed;});
 }
 document.addEventListener('DOMContentLoaded',()=>{
   repairTextNodes();
@@ -2550,6 +2550,8 @@ function collectAnnualTax(){
 }
 setInterval(()=>{
   if(!gameStarted)return;
+  // Share the visual clock: time spent in the menu cannot end a resumed day.
+  if(Date.now()-dayCycleStart<DAY_DURATION_MS)return;
   state.day++;
   collectAnnualTax();
   const p=calcTotalPassive()+state.passive;
@@ -2574,7 +2576,7 @@ setInterval(()=>{
   propDailyTick();
   updateTopBar();
   saveGame(true);
-},180000);
+},1000);
 
 // ══════════════ UTILS ══════════════
 const fmt=n=>{
@@ -5565,7 +5567,7 @@ function translateVisibleText(){
   const lang=state.language||'es';
   const dictionary=Object.entries(UI_TRANSLATIONS).map(([es,vals])=>[repairEncoding(es),vals.map(repairEncoding)]);
   document.querySelectorAll('.app, body > div').forEach(root=>{
-    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>(n.parentElement&&n.parentElement.closest('select'))?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});let n;
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>(n.parentElement&&n.parentElement.closest('script,style,select,[data-room-ui]'))?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});let n;
     while(n=walker.nextNode()){
       let record=translatedNodes.get(n);
       if(!record){
@@ -5580,7 +5582,8 @@ function translateVisibleText(){
       let value=record.base;
       if(entry)value=lang==='es'?record.base:(lang==='en'?entry[0]:entry[1]);
       else if(lang!=='es')value=translateRuntimeText(record.base,lang);
-      n.nodeValue=lead+value+trail;
+      const translated=lead+value+trail;
+      if(n.nodeValue!==translated)n.nodeValue=translated;
     }
   });
 }
@@ -7413,6 +7416,7 @@ function startNewGame(slot){
     return;
   }
   setActiveSlot(n);
+  resetForNewGame();
   hideMainMenu();
   showCustomizeScreen();
 }
@@ -7634,14 +7638,14 @@ setInterval(()=>repairTextNodes(),500);
   function walkText(lang){
     var map=maps[lang]||[],walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),n;
     while(n=walker.nextNode()){
-      if(n.parentElement&&n.parentElement.closest('select'))continue;
+      if(n.parentElement&&n.parentElement.closest('script,style,select,[data-room-ui]'))continue;
       var v=n.nodeValue||'';
       map.forEach(function(pair){v=v.split(pair[0]).join(pair[1]);});
       if(lang==='zh'){
         v=v.replace(/做多�买入/g,'做多 · 买入').replace(/做空�开仓/g,'做空 · 开仓').replace(/全�ƒ�卖出/g,'全部卖出');
-        v=v.replace(/🔋一💳产解锁需净💳产s*($[d.,]+[KMB]?)/g,'🔒 资产解锁需净资产 $1');
-        if(/^Días*d+/.test(v))v=v.replace(/^Días*(d+)/,'第$1天');
-      }else if(lang==='en'&&/^Días*d+/.test(v))v=v.replace(/^Días*(d+)/,'Day $1');
+        v=v.replace(/🔋一💳产解锁需净💳产\s*(\$[\d.,]+[KMB]?)/g,'🔒 资产解锁需净资产 $1');
+        if(/^Día\s*\d+/.test(v))v=v.replace(/^Día\s*(\d+)/,'第$1天');
+      }else if(lang==='en'&&/^Día\s*\d+/.test(v))v=v.replace(/^Día\s*(\d+)/,'Day $1');
       if(v!==n.nodeValue)n.nodeValue=v;
     }
   }
@@ -7657,14 +7661,50 @@ setInterval(()=>repairTextNodes(),500);
       }
       var next=document.getElementById('levelNextLabel');
       if(next&&lang==='zh'){
-        var money=(next.textContent||'').match(/$[d.,]+[KMB]?/);
-        next.textContent=money?'🔒 资产解锁需净资产 '+money[0]:'已达最高等级 · 全部解锁';
+        var money=(next.textContent||'').match(/\$[\d.,]+[KMB]?/);
+        var nextText=money?'🔒 资产解锁需净资产 '+money[0]:'已达最高等级 · 全部解锁';
+        if(next.textContent!==nextText)next.textContent=nextText;
       }
     }catch(e){}finally{busy=false;}
   }
-  function boot(){polish();new MutationObserver(function(){polish();}).observe(document.body,{childList:true,subtree:true,characterData:true});setInterval(polish,700);}
+  function boot(){
+    // Batch renders once per frame; never observe our own translation writes.
+    var scheduled=false,observer=new MutationObserver(function(){
+      if(scheduled)return;scheduled=true;
+      requestAnimationFrame(function(){scheduled=false;observer.disconnect();polish();observe();});
+    });
+    function observe(){observer.observe(document.body,{childList:true,subtree:true,characterData:true});}
+    polish();observe();
+  }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
 </script>
+<script id="tycoon-room-bridge">
+// The room reads the existing game. Money, trades and saves remain owned by the game.
+window.TycoonRoomBridge={
+  snapshot:function(){
+    return {
+      playing:gameStarted,
+      visible:gameStarted&&document.getElementById('screenMain').classList.contains('active'),
+      language:state.language||'es',
+      home:state.shop&&state.shop.equipped&&state.shop.equipped.inmueble||'default',
+      equipment:state.shop&&state.shop.equipped||{},
+      gender:state.playerGender||'M',
+      businesses:Object.values(state.bizOwned||{}).filter(function(n){return n>0;}).length,
+      day:state.day,
+      phase:Math.min(1,Math.max(0,(Date.now()-dayCycleStart)/DAY_DURATION_MS)),
+      price:ASSETS[0].price,
+      history:ASSETS[0].hist.slice(-24),
+      asset:ASSETS[0].name
+    };
+  },
+  open:function(target){
+    if(!gameStarted)return;
+    var screens={market:'screenTrade',bank:'screenBank',upgrades:'screenShop',business:'screenBiz'};
+    if(screens[target])goScreen(screens[target]);
+  }
+};
+</script>
+<script type="module" src="game-room-3d.js?v=20260905-1"></script>
 </body>
 </html>
