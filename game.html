@@ -6252,6 +6252,8 @@ function flashCashGain(elId){
 }
 function updateTopBar(){
   updateStats();
+  const dayStat=document.getElementById('dayStat');
+  if(dayStat)dayStat.textContent='Día '+state.day;
   const nw=netWorth(),rank=getRank(nw),tp=calcTotalPassive()+state.passive;
   const pl=state.prestigeLevel||0;
   animateNumberRollUp('cashStat',state.cash);
