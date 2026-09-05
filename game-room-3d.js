@@ -12,12 +12,18 @@ const ICONS = {
   market:'<path d="M3 3v14h14M6 12l4-5 3 3 4-6"/>',
   bank:'<path d="M2 7l8-5 8 5H2zm2 2v6m4-6v6m4-6v6m4-6v6M2 18h16"/>',
   upgrades:'<path d="M2 9l8-6 8 6M4 8v10h12V8M8 18v-6h4v6"/>',
-  reset:'<path d="M4 7a7 7 0 1 1-1 7M4 3v5h5"/>'
+  reset:'<path d="M4 7a7 7 0 1 1-1 7M4 3v5h5"/>',
+  view:'<path d="M2 10s3-5 8-5 8 5 8 5-3 5-8 5-8-5-8-5Z"/><circle cx="10" cy="10" r="2.5"/>'
 };
 const icon = name => `<svg viewBox="0 0 20 20" aria-hidden="true">${ICONS[name]}</svg>`;
 const text = (el, value) => { if (el.textContent !== value) el.textContent = value; };
 const setAttr = (el, name, value) => { if (el.getAttribute(name) !== value) el.setAttribute(name, value); };
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+const VIEW_COPY={
+  es:{settings:'Ajustar vista 3D',title:'Tu punto de vista',all:'Casa y paisaje',inside:'Solo interior',zoom:'Acercamiento',reset:'Restablecer vista',close:'Listo'},
+  en:{settings:'Adjust 3D view',title:'Your viewpoint',all:'Home and landscape',inside:'Interior only',zoom:'Zoom',reset:'Reset view',close:'Done'},
+  zh:{settings:'调整3D视图',title:'你的视角',all:'房屋与景观',inside:'仅室内',zoom:'缩放',reset:'重置视图',close:'完成'}
+};
 let mode = '3d';
 try { if (localStorage.getItem('ct_room_view') === '2d') mode = '2d'; } catch {}
 let room, loading = false, failed = false, lastLanguage = '', lastHome = '', snap;
@@ -31,8 +37,19 @@ if (bridge && host) {
   toolbar.className = 'room-toolbar'; toolbar.dataset.roomUi = '';
   const reset = document.createElement('button'); reset.type = 'button'; reset.innerHTML = icon('reset'); reset.hidden = true;
   const toggle = document.createElement('button'); toggle.type = 'button';
-  toolbar.append(reset, toggle); host.append(status, toolbar);
-  reset.addEventListener('click', () => { if(room) { room.yaw = 0; room.fit(); } });
+  const settings=document.createElement('button');settings.type='button';settings.innerHTML=icon('view');settings.hidden=true;
+  toolbar.append(reset, settings, toggle); host.append(status, toolbar);
+  const viewDialog=document.createElement('dialog');viewDialog.className='room-view-dialog';viewDialog.dataset.roomUi='';
+  viewDialog.innerHTML='<form method="dialog"><h2 id="room-view-title"></h2><div class="room-view-options"><button type="button" data-view="all"></button><button type="button" data-view="inside"></button></div><label for="room-zoom"></label><input id="room-zoom" type="range" min="85" max="110" value="100" step="5"><output for="room-zoom">100%</output><button type="button" data-view-reset></button><button value="close" data-view-close></button></form>';
+  viewDialog.setAttribute('aria-labelledby','room-view-title');document.body.append(viewDialog);
+  const zoomInput=viewDialog.querySelector('input');
+  const resetView=()=>{if(room){room.yaw=0;room.zoom=1;room.focus='all';room.fit();}zoomInput.value='100';viewDialog.querySelector('output').textContent='100%';syncView();};
+  const syncView=()=>viewDialog.querySelectorAll('[data-view]').forEach(b=>setAttr(b,'aria-pressed',String(b.dataset.view===(room?.focus||'all'))));
+  reset.addEventListener('click', resetView);
+  settings.addEventListener('click',()=>{syncView();viewDialog.showModal();});
+  viewDialog.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{if(room){room.focus=b.dataset.view;room.zoom=1;zoomInput.value='100';viewDialog.querySelector('output').textContent='100%';room.fit();syncView();}}));
+  zoomInput.addEventListener('input',()=>{if(room){room.zoom=Number(zoomInput.value)/100;room.fit();viewDialog.querySelector('output').textContent=zoomInput.value+'%';}});
+  viewDialog.querySelector('[data-view-reset]').addEventListener('click',resetView);
   toggle.addEventListener('click', () => {
     mode = mode === '3d' ? '2d' : '3d';
     if(failed && mode === '3d') { room?.dispose(); room = null; failed = false; }
@@ -44,6 +61,11 @@ if (bridge && host) {
   function sync() {
     snap = bridge.snapshot();
     const c = copy();
+    const v=VIEW_COPY[snap.language]||VIEW_COPY.es;
+    setAttr(settings,'aria-label',v.settings);setAttr(settings,'title',v.settings);
+    text(viewDialog.querySelector('h2'),v.title);
+    viewDialog.querySelectorAll('[data-view]').forEach(b=>text(b,v[b.dataset.view]));
+    text(viewDialog.querySelector('label'),v.zoom);text(viewDialog.querySelector('[data-view-reset]'),v.reset);text(viewDialog.querySelector('[data-view-close]'),v.close);
     text(toggle, mode === '3d' && !failed ? '2D' : '3D');
     setAttr(toggle, 'aria-label', mode === '3d' && !failed ? c.classic : c.three);
     setAttr(toggle, 'title', toggle.getAttribute('aria-label'));
@@ -60,6 +82,7 @@ if (bridge && host) {
     }
     host.classList.toggle('room-rendered', rendered);
     reset.hidden = !rendered;
+    settings.hidden = !rendered;
     status.hidden = !(snap.visible && (loading || failed));
     if (!status.hidden) text(status, failed ? c.fallback : c.loading);
     if (room) {
@@ -691,7 +714,9 @@ function createRoom(T, host) {
     w=r.width;h=r.height;renderer.setSize(w,h,false);
     const a=Math.atan2(8.5,10.5)+api.yaw;camera.position.set(Math.sin(a)*13.5,8,Math.cos(a)*13.5);camera.lookAt(target);camera.updateMatrixWorld();
     // Project the room's bounding corners to fit BOTH height and width, including portrait.
-    const outdoors=[3,4,6,8].includes(currentTier);
+    const outdoors=[3,4,6,8].includes(currentTier)&&api.focus!=='inside';
+    propertyViews.forEach(v=>{v.landscape.visible=v.interior.visible&&api.focus!=='inside';});
+    host.dataset.roomFocus=api.focus;
     const bounds=new T.Box3(new T.Vector3(outdoors?-4.55:-3.62,outdoors?-.66:-.42,outdoors?-4.42:-3.25),new T.Vector3(outdoors?5.85:3.55,3.48,outdoors?4.12:2.96));
     let left=Infinity,right=-Infinity,bottom=Infinity,top=-Infinity;
     for(const x of [bounds.min.x,bounds.max.x])for(const y of [bounds.min.y,bounds.max.y])for(const z of [bounds.min.z,bounds.max.z]){
@@ -702,7 +727,7 @@ function createRoom(T, host) {
     const compact=h<300;
     const padTop=narrow?(compact?37:55):22,padBottom=narrow?(compact?59:111):22;
     const usable=Math.max(60,h-padTop-padBottom);
-    const spanY=Math.max(sceneHeight*h/usable,sceneWidth/aspect*1.10);
+    const spanY=Math.max(sceneHeight*h/usable,sceneWidth/aspect*1.10)/api.zoom;
     const cy=(top+bottom)/2+(padTop-padBottom)/2/h*spanY,cx=(left+right)/2;
     camera.left=cx-spanY*aspect/2;camera.right=cx+spanY*aspect/2;
     camera.top=cy+spanY/2;camera.bottom=cy-spanY/2;camera.updateProjectionMatrix();positionHotspots();
@@ -807,6 +832,6 @@ function createRoom(T, host) {
     geometryCache.forEach(g=>g.dispose());materialCache.forEach(m=>m.dispose());textures.forEach(t=>t.dispose());
     surfaces.forEach(m=>{m.geometry.dispose();});root.remove();
   }
-  const api={root,scene,camera,renderer,yaw:0,gender:'M',fit,localize,setHome,updateProgress,light,updateChart,animate,dispose};
+  const api={root,scene,camera,renderer,yaw:0,zoom:1,focus:'all',gender:'M',fit,localize,setHome,updateProgress,light,updateChart,animate,dispose};
   updateChart(bridge.snapshot());return api;
 }

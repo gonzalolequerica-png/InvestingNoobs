@@ -40,6 +40,7 @@ player's browser or saved data. Checks cover:
 - Dawn/day/sunset/night, day-clock rollover, and pause/resume.
 - Starting a new slot after loading an existing slot without inheriting its cash.
 - All ten property variants, theme switching, distinct market cards and charts.
+- View dialog: interior/landscape selection, bounded zoom and reset controls.
 
 The body `data-game-theme` selects the 2D arcade palette or the 3D studio palette
 across the room, market, chart modal and mentor dialogue. On WebGL failure the

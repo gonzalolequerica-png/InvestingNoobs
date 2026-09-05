@@ -23,6 +23,15 @@ const out=path.join(__dirname,'..','test-results');fs.mkdirSync(out,{recursive:t
   await page.waitForTimeout(1200);
   await page.screenshot({path:path.join(out,'room-desktop.png')});
   console.log('room ready',await page.locator('#mainScene').boundingBox());
+  await page.getByRole('button',{name:'Ajustar vista 3D',exact:true}).click();
+  await page.getByRole('button',{name:'Solo interior',exact:true}).click();
+  assert.equal(await page.locator('#mainScene').getAttribute('data-room-focus'),'inside');
+  await page.locator('#room-zoom').focus();await page.locator('#room-zoom').press('ArrowRight');
+  assert.equal(await page.locator('.room-view-dialog output').textContent(),'105%');
+  await page.getByRole('button',{name:'Restablecer vista',exact:true}).click();
+  assert.equal(await page.locator('#mainScene').getAttribute('data-room-focus'),'all');
+  await page.getByRole('button',{name:'Listo',exact:true}).click();
+  assert.equal(await page.locator('.room-view-dialog').evaluate(e=>e.open),false);
   await page.getByRole('button',{name:'Mercado',exact:true}).click();
   await page.waitForSelector('#screenTrade.active');
   assert.equal(await page.evaluate(()=>state.cash),500,'Opening the market must not alter cash');

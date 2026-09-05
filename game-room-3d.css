@@ -121,6 +121,18 @@ body.room-enabled:has(#screenMain.active) #askSteveBtn {width:36px;height:36px;m
 @media(prefers-reduced-motion:reduce) {.tycoon-room,.room-hotspot {transition:none!important;}}
 
 /* Two complete visual languages; the game state and navigation are shared. */
+.room-view-dialog {position:fixed;inset:0;margin:auto;width:min(320px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;padding:22px;border:1px solid #698c7a;border-radius:20px;background:#15282b;color:#e5ede8;box-shadow:0 20px 80px #0008;}
+.room-view-dialog::backdrop {background:#071017b8;backdrop-filter:blur(5px);}
+.room-view-dialog h2 {font:600 21px system-ui;margin-bottom:18px;}
+.room-view-dialog button {min-height:44px;padding:10px;border:1px solid #74978466;border-radius:10px;background:#223b35;color:#e5ede8;font:500 13px system-ui;cursor:pointer;}
+.room-view-options {display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;}
+.room-view-dialog button[aria-pressed="true"] {background:#afc9b7;color:#182b24;}
+.room-view-dialog label {display:block;font:13px system-ui;margin-bottom:12px;}
+.room-view-dialog input {width:100%;min-height:44px;accent-color:#afc9b7;}
+.room-view-dialog output {display:block;text-align:center;margin-bottom:16px;font:13px system-ui;}
+.room-view-dialog [data-view-reset],.room-view-dialog [data-view-close] {width:100%;margin-top:8px;}
+.room-view-dialog [data-view-close] {background:#afc9b7;color:#182b24;}
+.room-caption {right:165px;}
 body[data-game-theme] .app {padding-top:54px;}
 @media(max-width:700px){body[data-game-theme] .app{padding-top:52px;}}
 body[data-game-theme="2d"] {
