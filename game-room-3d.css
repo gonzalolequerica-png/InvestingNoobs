@@ -119,3 +119,56 @@ body.room-enabled:has(#screenMain.active) #askSteveBtn {width:36px;height:36px;m
   .room-toolbar button:first-child {display:none;}
 }
 @media(prefers-reduced-motion:reduce) {.tycoon-room,.room-hotspot {transition:none!important;}}
+
+/* Two complete visual languages; the game state and navigation are shared. */
+body[data-game-theme="2d"] {
+  --bg:#100f22;--panel:#19172e;--panel2:#111024;--line:#7771b133;
+  --accent:#a397ff;--gold:#ffc45a;--alan:#b6a9ff;--green:#10B981;--red:#F43F5E;
+  --glass-bg:#19172eeb;--glass-border:#8d7cc14d;
+  background:radial-gradient(ellipse at top,#292044,#0d1020 70%);
+}
+body[data-game-theme="2d"] :is(.assetCard,.bizCard,.alanBox,.steveNext) {
+  border-radius:10px;border-color:#7866ae70;
+  background:linear-gradient(135deg,#211d39,#121728);box-shadow:0 4px 0 #080b1680;
+}
+body[data-game-theme="2d"] .screenHead {background:#1a1830;border-bottom:2px solid #8065b5;}
+body[data-game-theme="2d"] .sparkWrap {background:#100d23;border:1px solid #63518466;border-radius:6px;}
+body[data-game-theme="2d"] :is(.alanBox,.steveBottom) {border-left:3px solid #b6a9ff;background:#1c1731;}
+body[data-game-theme="2d"] #chartModal {background:#100e23!important;}
+body[data-game-theme="2d"] #chartModal .chartLiveChart {background:#17112d!important;border-color:#726299!important;}
+body[data-game-theme="2d"] .room-toolbar {z-index:12;}
+body[data-game-theme="3d"] {
+  --bg:#0d171e;--panel:#192933;--panel2:#12212a;--line:#829b9c33;
+  --text:#e5ece9;--muted:#a1b2b5;--gold:#dcc59a;--accent:#9dbfae;--alan:#b5cfc0;
+  --green:#78c5ab;--red:#e99588;--glass-bg:#172832;--glass-border:#637b7e55;
+  background:radial-gradient(ellipse at top,#2c4149,#0a1219 75%);
+}
+body[data-game-theme="3d"] :is(.app,.screen) {background-color:var(--bg);}
+body[data-game-theme="3d"] :is(.screenHead,.topbar) {background:#15252f;border-color:#526b6e60;box-shadow:none;}
+body[data-game-theme="3d"] .screenHead {padding-top:12px;padding-bottom:12px;}
+body[data-game-theme="3d"] .screenHead h2 {font-family:system-ui,sans-serif;font-weight:600;letter-spacing:-.02em;}
+body[data-game-theme="3d"] :is(.assetCard,.bizCard,.statPill) {background:#192a34;border:1px solid #66808455;border-radius:16px;box-shadow:0 6px 18px #0002;}
+body[data-game-theme="3d"] :is(button,input,select) {font-family:system-ui,sans-serif;}
+body[data-game-theme="3d"] :is(.backBtn,.buyBtn,.sellBtn) {border-radius:10px;box-shadow:none;}
+body[data-game-theme="3d"] .buyBtn {background:#a7c6b6;color:#10251e;border-color:#a7c6b6;}
+body[data-game-theme="3d"] .sellBtn {background:#463c3c;color:#f1bbb0;border-color:#936f6855;}
+body[data-game-theme="3d"] .sparkWrap {background:#101f28;border:1px solid #6b898433;border-radius:12px;padding:5px;}
+body[data-game-theme="3d"] :is(.alanBox,.steveNext) {background:#20352f;border:1px solid #8ba58c55;border-radius:16px;box-shadow:none;}
+body[data-game-theme="3d"] .steveBottom {background:#132820;border-top:1px solid #728f7855;border-radius:22px 22px 0 0;}
+body[data-game-theme="3d"] .steveMsg {color:#e2ebe4;line-height:1.7;}
+body[data-game-theme="3d"] .steveCap {background:#b5c6a5;color:#1d2b21;}
+body[data-game-theme="3d"] .steveContinue {background:#b5c6a5;color:#1d2b21;box-shadow:none;}
+body[data-game-theme="3d"] #chartModal {background:#0d1b24f7!important;}
+body[data-game-theme="3d"] #chartModal .chartLiveChart {background:#13252f!important;border-color:#6f898766!important;border-radius:18px!important;}
+body[data-game-theme="3d"] #chartModal button {border-color:#90a79c66!important;background:#22362f!important;color:#e6eee8!important;box-shadow:none!important;}
+body[data-game-theme] button:focus-visible {outline:2px solid var(--gold);outline-offset:3px;}
+body[data-game-theme]:has(#chartModal) .site-return-link {visibility:hidden;}
+body[data-game-theme="3d"] #mainMenu {background:radial-gradient(ellipse at 50% 30%,#30473f,#0b151d 75%);}
+body[data-game-theme="3d"] .menuTitle {background:none;color:#e3dcc9;-webkit-text-fill-color:#e3dcc9;text-shadow:none;letter-spacing:.03em;}
+body[data-game-theme="3d"] :is(.menuSaveInfo,.slotCard) {background:#192c30;border-color:#8caa9360;border-radius:18px;box-shadow:none;}
+body[data-game-theme="3d"] :is(.menuBtn,.slotBtnPlay) {background:#a7c6b6;color:#152820;border-color:#a7c6b6;box-shadow:none;}
+body[data-game-theme="3d"] .bottomnav {background:#15262e!important;border:1px solid #627e7555!important;border-radius:16px!important;box-shadow:none!important;}
+body[data-game-theme="3d"] .bottomnav .bnav {border-radius:12px!important;text-shadow:none!important;box-shadow:none!important;}
+body[data-game-theme="3d"] .bottomnav .bnav .icon {background:transparent!important;border:0!important;box-shadow:none!important;}
+body[data-game-theme="3d"] .bottomnav .bnav.active {background:#2c4438!important;color:#dfebd9!important;border-color:#9eb59766!important;}
+body[data-game-theme="2d"] #mainMenu {background:radial-gradient(ellipse at 50% 20%,#302047,#080c19 75%);}

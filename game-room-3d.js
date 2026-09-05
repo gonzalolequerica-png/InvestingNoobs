@@ -24,7 +24,6 @@ let room, loading = false, failed = false, lastLanguage = '', lastHome = '', sna
 let active = false, raf = 0, previousFrame = 0, elapsed = 0, lastChart = 0;
 
 if (bridge && host) {
-  document.body.classList.add('room-enabled');
   const status = document.createElement('div');
   status.className = 'room-mode-status';
   status.dataset.roomUi = ''; status.setAttribute('role', 'status'); status.hidden = true;
@@ -53,6 +52,12 @@ if (bridge && host) {
     const shown = snap.visible && !document.hidden && mode === '3d' && !failed;
     if (shown && !room && !loading) start();
     const rendered = !!room && mode === '3d' && !failed;
+    const theme = mode === '3d' && !failed ? '3d' : '2d';
+    document.body.classList.toggle('room-enabled', theme === '3d');
+    if(document.body.dataset.gameTheme !== theme) {
+      document.body.dataset.gameTheme = theme;
+      window.dispatchEvent(new Event('tycoon-theme-change'));
+    }
     host.classList.toggle('room-rendered', rendered);
     reset.hidden = !rendered;
     status.hidden = !(snap.visible && (loading || failed));
@@ -268,11 +273,12 @@ function createRoom(T, host) {
   const skyMaterial=new T.MeshBasicMaterial({color:'#88aaba'});materialCache.set('sky',skyMaterial);
   box(windowGroup,[3.78,1.8,.018],[0,1.95,-.42],skyMaterial);
   const cityMat = mat('#507080'); const cityWindows = mat('#e4cc89',{emissive:'#e4b86e',emissiveIntensity:.3});
+  const cityGroup = sub(windowGroup);
   for(let i=0;i<13;i++) {
     const bw=.19+(i%3)*.055, bh=.27+((i*7)%9)*.065;
-    box(windowGroup,[bw,bh,.055],[-1.72+i*.287,1.075+bh/2,-.34],cityMat);
+    box(cityGroup,[bw,bh,.055],[-1.72+i*.287,1.075+bh/2,-.34],cityMat);
     for(let f=0;f<3;f++) for(let j=0;j<2;j++) {
-      const win=box(windowGroup,[.027,.039,.008],[-1.72+i*.287+(j-.5)*.085,1.16+f*.12,-.306],cityWindows);
+      const win=box(cityGroup,[.027,.039,.008],[-1.72+i*.287+(j-.5)*.085,1.16+f*.12,-.306],cityWindows);
       win.castShadow=false;
     }
   }
@@ -439,6 +445,95 @@ function createRoom(T, host) {
   }
   plant(2.76,-2.02,1.16); plant(-2.61,2.25,.78);
   const bonusPlant=plant(2.75,2.26,.75);
+  // Build each property once. Switching equipment swaps geometry atomically;
+  // no image download, empty frame or fallback background between properties.
+  const propertyViews = new Map();
+  const propertyNames = {
+    es:['Mi primer estudio','Mi apartamento','Mi ático de soltero','Mi casa','Mi casa con viñedo','Mi penthouse de lujo','Mi villa mediterránea','Mi palacio de cristal','Mi isla privada','Mi sede mundial'],
+    en:['My first studio','My apartment','My bachelor loft','My house','My vineyard house','My luxury penthouse','My Mediterranean villa','My crystal palace','My private island','My global headquarters'],
+    zh:['我的第一个工作室','我的公寓','我的单身阁楼','我的家','我的葡萄园住宅','我的豪华顶层公寓','我的地中海别墅','我的水晶宫','我的私人岛屿','我的全球总部']
+  };
+  function propertyView(tier) {
+    if(propertyViews.has(tier))return propertyViews.get(tier);
+    const interior=sub(group), exterior=sub(windowGroup);
+    // All exterior silhouettes stay inside the real window aperture.
+    if([3,4,6,8].includes(tier)) {
+      const coast=tier===6||tier===8;
+      box(exterior,[3.74,.62,.025],[0,1.36,-.35],coast?'#3e9caa':'#78916a');
+      for(let i=0;i<5;i++) {
+        if(coast)box(exterior,[.46,.014,.016],[-1.42+i*.66,1.18+(i%3)*.12,-.31],'#a3d4ca',true);
+        else sphere(exterior,.43,[-1.45+i*.72,1.54,-.36],i%2?'#6c875c':'#93a477',[1.2,.43,.05]);
+      }
+      if(tier===4)for(let row=0;row<4;row++)for(let vine=0;vine<7;vine++) {
+        const x=-1.55+vine*.5,y=1.12+row*.095;
+        box(exterior,[.025,.075,.025],[x,y,-.29],'#806849');
+        sphere(exterior,.055,[x,y+.038,-.28],'#456f4d',[2,.45,.35]);
+      }
+      if(tier===3){
+        box(exterior,[.65,.26,.05],[-.8,1.4,-.26],'#dfc9a6');
+        const roof=cylinder(exterior,.01,.48,.23,[-.8,1.64,-.26],'#a9674e',4);roof.scale.z=.2;roof.rotation.y=Math.PI/4;
+      }
+      if(coast) {
+        sphere(exterior,.43,[1.08,1.25,-.28],'#d9c68e',[1.6,.24,.06]);
+        for(const x of [.92,1.29]){
+          tube(exterior,[x,1.29,-.24],[x-.05,1.86,-.24],.022,'#846343');
+          for(let j=0;j<5;j++){const leaf=sphere(exterior,.16,[x-.05+(j-2)*.09,1.85-Math.abs(j-2)*.04,-.24],'#426f57',[1.05,.22,.09]);leaf.rotation.z=(j-2)*.22;}
+        }
+      }
+    } else if(tier===7) {
+      box(exterior,[3.74,.40,.025],[0,1.24,-.34],'#738a83');
+      for(let i=0;i<9;i++){const tree=cylinder(exterior,.015,.13,.57,[-1.65+i*.41,1.5,-.29],'#3b6659',8);tree.scale.z=.25;}
+    }
+    // Architectural and furnishing signatures, not just a different label.
+    if(tier===0){
+      box(interior,[.85,.47,1.55],[-2.55,.33,-1.75],'#8a9fa3',true);
+      box(interior,[.8,.10,.45],[-2.55,.62,-2.21],cream,true);
+    }
+    if(tier===1||tier===2){
+      const cabinet=sub(interior,[-2.76,0,-1.75]);
+      box(cabinet,[.75,1.5,.70],[0,.83,0],tier===1?'#957554':'#414e5e',true);
+      for(const y of [.38,.78,1.18])box(cabinet,[.60,.025,.72],[0,y,.02],cream);
+      if(tier===2)for(let i=0;i<5;i++)box(interior,[.09,3,.10],[-3.20,1.6,-2.32+i*.21],'#8d6350',true);
+    }
+    if(tier===3||tier===4){
+      const hearth=sub(interior,[-3.03,0,-1.75]);
+      box(hearth,[.57,1.35,1.15],[0,.74,0],'#aa9b83',true);
+      box(hearth,[.04,.64,.73],[.30,.53,0],'#302d2b',true);
+      box(hearth,[.74,.12,1.29],[0,1.43,0],walnut,true);
+      if(tier===4){
+        for(let i=0;i<3;i++){const barrel=cylinder(interior,.19,.19,.47,[-2.64+i*.37,.34,-2.29],'#896044',16);barrel.scale.z=.8;}
+      }
+    }
+    if(tier>=5){
+      for(const z of [-2.48,2.50]){
+        cylinder(interior,.11,.14,3.08,[-3.17,1.65,z],tier===7?'#a9c1c5':'#c6bfa8');
+        box(interior,[.35,.12,.35],[-3.17,.18,z],brass,true);
+      }
+      if(tier===5||tier===9){
+        const dashboard=sub(interior,[-3.29,2.1,.25],Math.PI/2);
+        box(dashboard,[1.80,.92,.06],[0,0,0],ink,true);
+        const screen=new T.Mesh(new T.PlaneGeometry(1.67,.78),screenMat);screen.position.z=.04;dashboard.add(screen);surfaces.push(screen);
+      }
+      if(tier===6||tier===8){
+        box(interior,[.90,.14,1.78],[-2.54,.52,-1.72],'#d4c4a3',true);
+        box(interior,[.88,.15,1.55],[-2.54,.65,-1.65],cream,true);
+        const back=box(interior,[.88,.55,.14],[-2.54,.86,-2.34],cream,true);back.rotation.x=-.22;
+      }
+      if(tier===7){
+        const glass=mat('#92b7bf',{transparent:true,opacity:.36,metalness:.25,roughness:.12});
+        for(let i=0;i<5;i++)box(interior,[.035,2.65,.59],[-3.29,1.72,-2.33+i*.70],glass);
+        for(let i=0;i<4;i++)sphere(interior,.12,[-1.6+i*.42,3.03,-1.8],brass,[.6,1.6,.6]);
+      }
+      if(tier===9){
+        const globe=sub(interior,[-2.60,0,-1.85]);
+        cylinder(globe,.32,.38,.12,[0,.18,0],walnut);
+        tube(globe,[0,.24,0],[0,.88,0],.055,brass);
+        sphere(globe,.42,[0,1.2,0],'#638e9a');
+        for(let i=0;i<6;i++)sphere(globe,.13,[Math.sin(i)*.33,1.2+Math.cos(i)*.26,.22],'#a6b58d',[1,.7,.3]);
+      }
+    }
+    const result={interior,exterior};propertyViews.set(tier,result);return result;
+  }
   const trophyGroup=sub(group,[1.72,1.10,-1.43]);
   box(trophyGroup,[.20,.05,.20],[0,0,0],walnut,true);
   cylinder(trophyGroup,.023,.035,.16,[0,.10,0],brass);
@@ -554,8 +649,8 @@ function createRoom(T, host) {
   function localize(c) {
     labels=c;phaseShown=-1;
     text(overlay.querySelector('.room-eyebrow'),c.eyebrow);
-    const names={default:c.studio,home1:c.apartment,home1b:c.studio,home2:c.house,home3:c.loft,home4:c.estate,home5:c.loft,home6:c.estate,home7:c.estate,home8:c.empire,home9:c.empire};
-    text(overlay.querySelector('.room-title'),names[currentHome]||c.studio);
+    const language=Object.keys(COPY).find(key=>COPY[key]===c)||'es';
+    text(overlay.querySelector('.room-title'),propertyNames[language][currentTier]);
     text(overlay.querySelector('.room-caption'),c.hint);
     setAttr(root,'aria-label',c.scene);
     hot.forEach(item=>{text(item.span,c[item.button.dataset.action]);setAttr(item.button,'aria-label',c[item.button.dataset.action]);});
@@ -565,8 +660,27 @@ function createRoom(T, host) {
     const changed=currentHome&&currentHome!==id;
     currentHome=id;api.gender=gender;
     currentTier={default:0,home1b:0,home1:1,home5:2,home2:3,home6:4,home3:5,home7:6,home8:7,home4:8,home9:9}[id]||0;
-    const scheme=currentTier>=5?['#4a6173','#354958','#aeb5b6','#d8c291','#7b9195','#a4b2b0']:currentTier>=3?['#69776b','#3f5858','#a77a50','#e3cbaa','#b77451','#526e61']:['#5f7b7c','#455f64','#b98d63','#dfceb0','#b3684e','#718575'];
+    const view=propertyView(currentTier);
+    propertyViews.forEach(v=>{v.interior.visible=v===view;v.exterior.visible=v===view;});
+    cityGroup.visible=[0,1,2,5,9].includes(currentTier);
+    cityGroup.scale.y=currentTier===5?1.35:currentTier===9?1.65:1;
+    if(currentTier>=5)cityGroup.position.y=1.075*(1-cityGroup.scale.y);
+    else cityGroup.position.y=0;
+    host.dataset.roomVariant=String(currentTier);
+    const scheme=[
+      ['#5f7b7c','#455f64','#b98d63','#dfceb0','#b3684e','#718575'],
+      ['#728785','#4c676a','#be966d','#e0d3b8','#b57857','#85948b'],
+      ['#765f59','#4b4c55','#8b6c51','#d1bca0','#c88b4d','#626b77'],
+      ['#89917b','#5c7469','#b38b5c','#e3cbaa','#b77451','#71846c'],
+      ['#96876d','#627453','#987146','#e1cb9e','#9b5c56','#7c8560'],
+      ['#4a6173','#354958','#aeb5b6','#d8c291','#7b9195','#a4b2b0'],
+      ['#d2c7ad','#899d9b','#c8aa75','#e9dbc0','#c67e58','#8fada7'],
+      ['#aac0c4','#678790','#d2d4cb','#dfcda5','#9dbbb7','#c0caca'],
+      ['#8daca2','#4e817e','#bf9d67','#ead8b2','#d0a068','#8fb3a0'],
+      ['#465d70','#2d4356','#828c93','#bcb6a3','#647e89','#92a6aa']
+    ][currentTier];
     Object.values(palette).forEach((m,i)=>m.color.set(scheme[i]));
+    planks.forEach((m,i)=>{m.color.set(scheme[2]).multiplyScalar(.94+i*.018);m.roughness=currentTier>=5?.42:.68;});
     ponytail.visible=gender==='F';jacket.color.set(gender==='F'?'#a6664f':'#bd835b');
     secondMonitor.visible=currentTier>=1;
     bonusPlant.visible=currentTier>=2;

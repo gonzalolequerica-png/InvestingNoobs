@@ -5,8 +5,10 @@ studio, reading the small `TycoonRoomBridge` adapter. It never buys an item or
 changes money itself. Purchases, equipment, language, gender, and saved games
 remain owned by the existing game.
 
-The prototype uses one studio layout with progressive furnishing/palette changes.
-It does not yet provide ten separately modeled properties. Players can switch
+The scene uses a shared cutaway shell with ten property-specific furnishing,
+architecture, palette and window-scenery variants. It is not ten full buildings.
+City, vineyard, countryside, Mediterranean coast and island scenery follow the
+equipped property and the shared continuous day clock. Players can switch
 to their original 2D room; that preference is local to their browser. WebGL
 failure automatically leaves the original room usable.
 
@@ -34,6 +36,11 @@ player's browser or saved data. Checks cover:
 - 320×568, 390×844 and 844×390 viewport bounds and separated touch targets.
 - Dawn/day/sunset/night, day-clock rollover, and pause/resume.
 - Starting a new slot after loading an existing slot without inheriting its cash.
+- All ten property variants, theme switching, distinct market cards and charts.
+
+The body `data-game-theme` selects the 2D arcade palette or the 3D studio palette
+across the room, market, chart modal and mentor dialogue. On WebGL failure the
+classic theme is restored. Changing the view does not mutate the saved economy.
 
 Rendering caps pixel density and pauses its animation loop outside the home
 screen or in a hidden tab. Mobile uses 30fps scheduling and 1024px shadow maps;

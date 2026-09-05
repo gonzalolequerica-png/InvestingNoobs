@@ -98,6 +98,36 @@ const out=path.join(__dirname,'..','test-results');fs.mkdirSync(out,{recursive:t
     await page.locator('#screenTrade .backBtn').click();
     await page.screenshot({path:path.join(out,`room-${lang}.png`)});
   }
+  // Each equipped property has its own geometry, and both themes follow the same save.
+  const homes=['home1b','home1','home5','home2','home6','home3','home7','home8','home4','home9'];
+  for(const [tier,home] of homes.entries()) {
+    await page.evaluate(home=>{state.shop.equipped.inmueble=home;updateRoomPhoto();},home);
+    await page.waitForFunction(home=>document.getElementById('mainScene').dataset.roomHome===home,home);
+    assert.equal(await page.locator('#mainScene').getAttribute('data-room-variant'),String(tier));
+    await page.waitForTimeout(200);
+    await page.screenshot({path:path.join(out,`property-${home}.png`)});
+  }
+  await page.evaluate(()=>{state.shop.equipped.inmueble='home1';updateRoomPhoto();});
+  await page.waitForFunction(()=>document.getElementById('mainScene').dataset.roomHome==='home1');
+  await page.getByRole('button',{name:'Ver habitación en 2D',exact:true}).click();
+  assert.equal(await page.locator('body').getAttribute('data-game-theme'),'2d');
+  assert.equal(await page.locator('body').evaluate(e=>e.classList.contains('room-enabled')),false);
+  await page.evaluate(()=>goScreen('screenTrade'));
+  await page.screenshot({path:path.join(out,'theme-2d-market.png')});
+  const classicCard=await page.locator('.assetCard').first().evaluate(e=>getComputedStyle(e).backgroundImage);
+  await page.evaluate(()=>openChart(ASSETS[0].id));
+  await page.screenshot({path:path.join(out,'theme-2d-chart.png')});
+  await page.evaluate(()=>{closeChart();goHome();});
+  await page.getByRole('button',{name:'Ver habitación en 3D',exact:true}).click();
+  assert.equal(await page.locator('body').getAttribute('data-game-theme'),'3d');
+  await page.evaluate(()=>goScreen('screenTrade'));
+  const modernCard=await page.locator('.assetCard').first().evaluate(e=>getComputedStyle(e).backgroundImage);
+  assert.notEqual(classicCard,modernCard);
+  await page.screenshot({path:path.join(out,'theme-3d-market.png')});
+  await page.evaluate(()=>openChart(ASSETS[0].id));
+  assert.ok((await page.locator('#chartModal .chartLiveChart').innerHTML()).includes('#78c5ab'));
+  await page.screenshot({path:path.join(out,'theme-3d-chart.png')});
+  await page.evaluate(()=>{closeChart();goHome();});
   // A fresh slot starts fresh, even after loading another player's progress.
   await page.evaluate(()=>{openPauseMenu();startNewGame(2);});
   assert.equal(await page.evaluate(()=>state.cash),500);

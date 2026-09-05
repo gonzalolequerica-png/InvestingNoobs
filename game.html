@@ -80,7 +80,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Investing Noobs Tycoon</title>
-<link rel="stylesheet" href="game-room-3d.css?v=20260905-2">
+<link rel="stylesheet" href="game-room-3d.css?v=20260905-3">
 <style>
 :root{
   --bg:#0B0F19;--panel:#131826;--panel2:#0D1220;--line:rgba(255,255,255,.08);
@@ -4183,7 +4183,9 @@ function spark(hist){
   const W=260,H=84,PAD_TOP=7,PAD_BOT=3,VOL_H=13;
   const chartH=H-VOL_H-PAD_BOT-PAD_TOP;
   const up=hist[hist.length-1]>=hist[0];
-  const color=up?'#10B981':'#F43F5E';
+  const room3d=document.body.dataset.gameTheme==='3d';
+  const chartUp=room3d?'#78c5ab':'#10B981',chartDown=room3d?'#e99588':'#F43F5E';
+  const color=up?chartUp:chartDown;
   const fill=up?'rgba(46,212,122,0.08)':'rgba(232,80,80,0.08)';
 
   // Agrupamos el historial en velas, pero generamos OHLC con CONTINUIDAD real:
@@ -4241,7 +4243,7 @@ function spark(hist){
   candles.forEach((c,i)=>{
     const x=(i+0.5)*cw;
     const isUp=c.c>=c.o;
-    const col=isUp?'#10B981':'#F43F5E';
+    const col=isUp?chartUp:chartDown;
     const top=yp(Math.max(c.o,c.c));
     const bot=yp(Math.min(c.o,c.c));
     const bh=Math.max(2.4,bot-top);
@@ -7705,6 +7707,6 @@ window.TycoonRoomBridge={
   }
 };
 </script>
-<script type="module" src="game-room-3d.js?v=20260905-2"></script>
+<script type="module" src="game-room-3d.js?v=20260905-3"></script>
 </body>
 </html>
