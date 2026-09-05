@@ -8,8 +8,11 @@ remain owned by the existing game.
 The scene uses a shared cutaway shell with ten property-specific furnishing,
 architecture, palette and window-scenery variants. It is not ten full buildings.
 City, vineyard, countryside, Mediterranean coast and island scenery follow the
-equipped property and the shared continuous day clock. Players can switch
-to their original 2D room; that preference is local to their browser. WebGL
+equipped property and the shared continuous day clock.
+The countryside and coastal variants also include outdoor 3D grounds around
+the house: garden paths, vineyard rows, beach, palms and water. Camera fitting
+includes this plot and is checked in portrait mobile views.
+Players can switch to their original 2D room; that preference is local to their browser. WebGL
 failure automatically leaves the original room usable.
 
 Three.js 0.180.0 is vendored in `vendor/three/` with its MIT license, avoiding a

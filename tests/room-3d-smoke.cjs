@@ -104,8 +104,15 @@ const out=path.join(__dirname,'..','test-results');fs.mkdirSync(out,{recursive:t
     await page.evaluate(home=>{state.shop.equipped.inmueble=home;updateRoomPhoto();},home);
     await page.waitForFunction(home=>document.getElementById('mainScene').dataset.roomHome===home,home);
     assert.equal(await page.locator('#mainScene').getAttribute('data-room-variant'),String(tier));
+    assert.equal(await page.locator('#mainScene').getAttribute('data-room-landscape'),[3,4].includes(tier)?'countryside':[6,8].includes(tier)?'coast':'city');
     await page.waitForTimeout(200);
     await page.screenshot({path:path.join(out,`property-${home}.png`)});
+    if([4,8].includes(tier)) {
+      await page.setViewportSize({width:390,height:844});await page.waitForTimeout(350);
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),390);
+      await page.screenshot({path:path.join(out,`outdoor-mobile-${home}.png`)});
+      await page.setViewportSize({width:1024,height:900});await page.waitForTimeout(200);
+    }
   }
   await page.evaluate(()=>{state.shop.equipped.inmueble='home1';updateRoomPhoto();});
   await page.waitForFunction(()=>document.getElementById('mainScene').dataset.roomHome==='home1');

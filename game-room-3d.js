@@ -455,7 +455,68 @@ function createRoom(T, host) {
   };
   function propertyView(tier) {
     if(propertyViews.has(tier))return propertyViews.get(tier);
-    const interior=sub(group), exterior=sub(windowGroup);
+    const interior=sub(group), exterior=sub(windowGroup), landscape=sub(group);
+    const rural=tier===3||tier===4, seaside=tier===6||tier===8;
+    if(rural||seaside) {
+      // A real outdoor plot around the cutaway house, not a backdrop image.
+      box(landscape,[10.2,.20,8.4],[.65,-.51,-.15],seaside?'#357f90':'#617d52',true);
+      box(landscape,[8.0,.10,6.5],[.1,-.37,-.04],seaside?'#d7c396':'#859762',true);
+      if(rural) {
+        // Stone garden path, fence, trees and rows of trained vines.
+        for(let i=0;i<8;i++)box(landscape,[.53,.06,.48],[3.87,-.27,-2.9+i*.80],i%2?'#b7ad91':'#c3bba2',true);
+        for(let i=0;i<7;i++)box(landscape,[.08,.54,.08],[5.30,-.08,-3.6+i*1.14],'#a38e69',true);
+        for(const y of [-.04,.16])box(landscape,[.05,.05,7.3],[5.30,y,-.18],'#b9a780',true);
+        const tree=(x,z,scale=1)=>{
+          const t=sub(landscape,[x,-.34,z]);t.scale.setScalar(scale);
+          cylinder(t,.055,.095,.8,[0,.4,0],'#776048');
+          for(let i=0;i<4;i++)sphere(t,.34,[Math.sin(i*2)*.19,.88+(i%2)*.22,Math.cos(i*2)*.19],i%2?'#708c59':'#486e50',[1,1.1,1]);
+        };
+        tree(-3.96,-3.65,1.15);tree(4.75,-3.28,.9);tree(-3.98,2.5,.7);
+        if(tier===4) {
+          for(let row=0;row<3;row++) {
+            const x=4.42+row*.30;
+            box(landscape,[.12,.02,4.45],[x,-.38,.35],'#675b40',true);
+            for(let j=0;j<6;j++) {
+              const z=-1.5+j*.73;
+              box(landscape,[.035,.43,.035],[x,-.12,z],'#aa9771');
+              sphere(landscape,.13,[x,.10,z],'#537746',[.72,.82,1.9]);
+              sphere(landscape,.045,[x+.07,.06,z+.07],'#656086');
+            }
+            tube(landscape,[x,.04,-1.65],[x,.04,2.35],.012,'#8d967b');
+          }
+        } else {
+          for(let i=0;i<8;i++) {
+            const x=4.55+(i%2)*.32,z=-1.75+Math.floor(i/2)*.85;
+            sphere(landscape,.19,[x,-.23,z],'#58794b',[1,.55,1]);
+            sphere(landscape,.045,[x,.0,z],i%2?'#e3c373':'#b78fa5');
+          }
+        }
+      } else {
+        // Beach on one side, water on the other. Wavelets stay below the floor.
+        box(landscape,[1.46,.035,6.9],[4.42,-.36,-.22],'#daca9f',true);
+        for(let i=0;i<12;i++)box(landscape,[.20+(i%3)*.12,.012,.025],[4.9+(i%2)*.36,-.398,-3.7+i*.63],'#aed7d0',true);
+        for(let i=0;i<6;i++)box(landscape,[.53,.012,.025],[-3.6+i*1.42,-.397,3.7],'#aed7d0',true);
+        const palm=(x,z,scale=1)=>{
+          const t=sub(landscape,[x,-.32,z]);t.scale.setScalar(scale);
+          tube(t,[0,0,0],[.10,1.35,0],.065,'#9c8059');
+          for(let i=0;i<7;i++){
+            const a=i*Math.PI*2/7,leaf=sphere(t,.30,[.1+Math.sin(a)*.28,1.37,Math.cos(a)*.28],'#547d65',[.48,.14,1.65]);
+            leaf.rotation.y=a;leaf.rotation.x=.15;
+          }
+        };
+        palm(4.54,-2.85,1.12);palm(-3.92,-3.58,.9);palm(4.65,2.72,.75);
+        if(tier===6){
+          for(let i=0;i<6;i++)box(landscape,[.47,.025,.48],[3.92,-.29,-1.6+i*.68],'#bb9470',true);
+          cylinder(landscape,.20,.14,.35,[4.6,-.16,.35],'#b27455');
+          sphere(landscape,.27,[4.6,.15,.35],'#80926b',[1,.8,1]);
+        } else {
+          for(let i=0;i<8;i++)box(landscape,[.66,.045,.19],[4.43,-.24,-.63+i*.20],'#b59469',true);
+          const chair=sub(landscape,[4.43,-.15,.07]);
+          box(chair,[.47,.08,.85],[0,.16,0],'#e6d8b6',true);
+          const back=box(chair,[.47,.42,.07],[0,.36,-.39],'#e6d8b6',true);back.rotation.x=-.25;
+        }
+      }
+    }
     // All exterior silhouettes stay inside the real window aperture.
     if([3,4,6,8].includes(tier)) {
       const coast=tier===6||tier===8;
@@ -532,7 +593,7 @@ function createRoom(T, host) {
         for(let i=0;i<6;i++)sphere(globe,.13,[Math.sin(i)*.33,1.2+Math.cos(i)*.26,.22],'#a6b58d',[1,.7,.3]);
       }
     }
-    const result={interior,exterior};propertyViews.set(tier,result);return result;
+    const result={interior,exterior,landscape};propertyViews.set(tier,result);return result;
   }
   const trophyGroup=sub(group,[1.72,1.10,-1.43]);
   box(trophyGroup,[.20,.05,.20],[0,0,0],walnut,true);
@@ -630,7 +691,8 @@ function createRoom(T, host) {
     w=r.width;h=r.height;renderer.setSize(w,h,false);
     const a=Math.atan2(8.5,10.5)+api.yaw;camera.position.set(Math.sin(a)*13.5,8,Math.cos(a)*13.5);camera.lookAt(target);camera.updateMatrixWorld();
     // Project the room's bounding corners to fit BOTH height and width, including portrait.
-    const bounds=new T.Box3(new T.Vector3(-3.62,-.42,-3.25),new T.Vector3(3.55,3.48,2.96));
+    const outdoors=[3,4,6,8].includes(currentTier);
+    const bounds=new T.Box3(new T.Vector3(outdoors?-4.55:-3.62,outdoors?-.66:-.42,outdoors?-4.42:-3.25),new T.Vector3(outdoors?5.85:3.55,3.48,outdoors?4.12:2.96));
     let left=Infinity,right=-Infinity,bottom=Infinity,top=-Infinity;
     for(const x of [bounds.min.x,bounds.max.x])for(const y of [bounds.min.y,bounds.max.y])for(const z of [bounds.min.z,bounds.max.z]){
       const p=new T.Vector3(x,y,z).applyMatrix4(camera.matrixWorldInverse);left=Math.min(left,p.x);right=Math.max(right,p.x);bottom=Math.min(bottom,p.y);top=Math.max(top,p.y);
@@ -661,7 +723,8 @@ function createRoom(T, host) {
     currentHome=id;api.gender=gender;
     currentTier={default:0,home1b:0,home1:1,home5:2,home2:3,home6:4,home3:5,home7:6,home8:7,home4:8,home9:9}[id]||0;
     const view=propertyView(currentTier);
-    propertyViews.forEach(v=>{v.interior.visible=v===view;v.exterior.visible=v===view;});
+    propertyViews.forEach(v=>{v.interior.visible=v===view;v.exterior.visible=v===view;v.landscape.visible=v===view;});
+    host.dataset.roomLandscape=[3,4].includes(currentTier)?'countryside':[6,8].includes(currentTier)?'coast':'city';
     cityGroup.visible=[0,1,2,5,9].includes(currentTier);
     cityGroup.scale.y=currentTier===5?1.35:currentTier===9?1.65:1;
     if(currentTier>=5)cityGroup.position.y=1.075*(1-cityGroup.scale.y);
@@ -689,6 +752,7 @@ function createRoom(T, host) {
     renderer.shadowMap.needsUpdate=true;
     host.dataset.roomHome=id;
     if(labels)localize(labels);
+    fit();
   }
   function updateProgress(data) {
     currentBusinesses=data.businesses;
