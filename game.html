@@ -7609,6 +7609,130 @@ showMainMenu();
 repairTextNodes();
 setInterval(()=>repairTextNodes(),500);
 </script>
+<script id="game-locale-polish-final">
+(function(){
+  var maps={
+    en:[['Se desbloquea en el siguiente capítulo','Unlocks in the next chapter'],['Se desbloquea más adelante','Unlocks later'],['Cartera:','Holdings:'],['Cantidad en 
+</html>
+
+<script id="visible-text-encoding-repair">
+(function(){
+  function repair(value){
+    try{return decodeURIComponent(escape(value));}catch(e){return value;}
+  }
+  function run(){
+    var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),node;
+    while(node=walker.nextNode()){var fixed=repair(node.nodeValue);if(fixed!==node.nodeValue)node.nodeValue=fixed;}
+    document.querySelectorAll('input[placeholder],textarea[placeholder]').forEach(function(el){el.placeholder=repair(el.placeholder);});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
+  setInterval(run,1200);
+})();
+</script>
+
+
+
+
+,'Amount in 
+</html>
+
+<script id="visible-text-encoding-repair">
+(function(){
+  function repair(value){
+    try{return decodeURIComponent(escape(value));}catch(e){return value;}
+  }
+  function run(){
+    var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),node;
+    while(node=walker.nextNode()){var fixed=repair(node.nodeValue);if(fixed!==node.nodeValue)node.nodeValue=fixed;}
+    document.querySelectorAll('input[placeholder],textarea[placeholder]').forEach(function(el){el.placeholder=repair(el.placeholder);});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
+  setInterval(run,1200);
+})();
+</script>
+
+
+
+
+],['Vender todo','Sell all'],['Val.','Sell'],['Comprar','Buy'],['Caja (fondeada)','Funded cash'],['Sin abrir','Not open'],['Niv.','Lvl.'],['Día','Day'],['día','day']],
+    zh:[['Se desbloquea en el siguiente capítulo','在下一章解锁'],['Se desbloquea más adelante','稍后解锁'],['Personal','个人'],['Cartera:','持仓：'],['Cantidad en 
+</html>
+
+<script id="visible-text-encoding-repair">
+(function(){
+  function repair(value){
+    try{return decodeURIComponent(escape(value));}catch(e){return value;}
+  }
+  function run(){
+    var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),node;
+    while(node=walker.nextNode()){var fixed=repair(node.nodeValue);if(fixed!==node.nodeValue)node.nodeValue=fixed;}
+    document.querySelectorAll('input[placeholder],textarea[placeholder]').forEach(function(el){el.placeholder=repair(el.placeholder);});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
+  setInterval(run,1200);
+})();
+</script>
+
+
+
+
+,'金额（$）'],['Vender todo','全部卖出'],['Val.','卖出'],['Comprar','买入'],['Caja (fondeada)','资金账户'],['Caja','现金'],['Sin abrir','未开启'],['Día','天'],['día','天'],['模🛒币','模因币'],['�Ƒ�源','能源'],['📈�地产','房地产'],['去中�Ƒ化金融','去中心化金融'],['可持续�Ƒ�源','可持续能源'],['交☰机器人','交易机器人'],['�‹机维修','手机维修'],['�˜频交☰','高频交易'],['�ƒ应链控�ˆ�','供应链控制'],['�„产','资产'],['�„金','资金']]
+  };
+  var cleanZh=[
+    ['起点','你从 $500 开始。理性投资，建立你的第一份资产。','我开始时比你还穷。看看我现在的样子。','你有500美元作为起点。先用小额资金进入市场，边做边学，再承担更大的风险。建立第一个业务，让被动收入帮助你成长。目标：净资产达到 $7,000。'],
+    ['第一次十倍增长','$30K 是目标。交易机器人和新资产正在等待。','十倍增长不是运气，而是在正确的时间出现在正确的地方。','欢迎来到真正的交易世界。交易机器人会在你睡觉时工作，资产会随着净资产增长逐步解锁。先研究市场，再追逐快速行情。'],
+    ['第一年','$300K。私人基金和 AuroGold 是下一步。','富人不为钱工作，而是让钱为他们工作。','大多数人会在这里放弃，而你还在继续。谨慎管理资金，在市场下跌时使用防御性资产，并持续建立被动收入。'],
+    ['你找到了基金','专业管理者。加密交易所会改变一切。','交易者承担自己的风险，管理者承担他人的资金风险，却同样获得报酬。','你仍然是交易者，同时也开始管理资本。交易所带来手续费收入，对冲基金让你接近机构投资者。'],
+    ['世界认识你','$3M。房地产和 QuantumLeap 是下一次跃升。','当你拥有三百万，电话会自己响起来。','你的名字开始传播。建立实体资产并准备销售税。增长很重要，但流动性和风险管理更加重要。'],
+    ['基金壮大','$50M。电视、医药科技和 NFT 市场。','谁掌控金融叙事，谁就能影响市场。','你已经成为一家机构。被动收入不断扩大，但公开决策也会影响他人的反应。保持帝国多元化。'],
+    ['全球精英','$500M。风险投资和卫星网络正在等你。','世界上有数千位亿万富翁，而你正在成为其中之一。','投资下一代公司，建设全球基础设施。巨大回报可能出现，但巨大损失也一样可能出现。'],
+    ['王座','$5B。航空航天和人工智能。世界属于你。','我认识你时你一无所有，而现在全世界都知道你的名字。','你已达到顶级阶段。把业务提升到最高等级，然后选择用声望换取永久加成，或继续挑战最终目标。']
+  ];
+  var busy=false;
+  function language(){return document.documentElement.lang==='zh-CN'?'zh':(document.documentElement.lang==='en'?'en':'es');}
+  function applyCleanZh(){
+    if(language()!=='zh'||typeof state==='undefined'||!Array.isArray(CHAPTERS))return;
+    CHAPTERS.forEach(function(ch,i){var r=cleanZh[i];if(r){ch.title=r[0];ch.short=r[1];ch.quote=r[2];ch.dialog=r[3];}});
+  }
+  function walkText(lang){
+    var map=maps[lang]||[],root=document.body,walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),n;
+    while(n=walker.nextNode()){
+      if(n.parentElement&&n.parentElement.closest('select'))continue;
+      var v=n.nodeValue||'';
+      map.forEach(function(pair){v=v.split(pair[0]).join(pair[1]);});
+      if(lang==='zh'){
+        v=v.replace(/做多�买入/g,'做多 · 买入').replace(/做空�开仓/g,'做空 · 开仓').replace(/全�ƒ�卖出/g,'全部卖出');
+        v=v.replace(/🔋一💳产解锁需净💳产s*($[d.,]+[KMB]?)/g,'🔒 资产解锁需净资产 $1');
+        if(/^Días*d+/.test(v))v=v.replace(/^Días*(d+)/,'第$1天');
+      } else if(lang==='en'){
+        v=v.replace(/^Días*(d+)/,'Day $1');
+      }
+      if(v!==n.nodeValue)n.nodeValue=v;
+    }
+  }
+  function polish(){
+    if(busy)return;busy=true;
+    try{
+      var lang=language();
+      applyCleanZh();
+      walkText(lang);
+      var img=document.getElementById('mainCharacterImage');
+      if(img)img.alt=lang==='zh'?'主角':lang==='en'?'Trader character':'Personaje principal';
+      if(lang==='zh'&&typeof updateAlanBox==='function'){
+        var alan=document.getElementById('alanMsg');
+        if(alan&&/�|📈|🔋|💳/.test(alan.textContent||''))updateAlanBox();
+      }
+      var next=document.getElementById('levelNextLabel');
+      if(next&&lang==='zh'){
+        var money=(next.textContent||'').match(/$[d.,]+[KMB]?/);
+        next.textContent=money?'🔒 资产解锁需净资产 '+money[0]:'已达最高等级 · 全部解锁';
+      }
+    }catch(e){} finally{busy=false;}
+  }
+  function boot(){polish();new MutationObserver(function(){polish();}).observe(document.body,{childList:true,subtree:true,characterData:true});setInterval(polish,700);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+})();
+</script>
 </body>
 </html>
 
