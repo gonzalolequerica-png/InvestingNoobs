@@ -5980,6 +5980,14 @@ function applyLanguage(){
   const alanTalk=document.getElementById('alanTap');
   if(alanMessage&&(!alanMessage.textContent.trim()||/^(Cargando|Loading|加载)/.test(alanMessage.textContent.trim())))alanMessage.textContent=statCopy.loading;
   if(alanTalk&&(!alanTalk.textContent.trim()||/^(Toca|Tap|点击)/.test(alanTalk.textContent.trim())))alanTalk.textContent=statCopy.talk;
+  const menuTitle=document.querySelector('.menuTitle'),menuSubtitle=document.querySelector('.menuSubtitle'),menuTagline=document.querySelector('.menuTagline'),saveToast=document.getElementById('saveToast'),ticker=document.getElementById('menuTicker');
+  if(menuTitle)menuTitle.textContent='INVESTING NOOBS TYCOON';
+  if(menuSubtitle)menuSubtitle.textContent=lang==='en'?'FROM THE STREET TO THE WORLD':lang==='zh'?'从街头到世界':'DE LA CALLE AL MUNDO';
+  if(menuTagline)menuTagline.innerHTML=lang==='en'?'"You start with $500.<br>The goal: buy the whole world."':lang==='zh'?'"你从 $500 开始。<br>目标：买下整个世界。"':'"Empezaste con $500.<br>El objetivo: comprar el mundo entero."';
+  if(saveToast)saveToast.textContent=lang==='en'?'✅ Game saved':lang==='zh'?'✅ 游戏已保存':'✅ Partida guardada';
+  if(ticker&&lang==='zh')ticker.innerHTML=ticker.innerHTML.replace(/OreX Minería|OreX Miner�a|OreX Mining/g,'OreX 矿业');
+  if(typeof getRank==='function'&&typeof netWorth==='function'){const currentRank=getRank(netWorth()),rankZhNames=['街头新手','新手交易员','初级经理','基金经理','大亨','百万富翁','亿万富翁','全球精英','世界首富'];const rankEl=document.getElementById('rankStat');if(rankEl&&lang==='zh')rankEl.innerHTML=currentRank.emoji+' '+(rankZhNames[Math.max(0,RANKS.indexOf(currentRank))]||'交易员');}
+  const nwEl=document.getElementById('nwStat');if(nwEl&&typeof netWorth==='function')nwEl.textContent=(lang==='en'?'net worth':lang==='zh'?'净资产':'Patrimonio')+': '+fmt(netWorth());
 }
 const GLOBAL_LANG_KEY='ct_language_pref';
 function setLanguage(lang){
