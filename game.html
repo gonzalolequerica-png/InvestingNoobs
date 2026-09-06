@@ -1144,7 +1144,7 @@ button:active{transform:translateY(1px);}
       <div id="roomPhotoLayer" class="roomPhoto1 photo-active"></div><div id="roomPhotoLayerNext" class="photo-hidden" aria-hidden="true"></div>
       <div class="weatherLayer" id="weatherLayer"><div class="sunOrb" id="sunOrb"></div><div class="stars"></div><div class="clouds"></div><div class="fogLayer"></div><div class="dayNightOverlay" id="dayNightOverlay"></div></div>
       <svg id="charSVG" viewBox="0 0 160 300" xmlns="http://www.w3.org/2000/svg"></svg>
-      <img class="mainCharacterImage" id="mainCharacterImage" src="asset-personaje-trader.png" alt="Personaje trader">
+      <img class="mainCharacterImage" id="mainCharacterImage" src="asset-personaje-trader-no-laptop.png" alt="Personaje trader">
     </div>
     <div class="statsRow">
       <div class="statPill"><div class="sl">Pasivo/día</div><div class="sv" id="passiveStat">$0</div></div>
@@ -6182,7 +6182,7 @@ function renderCharacter(){
     const scale={home1b:[54,50,8],home1:[52,51,9],home5:[49,50,10],home2:[47,52,11],home6:[43,52,13],home3:[45,51,12],home7:[41,52,14],home8:[44,52,12],home4:[39,53,15],home9:[42,52,13]}[home]||[52,50,9];
     characterImage.style.setProperty('height',scale[0]+'%','important');characterImage.style.setProperty('width','auto','important');characterImage.style.setProperty('max-width','65%','important');characterImage.style.setProperty('left',scale[1]+'%','important');characterImage.style.setProperty('bottom',scale[2]+'%','important');
     const female=state.playerGender==='F';
-    characterImage.src=female?'asset-personaje-trader-f-alpha.png':'asset-personaje-trader.png';
+    characterImage.src=female?'asset-personaje-trader-f-alpha.png':'asset-personaje-trader-no-laptop.png';
     characterImage.alt=female?'Jugadora trader':'Jugador trader';
   }
   const nw=netWorth();
