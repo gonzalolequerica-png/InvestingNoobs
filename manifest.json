@@ -1,0 +1,20 @@
+{
+  "name": "InvestingNoobs — Market Tracker & Investing Course",
+  "short_name": "InvestingNoobs",
+  "description": "A free, real-time crypto, stock and commodity tracker with a 50-lesson beginner investing course and the InvestingNoobs Tycoon game.",
+  "start_url": "/",
+  "id": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0b0f14",
+  "theme_color": "#0b0f14",
+  "orientation": "portrait-primary",
+  "lang": "en",
+  "categories": ["finance", "education", "games"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
