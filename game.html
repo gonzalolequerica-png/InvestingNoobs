@@ -80,7 +80,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Investing Noobs Tycoon</title>
-<link rel="stylesheet" href="game-room-3d.css?v=20260906-2">
+<link rel="stylesheet" href="game-room-3d.css?v=20260906-3">
 <style>
 :root{
   --bg:#0B0F19;--panel:#131826;--panel2:#0D1220;--line:rgba(255,255,255,.08);
@@ -1448,7 +1448,7 @@ button:active{transform:translateY(1px);}
       <div class="nt" id="steveNextTitle"></div>
       <div class="nd" id="steveNextDesc"></div>
     </div>
-    <button class="steveContinue" onclick="closeSteveOverlay()">�Vamos a por ello! →</button>
+    <button class="steveContinue" onclick="closeSteveOverlay()">¡Vamos a por ello! →</button>
   </div>
 </div>
 
@@ -2703,7 +2703,7 @@ function setQuick(id,mode){
   const a=ASSETS.find(x=>x.id===id);
   const isPersonal=state.activeCapital==='personal';
   const cash=getCapCash();
-  const max=isPersonal?cash*(state.leverage||1):cash;
+  const max=isPersonal?(state.career&&state.career.reserve>0?Math.max(0,cash-state.career.reserve):cash*(state.leverage||1)):cash;
   const held=(getCapHoldings()[id]||0);
   const val=mode==='sell'?held*a.price:max*mode;
   inputValues[id]=val;
@@ -2714,6 +2714,10 @@ function buyAsset(id){
   const amt=getAmt(id);if(amt<=0){showToast('Escribe una cantidad');return;}
   const isPersonal=state.activeCapital==='personal';
   const cash=getCapCash();
+  if(isPersonal&&state.career&&state.career.reserve>0&&amt>Math.max(0,cash-state.career.reserve)+.01){
+    const messages={es:'Tu reserva protegida limita esta compra. Puedes ajustarla en Ruta.',en:'Your protected reserve limits this purchase. Adjust it in Journey.',zh:'受保护的现金储备限制了本次购买。可在成长路线中调整。'};
+    showToast(messages[state.language]||messages.es);return;
+  }
   const maxCash=isPersonal?cash*(state.leverage||1):cash;
   if(amt>maxCash+0.01){showToast('Sin efectivo suficiente'+(isPersonal?'':' en esta cuenta fondeada'));return;}
   const a=ASSETS.find(x=>x.id===id);
@@ -2729,6 +2733,7 @@ function buyAsset(id){
     if(acc){if(!acc.longBasis)acc.longBasis={};acc.longBasis[id]=(acc.longBasis[id]||0)+real;}
   }
   if(isPersonal)state.totalTraded+=real;
+  window.dispatchEvent(new CustomEvent('tycoon-purchase',{detail:{type:'asset',id:id}}));
   vibrate(18);
   showToast((isPersonal?'':'💼 ')+'Comprado '+units.toFixed(4)+' '+a.name+' por '+fmt(real)+(isPersonal?'':' (cuenta fondeada)'));
   updateTopBar();checkAchievements();checkMisiones();checkChapter();checkWin();checkWorldMilestones();checkPropAccountStatus();renderCharacter();refreshCard(id);
@@ -2780,6 +2785,9 @@ function openShort(id){
   const amt=getAmt(id);if(amt<=0){showToast('Escribe una cantidad');return;}
   const isPersonal=state.activeCapital==='personal';
   const cash=getCapCash();
+  if(isPersonal&&state.career&&state.career.reserve>0&&amt>Math.max(0,cash-state.career.reserve)+.01){
+    const messages={es:'Esta operación consumiría tu reserva protegida. Ajústala en Ruta.',en:'This trade would use your protected reserve. Adjust it in Journey.',zh:'本次交易将使用受保护的储备。请在成长路线中调整。'};showToast(messages[state.language]||messages.es);return;
+  }
   const maxCash=isPersonal?cash*(state.leverage||1):cash;
   if(amt>maxCash+0.01){showToast('Sin efectivo suficiente para ese margen');return;}
   const a=ASSETS.find(x=>x.id===id);
@@ -6411,6 +6419,7 @@ function syncBottomNav(activeTarget){
 }
 function goHome(){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screenMain').classList.add('active');syncBottomNav('screenMain');renderCharacter();updateTopBar();updateWeather();updateDayNightCycle();}
 function goScreen(id){
+  if(gameStarted&&id==='screenTrade'){if(!state.career)state.career={};state.career.visited=true;}
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   // La pantalla activa siempre coincide con su apartado de navegaci�n.
@@ -6581,11 +6590,12 @@ function buyShopItem(id){
       state.shop.equipped.inmueble='home1b';
     }
   if(!shopItemUnlocked(item)){showToast('🔒 Se desbloquea más adelante');return;}
-  if(state.shop.owned[id]){showToast('Ya tienes este artúculo');return;}
+  if(state.shop.owned[id]){showToast('Ya tienes este artículo');return;}
   if(state.cash<item.cost){showToast('Sin efectivo suficiente');return;}
   state.cash-=item.cost;
   state.shop.owned[id]=true;
   state.shop.equipped[item.cat]=id;
+  window.dispatchEvent(new CustomEvent('tycoon-purchase',{detail:{type:item.cat,id:item.id}}));
   showToast(item.icon+' '+item.name+' comprado y equipado');
   checkAchievements();
   updateTopBar();renderCharacter();
@@ -6927,7 +6937,7 @@ function saveGame(silent){
     if(previous)localStorage.setItem(backupSlotKey(),previous);
     localStorage.setItem(key,payload);
     localStorage.setItem(backupSlotKey(),payload);
-    if(!silent) showSaveToast('✅ Partida guardada (ranura '+activeSlot+') � Día '+state.day);
+    if(!silent) showSaveToast('✅ Partida guardada (ranura '+activeSlot+') · Día '+state.day);
   }catch(e){
     console.error('Error guardando partida', e);
     if(!silent) showSaveToast('⚠️ No se pudo guardar');
@@ -7707,6 +7717,22 @@ window.TycoonRoomBridge={
   }
 };
 </script>
-<script type="module" src="game-room-3d.js?v=20260906-2"></script>
+<script>
+window.TycoonCareerBridge={
+  snapshot:function(){
+    var c=state.career||{},order=['home1b','home1','home5','home2','home6','home3','home7','home8','home4','home9'];
+    var tier=order.reduce(function(best,id,i){return state.shop&&state.shop.owned&&state.shop.owned[id]?Math.max(best,i):best;},0);
+    return {playing:gameStarted,language:state.language||'es',day:state.day,cash:state.cash,reserve:c.reserve||0,reviewed:!!c.reviewed,visited:!!c.visited,traded:state.totalTraded||0,tier:tier,income:calcTotalPassive(),
+      businesses:Object.values(state.bizOwned||{}).filter(function(n){return n>0;}).length,
+      holdings:ASSETS.map(function(a){return {name:a.name,value:Math.max(0,((state.holdings||{})[a.id]||0)*a.price)};}).filter(function(a){return a.value>0;}),
+      next:tier<9?SHOP_ITEMS.filter(function(i){return i.id===order[tier+1];}).map(function(i){return {cost:i.cost,available:shopItemUnlocked(i)};})[0]:null};
+  },
+  plan:function(percent){if(!gameStarted)return;if(!state.career)state.career={};state.career.reserve=Math.round(Math.max(0,state.cash)*Math.max(0,Math.min(.5,Number(percent)||0)));state.career.reviewed=true;saveGame(true);},
+  open:function(target){if(!gameStarted)return;if(!state.career)state.career={};if(target==='screenTrade')state.career.visited=true;saveGame(true);goScreen(target);}
+};
+</script>
+<script type="module" src="game-career.js?v=20260906-1"></script>
+<link rel="stylesheet" href="game-career.css?v=20260906-1">
+<script type="module" src="game-room-3d.js?v=20260906-3"></script>
 </body>
 </html>

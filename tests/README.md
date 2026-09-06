@@ -1,5 +1,14 @@
 # Isometric room QA
 
+`node tests/career-smoke.cjs` verifies the starter journey, opt-in fixed cash
+reserve, quick-buy sizing, long/short reserve enforcement and save/reload.
+The reserve protects only new personal market positions, not business/home
+spending, existing position losses or funded accounts. It defaults to zero.
+Career tools unlock from the highest owned home; forecasts use current passive
+income and explicitly exclude expenses. No extra cash rewards are minted.
+This is an initial implementation across the gameplay roadmap, not a completed
+redesign of every house shell or an exhaustive legacy translation audit.
+
 `game.html` is the existing game. `game-room-3d.js` renders a first interactive
 studio, reading the small `TycoonRoomBridge` adapter. It never buys an item or
 changes money itself. Purchases, equipment, language, gender, and saved games

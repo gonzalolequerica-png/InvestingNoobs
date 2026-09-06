@@ -322,7 +322,7 @@ function createRoom(T, host) {
   box(artwork,[.88,.38,.02],[0,-.38,.072],'#5c7971');
   box(artwork,[.48,.15,.025],[-.2,-.12,.073],'#8da091');
   // Soft local occlusion anchors furniture to the floor and to the rug.
-  contact(.55,-1.48,3.5,1.7,.083,.36);
+  const deskContact=contact(.55,-1.48,3.5,1.7,.083,.36);
   contact(-2.6,.54,1.6,2.9,.111,.38);
   contact(-.74,1.10,1.75,1.60,.113,.33);
   contact(-.12,-.43,1.3,1.4,.084,.38);
@@ -368,6 +368,7 @@ function createRoom(T, host) {
   box(chair,[.64,.68,.12],[0,.96,.27],ink,true);
   [-.38,.38].forEach(x=>{box(chair,[.06,.32,.05],[x,.73,.03],ink,true);box(chair,[.09,.055,.4],[x,.91,.015],ink,true);});
   const person=sub(chair,[0,.69,-.04]);
+  const workspace=sub(group);workspace.add(desk,chair);
   const jacket=mat('#c27f53'), skin=mat('#cc956e'), hair=mat('#3d2a23');
   jacket.map=linen;jacket.roughness=.95;skin.roughness=.65;hair.roughness=.88;
   const torso=sphere(person,.27,[0,.39,0],jacket,[.9,1.15,.67]);
@@ -875,6 +876,16 @@ function createRoom(T, host) {
     ponytail.visible=gender==='F';jacket.color.set(gender==='F'?'#a6664f':'#bd835b');
     sofa.visible=currentTier>0;artwork.visible=currentTier>0;wainscot.visible=currentTier!==0&&currentTier!==2&&currentTier!==4;
     shelf.visible=currentTier<3||currentTier===6||currentTier===8;
+    // Arrangements move the workspace, interaction target and lights together.
+    const layouts=[[.15,0,0],[0,0,0],[-.3,.48,-.24],[.45,.08,.06],[.45,.22,.10],[-.32,.60,-.18],[.30,.35,.14],[-.25,.42,-.12],[.25,.48,.18],[0,.62,0]];
+    const [dx,dz,angle]=layouts[currentTier];workspace.position.set(dx,0,dz);workspace.rotation.y=angle;workspace.updateMatrixWorld(true);
+    hot[0].point.set(.10,2.24,-1.55).applyMatrix4(workspace.matrixWorld);
+    lampLight.position.set(1.45,1.60,-1.78).applyMatrix4(workspace.matrixWorld);
+    monitorLight.position.set(.05,1.75,-1.5).applyMatrix4(workspace.matrixWorld);
+    deskContact.position.set(.55,.083,-1.48).applyMatrix4(workspace.matrixWorld);deskContact.rotation.z=angle;
+    warmPool.position.set(1.23,1.092,-1.47).applyMatrix4(workspace.matrixWorld);warmPool.rotation.z=angle;
+    table.position.set(currentTier>=5?-1.60:-.74,0,currentTier>=5?1.40:1.10);
+    sofa.position.z=currentTier>=5?.90:.54;
     rugMat.color.set(currentTier===0?'#817c65':currentTier===2?'#886b56':currentTier>=5?'#bbc6bd':'#98a99c');
     planks.forEach(m=>{m.map=[5,7,9].includes(currentTier)?marble:oak;m.needsUpdate=true;});
     secondMonitor.visible=currentTier>=1;
