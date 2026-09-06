@@ -7,6 +7,10 @@ remain owned by the existing game.
 
 The scene uses a shared cutaway shell with ten property-specific furnishing,
 architecture, palette and window-scenery variants. It is not ten full buildings.
+Property identity includes weathered plaster/cracks and exposed brick in the
+starter room, brickwork in the loft, country timber, formal paneling and marble.
+Outdoor lots include an alley, balcony, pool terrace, formal fountain garden,
+and headquarters terrace, as well as the countryside and coastal plots.
 City, vineyard, countryside, Mediterranean coast and island scenery follow the
 equipped property and the shared continuous day clock.
 The countryside and coastal variants also include outdoor 3D grounds around
