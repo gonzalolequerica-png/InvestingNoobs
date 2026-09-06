@@ -509,23 +509,19 @@
     NFLX: 'The streaming service for movies and TV shows.',
   };
 
+  // Only symbols the gold-api.com free endpoint actually serves are listed here.
+  // (Copper, Rhodium, Aluminum, Nickel, Zinc, Lead, Tin and Iridium always 404 on
+  // that API, which used to leave those rows permanently frozen on a hardcoded
+  // fallback price while showing a "▲ 0.00%" as if it were live — removed rather
+  // than shown as fake live data.)
   const COMMODITY_META = [
     { symbol: 'XAU', name: 'Gold', image: '🥇' },
     { symbol: 'XAG', name: 'Silver', image: '🥈' },
     { symbol: 'XPT', name: 'Platinum', image: '⚪' },
     { symbol: 'XPD', name: 'Palladium', image: '⚙️' },
-    { symbol: 'XCU', name: 'Copper', image: '🟠' },
-    { symbol: 'XRH', name: 'Rhodium', image: '💠' },
-    { symbol: 'XAL', name: 'Aluminum', image: '🔩' },
-    { symbol: 'XNI', name: 'Nickel', image: '⛓️' },
-    { symbol: 'XZN', name: 'Zinc', image: '🔘' },
-    { symbol: 'XPB', name: 'Lead', image: '⚫' },
-    { symbol: 'XSN', name: 'Tin', image: '🥫' },
-    { symbol: 'XIR', name: 'Iridium', image: '💎' },
   ];
   const COMMODITY_FALLBACK = {
-    XAU: 2648.30, XAG: 30.85, XPT: 985.40, XPD: 1015.20, XCU: 4.28, XRH: 5250.00,
-    XAL: 2.55, XNI: 7.10, XZN: 1.32, XPB: 0.98, XSN: 14.20, XIR: 4650.00,
+    XAU: 2648.30, XAG: 30.85, XPT: 985.40, XPD: 1015.20,
   };
 
   // Minimal fallback so the crypto tab is never fully empty, even if the very
