@@ -11,7 +11,7 @@ http.createServer(async(req,res)=>{
   if(!file.startsWith(root+path.sep)){res.writeHead(403);return res.end();}
   res.setHeader('Cache-Control','no-store');
   if(fs.existsSync(file)&&fs.statSync(file).isFile()){res.setHeader('Content-Type',types[path.extname(file)]||'application/octet-stream');return fs.createReadStream(file).pipe(res);}
-  if(/^\/(?:asset-|companion-|personaje-|neon_lounge|movil-|menu-)/.test(name)){
+  if(/^\/(?:asset-|asesor-|companion-|personaje-|neon_lounge|movil-|menu-)/.test(name)){
     try {const upstream=await fetch('https://investingnoobs.com'+name);res.writeHead(upstream.status,{'Content-Type':upstream.headers.get('content-type')||'application/octet-stream'});return res.end(Buffer.from(await upstream.arrayBuffer()));}catch{}
   }
   res.writeHead(404);res.end('Not found');

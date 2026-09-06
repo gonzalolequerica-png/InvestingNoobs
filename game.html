@@ -2371,7 +2371,12 @@ function askSteveAdvice(){
     showToast('🔒 Contrata a un asesor financiero primero (desde el panel inferior)');
     return;
   }
-  if(!(state.advisorLevel||0)){showToast('🔒 Contrata primero un asesor desde Más');return;}
+  if(!(state.advisorLevel||0)){
+    const tips={es:'Antes de invertir, separa el efectivo que necesitas. Tu patrimonio incluye activos y resta deudas: pedir un préstamo no te hace más rico. Puedes contratar un asesor desde Más para desbloquear sus bonificaciones.',en:'Set aside the cash you need before investing. Net worth includes assets minus debts: borrowing does not make you richer. Hire an advisor in More to unlock their bonuses.',zh:'投资前先留好所需现金。净资产等于资产减负债：借款不会使你更富有。可在更多菜单雇用顾问并解锁加成。'};
+    document.getElementById('adviceQuote').textContent=tips[state.language]||tips.es;
+    const name=document.querySelector('#adviceOverlay .dName');if(name)name.textContent=state.language==='en'?'Financial guidance':state.language==='zh'?'财务指导':'Orientación financiera';
+    renderAlanSVG('adviceAlanSVG',true);document.getElementById('adviceOverlay').classList.add('show');return;
+  }
   const level=Math.max(1,Math.min(5,state.advisorLevel||1));
   const calls=[
     'Veo presi�n compradora. No te expongas de golpe: entra poco a poco y conserva liquidez.',
@@ -2603,6 +2608,10 @@ const netWorth=()=>{
       }
     });
   }
+  // Cost-based valuation of owned durable assets, not spendable cash.
+  if(window.TycoonFinance)v+=window.TycoonFinance.durable();
+  v-=(state.bank?.loans||[]).reduce((sum,l)=>sum+Math.max(0,Number(l.remaining)||0),0)+Math.max(0,Number(state.bank?.revolvingUsed)||0);
+  if(window.TycoonFinance)v+=window.TycoonFinance.value();
   return v;
 };
 const getRank=nw=>{let r=RANKS[0];for(const x of RANKS)if(nw>=x.min)r=x;return r;};
@@ -3098,7 +3107,7 @@ function showAdvisorHireOverlay(advisor){
   if(portrait){
     portrait.innerHTML='';
     portrait.classList.add('advisor-portrait');
-    portrait.style.backgroundImage="url('fondos/asesor-"+advisor.level+".png')";
+    portrait.style.backgroundImage="url('asesor-"+advisor.level+".png')";
     portrait.style.backgroundRepeat='no-repeat';
     portrait.style.backgroundPosition='center center';
     portrait.style.backgroundSize='auto 94%';
@@ -6097,7 +6106,7 @@ function renderExtra(){
 function renderAlanSVG(svgId,small){
   const el=document.getElementById(svgId);if(!el)return;
   const advisorLevel=Math.max(1,Math.min(5,state.advisorLevel||1));
-  const companionImage=svgId==='adviceAlanSVG'?'fondos/asesor-'+advisorLevel+'.png':(state.companionGender==='F'?'asset-companion-f.png':'asset-companion-m.png');
+  const companionImage=svgId==='adviceAlanSVG'?'asesor-'+advisorLevel+'.png':(state.companionGender==='F'?'asset-companion-f.png':'asset-companion-m.png');
   el.style.backgroundImage="url('"+companionImage+"')";
   el.innerHTML='';
   return;
@@ -6169,6 +6178,9 @@ function renderCharacter(){
   updateRoomPhoto();
   const characterImage=document.getElementById('mainCharacterImage');
   if(characterImage){
+    const home=state.shop?.equipped?.inmueble||'home1b';
+    const scale={home1b:[54,50,8],home1:[52,51,9],home5:[49,50,10],home2:[47,52,11],home6:[43,52,13],home3:[45,51,12],home7:[41,52,14],home8:[44,52,12],home4:[39,53,15],home9:[42,52,13]}[home]||[52,50,9];
+    characterImage.style.setProperty('height',scale[0]+'%','important');characterImage.style.setProperty('width','auto','important');characterImage.style.setProperty('max-width','65%','important');characterImage.style.setProperty('left',scale[1]+'%','important');characterImage.style.setProperty('bottom',scale[2]+'%','important');
     const female=state.playerGender==='F';
     characterImage.src=female?'asset-personaje-trader-f-alpha.png':'asset-personaje-trader.png';
     characterImage.alt=female?'Jugadora trader':'Jugador trader';
@@ -7732,6 +7744,7 @@ window.TycoonCareerBridge={
 };
 </script>
 <script type="module" src="game-career.js?v=20260906-1"></script>
+<script type="module" src="game-finance.js?v=20260906-1"></script>
 <link rel="stylesheet" href="game-career.css?v=20260906-1">
 <script type="module" src="game-room-3d.js?v=20260906-3"></script>
 </body>

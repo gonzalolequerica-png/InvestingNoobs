@@ -1,0 +1,16 @@
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');const assert=require('node:assert/strict');
+(async()=>{const b=await chromium.launch({channel:'chrome',headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});try{const p=await b.newPage({viewport:{width:390,height:844}}),errors=[];p.on('pageerror',e=>errors.push(e.message));await p.goto(process.env.ROOM_QA_URL||'http://127.0.0.1:4173/game.html');await p.evaluate(()=>{state=JSON.parse(JSON.stringify(NEW_GAME_STATE));state.soundEnabled=false;state.tutorialSeen=true;saveGame(true);continueGame(1);});await p.waitForSelector('#mainScene.room-rendered');
+ const v=await p.evaluate(()=>{const before=netWorth();TycoonFinance.transact('fund',100);const after=netWorth();TycoonFinance.transact('fund',0,true);return {before,after,cash:state.cash};});assert.ok(Math.abs(v.before-v.after)<.001);assert.equal(v.cash,500);
+ const pension=await p.evaluate(()=>{TycoonFinance.transact('pension',100);TycoonFinance.transact('pension',0,true);return state.cash});assert.ok(Math.abs(pension-495)<.001);
+ const debt=await p.evaluate(()=>{const before=netWorth();state.cash+=1000;state.bank.revolvingUsed=1000;return {before,after:netWorth()}});assert.ok(Math.abs(debt.before-debt.after)<.001);
+ const house=await p.evaluate(()=>{state.cash=10000;state.bank.revolvingUsed=0;const before=netWorth();state.cash-=2900;state.shop.owned.home1=true;return {before,after:netWorth()};});assert.ok(Math.abs(house.before-house.after)<.001);
+ await p.evaluate(()=>{state.advisorLevel=0;askSteveAdvice();});await p.waitForSelector('#adviceOverlay.show');const bg=await p.locator('#adviceAlanSVG').evaluate(e=>e.style.backgroundImage);assert.ok(bg.includes('asesor-1.png')&&!bg.includes('fondos'));
+ await p.evaluate(()=>new Promise((resolve,reject)=>{const img=new Image();img.onload=resolve;img.onerror=reject;img.src='asesor-1.png';}));await p.waitForTimeout(200);
+ await p.screenshot({path:'test-results/advisor-fixed.png'});await p.evaluate(()=>{closeAdviceOverlay();openFinance();});await p.screenshot({path:'test-results/finance-mobile.png'});
+ await p.evaluate(()=>document.querySelectorAll('dialog').forEach(d=>d.close()));
+ await p.getByRole('button',{name:'Ver habitación en 2D',exact:true}).click();
+ await p.evaluate(()=>{state.shop.equipped.inmueble='home4';renderCharacter();});await p.waitForTimeout(700);
+ const image=await p.locator('#mainCharacterImage').boundingBox(),scene=await p.locator('#mainScene').boundingBox();assert.ok(image.height<=scene.height*.42);
+ await p.screenshot({path:'test-results/character-scale.png'});
+ await p.evaluate(()=>{state.longTerm.pension=[{units:1,day:state.day}];saveGame(true)});await p.reload();await p.locator('.slotBtnPlay').first().click();assert.equal(await p.evaluate(()=>state.longTerm.pension.length),1);
+ assert.deepEqual(errors,[]);console.log('Wealth, debt, pension penalty, advisor and persistence OK');}finally{await b.close()}})().catch(e=>{console.error(e);process.exit(1)});

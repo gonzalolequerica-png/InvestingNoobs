@@ -1,5 +1,11 @@
 # Isometric room QA
 
+`node tests/finance-smoke.cjs` covers fictional funds/pension withdrawals,
+cost-based net worth (durable assets minus bank debt), saving, advisor portraits
+and 2D character scaling. The pension holding period is 30 game days and early
+withdrawals cost 5% per immature lot. These are invented game products, not
+real funds or real-world pension rules.
+
 `node tests/career-smoke.cjs` verifies the starter journey, opt-in fixed cash
 reserve, quick-buy sizing, long/short reserve enforcement and save/reload.
 The reserve protects only new personal market positions, not business/home
