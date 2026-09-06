@@ -467,6 +467,11 @@
   let prevPrices = {};
   let commoditiesLoaded = false;
   let stocksLoaded = false;
+  // Tracks whether the *current* data is genuinely live vs a frozen fallback,
+  // so switching away from a tab and back doesn't silently hide the "showing
+  // reference prices" warning once it has been shown.
+  let commoditiesLive = false;
+  let stocksLive = false;
   let watchlist = new Set();
   try {
     const saved = JSON.parse(localStorage.getItem('ct_watchlist') || '[]');
@@ -1194,6 +1199,7 @@
       });
 
       commoditiesLoaded = true;
+      commoditiesLive = true;
       loading = false;
       updateGoldStat();
       if (activeTab === 'commodities') {
@@ -1217,11 +1223,14 @@
         market_cap: null, total_volume: null,
       }));
       commoditiesLoaded = true;
+      commoditiesLive = false;
       loading = false;
       updateGoldStat();
       if (activeTab === 'commodities') {
         errorBanner.style.display = 'block';
+        errorBanner.className = 'banner banner-info';
         errorBanner.textContent = 'Could not connect to live commodities data. Showing reference prices.';
+        statusText.textContent = 'Reference prices (offline)';
         render();
       }
     }
@@ -1283,6 +1292,7 @@
       });
 
       stocksLoaded = true;
+      stocksLive = true;
       loading = false;
       if (activeTab === 'stocks') {
         errorBanner.style.display = 'none';
@@ -1304,10 +1314,13 @@
         market_cap: null, total_volume: null,
       }));
       stocksLoaded = true;
+      stocksLive = false;
       loading = false;
       if (activeTab === 'stocks') {
         errorBanner.style.display = 'block';
+        errorBanner.className = 'banner banner-info';
         errorBanner.textContent = 'Could not connect to live stock data. Showing reference prices.';
+        statusText.textContent = 'Reference prices (offline)';
         render();
       }
     }
@@ -1353,15 +1366,30 @@
         searchInput.placeholder = 'Search by name or symbol (Gold, Silver...)';
         document.getElementById('th-24h').textContent = 'Since load';
         loading = !commoditiesLoaded;
-        errorBanner.style.display = 'none';
-        if (!commoditiesLoaded) fetchCommodities();
+        // Reflect the true state immediately instead of hiding a warning that
+        // was earned on a previous visit to this tab; retry in the background
+        // if we're not currently getting live data.
+        if (commoditiesLoaded && !commoditiesLive) {
+          errorBanner.style.display = 'block';
+          errorBanner.className = 'banner banner-info';
+          errorBanner.textContent = 'Could not connect to live commodities data. Showing reference prices.';
+        } else {
+          errorBanner.style.display = 'none';
+        }
+        if (!commoditiesLive) fetchCommodities();
       } else if (activeTab === 'stocks') {
         document.getElementById('page-title').textContent = 'Stocks';
         searchInput.placeholder = 'Search by name or symbol (TSLA, AAPL...)';
         document.getElementById('th-24h').textContent = 'Since load';
         loading = !stocksLoaded;
-        errorBanner.style.display = 'none';
-        if (!stocksLoaded) fetchStocks();
+        if (stocksLoaded && !stocksLive) {
+          errorBanner.style.display = 'block';
+          errorBanner.className = 'banner banner-info';
+          errorBanner.textContent = 'Could not connect to live stock data. Showing reference prices.';
+        } else {
+          errorBanner.style.display = 'none';
+        }
+        if (!stocksLive) fetchStocks();
       }
       render();
     });
