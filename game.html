@@ -80,6 +80,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Investing Noobs Tycoon</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#0b0f14">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="InvestingNoobs">
 <link rel="stylesheet" href="game-room-3d.css?v=20260906-3">
 <style>
 :root{
@@ -842,46 +849,46 @@ body{background:radial-gradient(ellipse at 15% 0%,rgba(99,102,241,.10),transpare
 #roomPhotoLayer::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,15,25,.15) 0%,rgba(11,15,25,.35) 55%,rgba(11,15,25,.75) 100%);}
 /* Fondos reales de la habitaci�n entregados con el juego. Cada nivel conserva
    la misma escena y a�ade progresivamente más riqueza visual. */
-#roomPhotoLayer.roomPhoto1{background-image:url('asset-Cuarto-1_1.png');}
-#roomPhotoLayer.roomPhoto2{background-image:url('asset-Cuarto-1_2.png');}
-#roomPhotoLayer.roomPhoto3{background-image:url('asset-Cuarto-1_3.png');}
-#roomPhotoLayer.roomPhoto4{background-image:url('asset-Cuarto-1_4.png');}
-#roomPhotoLayer.roomApartment.roomPhoto1{background-image:url('asset-apartamento-alquiler-Apartamento-alquiler-v2---amanecer.png');}
-#roomPhotoLayer.roomApartment.roomPhoto2{background-image:url('asset-apartamento-alquiler-Apartamento-alquiler-v2---dia.png');}
-#roomPhotoLayer.roomApartment.roomPhoto3{background-image:url('asset-apartamento-alquiler-Apartamento-alquiler-v2---anochecer.png');}
-#roomPhotoLayer.roomApartment.roomPhoto4{background-image:url('asset-apartamento-alquiler-Apartamento-alquiler-v2---noche.png');}
-#roomPhotoLayer.roomPenthouse.roomPhoto1{background-image:url('asset-atico-soltero-amanecer.png');}
-#roomPhotoLayer.roomPenthouse.roomPhoto2{background-image:url('asset-atico-soltero-dia.png');}
-#roomPhotoLayer.roomPenthouse.roomPhoto3{background-image:url('asset-atico-soltero-anochecer.png');}
-#roomPhotoLayer.roomPenthouse.roomPhoto4{background-image:url('asset-atico-soltero-noche.png');}
-#roomPhotoLayer.roomOwnedHouse.roomPhoto1{background-image:url('asset-casa-en-propiedad-Casa-en-propiedad---amanecer.png');}
-#roomPhotoLayer.roomOwnedHouse.roomPhoto2{background-image:url('asset-casa-en-propiedad-Casa-en-propiedad---dia.png');}
-#roomPhotoLayer.roomOwnedHouse.roomPhoto3{background-image:url('asset-casa-en-propiedad-Casa-en-propiedad---anochecer.png');}
-#roomPhotoLayer.roomOwnedHouse.roomPhoto4{background-image:url('asset-casa-en-propiedad-Casa-en-propiedad---noche.png');}
-#roomPhotoLayer.roomVineyardHouse.roomPhoto1{background-image:url('asset-casa-vinedos-amanecer.png');}
-#roomPhotoLayer.roomVineyardHouse.roomPhoto2{background-image:url('asset-casa-vinedos-dia.png');}
-#roomPhotoLayer.roomVineyardHouse.roomPhoto3{background-image:url('asset-casa-vinedos-anochecer.png');}
-#roomPhotoLayer.roomVineyardHouse.roomPhoto4{background-image:url('asset-casa-vinedos-noche.png');}
-#roomPhotoLayer.roomLuxuryPenthouse.roomPhoto1{background-image:url('asset-penthouse-lujo-amanecer.png');}
-#roomPhotoLayer.roomLuxuryPenthouse.roomPhoto2{background-image:url('asset-penthouse-lujo-dia.png');}
-#roomPhotoLayer.roomLuxuryPenthouse.roomPhoto3{background-image:url('asset-penthouse-lujo-anochecer.png');}
-#roomPhotoLayer.roomLuxuryPenthouse.roomPhoto4{background-image:url('asset-penthouse-lujo-noche.png');}
-#roomPhotoLayer.roomMediterraneanVilla.roomPhoto1{background-image:url('asset-villa-mediterranea-amanecer.png');}
-#roomPhotoLayer.roomMediterraneanVilla.roomPhoto2{background-image:url('asset-villa-mediterranea-dia.png');}
-#roomPhotoLayer.roomMediterraneanVilla.roomPhoto3{background-image:url('asset-villa-mediterranea-anochecer.png');}
-#roomPhotoLayer.roomMediterraneanVilla.roomPhoto4{background-image:url('asset-villa-mediterranea-noche.png');}
-#roomPhotoLayer.roomCrystalPalace.roomPhoto1{background-image:url('asset-palacio-cristal-amanecer.png');}
-#roomPhotoLayer.roomCrystalPalace.roomPhoto2{background-image:url('asset-palacio-cristal-dia.png');}
-#roomPhotoLayer.roomCrystalPalace.roomPhoto3{background-image:url('asset-palacio-cristal-anochecer.png');}
-#roomPhotoLayer.roomCrystalPalace.roomPhoto4{background-image:url('asset-palacio-cristal-noche.png');}
-#roomPhotoLayer.roomPrivateIslandMansion.roomPhoto1{background-image:url('asset-mansion-isla-nueva-amanecer.png');}
-#roomPhotoLayer.roomPrivateIslandMansion.roomPhoto2{background-image:url('asset-mansion-isla-nueva-dia.png');}
-#roomPhotoLayer.roomPrivateIslandMansion.roomPhoto3{background-image:url('asset-mansion-isla-nueva-anochecer.png');}
-#roomPhotoLayer.roomPrivateIslandMansion.roomPhoto4{background-image:url('asset-mansion-isla-nueva-noche.png');}
-#roomPhotoLayer.roomGlobalResidentialComplex.roomPhoto1{background-image:url('asset-complejo-mundial-amanecer.png');}
-#roomPhotoLayer.roomGlobalResidentialComplex.roomPhoto2{background-image:url('asset-complejo-mundial-dia.png');}
-#roomPhotoLayer.roomGlobalResidentialComplex.roomPhoto3{background-image:url('asset-complejo-mundial-anochecer.png');}
-#roomPhotoLayer.roomGlobalResidentialComplex.roomPhoto4{background-image:url('asset-complejo-mundial-noche.png');}
+#roomPhotoLayer.roomPhoto1{background-image:url('asset-Cuarto-1_1.webp');}
+#roomPhotoLayer.roomPhoto2{background-image:url('asset-Cuarto-1_2.webp');}
+#roomPhotoLayer.roomPhoto3{background-image:url('asset-Cuarto-1_3.webp');}
+#roomPhotoLayer.roomPhoto4{background-image:url('asset-Cuarto-1_4.webp');}
+#roomPhotoLayer.roomApartment.roomPhoto1{background-image:url('asset-apartamento-alquiler-Apartamento-alquiler-v2---amanecer.webp');}
+#roomPhotoLayer.roomApartment.roomPhoto2{background-image:url('asset-apartamento-alquiler-Apartamento-alquiler-v2---dia.webp');}
+#roomPhotoLayer.roomApartment.roomPhoto3{background-image:url('asset-apartamento-alquiler-Apartamento-alquiler-v2---anochecer.webp');}
+#roomPhotoLayer.roomApartment.roomPhoto4{background-image:url('asset-apartamento-alquiler-Apartamento-alquiler-v2---noche.webp');}
+#roomPhotoLayer.roomPenthouse.roomPhoto1{background-image:url('asset-atico-soltero-amanecer.webp');}
+#roomPhotoLayer.roomPenthouse.roomPhoto2{background-image:url('asset-atico-soltero-dia.webp');}
+#roomPhotoLayer.roomPenthouse.roomPhoto3{background-image:url('asset-atico-soltero-anochecer.webp');}
+#roomPhotoLayer.roomPenthouse.roomPhoto4{background-image:url('asset-atico-soltero-noche.webp');}
+#roomPhotoLayer.roomOwnedHouse.roomPhoto1{background-image:url('asset-casa-en-propiedad-Casa-en-propiedad---amanecer.webp');}
+#roomPhotoLayer.roomOwnedHouse.roomPhoto2{background-image:url('asset-casa-en-propiedad-Casa-en-propiedad---dia.webp');}
+#roomPhotoLayer.roomOwnedHouse.roomPhoto3{background-image:url('asset-casa-en-propiedad-Casa-en-propiedad---anochecer.webp');}
+#roomPhotoLayer.roomOwnedHouse.roomPhoto4{background-image:url('asset-casa-en-propiedad-Casa-en-propiedad---noche.webp');}
+#roomPhotoLayer.roomVineyardHouse.roomPhoto1{background-image:url('asset-casa-vinedos-amanecer.webp');}
+#roomPhotoLayer.roomVineyardHouse.roomPhoto2{background-image:url('asset-casa-vinedos-dia.webp');}
+#roomPhotoLayer.roomVineyardHouse.roomPhoto3{background-image:url('asset-casa-vinedos-anochecer.webp');}
+#roomPhotoLayer.roomVineyardHouse.roomPhoto4{background-image:url('asset-casa-vinedos-noche.webp');}
+#roomPhotoLayer.roomLuxuryPenthouse.roomPhoto1{background-image:url('asset-penthouse-lujo-amanecer.webp');}
+#roomPhotoLayer.roomLuxuryPenthouse.roomPhoto2{background-image:url('asset-penthouse-lujo-dia.webp');}
+#roomPhotoLayer.roomLuxuryPenthouse.roomPhoto3{background-image:url('asset-penthouse-lujo-anochecer.webp');}
+#roomPhotoLayer.roomLuxuryPenthouse.roomPhoto4{background-image:url('asset-penthouse-lujo-noche.webp');}
+#roomPhotoLayer.roomMediterraneanVilla.roomPhoto1{background-image:url('asset-villa-mediterranea-amanecer.webp');}
+#roomPhotoLayer.roomMediterraneanVilla.roomPhoto2{background-image:url('asset-villa-mediterranea-dia.webp');}
+#roomPhotoLayer.roomMediterraneanVilla.roomPhoto3{background-image:url('asset-villa-mediterranea-anochecer.webp');}
+#roomPhotoLayer.roomMediterraneanVilla.roomPhoto4{background-image:url('asset-villa-mediterranea-noche.webp');}
+#roomPhotoLayer.roomCrystalPalace.roomPhoto1{background-image:url('asset-palacio-cristal-amanecer.webp');}
+#roomPhotoLayer.roomCrystalPalace.roomPhoto2{background-image:url('asset-palacio-cristal-dia.webp');}
+#roomPhotoLayer.roomCrystalPalace.roomPhoto3{background-image:url('asset-palacio-cristal-anochecer.webp');}
+#roomPhotoLayer.roomCrystalPalace.roomPhoto4{background-image:url('asset-palacio-cristal-noche.webp');}
+#roomPhotoLayer.roomPrivateIslandMansion.roomPhoto1{background-image:url('asset-mansion-isla-nueva-amanecer.webp');}
+#roomPhotoLayer.roomPrivateIslandMansion.roomPhoto2{background-image:url('asset-mansion-isla-nueva-dia.webp');}
+#roomPhotoLayer.roomPrivateIslandMansion.roomPhoto3{background-image:url('asset-mansion-isla-nueva-anochecer.webp');}
+#roomPhotoLayer.roomPrivateIslandMansion.roomPhoto4{background-image:url('asset-mansion-isla-nueva-noche.webp');}
+#roomPhotoLayer.roomGlobalResidentialComplex.roomPhoto1{background-image:url('asset-complejo-mundial-amanecer.webp');}
+#roomPhotoLayer.roomGlobalResidentialComplex.roomPhoto2{background-image:url('asset-complejo-mundial-dia.webp');}
+#roomPhotoLayer.roomGlobalResidentialComplex.roomPhoto3{background-image:url('asset-complejo-mundial-anochecer.webp');}
+#roomPhotoLayer.roomGlobalResidentialComplex.roomPhoto4{background-image:url('asset-complejo-mundial-noche.webp');}
 #roomPhotoLayer .roomProp{position:absolute;z-index:0;display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:0;background:transparent;border:0;box-shadow:none;font-size:28px;filter:drop-shadow(2px 3px 2px rgba(0,0,0,.58));mix-blend-mode:normal;}
 #roomPhotoLayer .roomProp small{display:none;}
 .roomMobile{position:absolute;z-index:0;width:30px;height:52px;object-fit:contain;filter:drop-shadow(2px 4px 2px rgba(0,0,0,.62));transform:rotate(-3deg);}
@@ -1144,7 +1151,7 @@ button:active{transform:translateY(1px);}
       <div id="roomPhotoLayer" class="roomPhoto1 photo-active"></div><div id="roomPhotoLayerNext" class="photo-hidden" aria-hidden="true"></div>
       <div class="weatherLayer" id="weatherLayer"><div class="sunOrb" id="sunOrb"></div><div class="stars"></div><div class="clouds"></div><div class="fogLayer"></div><div class="dayNightOverlay" id="dayNightOverlay"></div></div>
       <svg id="charSVG" viewBox="0 0 160 300" xmlns="http://www.w3.org/2000/svg"></svg>
-      <img class="mainCharacterImage" id="mainCharacterImage" src="asset-personaje-trader-no-laptop.png" alt="Personaje trader">
+      <img class="mainCharacterImage" id="mainCharacterImage" src="asset-personaje-trader-no-laptop.webp" alt="Personaje trader">
     </div>
     <div class="statsRow">
       <div class="statPill"><div class="sl">Pasivo/día</div><div class="sv" id="passiveStat">$0</div></div>
@@ -2928,7 +2935,7 @@ function buySkill(id){
 function renderSteveBig(){
   const companionEl=document.getElementById('steveBigSVG');
   if(companionEl){
-    const companionFile=state.companionGender==='F'?'asset-companion-f.png':'asset-companion-m.png';
+    const companionFile=state.companionGender==='F'?'asset-companion-f.webp':'asset-companion-m.webp';
     companionEl.innerHTML='';
     companionEl.classList.remove('advisor-portrait');
     companionEl.style.backgroundImage="url('"+companionFile+"')";
@@ -6106,7 +6113,7 @@ function renderExtra(){
 function renderAlanSVG(svgId,small){
   const el=document.getElementById(svgId);if(!el)return;
   const advisorLevel=Math.max(1,Math.min(5,state.advisorLevel||1));
-  const companionImage=svgId==='adviceAlanSVG'?'asesor-'+advisorLevel+'.png':(state.companionGender==='F'?'asset-companion-f.png':'asset-companion-m.png');
+  const companionImage=svgId==='adviceAlanSVG'?'asesor-'+advisorLevel+'.png':(state.companionGender==='F'?'asset-companion-f.webp':'asset-companion-m.webp');
   el.style.backgroundImage="url('"+companionImage+"')";
   el.innerHTML='';
   return;
@@ -6161,7 +6168,7 @@ function renderAlanSVG(svgId,small){
 // ══════════════ PERSONAJE JUGADOR ══════════════
 // La foto de fondo de la habitaci�n evoluciona seg�n cu�ntos artúculos de la Tienda
 // tienes comprados � de la habitaci�n vacía a la habitaci�n llena de cosas.
-const PREMIUM_ROOM_ASSETS={home1:['asset-apartamento-alquiler-Apartamento-alquiler-v2---amanecer.png','asset-apartamento-alquiler-Apartamento-alquiler-v2---dia.png','asset-apartamento-alquiler-Apartamento-alquiler-v2---anochecer.png','asset-apartamento-alquiler-Apartamento-alquiler-v2---noche.png'],home1b:['asset-apartamento-alquiler-Apartamento-alquiler-v2---amanecer.png','asset-apartamento-alquiler-Apartamento-alquiler-v2---dia.png','asset-apartamento-alquiler-Apartamento-alquiler-v2---anochecer.png','asset-apartamento-alquiler-Apartamento-alquiler-v2---noche.png'],home2:['asset-casa-en-propiedad-Casa-en-propiedad---amanecer.png','asset-casa-en-propiedad-Casa-en-propiedad---dia.png','asset-casa-en-propiedad-Casa-en-propiedad---anochecer.png','asset-casa-en-propiedad-Casa-en-propiedad---noche.png'],home3:['asset-penthouse-lujo-amanecer.png','asset-penthouse-lujo-dia.png','asset-penthouse-lujo-anochecer.png','asset-penthouse-lujo-noche.png'],home4:['asset-mansion-isla-nueva-amanecer.png','asset-mansion-isla-nueva-dia.png','asset-mansion-isla-nueva-anochecer.png','asset-mansion-isla-nueva-noche.png'],home5:['asset-atico-soltero-amanecer.png','asset-atico-soltero-dia.png','asset-atico-soltero-anochecer.png','asset-atico-soltero-noche.png'],home6:['asset-casa-vinedos-amanecer.png','asset-casa-vinedos-dia.png','asset-casa-vinedos-anochecer.png','asset-casa-vinedos-noche.png'],home7:['asset-villa-mediterranea-amanecer.png','asset-villa-mediterranea-dia.png','asset-villa-mediterranea-anochecer.png','asset-villa-mediterranea-noche.png'],home8:['asset-palacio-cristal-amanecer.png','asset-palacio-cristal-dia.png','asset-palacio-cristal-anochecer.png','asset-palacio-cristal-noche.png'],home9:['asset-complejo-mundial-amanecer.png','asset-complejo-mundial-dia.png','asset-complejo-mundial-anochecer.png','asset-complejo-mundial-noche.png']};
+const PREMIUM_ROOM_ASSETS={home1:['asset-apartamento-alquiler-Apartamento-alquiler-v2---amanecer.webp','asset-apartamento-alquiler-Apartamento-alquiler-v2---dia.webp','asset-apartamento-alquiler-Apartamento-alquiler-v2---anochecer.webp','asset-apartamento-alquiler-Apartamento-alquiler-v2---noche.webp'],home1b:['asset-apartamento-alquiler-Apartamento-alquiler-v2---amanecer.webp','asset-apartamento-alquiler-Apartamento-alquiler-v2---dia.webp','asset-apartamento-alquiler-Apartamento-alquiler-v2---anochecer.webp','asset-apartamento-alquiler-Apartamento-alquiler-v2---noche.webp'],home2:['asset-casa-en-propiedad-Casa-en-propiedad---amanecer.webp','asset-casa-en-propiedad-Casa-en-propiedad---dia.webp','asset-casa-en-propiedad-Casa-en-propiedad---anochecer.webp','asset-casa-en-propiedad-Casa-en-propiedad---noche.webp'],home3:['asset-penthouse-lujo-amanecer.webp','asset-penthouse-lujo-dia.webp','asset-penthouse-lujo-anochecer.webp','asset-penthouse-lujo-noche.webp'],home4:['asset-mansion-isla-nueva-amanecer.webp','asset-mansion-isla-nueva-dia.webp','asset-mansion-isla-nueva-anochecer.webp','asset-mansion-isla-nueva-noche.webp'],home5:['asset-atico-soltero-amanecer.webp','asset-atico-soltero-dia.webp','asset-atico-soltero-anochecer.webp','asset-atico-soltero-noche.webp'],home6:['asset-casa-vinedos-amanecer.webp','asset-casa-vinedos-dia.webp','asset-casa-vinedos-anochecer.webp','asset-casa-vinedos-noche.webp'],home7:['asset-villa-mediterranea-amanecer.webp','asset-villa-mediterranea-dia.webp','asset-villa-mediterranea-anochecer.webp','asset-villa-mediterranea-noche.webp'],home8:['asset-palacio-cristal-amanecer.webp','asset-palacio-cristal-dia.webp','asset-palacio-cristal-anochecer.webp','asset-palacio-cristal-noche.webp'],home9:['asset-complejo-mundial-amanecer.webp','asset-complejo-mundial-dia.webp','asset-complejo-mundial-anochecer.webp','asset-complejo-mundial-noche.webp']};
 let premiumRoomActiveId='roomPhotoLayer';
 let premiumRoomKey='';
 let premiumRoomPendingKey='';
@@ -6182,7 +6189,7 @@ function renderCharacter(){
     const scale={home1b:[54,50,8],home1:[52,51,9],home5:[49,50,10],home2:[47,52,11],home6:[43,52,13],home3:[45,51,12],home7:[41,52,14],home8:[44,52,12],home4:[39,53,15],home9:[42,52,13]}[home]||[52,50,9];
     characterImage.style.setProperty('height',scale[0]+'%','important');characterImage.style.setProperty('width','auto','important');characterImage.style.setProperty('max-width','65%','important');characterImage.style.setProperty('left',scale[1]+'%','important');characterImage.style.setProperty('bottom',scale[2]+'%','important');
     const female=state.playerGender==='F';
-    characterImage.src=female?'asset-personaje-trader-f-alpha.png':'asset-personaje-trader-no-laptop.png';
+    characterImage.src=female?'asset-personaje-trader-f-alpha.webp':'asset-personaje-trader-no-laptop.webp';
     characterImage.alt=female?'Jugadora trader':'Jugador trader';
   }
   const nw=netWorth();
@@ -7522,7 +7529,7 @@ function showCineIntro(){
   const face=document.querySelector('#cineFaceWrap img');
   if(face){
     const female=String(state.companionGender||'M').toUpperCase()==='F';
-    face.src=female?'asset-companion-f-intro.png':'asset-companion-m.png';
+    face.src=female?'asset-companion-f-intro.webp':'asset-companion-m.webp';
     face.alt=female?'Compa�era de piso':'Compañero de piso';
   }
   overlay.classList.add('show');
