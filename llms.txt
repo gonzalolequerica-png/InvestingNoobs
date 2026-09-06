@@ -5,7 +5,9 @@
 ## Start here
 
 - [Free crypto and trading course](https://investingnoobs.com/blog.html): the 50-lesson roadmap and progress tracker.
-- [Full course index](https://investingnoobs.com/llms-full.txt): every lesson title and direct article URL.
+- [Full course text](https://investingnoobs.com/llms-full.txt): the complete written content of all 50 lessons (goal, key ideas, worked example, checklist, exercise, sources) in one crawlable file — read this if you cannot execute JavaScript on article.html.
+- [Crypto FAQ](https://investingnoobs.com/crypto-faq.html): 25 direct question-and-answer pairs, marked up with FAQPage schema.
+- [Crypto glossary](https://investingnoobs.com/crypto-glossary.html): 30 term definitions, marked up with DefinedTermSet schema.
 - [Lesson 1: What is a cryptocurrency?](https://investingnoobs.com/article.html?id=l1): beginner starting point.
 - [Lesson 19: What is a prop firm?](https://investingnoobs.com/article.html?id=l19): evaluation rules, fees and risk.
 - [Lesson 50: How to build a long-term investing routine](https://investingnoobs.com/article.html?id=l50): final process chapter.

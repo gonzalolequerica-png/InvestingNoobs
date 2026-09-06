@@ -1,83 +1,1180 @@
-# InvestingNoobs Academy
+# InvestingNoobs Academy — Full Course Content
 
-> InvestingNoobs Academy is a free, browser-based course for learning cryptocurrency, investing and trading fundamentals. It is designed for complete beginners and teaches a repeatable, risk-aware process rather than predictions or guaranteed returns.
+> This file contains the complete text of all 50 lessons in the InvestingNoobs Academy, a free browser-based course on cryptocurrency, stocks, commodities, trading and risk management for complete beginners. It is provided in full so that AI assistants, answer engines and search crawlers that do not execute JavaScript can read the actual lesson content directly, instead of only the lesson titles.
 
-## Learning path
+InvestingNoobs (https://investingnoobs.com) also provides a live market tracker (crypto, stocks, commodities), a Tycoon simulation game that teaches investing concepts through play, a Research Room, Decision Lab and Portfolio Blueprint practice tool, and an Investor Passport that builds a personalised learning route.
 
-Read the 50 chapters in order. Each chapter includes a plain-English explanation, a worked example, a pre-action checklist, a practice exercise and further reading. The final assessment contains one practical question for each lesson and requires 80% to pass.
+Editorial note: this content is educational only, not personal financial, legal or tax advice. No lesson promises profits or guarantees a strategy will work. Always verify current market data, regulation, fees and tax treatment with authoritative, up-to-date sources before acting. See https://investingnoobs.com/editorial-policy.html for the full editorial policy.
 
-### 01–10 · Foundations and market language
+---
 
-- [01 What is a cryptocurrency?](https://investingnoobs.com/article.html?id=l1)
-- [02 What does it mean to buy company stock?](https://investingnoobs.com/article.html?id=l2)
-- [03 Why invest in gold and other metals?](https://investingnoobs.com/article.html?id=l3)
-- [04 Crypto vs stocks: what is the difference?](https://investingnoobs.com/article.html?id=l4)
-- [05 What is market capitalization?](https://investingnoobs.com/article.html?id=l5)
-- [06 What does volatility mean?](https://investingnoobs.com/article.html?id=l6)
-- [07 What is inflation?](https://investingnoobs.com/article.html?id=l7)
-- [08 What are fees and why do they matter?](https://investingnoobs.com/article.html?id=l8)
-- [09 What is an exchange?](https://investingnoobs.com/article.html?id=l9)
-- [10 What is a wallet?](https://investingnoobs.com/article.html?id=l10)
 
-### 11–20 · Market mechanics and risk
+## Lesson 1: What is a cryptocurrency?
+URL: https://investingnoobs.com/article.html?id=l1
 
-- [11 What is the Bitcoin halving?](https://investingnoobs.com/article.html?id=l11)
-- [12 What are stablecoins?](https://investingnoobs.com/article.html?id=l12)
-- [13 How much money should I start investing with?](https://investingnoobs.com/article.html?id=l13)
-- [14 Is gold a safe investment right now?](https://investingnoobs.com/article.html?id=l14)
-- [15 First steps so you do not get lost](https://investingnoobs.com/article.html?id=l15)
-- [16 Common beginner mistakes](https://investingnoobs.com/article.html?id=l16)
-- [17 Diversification: not all eggs in one basket](https://investingnoobs.com/article.html?id=l17)
-- [18 Technical vs fundamental analysis](https://investingnoobs.com/article.html?id=l18)
-- [19 What is a prop firm?](https://investingnoobs.com/article.html?id=l19)
-- [20 Leverage and margin](https://investingnoobs.com/article.html?id=l20)
+A cryptocurrency is a digital asset transferred between addresses on a blockchain. To evaluate it, look past the price: understand the network, the asset’s purpose, the people who control it and the risks that could destroy demand.
 
-### 21–30 · Trading discipline and crypto infrastructure
+A blockchain is a shared record maintained by a network of computers. The network, its native asset and the organisation or community building around it are related, but they are not the same thing. A token can have a useful application while giving holders no claim on its revenue.
 
-- [21 Stop-loss and risk management](https://investingnoobs.com/article.html?id=l21)
-- [22 Drawdown and maximum loss](https://investingnoobs.com/article.html?id=l22)
-- [23 Spot, futures and CFDs](https://investingnoobs.com/article.html?id=l23)
-- [24 How to compare a prop firm](https://investingnoobs.com/article.html?id=l24)
-- [25 Recognising scams and misleading claims](https://investingnoobs.com/article.html?id=l25)
-- [26 Trading psychology](https://investingnoobs.com/article.html?id=l26)
-- [27 Building a trading plan](https://investingnoobs.com/article.html?id=l27)
-- [28 How to keep crypto safe](https://investingnoobs.com/article.html?id=l28)
-- [29 What is DeFi?](https://investingnoobs.com/article.html?id=l29)
-- [30 Stablecoins: how to evaluate them](https://investingnoobs.com/article.html?id=l30)
+Before buying, identify the consensus method, supply schedule, use case, liquidity, holder concentration and custody process. A popular token can still have weak security, concentrated ownership or no durable demand.
 
-### 31–40 · Bitcoin, Ethereum and DeFi
+**Worked example:** If a token trades at €2 and 10 million units circulate, its approximate market capitalisation is €20 million. That measures size, not quality, safety or fair value.
 
-- [31 What is Bitcoin?](https://investingnoobs.com/article.html?id=l31)
-- [32 What is Ethereum?](https://investingnoobs.com/article.html?id=l32)
-- [33 How does blockchain work?](https://investingnoobs.com/article.html?id=l33)
-- [34 What is staking?](https://investingnoobs.com/article.html?id=l34)
-- [35 What is a crypto token?](https://investingnoobs.com/article.html?id=l35)
-- [36 What is a smart contract?](https://investingnoobs.com/article.html?id=l36)
-- [37 What is a DAO?](https://investingnoobs.com/article.html?id=l37)
-- [38 What is a crypto bridge?](https://investingnoobs.com/article.html?id=l38)
-- [39 What is a liquidity pool?](https://investingnoobs.com/article.html?id=l39)
-- [40 What is yield farming?](https://investingnoobs.com/article.html?id=l40)
+**Checklist before you act:**
+- What does the network do in one sentence?
+- Who can issue tokens or change the rules?
+- How would I store it and recover access?
+- What fact would invalidate my thesis?
 
-### 41–50 · Research, execution and long-term habits
+**Practice exercise:** Choose one cryptocurrency. Write its network, asset, use, supply, main holders, custody method and three risks. Mark each fact as verified, assumed or unknown.
 
-- [41 What is a bull market?](https://investingnoobs.com/article.html?id=l41)
-- [42 What is dollar-cost averaging?](https://investingnoobs.com/article.html?id=l42)
-- [43 What is a limit order?](https://investingnoobs.com/article.html?id=l43)
-- [44 What is technical analysis?](https://investingnoobs.com/article.html?id=l44)
-- [45 What is fundamental analysis?](https://investingnoobs.com/article.html?id=l45)
-- [46 What is portfolio rebalancing?](https://investingnoobs.com/article.html?id=l46)
-- [47 How do crypto taxes work?](https://investingnoobs.com/article.html?id=l47)
-- [48 How to avoid crypto phishing scams](https://investingnoobs.com/article.html?id=l48)
-- [49 What is a rug pull?](https://investingnoobs.com/article.html?id=l49)
-- [50 How to build a long-term investing routine](https://investingnoobs.com/article.html?id=l50)
+**Further reading:** [CFTC: Understand virtual-currency risks](https://www.cftc.gov/LearnAndProtect/AdvisoriesAndArticles/understand_risks_of_virtual_currency.html)
 
-## Primary pages
+---
 
-- [Course index](https://investingnoobs.com/blog.html)
-- [50-question final assessment](https://investingnoobs.com/test.html)
-- [Live market tracker](https://investingnoobs.com/)
-- [About and data sources](https://investingnoobs.com/about.html)
+## Lesson 2: What does it mean to buy company stock?
+URL: https://investingnoobs.com/article.html?id=l2
 
-## Editorial policy
+Buying a stock gives you an ownership claim in a company. Your return may come from a higher share price, dividends or both, but neither is guaranteed. A stock is a claim on a business, not a fixed deposit.
 
-InvestingNoobs is educational content, not personal financial, legal or tax advice. Markets can be volatile, prices and data can be delayed, and users can lose some or all of their capital. Readers should verify current rules, fees, product availability and tax treatment with authoritative sources in their country.
+Study how the company makes money, what it sells, who pays it and what costs or competitors could weaken it. Revenue growth is not enough if margins, cash flow or the balance sheet deteriorate.
+
+Share prices also reflect expectations. A strong company can fall when results disappoint or when investors decide future growth is already priced in. Read financial statements and valuation assumptions instead of relying on a familiar brand.
+
+**Worked example:** If a company earns €100 million and has 10 million shares, earnings are €10 per share. A market multiple of 15 would imply €150 per share before considering debt, growth and uncertainty. This is an illustration, not a forecast.
+
+**Checklist before you act:**
+- What does the company sell and how does it earn?
+- Are revenue, margins and cash flow improving?
+- What debt, competition or regulation matters?
+- What valuation am I paying for realistic results?
+
+**Practice exercise:** Read one annual or quarterly report. Write three facts, two assumptions and one unanswered question before opening the price chart.
+
+**Further reading:** [Investor.gov: Introduction to investing](https://www.investor.gov/introduction-investing)
+
+---
+
+## Lesson 3: Why invest in gold and other metals?
+URL: https://investingnoobs.com/article.html?id=l3
+
+Gold, silver and other metals can have diversification or industrial uses, but they are not automatically safe. Prices respond to interest rates, currencies, supply, industrial demand, investor flows and the cost of owning the chosen product.
+
+Physical bullion adds premiums, storage, insurance, authenticity and selling-spread costs. Funds and exchange-traded products may be easier to trade, but you must know whether they hold metal, use derivatives or rely on another institution. Mining shares are businesses, not the metal itself.
+
+Decide the role before buying: diversification, a liquidity reserve, an inflation concern or a macroeconomic view. Gold may not produce income and silver or industrial metals can behave more like cyclical commodities.
+
+**Worked example:** If you pay a 5% premium on €1,000 of coins and later face a 4% dealer spread, the metal must rise by more than those costs before you break even.
+
+**Checklist before you act:**
+- What exactly am I buying?
+- What are the premium, storage and selling costs?
+- What job should this position perform?
+- Could I tolerate years without a return?
+
+**Practice exercise:** Compare physical metal, a fund and a mining share. Record structure, costs, liquidity, custody and the risk that is missing from the headline price.
+
+**Further reading:** [Investor.gov: Asset allocation](https://www.investor.gov/introduction-investing/getting-started/asset-allocation)
+
+---
+
+## Lesson 4: Crypto vs stocks: what is the difference?
+URL: https://investingnoobs.com/article.html?id=l4
+
+Stocks represent ownership in companies; cryptocurrencies are digital assets native to networks or protocols. The two markets share volatility and fraud risk, but custody, legal rights, cash flows, governance and market structure can be very different.
+
+A stock may provide rights defined by company law, such as voting or a claim on declared dividends. A token may provide network access or governance, but its rights depend on code and the specific design. Neither category guarantees profit.
+
+Crypto adds wallet, private-key, smart-contract and protocol risks. Stocks add business, accounting and issuer risks. Compare the claim you own and the way you can lose money, not only the historical chart.
+
+**Worked example:** €1,000 in one stock depends on one company. €1,000 in one token depends on one protocol, market and custody setup. The label alone does not determine suitable size.
+
+**Checklist before you act:**
+- What do I own and what rights does it provide?
+- What produces demand or cash flow?
+- Who holds the asset and who can freeze access?
+- Which risk could cause a total loss?
+
+**Practice exercise:** Make a two-column comparison for one stock and one crypto asset: ownership, cash flow, liquidity, custody, regulation, fees and worst case.
+
+**Further reading:** [FINRA: Crypto investing](https://www.finra.org/investors/insights/crypto-investing)
+
+---
+
+## Lesson 5: What is market capitalization?
+URL: https://investingnoobs.com/article.html?id=l5
+
+Market capitalisation is a size measure: price multiplied by shares or tokens considered in circulation. It helps compare assets, but it is not cash in the project, intrinsic value, liquidity or the amount you could sell without moving the market.
+
+For stocks, market cap normally uses shares outstanding. Crypto websites may use circulating supply that excludes locked or vested tokens. Fully diluted valuation applies today’s price to a larger possible supply and can reveal future dilution.
+
+A low market cap can grow quickly, but it can also be easier to manipulate and harder to exit. Check unlocks, treasury wallets, holder concentration and whether the displayed price comes from reliable markets.
+
+**Worked example:** Token A at €0.10 with 1 billion circulating tokens has a €100 million market cap. Token B at €10 with 5 million tokens has a €50 million market cap. Unit price alone says little.
+
+**Checklist before you act:**
+- Which supply number is being used?
+- How many units can be issued later?
+- Who owns the largest balances?
+- Could I exit near the displayed quote?
+
+**Practice exercise:** Calculate the market cap of three assets and compare their circulating supply, fully diluted value, unlocks and trading volume.
+
+**Further reading:** [Investor.gov: Investment products](https://www.investor.gov/introduction-investing/investing-basics/investment-products)
+
+---
+
+## Lesson 6: What does “volatility” mean?
+URL: https://investingnoobs.com/article.html?id=l6
+
+Volatility describes how widely and quickly a price moves. It is not identical to risk, but high volatility makes losses, forced decisions and poor execution more likely. The practical response is smaller sizing and preparation, not perfect prediction.
+
+Historical volatility describes past movement; implied volatility reflects expectations embedded in some options. Neither predicts the future perfectly. Liquidity can disappear during news, outages or liquidations, creating gaps and slippage.
+
+Define the loss you can tolerate before entering. A position should be small enough that a normal adverse move does not make you abandon your process or use money needed for essentials.
+
+**Worked example:** A €500 position falling 20% becomes €400. Recovering from €400 to €500 requires a 25% gain, not 20%. Drawdown control matters more than celebrating a percentage gain.
+
+**Checklist before you act:**
+- What move would change my decision?
+- What happens if execution is worse than the quote?
+- Is my size small enough to think clearly?
+- Can I fund the position without borrowing?
+
+**Practice exercise:** Record the largest daily move of one asset over a chosen period. Choose a simulated size that would let you tolerate that move without breaking your rules.
+
+**Further reading:** [CFTC: Virtual-currency risk advisory](https://www.cftc.gov/LearnAndProtect/AdvisoriesAndArticles/understand_risks_of_virtual_currency.html)
+
+---
+
+## Lesson 7: What is inflation?
+URL: https://investingnoobs.com/article.html?id=l7
+
+Inflation is a sustained rise in the general price level, reducing what money can buy. Investors need to distinguish nominal returns from real returns and match the risk of an asset to the date when the money is needed.
+
+A nominal return is the account balance change. A real return adjusts for inflation, and the result must also account for fees and taxes. Cash can lose purchasing power, but risky assets can also fall during inflationary periods.
+
+Companies, bonds and commodities respond differently to rates, costs, demand and supply shocks. There is no single inflation-proof asset; diversification and a suitable time horizon matter more than a slogan.
+
+**Worked example:** If €10,000 grows to €10,600 while prices rise 4%, its purchasing power is about €10,192 before fees and taxes. The nominal increase hides a much smaller real gain.
+
+**Checklist before you act:**
+- When will I need this money?
+- Am I measuring after inflation, fees and tax?
+- Could this asset fall even if inflation rises?
+- Does the portfolio fit the time horizon?
+
+**Practice exercise:** Choose a future expense. Estimate its cost, a possible inflation rate and the risks of two ways to fund it. Keep the estimate separate from certainty.
+
+**Further reading:** [Investor.gov: Introduction to investing](https://www.investor.gov/introduction-investing)
+
+---
+
+## Lesson 8: What are fees and why do they matter?
+URL: https://investingnoobs.com/article.html?id=l8
+
+Fees reduce returns whether a trade wins or loses. The full cost can include commission, spread, slippage, funding, custody, withdrawal charges, currency conversion and taxes. A low headline commission may hide a wider spread.
+
+A spread is the gap between visible buy and sell prices. Slippage is the difference between expected and actual execution. Thin liquidity means a displayed quote may not be available for your order size. Derivatives can add funding or financing over time.
+
+Frequency compounds costs against you. Ask for the all-in cost of entering, holding, exiting and converting back to your currency. Compare the same transaction size across providers.
+
+**Worked example:** A 1% cost on €10,000 is €100. If entry and exit each cost 1%, the round trip can consume about €200 before the market moves.
+
+**Checklist before you act:**
+- What is the cost to buy, hold and sell?
+- Is the quote delayed or liquid enough?
+- Are funding and conversion costs included?
+- How much return must cover costs?
+
+**Practice exercise:** Compare two providers for a hypothetical €1,000 round trip. Record commission, spread, conversion, withdrawal and holding costs.
+
+**Further reading:** [Investor.gov: Investing costs](https://www.investor.gov/introduction-investing/getting-started/asset-allocation)
+
+---
+
+## Lesson 9: What is an exchange?
+URL: https://investingnoobs.com/article.html?id=l9
+
+An exchange matches buyers and sellers or offers its own liquidity. It may also custody your assets, adding platform and operational risk to normal market risk. A polished app is not proof of strong controls.
+
+Check the legal entity, countries served, fees, withdrawal limits, security history, reserve disclosures and customer support. Use the official domain and read the terms before depositing. Trading frequently, buying periodically and holding long term have different needs.
+
+Test a small deposit and withdrawal. Understand whether assets are segregated, how insolvency is handled and whether your country’s rules protect you. Diversifying providers can reduce concentration but adds complexity.
+
+**Worked example:** If an exchange pauses withdrawals, the market price may be irrelevant because access is the immediate risk. Custody is part of the investment decision.
+
+**Checklist before you act:**
+- Is the provider authorised or registered where I live?
+- Can I test a small withdrawal?
+- What happens if the platform fails?
+- Which alerts and account limits are available?
+
+**Practice exercise:** Create an exchange scorecard with security, regulation, fees, liquidity, withdrawals, custody and support. Mark unknowns as unknown.
+
+**Further reading:** [FINRA: Crypto investing](https://www.finra.org/investors/insights/crypto-investing)
+
+---
+
+## Lesson 10: What is a wallet?
+URL: https://investingnoobs.com/article.html?id=l10
+
+A crypto wallet uses the private keys that authorise transactions on a blockchain. It does not hold coins like a physical wallet. Losing the key or exposing the recovery phrase can mean losing control of the assets.
+
+Custodial wallets are controlled by a service. Self-custody gives you the signing keys and the responsibility for backups, device security and transaction checks. Hot wallets are online; cold storage reduces online exposure but is less convenient.
+
+A recovery phrase is a master key. Never share it, enter it into a site from a message or store it in a cloud note. Verify the address and network, then use a small test transfer before sending a meaningful amount.
+
+**Worked example:** Sending on the wrong network or to a mistyped address may be difficult or impossible to recover. A test transfer verifies address, network and destination.
+
+**Checklist before you act:**
+- Who controls the private keys?
+- Where is the offline backup?
+- Have I tested recovery?
+- Do I verify addresses on a trusted device?
+
+**Practice exercise:** Write a custody plan without recording secrets: device, backup location, recovery test, emergency access and what support will never be allowed to see.
+
+**Further reading:** [Investor.gov: Crypto asset account risks](https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins/crypto-asset-interest-bearing-accounts)
+
+---
+
+## Lesson 11: What is the Bitcoin “halving”?
+URL: https://investingnoobs.com/article.html?id=l11
+
+A Bitcoin halving reduces the block subsidy paid to miners under the protocol schedule. It changes the rate at which new bitcoin enters circulation; it does not guarantee a price increase or remove market, custody and network risks.
+
+Mining revenue combines new-coin subsidy and transaction fees. When the subsidy falls, miners may sell reserves, improve efficiency or shut down. Markets often anticipate scheduled events, so any reaction depends on demand, liquidity, positioning and wider conditions.
+
+Supply is only one variable. A historical pattern is not a reliable price forecast, and a protocol rule cannot tell you whether future demand will rise, stay flat or fall.
+
+**Worked example:** If miners receive 900 newly issued bitcoin per day and the subsidy portion halves, issuance falls substantially. That alone cannot produce a price target.
+
+**Checklist before you act:**
+- Am I mistaking a rule for a guarantee?
+- What affects demand and liquidity?
+- How could miner economics matter?
+- What if the expected reaction does not happen?
+
+**Practice exercise:** Explain the halving in three sentences without using “bullish” or “guaranteed”. Then list three reasons price could move either way.
+
+**Further reading:** [Bitcoin whitepaper](https://bitcoin.org/bitcoin.pdf)
+
+---
+
+## Lesson 12: What are stablecoins?
+URL: https://investingnoobs.com/article.html?id=l12
+
+Stablecoins aim to track a reference value such as the dollar or euro. Their stability depends on reserves, redemption, collateral, technology, issuer and liquidity. The name does not make the asset risk-free.
+
+Some stablecoins use cash or short-term assets, some use crypto collateral and others use algorithms or incentives. Ask what can be redeemed, by whom, under which terms and how reserves are reported.
+
+Even a widely used token can trade away from its target during stress. Frozen addresses, bank access, oracle errors, contract bugs or a congested network can affect redemption and transfers.
+
+**Worked example:** A stablecoin intended to equal €1 trading at €0.96 represents a 4% deviation. €1,000 of it is worth about €960 at that market price before fees.
+
+**Checklist before you act:**
+- What backs the token?
+- Who can redeem it and under what terms?
+- Can administrators freeze or change supply?
+- Where is exit liquidity during stress?
+
+**Practice exercise:** Compare two stablecoins by issuer, reserve, redemption, chain, fees, transparency and failure scenario. Identify the risk you understand least.
+
+**Further reading:** [FCA: Questions before crypto investing](https://www.fca.org.uk/investsmart/5-questions-ask-you-invest-cryptoassets)
+
+---
+
+## Lesson 13: How much money should I start investing with?
+URL: https://investingnoobs.com/article.html?id=l13
+
+There is no universal starting amount. Use money that is not needed for housing, bills, emergency savings or near-term goals, and choose a size small enough to learn without emotional pressure.
+
+Map essential expenses, expensive debt, emergency cash and the date when you need the money. Money needed soon should not depend on a volatile asset being higher at the exact moment you need it.
+
+Set a maximum loss, not only a deposit. Leverage can make losses exceed the initial amount. Starting small tests your process and behaviour; it does not make the asset safe.
+
+**Worked example:** If you can save €200 monthly after essentials, a €50 learning contribution may be manageable for one person and unsuitable for another. The budget and loss capacity decide the amount.
+
+**Checklist before you act:**
+- Is emergency money separate?
+- Do I have expensive debt?
+- What loss would not change my life?
+- When will I need the money?
+
+**Practice exercise:** Build a one-page budget with essentials, emergency target, debt, savings and a learning amount. Explain why losing that amount would not affect essentials.
+
+**Further reading:** [Investor.gov: Introduction to investing](https://www.investor.gov/introduction-investing)
+
+---
+
+## Lesson 14: Is gold a safe investment right now?
+URL: https://investingnoobs.com/article.html?id=l14
+
+“Safe” depends on the goal and time horizon. Gold can diversify a portfolio, but its price can fall, it may not generate income and ownership costs or counterparty risks matter.
+
+Gold responds to rates, currencies, real yields, central-bank activity and investor flows. Physical gold has storage and authenticity issues; funds and derivatives have provider and structure risks.
+
+Decide the job before buying: diversification, liquidity reserve or a view on macro conditions. If you need growth or income, gold may not solve the problem. A position can suit one goal and fail another.
+
+**Worked example:** An investor buying after a sharp rise can face a falling price even when the long-term story remains intact. A target weight and review rule reduce headline-driven decisions.
+
+**Checklist before you act:**
+- What risk am I trying to reduce?
+- What form and costs apply?
+- Can I tolerate years without a return?
+- How does it interact with other assets?
+
+**Practice exercise:** Write a job description for gold in your portfolio. Include its target weight, reason for holding and condition for reviewing it.
+
+**Further reading:** [Investor.gov: Asset allocation](https://www.investor.gov/introduction-investing/getting-started/asset-allocation)
+
+---
+
+## Lesson 15: First steps so you don’t get lost
+URL: https://investingnoobs.com/article.html?id=l15
+
+A new investor does not need to predict markets. Start by understanding the product, choosing a trustworthy provider, protecting access, defining a goal and creating a repeatable process.
+
+Learn a small vocabulary: asset, order, spread, custody, volatility, diversification and risk. Understand settlement before adding leverage, derivatives or DeFi. Use official provider pages and independent investor education.
+
+Activate two-factor authentication, keep transaction records and reject urgency or guaranteed-return claims. Learning is a risk control, not a delay.
+
+**Worked example:** A useful first experiment is a simulated €100 allocation with a written reason, time horizon, maximum loss, fees, custody and review date.
+
+**Checklist before you act:**
+- What is my goal and horizon?
+- Can I explain the product and worst case?
+- Is my account protected?
+- What evidence would make me stop?
+
+**Practice exercise:** Create a before-first-purchase checklist and refuse to buy until each answer is written. Review the checklist after one month.
+
+**Further reading:** [Investor.gov: Investor education](https://www.investor.gov/introduction-investing)
+
+---
+
+## Lesson 16: Common beginner mistakes
+URL: https://investingnoobs.com/article.html?id=l16
+
+Beginner losses often come from process errors: using essential money, copying others, ignoring costs, using excessive leverage, chasing performance and failing to plan custody or exits.
+
+FOMO encourages late entries; loss aversion encourages holding or revenge trading. Screenshots rarely show losing periods, fees, risk or survivorship bias. These are predictable behaviours, so add friction before they occur.
+
+Changing the asset, strategy, size and provider after every result prevents learning. Keep a journal with thesis, evidence, costs, outcome and review date.
+
+**Worked example:** A trader loses €30, doubles the next position to recover it and loses €60. The second trade was an emotional response, not a better idea. A daily loss limit would interrupt the escalation.
+
+**Checklist before you act:**
+- Am I following a rule or an emotion?
+- Did I include costs and total-loss risk?
+- Is the source independent?
+- What stops one error becoming a series?
+
+**Practice exercise:** List five mistakes you are likely to make and one friction for each: smaller size, delay, withdrawal test, trade limit or journal.
+
+**Further reading:** [Investor.gov: Crypto asset alert](https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-alerts/crypto-asset-securities)
+
+---
+
+## Lesson 17: Diversifying: not all eggs in one basket
+URL: https://investingnoobs.com/article.html?id=l17
+
+Diversification spreads exposure across investments whose risks do not move identically. It can reduce the damage from one failure, but it cannot guarantee profit or prevent all losses.
+
+Ten tokens may still depend on one blockchain, exchange, stablecoin or narrative. Review concentration by issuer, sector, geography, network, custody and liquidity, not only by number of holdings.
+
+The goal is not to own everything. It is to ensure one wrong assumption cannot destroy the plan. Narrow funds can also be concentrated despite holding many securities.
+
+**Worked example:** If one asset is 60% of a portfolio and falls 50%, the portfolio loses about 30% before other movements. At 10%, the same fall costs about 5%.
+
+**Checklist before you act:**
+- What percentage depends on one network or provider?
+- Are the holdings genuinely different?
+- What is my maximum position weight?
+- Could holdings fall together?
+
+**Practice exercise:** Group your holdings by asset, issuer, network, sector and custody. Identify the largest dependency and one practical way to reduce it.
+
+**Further reading:** [Investor.gov: Diversification](https://www.investor.gov/introduction-investing/getting-started/asset-allocation)
+
+---
+
+## Lesson 18: Technical vs fundamental analysis
+URL: https://investingnoobs.com/article.html?id=l18
+
+Technical analysis studies price, volume and market structure. Fundamental analysis studies the business, network, cash flows, users, competition and token design. Both organise hypotheses; neither provides certainty.
+
+A technical question may concern trend, liquidity or execution. A fundamental question may concern durable revenue, users or token value capture. Keep the question separate from the prediction.
+
+Signals fail during news and thin liquidity. Fundamental estimates fail when assumptions about growth, regulation or technology are wrong. Match evidence to the time horizon.
+
+**Worked example:** A token can break above a chart level while its supply is about to double. The chart describes behaviour; the unlock changes future supply.
+
+**Checklist before you act:**
+- What exact question am I answering?
+- Is the evidence relevant to the horizon?
+- Which assumption matters most?
+- What would make me exit?
+
+**Practice exercise:** Write separate technical and fundamental notes for one asset. Compare their assumptions, time horizons and failure conditions.
+
+**Further reading:** [Investor.gov: Investing basics](https://www.investor.gov/introduction-investing)
+
+---
+
+## Lesson 19: What is a prop firm?
+URL: https://investingnoobs.com/article.html?id=l19
+
+A proprietary trading firm may offer a simulated or funded programme after an evaluation. The contract and rule set matter more than the advertised account size.
+
+Check whether trading is simulated, how the firm earns revenue, whether fees are refundable, how violations are defined and how daily loss or drawdown is calculated. A €100,000 account may be notional and not money you own.
+
+Rules may include targets, minimum days, news or overnight restrictions, consistency, copying limits and payout conditions. A strategy can work in a market and still fail the programme.
+
+**Worked example:** A €100,000 notional account with a 5% maximum drawdown has a €5,000 boundary. A 2% daily limit can end an evaluation after one volatile day.
+
+**Checklist before you act:**
+- Is the account live, simulated or unclear?
+- How are loss limits calculated?
+- What are fees and payout conditions?
+- What legal identity and evidence exist?
+
+**Practice exercise:** Create a prop-firm term sheet: target, daily loss, total drawdown, minimum days, prohibited actions, fee, payout and failure scenario.
+
+**Further reading:** [FCA: Due-diligence questions](https://www.fca.org.uk/investsmart/5-questions-ask-you-invest-cryptoassets)
+
+---
+
+## Lesson 20: Leverage and margin
+URL: https://investingnoobs.com/article.html?id=l20
+
+Leverage controls more market exposure than the cash posted as margin. It magnifies gains and losses, increases liquidation risk and may add funding costs. Buying power is not affordable risk.
+
+If you post €100 and control €1,000, a 1% move changes the position by about €10 before costs, or 10% of margin. A move against you can trigger a margin call or liquidation before you can react.
+
+Read maintenance margin, liquidation, fees and funding rules. Cross margin can expose more of an account; isolated margin limits assigned collateral but is not safe by itself.
+
+**Worked example:** A €1,000 position on €100 margin loses €20 after a 2% adverse move, reducing margin by 20% before fees. Gaps and thin liquidity can worsen it.
+
+**Checklist before you act:**
+- What is my exposure, not deposit?
+- Where is liquidation?
+- What funding and interest apply?
+- Can other positions be affected?
+
+**Practice exercise:** Calculate the cash impact of 1%, 3% and 10% moves. Choose a simulated exposure that does not require a price rebound.
+
+**Further reading:** [CFTC: Leverage risk](https://www.cftc.gov/LearnAndProtect/AdvisoriesAndArticles/understand_risks_of_virtual_currency.html)
+
+---
+
+## Lesson 21: Stop-loss and risk management
+URL: https://investingnoobs.com/article.html?id=l21
+
+A stop-loss is an instruction or rule intended to close a position at a chosen level. It can define planned risk, but it cannot guarantee an exact price during gaps, rapid markets, outages or low liquidity.
+
+Set the invalidation level from the trade idea, then calculate position size from the distance to it. A stop that is too close can be normal noise; a stop that is too far can create an unacceptable loss.
+
+Understand stop-market versus stop-limit. The first prioritises execution and may fill worse; the second controls price and may not fill. Include slippage and fees.
+
+**Worked example:** Entry €50, invalidation €47 and maximum loss €30 gives 10 units before costs. Moving the stop further without reducing size increases risk.
+
+**Checklist before you act:**
+- What fact proves the idea wrong?
+- How much can slippage add?
+- Will the stop work during an outage?
+- What is the rule after a stop?
+
+**Practice exercise:** Choose a hypothetical entry and invalidation. Calculate size for three loss limits and explain why moving the stop changes the maths.
+
+**Further reading:** [FINRA: Order types](https://www.finra.org/investors/investing/investment-products/stocks/order-types)
+
+---
+
+## Lesson 22: Drawdown and maximum loss
+URL: https://investingnoobs.com/article.html?id=l22
+
+Drawdown is the decline from a previous peak in balance or equity. It matters because recovery requires a larger percentage gain than the original loss and because rules may force a close.
+
+A 10% loss needs an 11.1% gain to recover; a 50% loss needs 100%. Track realised and unrealised losses because programmes may use equity, not only closed trades.
+
+Limits may be static, daily, total or trailing and may use a high-water mark. A profitable strategy can still breach a rule because of its path.
+
+**Worked example:** €10,000 falling to €8,000 is a 20% drawdown. Returning to €10,000 requires a 25% gain from €8,000.
+
+**Checklist before you act:**
+- Which peak and value are compared?
+- Is the limit balance, equity or trailing?
+- What size stays below normal loss?
+- When do I stop trading?
+
+**Practice exercise:** Make a table for 5%, 10%, 20% and 40% losses, adding the recovery percentage and a behaviour rule for each level.
+
+**Further reading:** [CFTC: Risk advisory](https://www.cftc.gov/LearnAndProtect/AdvisoriesAndArticles/understand_risks_of_virtual_currency.html)
+
+---
+
+## Lesson 23: Spot, futures and CFDs
+URL: https://investingnoobs.com/article.html?id=l23
+
+Spot trading generally involves the asset itself. Futures and CFDs are derivatives whose value references an asset without giving the same ownership. Derivatives add margin, financing, expiry, liquidation or counterparty risks.
+
+With spot crypto, custody and network transfer are central. Futures may use leverage, funding or expiry. A CFD is a contract with a provider and may include financing; you normally do not own the underlying asset.
+
+Ask how price is marked, who is counterparty, what collateral does, what happens during a gap and which protections apply in your country.
+
+**Worked example:** A €1,000 cash purchase can fall to €700 without margin liquidation. A €1,000 leveraged derivative can be closed after a smaller adverse move if collateral falls below its threshold.
+
+**Checklist before you act:**
+- Do I own the asset or a contract?
+- What are margin and liquidation rules?
+- Who marks the price and is counterparty?
+- Is the product legal and suitable here?
+
+**Practice exercise:** Compare a spot product and derivative for the same asset by ownership, custody, leverage, fees, liquidation, expiry and provider risk.
+
+**Further reading:** [CFTC: Derivative and leverage risks](https://www.cftc.gov/LearnAndProtect/AdvisoriesAndArticles/understand_risks_of_virtual_currency.html)
+
+---
+
+## Lesson 24: How to compare a prop firm
+URL: https://investingnoobs.com/article.html?id=l24
+
+Compare prop firms by survivable rules, total cost and payout reliability, not by the largest advertised account. Two readers should be able to calculate the same result from the terms.
+
+Record evaluation price, target, daily loss, total drawdown, static or trailing calculation, minimum days, size, news and overnight rules, platform and payout conditions. Check whether rules change between stages.
+
+Verify the legal company, support channels, terms and complaint process. A screenshot or testimonial is not audited performance. Treat vague wording as an unresolved risk.
+
+**Worked example:** Firm A may charge €50 with a 10% target and 5% drawdown; Firm B €80 with an 8% target and 4% drawdown. Strategy fit and payout rules decide the comparison.
+
+**Checklist before you act:**
+- Can I calculate every limit?
+- Does my strategy fit the restrictions?
+- What is the complete cost?
+- How is reliability independently checked?
+
+**Practice exercise:** Put two firms side by side. Mark each rule clear, restrictive or unknown, and resolve every unknown from the official agreement.
+
+**Further reading:** [FCA: Due diligence](https://www.fca.org.uk/investsmart/5-questions-ask-you-invest-cryptoassets)
+
+---
+
+## Lesson 25: Recognising scams and misleading claims
+URL: https://investingnoobs.com/article.html?id=l25
+
+Scams combine urgency, authority, social proof and promises of low risk or guaranteed profit. Slow down, verify the person and company independently, and never send keys or money to unlock a withdrawal.
+
+Red flags include unexpected contact, only winning results, pressure to act, fixed returns, crypto-only payment, recovery-fee demands and a tax or fee required before withdrawal. A realistic dashboard can be fabricated.
+
+Type the provider’s domain yourself, check official registers where relevant and contact support through a trusted route. Do not trust the link or phone number supplied by the promoter.
+
+**Worked example:** If a platform says €2,000 of profit is locked until you pay €300 in “verification crypto,” stop. Do not send more. Preserve evidence and contact your bank or exchange quickly.
+
+**Checklist before you act:**
+- Who contacted me and how can I verify them?
+- Are returns guaranteed or unusually consistent?
+- Can I withdraw without a new payment?
+- Am I asked for a secret or remote access?
+
+**Practice exercise:** Take one investment offer and write its claim, evidence, conflict, legal identity, withdrawal process and worst case. Mark promoter-supplied evidence as unverified.
+
+**Further reading:** [FTC: Cryptocurrency scam advice](https://consumer.ftc.gov/articles/what-know-about-cryptocurrency-scams)
+
+---
+
+## Lesson 26: Trading psychology
+URL: https://investingnoobs.com/article.html?id=l26
+
+Trading psychology is behaviour under uncertainty. Discipline is not never feeling fear; it is designing rules so emotion has less control over size, frequency and exits.
+
+FOMO leads to late entries, loss aversion keeps bad positions open and revenge trading tries to repair a loss with a larger risk. Add friction: pre-written criteria, a maximum number of trades, a daily loss limit, breaks and a journal.
+
+If you cannot follow the rules, reduce size or stop. A strategy that requires perfect emotional control is not robust at the current size.
+
+**Worked example:** After two losses, doubling the next position is not a better idea. A rule to stop for the day, record the trades and review after a break protects decision quality.
+
+**Checklist before you act:**
+- What emotion changes my size?
+- What creates a pause before an impulse?
+- Do I review losses honestly?
+- Is size small enough to think clearly?
+
+**Practice exercise:** Write an if-then plan for three triggers: “If I feel X, I will do Y before placing another order.” Test it in simulation.
+
+**Further reading:** [Investor.gov: Investor education](https://www.investor.gov/introduction-investing)
+
+---
+
+## Lesson 27: Building a trading plan
+URL: https://investingnoobs.com/article.html?id=l27
+
+A trading plan turns a market opinion into rules that can be tested. It should define market, setup, entry, invalidation, exit, size, costs, schedule, maximum loss and review process.
+
+Define when you will and will not trade: asset, timeframe, liquidity, news and allowed instruments. State the evidence required and the fact that proves the idea wrong.
+
+Size from risk, not platform buying power. Record spread, slippage, funding and tax treatment. Review a meaningful sample and change one variable at a time.
+
+**Worked example:** A plan can risk €10, require two defined conditions, stop at invalidation, allow three trades daily and review after 30 trades. The value is consistency, not a perfect win rate.
+
+**Checklist before you act:**
+- What creates an entry?
+- Where is the idea wrong?
+- What ends the session?
+- What data will I record?
+
+**Practice exercise:** Write a one-page simulated plan. Paper trade it, record exceptions and revise only after reviewing the whole sample.
+
+**Further reading:** [FINRA: Order types](https://www.finra.org/investors/investing/investment-products/stocks/order-types)
+
+---
+
+## Lesson 28: How to keep crypto safe
+URL: https://investingnoobs.com/article.html?id=l28
+
+Crypto security is a chain: email, device, exchange, wallet, private key and transaction approval. One weak link can expose funds, and a shared seed phrase cannot be recovered by customer support.
+
+Use a unique password, password manager, strong two-factor authentication, updates, screen lock, withdrawal alerts and allowlists where available. Consider cold storage for long-term funds only if you can manage recovery safely.
+
+Separate everyday use from long-term custody. Bookmark official sites, inspect domains, verify transaction details and keep recovery backups offline. After a suspected compromise, use a clean device and act quickly.
+
+**Worked example:** If a message says your exchange closes in ten minutes, open the bookmarked exchange yourself and inspect alerts. Urgency is a reason to verify, never a reason to skip verification.
+
+**Checklist before you act:**
+- Is email protected separately?
+- Where is the offline recovery backup?
+- Do I verify contracts and networks?
+- What happens if my device is lost?
+
+**Practice exercise:** Draw the path from email to withdrawal. Mark each attack point and add one control: 2FA, update, backup, allowlist, test transfer or cold storage.
+
+**Further reading:** [FTC: Crypto safety advice](https://consumer.ftc.gov/articles/what-know-about-cryptocurrency-scams)
+
+---
+
+## Lesson 29: What is DeFi?
+URL: https://investingnoobs.com/article.html?id=l29
+
+Decentralised finance uses smart contracts and blockchains for swaps, lending and liquidity without a traditional intermediary. Removing an intermediary changes risk; it does not remove it.
+
+Understand the contract, assets, oracle, admin keys, fees, liquidation and liquidity before connecting a wallet. Audits can find some bugs but do not guarantee safety, honest governance or sustainable economics.
+
+Risks include code bugs, oracle manipulation, bridge failure, impermanent loss, bad debt, governance attacks, front-running, phishing and irreversible transactions. Read documentation and test with a small amount.
+
+**Worked example:** A lending protocol may liquidate collateral when a health threshold is crossed. An oracle failure or sudden move can make liquidation occur at a poor price.
+
+**Checklist before you act:**
+- What contract and address will I use?
+- Who can upgrade or pause it?
+- What if oracle or liquidity fails?
+- What is the complete worst-case loss?
+
+**Practice exercise:** Map one protocol’s funds, price feeds, admin powers, withdrawal path, fees and failure mode. If you cannot trace the flow, do not deposit.
+
+**Further reading:** [Ethereum.org: DeFi](https://ethereum.org/use-cases/defi/)
+
+---
+
+## Lesson 30: Stablecoins: how to evaluate them
+URL: https://investingnoobs.com/article.html?id=l30
+
+Evaluate the promise behind a stablecoin’s peg: backing, redemption, reporting, contract permissions, liquidity and behaviour under stress.
+
+Identify issuer, reserve assets, storage, reports and direct redemption rights. Inspect mint, burn, pause and freeze powers on the blockchain contract. Then check depth across venues and networks.
+
+A token can look stable in normal conditions and become expensive or impossible to exit during stress. Include chain congestion, bridge exposure, fees and acceptance where you need to use it.
+
+**Worked example:** A token may trade at $1 on one venue and $0.97 on another because liquidity is fragmented. An average price does not guarantee redemption at par.
+
+**Checklist before you act:**
+- What legal claim does a holder have?
+- How are reserves reported?
+- Can supply or addresses be changed?
+- Where can I exit during stress?
+
+**Practice exercise:** Make a stablecoin risk card with issuer, reserve, redemption, permissions and exit liquidity. Update it when any fact changes.
+
+**Further reading:** [FCA: Cryptoasset questions](https://www.fca.org.uk/investsmart/5-questions-ask-you-invest-cryptoassets)
+
+---
+
+## Lesson 31: What is Bitcoin?
+URL: https://investingnoobs.com/article.html?id=l31
+
+Bitcoin is a decentralised digital-currency protocol with a public transaction history and software-defined issuance. It enables value transfer without a central ledger operator, but users still face price, custody, network and fraud risks.
+
+Users control addresses through private keys. Transactions are broadcast, checked and added to blocks under proof-of-work consensus. Confirmations make reversal harder, so address accuracy and custody are essential.
+
+Limited issuance is a protocol property, not guaranteed purchasing power. Price depends on demand, liquidity, regulation, macro conditions, competition and confidence in the network.
+
+**Worked example:** A single incorrect character in a destination address can send funds somewhere the network cannot interpret as a mistake. Verify first and test with a small amount.
+
+**Checklist before you act:**
+- Can I explain keys, addresses and confirmations?
+- How will I custody bitcoin?
+- What fees and confirmation policy apply?
+- What makes it unsuitable for my goal?
+
+**Practice exercise:** Read the Bitcoin whitepaper introduction. Explain the problem it addresses, what it does not guarantee and three user risks.
+
+**Further reading:** [Bitcoin whitepaper](https://bitcoin.org/bitcoin.pdf)
+
+---
+
+## Lesson 32: What is Ethereum?
+URL: https://investingnoobs.com/article.html?id=l32
+
+Ethereum is a public blockchain platform for smart contracts and applications. Ether, or ETH, is its native asset used for fees, staking and transfers. Ethereum the network and ETH the asset are not the same term.
+
+Smart contracts are programs deployed on-chain. Users submit transactions, validators process them and gas fees help compensate the network and limit spam. Fees change with demand; a transaction can fail while still consuming gas.
+
+Applications inherit risks from code, permissions, oracles, bridges and interfaces. ETH price risk is separate from losing funds through a bad contract interaction.
+
+**Worked example:** A transaction can be valid but uneconomic if gas exceeds the value moved. Check network, contract, fee estimate and slippage before signing.
+
+**Checklist before you act:**
+- Am I on the correct network?
+- What permission am I granting?
+- How will gas affect the result?
+- Can I revoke approvals?
+
+**Practice exercise:** Draw the path from wallet signature to contract state change. Label fees, permissions and irreversible steps.
+
+**Further reading:** [Ethereum.org: What is Ethereum?](https://ethereum.org/what-is-ethereum/)
+
+---
+
+## Lesson 33: How does blockchain work?
+URL: https://investingnoobs.com/article.html?id=l33
+
+A blockchain is a replicated record updated by a network following agreed rules. Blocks group transactions, hashes link records and consensus decides which valid history is accepted.
+
+A wallet signs a transaction; nodes check it; a block producer includes it; other nodes validate the block. More confirmations can reduce reversal risk depending on the network.
+
+Proof of work, proof of stake and other systems make different trade-offs around security, cost, finality and participation. A blockchain records data; it does not make the input true or the application safe.
+
+**Worked example:** A transaction visible on an explorer may not yet satisfy a merchant’s confirmation policy. High-value transfers need the network’s required finality, not just a visible hash.
+
+**Checklist before you act:**
+- Who validates transactions?
+- What does one confirmation mean here?
+- Is recorded data actually verified?
+- What if the app or oracle is wrong?
+
+**Practice exercise:** Explain a transaction using sign, broadcast, validate, include and confirm. Add one risk at each step.
+
+**Further reading:** [Ethereum.org: The Ethereum network](https://ethereum.org/what-is-the-ethereum-network/)
+
+---
+
+## Lesson 34: What is staking?
+URL: https://investingnoobs.com/article.html?id=l34
+
+Staking commits an asset to help secure or operate a proof-of-stake network. Rewards follow protocol and service rules; they are not guaranteed interest. Price falls, lockups, slashing and provider risk can outweigh rewards.
+
+Native staking involves validators following protocol rules. Delegating through an exchange or liquid-staking protocol adds fees, smart-contract, governance and custody risks. Understand keys, unbonding and withdrawals.
+
+Reward rates can change as participation, issuance or fees change. A reward token can fall in value. Separate real fees from newly issued tokens when judging sustainability.
+
+**Worked example:** A 5% token reward on €1,000 is 50 units only if the token price stays constant. A 30% price fall can outweigh that reward and any lockup cost.
+
+**Checklist before you act:**
+- What is my role in securing the network?
+- How long are funds locked?
+- What causes slashing or loss?
+- Are rewards fees or new issuance?
+
+**Practice exercise:** Make a staking table with reward, provider fee, lockup, price scenarios, exit delay and failure risks.
+
+**Further reading:** [Ethereum.org: Staking](https://ethereum.org/staking/)
+
+---
+
+## Lesson 35: What is a crypto token?
+URL: https://investingnoobs.com/article.html?id=l35
+
+A token is a digital asset issued on a blockchain or network. Its name and price do not tell you what rights it provides. Read the contract, distribution, supply schedule, holders and actual use.
+
+Tokens can represent access, governance, application claims, points or speculation. A whitepaper states intentions; the contract and real usage are stronger evidence.
+
+Study insider allocation, unlocks, emissions, treasury control, transfer restrictions, minting powers, liquidity and holder concentration. Useful technology does not guarantee that the token captures value.
+
+**Worked example:** If insiders hold 70% with upcoming unlocks, rising demand may be absorbed by future selling. Application quality and token price can diverge.
+
+**Checklist before you act:**
+- What right or utility exists?
+- How is supply created or unlocked?
+- Who can mint or change rules?
+- Does usage create token demand?
+
+**Practice exercise:** Create a tokenomics table with supply, allocation, unlocks, utility, governance, liquidity and contract permissions. Mark marketing claims.
+
+**Further reading:** [Ethereum.org: Smart-contract ecosystem](https://ethereum.org/what-is-ethereum/)
+
+---
+
+## Lesson 36: What is a smart contract?
+URL: https://investingnoobs.com/article.html?id=l36
+
+A smart contract is code deployed on a blockchain that executes when called. It can reduce reliance on an intermediary, but bugs, permissions and flawed economics can make actions irreversible.
+
+Identify what the contract can do before approving or depositing. Unlimited approvals, admin keys and upgrade functions can create large losses. An audit is useful evidence, not insurance.
+
+Use verified addresses from official documentation, inspect transaction simulations, test small and revoke unused approvals. A technically correct contract can still be economically unsafe.
+
+**Worked example:** Approving a contract to spend only the intended amount limits damage compared with an unlimited approval if the contract or front end is compromised.
+
+**Checklist before you act:**
+- What function am I calling?
+- What permission am I granting?
+- Who can upgrade or pause it?
+- Can I revoke approval and exit?
+
+**Practice exercise:** List every permission from wallet connection to final transfer in a simulated swap. Identify the irreversible step and smallest safe test.
+
+**Further reading:** [Ethereum.org: Smart contracts](https://ethereum.org/developers/docs/smart-contracts/)
+
+---
+
+## Lesson 37: What is a DAO?
+URL: https://investingnoobs.com/article.html?id=l37
+
+A DAO is a community or organisation coordinated partly through blockchain governance. The label does not guarantee decentralisation; voting power, delegation, treasury control and upgrade keys determine practical control.
+
+Check who can propose, vote and execute, how quorum works and whether votes are token-weighted. A small group, multisig or foundation may control outcomes while thousands hold tokens.
+
+Treasuries face contract, signer and proposal risk. A vote can also be technically valid but legally unclear. Read the proposal, turnout, conflicts and execution path.
+
+**Worked example:** A proposal with 60% approval may have received votes from only 2% of total supply. “Approval among votes cast” is not broad participation.
+
+**Checklist before you act:**
+- Who can propose, vote and execute?
+- How concentrated is voting power?
+- Can admins override decisions?
+- What legal and treasury risks remain?
+
+**Practice exercise:** Read one governance proposal and summarise change, voters, quorum, execution, conflicts and downside if it passes.
+
+**Further reading:** [Ethereum.org: DAOs](https://ethereum.org/dao/)
+
+---
+
+## Lesson 38: What is a crypto bridge?
+URL: https://investingnoobs.com/article.html?id=l38
+
+A bridge moves or represents an asset between blockchain networks. It may lock assets on one chain and mint a representation on another, or rely on liquidity and messaging systems. It adds several failure points.
+
+Ask whether the destination token is native or wrapped, who controls locked collateral, how messages are verified and what happens when a chain pauses.
+
+A bridge can be secure yet expose users to a fake token, wrong network, insufficient liquidity or compromised front end. Verify route, addresses and representation, then test a small transfer.
+
+**Worked example:** On Chain B you may hold a wrapped representation, not the original asset on Chain A. If collateral cannot be unlocked, the wrapper can lose value.
+
+**Checklist before you act:**
+- What is locked, minted or transferred?
+- Who verifies the cross-chain message?
+- What if a signer or chain fails?
+- Is there exit liquidity?
+
+**Practice exercise:** Draw source asset, lock contract, validators, destination token and redemption path. Mark the single-point failures.
+
+**Further reading:** [Ethereum.org: Bridges](https://ethereum.org/bridges/)
+
+---
+
+## Lesson 39: What is a liquidity pool?
+URL: https://investingnoobs.com/article.html?id=l39
+
+A liquidity pool holds assets so an automated market maker can quote swaps. Liquidity providers earn fees or incentives, but face price divergence, slippage, smart-contract risk and difficult exits.
+
+In a constant-product pool, trader swaps change the asset balances. When prices diverge, arbitrageurs rebalance the pool and the provider can hold more of the weaker asset. This difference from holding both is commonly called impermanent loss.
+
+Fees may offset it, but only if volume and fee share are sufficient. Check reserves, volume, fees, contract, incentive emissions and withdrawal behaviour.
+
+**Worked example:** Providing equal ETH and stablecoin value can leave you with less ETH than simply holding both after ETH doubles. Fee income may or may not compensate.
+
+**Checklist before you act:**
+- What assets and formula are used?
+- How are fees shared?
+- What happens when prices diverge?
+- Can liquidity be withdrawn under stress?
+
+**Practice exercise:** Model a two-asset pool after a 2x price change. Compare liquidity provision with holding and list the contract and exit risks.
+
+**Further reading:** [Ethereum.org: DeFi](https://ethereum.org/defi/)
+
+---
+
+## Lesson 40: What is yield farming?
+URL: https://investingnoobs.com/article.html?id=l40
+
+Yield farming moves capital through DeFi strategies to earn fees, interest, token incentives or leverage. APY is not guaranteed and may hide dilution, price, liquidity, contract and counterparty risks.
+
+Ask where return comes from: user fees, borrower interest, new emissions, a temporary campaign or leverage. A high rate funded by new tokens can collapse when incentives end or the reward token falls.
+
+Compare net return after gas, slippage, platform fees, taxes and exit costs. If yield cannot be explained as cash flows and risks, it is not understood.
+
+**Worked example:** A 40% APY paid in a token that falls 50%, with 5% costs, can produce a negative euro result despite the headline rate.
+
+**Checklist before you act:**
+- What pays the yield?
+- Is it sustainable demand or emissions?
+- Which contracts and bridges are involved?
+- What happens when liquidity falls?
+
+**Practice exercise:** Rewrite one offer as a cash-flow statement: deposit, fees, rewards, price assumption, gas, exit and failure scenarios.
+
+**Further reading:** [Ethereum.org: DeFi](https://ethereum.org/use-cases/defi/)
+
+---
+
+## Lesson 41: What is a bull market?
+URL: https://investingnoobs.com/article.html?id=l41
+
+A bull market is a sustained period of rising prices and optimistic expectations. It can make weak decisions look smart because many assets rise together, encouraging excess exposure and certainty.
+
+Rising prices can reflect improved fundamentals, liquidity, short covering or speculation. They do not prove every project is sound. Bull markets also attract aggressive marketing and scams.
+
+Define allocation limits, rebalancing and profit or risk rules before excitement peaks. Treat unrealised gains as uncertain capital and avoid adding leverage because confidence feels high.
+
+**Worked example:** €1,000 growing to €1,800 and then falling 50% leaves €900. An exposure limit can prevent a gain from becoming a larger-than-original loss.
+
+**Checklist before you act:**
+- Has exposure exceeded the plan?
+- What evidence exists apart from momentum?
+- What after a 30% or 50% fall?
+- Am I using leverage because of emotion?
+
+**Practice exercise:** Write a bull-market policy: maximum allocation, leverage rule, rebalancing date, cash needs and stop-adding conditions.
+
+**Further reading:** [Investor.gov: Market basics](https://www.investor.gov/introduction-investing)
+
+---
+
+## Lesson 42: What is dollar-cost averaging?
+URL: https://investingnoobs.com/article.html?id=l42
+
+Dollar-cost averaging invests a fixed amount on a schedule instead of committing planned capital at once. It reduces pressure to choose one entry price, but it does not guarantee profit or outperform investing earlier in a rising market.
+
+A fixed euro contribution buys more units when price is lower and fewer when higher. The asset can still decline for a long time or become worthless, so DCA is a behaviour and cash-flow method, not a safety feature.
+
+Define schedule, fees, allocation limit, review date and stopping conditions. Do not use DCA to avoid admitting that the investment thesis changed.
+
+**Worked example:** €100 at prices €10, €5 and €20 buys 10, 20 and 5 units: 35 for €300, an average cost of about €8.57 before fees.
+
+**Checklist before you act:**
+- Why this asset and horizon?
+- What if the thesis changes?
+- Are fees small for each contribution?
+- Does the plan fit cash flow?
+
+**Practice exercise:** Build a 12-month DCA plan with amount, date, fees, allocation, review criteria and a rule for stopping contributions.
+
+**Further reading:** [Investor.gov: Saving and investing](https://www.investor.gov/introduction-investing)
+
+---
+
+## Lesson 43: What is a limit order?
+URL: https://investingnoobs.com/article.html?id=l43
+
+A limit order buys or sells only at a specified price or better. It controls price but not execution. A market order prioritises execution but can fill unexpectedly in a fast or thin market.
+
+A limit buy can remain unfilled or partially fill. Check time-in-force, post-only rules and whether it persists after a session. A stale order can execute after the original reason is gone, so cancel orders that no longer fit.
+
+A limit price does not remove asset risk: negative news can arrive immediately after the fill. Execution is always a trade-off between price control and certainty.
+
+**Worked example:** With a €20.10 sell price and €19.90 buy price, a €19.90 limit buy controls the maximum but may not fill; a market buy may fill at €20.10 or worse.
+
+**Checklist before you act:**
+- Do I value price control over speed?
+- What about gaps or partial fills?
+- When does the order expire?
+- Will the reason still exist later?
+
+**Practice exercise:** Use a simulated order book for market, limit and stop orders. Record spread, fill status, execution and new risks.
+
+**Further reading:** [FINRA: Order types](https://www.finra.org/investors/investing/investment-products/stocks/order-types)
+
+---
+
+## Lesson 44: What is technical analysis?
+URL: https://investingnoobs.com/article.html?id=l44
+
+Technical analysis uses historical price and volume to describe behaviour and build trade hypotheses. It can help plan entries and exits, but patterns are not laws and can fail when liquidity, news or regime changes.
+
+Start with one question: trend, range, volatility, liquidity or execution. Define indicators before looking at the result. A moving average or oscillator transforms past data; it does not create certainty about the future.
+
+Backtest with realistic spread, fees, slippage, missed fills and delisted assets. Avoid changing parameters until the historical result looks attractive; that is overfitting.
+
+**Worked example:** A breakout on low volume with a widening spread may be less actionable than a move supported by deep liquidity. The chart cannot guarantee execution.
+
+**Checklist before you act:**
+- What exact behaviour am I testing?
+- What data and sample are used?
+- Are costs and missed fills included?
+- When is the signal unreliable?
+
+**Practice exercise:** Write a chart rule with entry, exit, invalidation and no-trade conditions. Test it on data not used to create it.
+
+**Further reading:** [FINRA: Trading basics](https://www.finra.org/investors/investing/investment-products/stocks/order-types)
+
+---
+
+## Lesson 45: What is fundamental analysis?
+URL: https://investingnoobs.com/article.html?id=l45
+
+Fundamental analysis studies what supports an asset’s value: business cash flow, network activity, users, competition, incentives and risks. It is useful only when evidence and assumptions are explicit enough to challenge.
+
+For a company, study revenue quality, margins, cash flow, debt, management and valuation. For a protocol, study users, fees, security, treasury, token supply, governance and value capture.
+
+Separate data from forecasts. Address counts may include bots; high fees may be temporary. Compare periods and competitors and identify the assumption with the greatest impact.
+
+**Worked example:** A protocol with €1 million monthly fees is not automatically better than one with €100,000. Ask who receives fees, what costs create them and whether holders capture value.
+
+**Checklist before you act:**
+- What measurable activity supports value?
+- How durable are revenue or users?
+- Who captures value and bears risk?
+- Which assumption matters most?
+
+**Practice exercise:** Write a one-page memo with facts, assumptions, valuation range, catalysts, risks, disconfirming evidence and review date.
+
+**Further reading:** [Investor.gov: Investing basics](https://www.investor.gov/introduction-investing)
+
+---
+
+## Lesson 46: What is portfolio rebalancing?
+URL: https://investingnoobs.com/article.html?id=l46
+
+Rebalancing restores a portfolio toward target allocations after prices or contributions change. It keeps risk connected to the plan, but creates costs, taxes and the possibility of selling a winner.
+
+Choose target weights, review schedule and tolerance bands before the next market move. Calendar and threshold rules can both work; new contributions may rebalance without selling.
+
+First check whether the target still fits the goal and loss capacity. Rebalancing an unsuitable allocation only preserves an unsuitable plan. Include spreads, commissions, tax and liquidity.
+
+**Worked example:** A 60/40 portfolio becoming 75/25 after a rally can be restored by selling the overweight side or directing new contributions to the underweight side.
+
+**Checklist before you act:**
+- What are targets and bands?
+- When will I review?
+- Can contributions reduce trading?
+- Does the target still fit?
+
+**Practice exercise:** Create a three-asset rule and test 20% rise and 30% fall scenarios including fees and the local tax question.
+
+**Further reading:** [Investor.gov: Rebalancing](https://www.investor.gov/introduction-investing/getting-started/asset-allocation)
+
+---
+
+## Lesson 47: How do crypto taxes work?
+URL: https://investingnoobs.com/article.html?id=l47
+
+Crypto tax treatment depends on country, residence, asset, transaction and activity. Buying, selling, swapping, staking, mining, receiving payment and moving between your own wallets may be treated differently.
+
+Keep date, asset, quantity, fiat value, fees, wallet or exchange, transaction type and transaction ID. Export statements regularly because platforms may not retain every record. Label transfers between your own wallets clearly.
+
+Rules and reporting duties change. Use your tax authority’s guidance and a qualified professional for frequent trading, DeFi, rewards or cross-border activity. This article cannot give a personal tax answer.
+
+**Worked example:** A token-to-token swap may be treated as a disposal in some jurisdictions even when no euros are withdrawn. Without acquisition cost and timestamp, later calculations become guesswork.
+
+**Checklist before you act:**
+- Which country’s rules apply?
+- Do I have records from every wallet and provider?
+- Have I separated trades, transfers and rewards?
+- What changed this tax year?
+
+**Practice exercise:** Create one row per transaction with the fields above and reconcile it to provider statements before filing or asking a professional.
+
+**Further reading:** [Official crypto tax guidance example; check your own authority](https://www.gov.uk/government/collections/cryptoassets-tax-for-businesses)
+
+---
+
+## Lesson 48: How to avoid crypto phishing scams
+URL: https://investingnoobs.com/article.html?id=l48
+
+Phishing copies exchanges, wallets or support teams to steal credentials, recovery phrases or transaction approvals. The strongest defence is verifying the route before clicking and limiting what a compromised account can do.
+
+Avoid links from unsolicited messages, search ads, fake support accounts and urgent pop-ups. Type the domain or use a trusted bookmark, inspect spelling and check that the action matches your intent. Legitimate support does not request a seed phrase.
+
+Use passkeys or strong two-factor authentication, separate email security, withdrawal alerts and allowlists. If a wallet is compromised, stop signing, preserve evidence and move assets from a clean device if possible.
+
+**Worked example:** A fake site can show the correct logo. Visual similarity is not verification; the safe test is a trusted route and an independent confirmation of the request.
+
+**Checklist before you act:**
+- Did I use a trusted bookmark or typed domain?
+- Is the sender asking for a secret or urgency?
+- What will this signature approve?
+- What is my response plan after exposure?
+
+**Practice exercise:** Inspect three messages without clicking. Identify sender, domain, request, urgency and independent verification. Report or delete failures.
+
+**Further reading:** [FTC: Crypto scam advice](https://consumer.ftc.gov/articles/what-know-about-cryptocurrency-scams)
+
+---
+
+## Lesson 49: What is a rug pull?
+URL: https://investingnoobs.com/article.html?id=l49
+
+A rug pull is an exit scam in which operators remove value after attracting users, often by withdrawing liquidity, selling concentrated holdings or exploiting hidden permissions. Not every failure is a rug pull, but warning signs can be investigated.
+
+Check holder concentration, deployer and admin permissions, liquidity ownership and lock terms, mint or blacklist functions, upgradeability, team identity and verified code. An audit does not prove honesty or economics.
+
+Test selling a small amount and measure slippage. Be cautious with unrealistic returns, urgency and communities that discourage questions. Locked liquidity does not prevent insider selling or another contract exploit.
+
+**Worked example:** Thousands of holders do not prove broad ownership. A linked group controlling most supply can sell into shallow liquidity and leave others unable to exit near the displayed price.
+
+**Checklist before you act:**
+- Who controls contracts and largest balances?
+- Can liquidity be removed or supply increased?
+- Can I sell a small test amount?
+- Are team and claims independently verifiable?
+
+**Practice exercise:** Create a risk report for one project: ownership, liquidity, permissions, unlocks, team, sell test, promises and unknowns.
+
+**Further reading:** [FTC: Crypto investment scams](https://consumer.ftc.gov/articles/what-know-about-cryptocurrency-scams)
+
+---
+
+## Lesson 50: How to build a long-term investing routine
+URL: https://investingnoobs.com/article.html?id=l50
+
+A durable investing routine is built around goals, time horizon, savings, allocation, research, custody, records and scheduled reviews. It replaces constant prediction with a process that makes risk visible and decisions repeatable.
+
+Write the goal, amount, date and flexibility first. Choose an allocation you could hold through a difficult market. Automate only what you understand and can stop when circumstances change.
+
+Use a research checklist: what do I own, why might it have value, what can go wrong, what does it cost, who holds it and when will I review it? Compare results with your original reasoning, not only the latest price.
+
+**Worked example:** A monthly routine might include one contribution, a short fee and allocation review, a quarterly security check and an annual goal review. The calendar matters less than consistency.
+
+**Checklist before you act:**
+- What goal, amount and date matter?
+- What loss could I tolerate?
+- Are custody and records safe?
+- What triggers a review instead of panic?
+
+**Practice exercise:** Write a one-page investment policy with goals, horizon, savings, allocation, concentration limit, custody, review dates and stop conditions.
+
+**Further reading:** [Investor.gov: Beginner’s guide to asset allocation](https://www.investor.gov/additional-resources/general-resources/publications-research/info-sheets/beginners-guide-asset)
+
+---
+
+
+## Other InvestingNoobs resources
+
+- [Live market tracker](https://investingnoobs.com/): crypto, stocks and commodity reference prices.
+- [Course index / progress tracker](https://investingnoobs.com/blog.html)
+- [InvestingNoobs Tycoon simulator game](https://investingnoobs.com/game.html): learn investing concepts by playing through career, income and risk decisions.
+- [50-question final assessment](https://investingnoobs.com/test.html): one practical question per lesson, 80% required to pass.
+- [Investor Passport](https://investingnoobs.com/passport.html): a personalised three-step route through the course and tools.
+- [Research Room](https://investingnoobs.com/research.html): build an evidence-based thesis for a crypto, stock or commodity.
+- [Decision Lab](https://investingnoobs.com/decisionlab.html): practise five risk-management decisions with transparent feedback.
+- [Portfolio Blueprint](https://investingnoobs.com/portfolio.html): turn an allocation idea into an explainable, risk-first practice blueprint.
+- [Crypto FAQ](https://investingnoobs.com/crypto-faq.html): 25 beginner questions answered directly.
+- [Crypto glossary](https://investingnoobs.com/crypto-glossary.html): 40 essential terms in plain English.
+- [How to start investing in cryptocurrency](https://investingnoobs.com/crypto-investing-guide.html)
+- [Bitcoin for beginners](https://investingnoobs.com/bitcoin-for-beginners.html)
+- [Editorial policy](https://investingnoobs.com/editorial-policy.html)
+- [Privacy policy](https://investingnoobs.com/privacidad.html)
+
+InvestingNoobs is not a financial adviser. Crypto, stocks, commodities, derivatives and prop-firm evaluations involve risk, including the loss of capital. Nothing on this site is personal financial advice or a guarantee of performance.

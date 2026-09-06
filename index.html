@@ -14,18 +14,55 @@
 <meta property="og:title" content="InvestingNoobs | Live Market Tracker, Investing Course &amp; Risk Tools">
 <meta property="og:description" content="A free market tracker, practical investing course and risk-first tools for crypto, stocks and commodities.">
 <meta property="og:url" content="https://investingnoobs.com/">
+<meta property="og:image" content="https://investingnoobs.com/logo.svg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="InvestingNoobs | Live Market Tracker, Course &amp; Risk Tools">
 <meta name="twitter:description" content="Track crypto, stocks and commodities, then learn investing, trading and risk management through practical tools and lessons.">
+<meta name="twitter:image" content="https://investingnoobs.com/logo.svg">
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
-  "@type":"WebSite",
-  "name":"InvestingNoobs",
-  "url":"https://investingnoobs.com/",
-  "description":"A free market tracker, beginner investing course and risk-first decision tools for crypto, stocks and commodities.",
-  "inLanguage":"en",
-  "publisher":{"@type":"Organization","name":"InvestingNoobs","url":"https://investingnoobs.com/"}
+  "@graph":[
+    {
+      "@type":"WebSite",
+      "@id":"https://investingnoobs.com/#website",
+      "name":"InvestingNoobs",
+      "url":"https://investingnoobs.com/",
+      "description":"A free market tracker, beginner investing course and risk-first decision tools for crypto, stocks and commodities.",
+      "inLanguage":"en",
+      "publisher":{"@id":"https://investingnoobs.com/#organization"}
+    },
+    {
+      "@type":"Organization",
+      "@id":"https://investingnoobs.com/#organization",
+      "name":"InvestingNoobs",
+      "url":"https://investingnoobs.com/",
+      "logo":{"@type":"ImageObject","url":"https://investingnoobs.com/logo.svg"},
+      "description":"InvestingNoobs is a free, independent education project offering a live crypto, stock and commodity tracker plus a 50-lesson beginner investing and trading course.",
+      "sameAs":[]
+    },
+    {
+      "@type":"WebApplication",
+      "@id":"https://investingnoobs.com/#tracker",
+      "name":"InvestingNoobs Market Tracker",
+      "url":"https://investingnoobs.com/",
+      "applicationCategory":"FinanceApplication",
+      "operatingSystem":"Any (web browser)",
+      "description":"A free, real-time tracker for cryptocurrency, stock and commodity reference prices, aimed at beginners.",
+      "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+      "publisher":{"@id":"https://investingnoobs.com/#organization"}
+    },
+    {
+      "@type":"Course",
+      "@id":"https://investingnoobs.com/#course",
+      "name":"InvestingNoobs Academy",
+      "description":"A free 50-lesson beginner course covering cryptocurrency, stocks, commodities, trading, risk management and portfolio construction.",
+      "provider":{"@id":"https://investingnoobs.com/#organization"},
+      "url":"https://investingnoobs.com/blog.html",
+      "isAccessibleForFree":true,
+      "hasCourseInstance":{"@type":"CourseInstance","courseMode":"online","courseWorkload":"PT5H"}
+    }
+  ]
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
