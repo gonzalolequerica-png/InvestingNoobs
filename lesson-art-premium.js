@@ -59,6 +59,22 @@
   };
 
   const key=motifs[item.kind]?item.kind:(['chart','market','order','fundamental'].includes(item.kind)?'chart':['risk','drawdown','security','wallet'].includes(item.kind)?'security':['defi','dao','bridge','liquidity','yield'].includes(item.kind)?'defi':['plan','dca','rebalance','tax','fees'].includes(item.kind)?'plan':'compareDefault');
+  const hexToRgb=h=>{h=String(h).replace('#','');if(h.length===3)h=h.split('').map(c=>c+c).join('');const v=parseInt(h,16)||0xeabd64;return [v>>16&255,v>>8&255,v&255]};
+  const shade=(rgb,f)=>'rgb('+rgb.map(c=>Math.max(0,Math.min(255,Math.round(c*f)))).join(',')+')';
+  const gemSVG=(cx,cy,r,hex,seed)=>{
+    const rgb=hexToRgb(hex),nf=9,outer=[],inner=[];
+    for(let i=0;i<nf;i++){const a=(i/nf)*Math.PI*2;const rr=r*(0.9+0.1*Math.sin(i*1.7+seed));outer.push([cx+rr*Math.cos(a),cy+rr*Math.sin(a)])}
+    const innerR=r*0.4;
+    for(let i=0;i<nf;i++){const a=((i+0.5)/nf)*Math.PI*2;inner.push([cx+innerR*Math.cos(a),cy+innerR*Math.sin(a)])}
+    let s='<g opacity="0.5">';
+    for(let i=0;i<nf;i++){const p2=inner[i],p3=inner[(i+1)%nf],b=0.5+0.45*Math.abs(Math.sin(i*2.3+seed));s+='<polygon points="'+cx+','+cy+' '+p2[0]+','+p2[1]+' '+p3[0]+','+p3[1]+'" fill="'+shade(rgb,b)+'"/>'}
+    for(let i=0;i<nf;i++){const p1=inner[i],p2=outer[i],p3=outer[(i+1)%nf],p4=inner[(i+1)%nf],b1=0.7+0.5*Math.abs(Math.sin(i*1.9+seed+1)),b2=0.45+0.4*Math.abs(Math.cos(i*2.1+seed));s+='<polygon points="'+p1[0]+','+p1[1]+' '+p2[0]+','+p2[1]+' '+p3[0]+','+p3[1]+'" fill="'+shade(rgb,b1)+'"/>';s+='<polygon points="'+p1[0]+','+p1[1]+' '+p3[0]+','+p3[1]+' '+p4[0]+','+p4[1]+'" fill="'+shade(rgb,b2)+'"/>'}
+    s+='</g><g opacity="0.55" stroke="'+shade(rgb,1.6)+'" stroke-width="1">';
+    for(let i=0;i<nf;i++){s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+inner[i][0]+'" y2="'+inner[i][1]+'"/><line x1="'+inner[i][0]+'" y1="'+inner[i][1]+'" x2="'+outer[i][0]+'" y2="'+outer[i][1]+'"/><line x1="'+outer[i][0]+'" y1="'+outer[i][1]+'" x2="'+outer[(i+1)%nf][0]+'" y2="'+outer[(i+1)%nf][1]+'"/>'}
+    s+='</g><ellipse cx="'+(cx-r*0.32)+'" cy="'+(cy-r*0.35)+'" rx="'+(r*0.14)+'" ry="'+(r*0.42)+'" fill="#ffffff" opacity="0.16" transform="rotate(-35 '+(cx-r*0.32)+' '+(cy-r*0.35)+')"/>';
+    return s;
+  };
+  const gem=gemSVG(600,190,172,accent,Number(id.slice(1))||1);
   const number=String(id.slice(1)).padStart(2,'0');
   const title=heading.textContent.trim();
 
@@ -74,6 +90,7 @@
   svg.appendChild(make('circle',{cx:'600',cy:'180',r:'245',fill:'url(#art-glow-'+id+')'}));
   svg.appendChild(make('path',{d:'M92 304H1108',stroke:accent,'stroke-opacity':'.2','stroke-width':'2'}));
   svg.appendChild(make('text',{x:'92',y:'72',fill:accent,'font-family':"'IBM Plex Mono',monospace",'font-size':'12','letter-spacing':'3'},'INVESTINGNOOBS  /  LESSON '+number));
+  svg.insertAdjacentHTML('beforeend','<g class="art-gem" aria-hidden="true">'+gem+'</g>');
   svg.insertAdjacentHTML('beforeend','<g class="art-minimal-motif" aria-hidden="true">'+motifs[key]+'</g>');
   const cap=figure.querySelector('figcaption');if(cap)cap.textContent=item.label+' · topic illustration';
 })();
