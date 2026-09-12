@@ -128,6 +128,8 @@
   .skel { height: 14px; background: #141e1c; border-radius: 4px; }
   .coin-row { display: flex; align-items: center; gap: 10px; }
   .coin-img { border-radius: 50%; }
+  .stock-img { width: 22px; height: 22px; border-radius: 6px; background: #f4f6fa; padding: 2px; box-sizing: border-box; object-fit: contain; flex: none; }
+  .stock-mono { width: 22px; height: 22px; border-radius: 6px; background: #1d2637; color: #aab6c8; font: 600 11px/22px 'IBM Plex Mono', monospace; text-align: center; display: inline-block; flex: none; }
   .coin-name { font-weight: 600; font-size: 14px; }
   .coin-sym { font-size: 11px; color: #8b93a0; text-transform: uppercase; }
   .stat-cell { background: #10141a; padding: 14px 18px; }
@@ -1057,10 +1059,13 @@
         : '';
       const isStock = activeTab === 'stocks';
       const stockDomain = isStock ? STOCK_DOMAINS[coin.symbol] : null;
+      // Logo de cada empresa. Clearbit, que se usaba antes, dejó de funcionar y todas las
+      // acciones acababan con el mismo icono; ahora se usa el servicio de iconos de Google
+      // y, si una empresa no tiene, se muestra la inicial en un cuadrado.
       const iconHtml = hasIconImage
         ? '<img class="coin-img" src="' + coin.image + '" width="22" height="22" alt="" />'
         : stockDomain
-          ? '<img class="coin-img" src="https://logo.clearbit.com/' + stockDomain + '?size=44" width="22" height="22" alt="" onerror="this.outerHTML=\'<span style=&quot;font-size:20px;width:22px;text-align:center;display:inline-block;&quot;>' + coin.image + '</span>\'" />'
+          ? '<img class="stock-img" src="https://www.google.com/s2/favicons?domain=' + stockDomain + '&sz=64" width="22" height="22" alt="" loading="lazy" onerror="this.outerHTML=\'<span class=&quot;stock-mono&quot;>' + coin.symbol.charAt(0) + '</span>\'" />'
           : '<span style="font-size:20px;width:22px;text-align:center;display:inline-block;">' + coin.image + '</span>';
       const rankCell = isCrypto ? coin.market_cap_rank : '—';
       const capCell = isCrypto ? fmtBig(coin.market_cap) : '—';
