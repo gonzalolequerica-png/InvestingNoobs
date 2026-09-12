@@ -1,0 +1,21 @@
+{
+  "name": "Investing Noobs Tycoon",
+  "short_name": "Noobs Tycoon",
+  "description": "Empieza con 500 dolares y construye un imperio: opera en los mercados, monta negocios y aprende como funciona el dinero de verdad.",
+  "start_url": "/game.html?pwa=1",
+  "id": "/game.html",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "fullscreen"],
+  "background_color": "#0b0f14",
+  "theme_color": "#0b0f14",
+  "orientation": "portrait",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": ["games", "finance", "education"],
+  "icons": [
+    { "src": "game-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "game-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "game-icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Investing Noobs Tycoon</title>
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="game-manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="theme-color" content="#0b0f14">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1002,6 +1002,7 @@ button:active{transform:translateY(1px);}
   <div class="menuTicker">
     <div class="menuTickerInner" id="menuTicker"></div>
   </div>
+  <button id="installBtn" hidden onclick="event.preventDefault();event.stopImmediatePropagation();promptInstall();return false" style="position:relative;z-index:5;margin-top:10px;margin-right:6px;padding:9px 15px;border-radius:9px;border:1px solid var(--gold);background:rgba(240,192,64,.14);color:var(--gold);cursor:pointer;font-weight:700">📲 Instalar</button>
   <button id="menuMusicBtn" onclick="event.preventDefault();event.stopImmediatePropagation();toggleMenuMusic();return false" style="position:relative;z-index:5;margin-top:10px;padding:9px 15px;border-radius:9px;border:1px solid var(--line);background:rgba(17,26,40,.86);color:var(--text);cursor:pointer;font-weight:700">🔊 Música: activada</button>
 </div>
 
@@ -8045,6 +8046,68 @@ window.TycoonCareerBridge={
 addEventListener('load',()=>{const idle=window.requestIdleCallback||(f=>setTimeout(f,1200));
   idle(()=>['scene-intro-gotera.webp','scene-room-1.webp','scene-room-2.webp','scene-room-3.webp','scene-room-4.webp']
     .forEach(src=>{const i=new Image();i.decoding='async';i.src=src;}));});
+</script>
+
+<script id="tycoon-pwa">
+/* Instalación como app y funcionamiento sin conexión. */
+(function(){
+  function idioma(){ try { return (window.state && state.language) || localStorage.getItem('ct_language_pref') || 'es'; } catch(e) { return 'es'; } }
+  function t(es,en,zh){ var l=idioma(); return l==='en'?en:(l==='zh'?zh:es); }
+  function aviso(msg){ if (typeof showToast === 'function') showToast(msg); else alert(msg); }
+  var pendiente = null;
+  var btn = document.getElementById('installBtn');
+  function mostrarBoton(texto){ if(!btn) return; btn.textContent = texto; btn.hidden = false; }
+
+  var yaInstalado = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+  var esIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    pendiente = e;
+    mostrarBoton(t('📲 Instalar el juego','📲 Install the game','📲 安装游戏'));
+  });
+
+  window.promptInstall = function(){
+    if (pendiente) {
+      pendiente.prompt();
+      pendiente.userChoice.then(function(res){
+        pendiente = null;
+        if (res && res.outcome === 'accepted' && btn) btn.hidden = true;
+      });
+      return;
+    }
+    aviso(t('En iPhone: toca Compartir y luego "Añadir a pantalla de inicio".',
+            'On iPhone: tap Share, then "Add to Home Screen".',
+            '在 iPhone 上：点击分享，然后选择"添加到主屏幕"。'));
+  };
+
+  window.addEventListener('appinstalled', function(){
+    if (btn) btn.hidden = true;
+    aviso(t('✅ Juego instalado. Ya puedes abrirlo desde tu pantalla de inicio.',
+            '✅ Game installed. You can now open it from your home screen.',
+            '✅ 游戏已安装，现在可以从主屏幕打开。'));
+  });
+
+  if (esIOS && !yaInstalado) mostrarBoton(t('📲 Cómo instalarlo','📲 How to install','📲 如何安装'));
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('game-sw.js').then(function(reg){
+        reg.addEventListener('updatefound', function(){
+          var nuevo = reg.installing;
+          if (!nuevo) return;
+          nuevo.addEventListener('statechange', function(){
+            if (nuevo.state === 'installed' && navigator.serviceWorker.controller) {
+              aviso(t('🔄 Hay una versión nueva. Recarga para actualizarla.',
+                      '🔄 A new version is ready. Reload to update.',
+                      '🔄 有新版本，请重新载入以更新。'));
+            }
+          });
+        });
+      }).catch(function(){});
+    });
+  }
+})();
 </script>
 </body>
 </html>
