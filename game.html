@@ -8053,19 +8053,71 @@ addEventListener('load',()=>{const idle=window.requestIdleCallback||(f=>setTimeo
 (function(){
   function idioma(){ try { return (window.state && state.language) || localStorage.getItem('ct_language_pref') || 'es'; } catch(e) { return 'es'; } }
   function t(es,en,zh){ var l=idioma(); return l==='en'?en:(l==='zh'?zh:es); }
-  function aviso(msg){ if (typeof showToast === 'function') showToast(msg); else alert(msg); }
   var pendiente = null;
   var btn = document.getElementById('installBtn');
-  function mostrarBoton(texto){ if(!btn) return; btn.textContent = texto; btn.hidden = false; }
 
   var yaInstalado = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
-  var esIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  var ua = navigator.userAgent || '';
+  var tactil = (navigator.maxTouchPoints || 0) > 1;
+  var esIOS = /iphone|ipad|ipod/i.test(ua) || (/Macintosh/.test(ua) && tactil); // iPadOS se hace pasar por Mac
+  var esAndroid = /android/i.test(ua);
+  var esFirefox = /firefox|fxios/i.test(ua);
+  var esSafari = /safari/i.test(ua) && !/chrome|crios|android/i.test(ua);
+
+  // El botón se ve siempre (salvo que ya esté instalado): si el navegador no ofrece
+  // el aviso de instalación, al tocarlo se explican los pasos a mano.
+  if (btn && !yaInstalado) {
+    btn.textContent = t('📲 Instalar el juego','📲 Install the game','📲 安装游戏');
+    btn.hidden = false;
+  }
 
   window.addEventListener('beforeinstallprompt', function(e){
     e.preventDefault();
     pendiente = e;
-    mostrarBoton(t('📲 Instalar el juego','📲 Install the game','📲 安装游戏'));
+    if (btn && !yaInstalado) { btn.textContent = t('📲 Instalar el juego','📲 Install the game','📲 安装游戏'); btn.hidden = false; }
   });
+
+  function pasos(){
+    if (esIOS) {
+      return [t('Abre esta página en Safari (en iPhone y iPad solo funciona desde ahí).','Open this page in Safari (on iPhone and iPad it only works there).','请在 Safari 中打开此页面（iPhone 和 iPad 只能通过 Safari 安装）。'),
+              t('Toca el botón Compartir, el cuadrado con la flecha hacia arriba.','Tap the Share button, the square with an arrow pointing up.','点击分享按钮，即带向上箭头的方块。'),
+              t('Baja y elige "Añadir a pantalla de inicio".','Scroll down and choose "Add to Home Screen".','向下滑动，选择"添加到主屏幕"。'),
+              t('Confirma con "Añadir". El juego aparece como una app más.','Confirm with "Add". The game shows up like any other app.','点击"添加"确认。游戏会像普通应用一样出现。')];
+    }
+    if (esAndroid) {
+      if (esFirefox) return [t('Toca el menú de Firefox, los tres puntos.','Open the Firefox menu, the three dots.','点击 Firefox 菜单（三个点）。'),
+                             t('Elige "Instalar" o "Añadir a la pantalla de inicio".','Choose "Install" or "Add to Home screen".','选择"安装"或"添加到主屏幕"。')];
+      return [t('Toca el menú del navegador, los tres puntos de arriba a la derecha.','Open the browser menu, the three dots at the top right.','点击浏览器菜单，即右上角的三个点。'),
+              t('Elige "Instalar aplicación" o "Añadir a pantalla de inicio".','Choose "Install app" or "Add to Home screen".','选择"安装应用"或"添加到主屏幕"。'),
+              t('Confirma y listo: el juego se abre solo, sin barra del navegador.','Confirm and that is it: the game opens on its own, with no browser bar.','确认即可：游戏将独立打开，没有浏览器地址栏。')];
+    }
+    if (esSafari) return [t('En Safari de Mac: menú Archivo → "Añadir al Dock".','In Safari on Mac: File menu → "Add to Dock".','在 Mac 的 Safari 中：文件菜单 →"添加到程序坞"。')];
+    return [t('En Chrome o Edge: pulsa el icono de instalar de la barra de direcciones, a la derecha.','In Chrome or Edge: click the install icon on the right of the address bar.','在 Chrome 或 Edge 中：点击地址栏右侧的安装图标。'),
+            t('O abre el menú del navegador y elige "Instalar Investing Noobs Tycoon".','Or open the browser menu and choose "Install Investing Noobs Tycoon".','或打开浏览器菜单，选择"安装 Investing Noobs Tycoon"。')];
+  }
+
+  function mostrarPasos(){
+    var previo = document.getElementById('installHelp');
+    if (previo) previo.remove();
+    var lista = pasos().map(function(p,i){
+      return '<li style="margin:0 0 9px;padding-left:4px">' + p + '</li>';
+    }).join('');
+    var caja = document.createElement('div');
+    caja.id = 'installHelp';
+    caja.style.cssText = 'position:fixed;inset:0;z-index:960;background:rgba(6,10,18,.92);display:flex;align-items:center;justify-content:center;padding:20px';
+    caja.innerHTML =
+      '<div style="max-width:340px;width:100%;background:var(--panel,#111a28);border:1px solid var(--gold,#f0c040);border-radius:14px;padding:20px 18px;text-align:left">'
+      + '<div style="font-size:34px;text-align:center;line-height:1">📲</div>'
+      + '<h3 style="margin:8px 0 4px;text-align:center;font-size:16px;color:var(--gold,#f0c040)">' + t('Instalar el juego','Install the game','安装游戏') + '</h3>'
+      + '<p style="margin:0 0 12px;text-align:center;font-size:11.5px;color:var(--muted,#8fa0b6)">' + t('Se guarda en tu móvil y se puede jugar sin conexión.','It lives on your phone and works offline.','安装到手机后可离线游玩。') + '</p>'
+      + '<ol style="margin:0;padding-left:18px;font-size:12.5px;line-height:1.5;color:var(--text,#e6ebf2)">' + lista + '</ol>'
+      + '<button id="installHelpClose" style="margin-top:16px;width:100%;padding:11px;border:none;border-radius:10px;background:linear-gradient(90deg,#f0c040,#e0a020);color:#10151f;font-weight:700;cursor:pointer">' + t('Entendido','Got it','知道了') + '</button>'
+      + '</div>';
+    document.body.appendChild(caja);
+    var cerrar = function(){ caja.remove(); };
+    caja.addEventListener('click', function(e){ if (e.target === caja) cerrar(); });
+    document.getElementById('installHelpClose').addEventListener('click', cerrar);
+  }
 
   window.promptInstall = function(){
     if (pendiente) {
@@ -8073,22 +8125,19 @@ addEventListener('load',()=>{const idle=window.requestIdleCallback||(f=>setTimeo
       pendiente.userChoice.then(function(res){
         pendiente = null;
         if (res && res.outcome === 'accepted' && btn) btn.hidden = true;
+        else mostrarPasos(); // si lo rechaza sin querer, que sepa cómo volver a hacerlo
       });
       return;
     }
-    aviso(t('En iPhone: toca Compartir y luego "Añadir a pantalla de inicio".',
-            'On iPhone: tap Share, then "Add to Home Screen".',
-            '在 iPhone 上：点击分享，然后选择"添加到主屏幕"。'));
+    mostrarPasos();
   };
 
   window.addEventListener('appinstalled', function(){
     if (btn) btn.hidden = true;
-    aviso(t('✅ Juego instalado. Ya puedes abrirlo desde tu pantalla de inicio.',
-            '✅ Game installed. You can now open it from your home screen.',
-            '✅ 游戏已安装，现在可以从主屏幕打开。'));
+    var ayuda = document.getElementById('installHelp');
+    if (ayuda) ayuda.remove();
+    if (typeof showToast === 'function') showToast(t('✅ Juego instalado. Ábrelo desde tu pantalla de inicio.','✅ Game installed. Open it from your home screen.','✅ 游戏已安装，可从主屏幕打开。'));
   });
-
-  if (esIOS && !yaInstalado) mostrarBoton(t('📲 Cómo instalarlo','📲 How to install','📲 如何安装'));
 
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function(){
@@ -8097,10 +8146,8 @@ addEventListener('load',()=>{const idle=window.requestIdleCallback||(f=>setTimeo
           var nuevo = reg.installing;
           if (!nuevo) return;
           nuevo.addEventListener('statechange', function(){
-            if (nuevo.state === 'installed' && navigator.serviceWorker.controller) {
-              aviso(t('🔄 Hay una versión nueva. Recarga para actualizarla.',
-                      '🔄 A new version is ready. Reload to update.',
-                      '🔄 有新版本，请重新载入以更新。'));
+            if (nuevo.state === 'installed' && navigator.serviceWorker.controller && typeof showToast === 'function') {
+              showToast(t('🔄 Hay una versión nueva. Recarga para actualizarla.','🔄 A new version is ready. Reload to update.','🔄 有新版本，请重新载入以更新。'));
             }
           });
         });
