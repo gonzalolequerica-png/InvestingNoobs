@@ -1059,13 +1059,14 @@
         : '';
       const isStock = activeTab === 'stocks';
       const stockDomain = isStock ? STOCK_DOMAINS[coin.symbol] : null;
-      // Logo de cada empresa. Clearbit, que se usaba antes, dejó de funcionar y todas las
+      // Logo de cada empresa (sin carga diferida: la tabla se repinta a menudo y los logos
+      // no llegaban a cargarse). Clearbit, que se usaba antes, dejó de funcionar y todas las
       // acciones acababan con el mismo icono; ahora se usa el servicio de iconos de Google
       // y, si una empresa no tiene, se muestra la inicial en un cuadrado.
       const iconHtml = hasIconImage
         ? '<img class="coin-img" src="' + coin.image + '" width="22" height="22" alt="" />'
         : stockDomain
-          ? '<img class="stock-img" src="https://www.google.com/s2/favicons?domain=' + stockDomain + '&sz=64" width="22" height="22" alt="" loading="lazy" onerror="this.outerHTML=\'<span class=&quot;stock-mono&quot;>' + coin.symbol.charAt(0) + '</span>\'" />'
+          ? '<img class="stock-img" src="https://www.google.com/s2/favicons?domain=' + stockDomain + '&sz=64" width="22" height="22" alt="" onerror="this.outerHTML=\'<span class=&quot;stock-mono&quot;>' + coin.symbol.charAt(0) + '</span>\'" />'
           : '<span style="font-size:20px;width:22px;text-align:center;display:inline-block;">' + coin.image + '</span>';
       const rankCell = isCrypto ? coin.market_cap_rank : '—';
       const capCell = isCrypto ? fmtBig(coin.market_cap) : '—';
