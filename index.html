@@ -1242,13 +1242,14 @@
   }
 
   function buildStocksFromCache() {
-    stocks = STOCK_META.map(m => {
+    stocks = STOCK_META.map((m, idx) => {
       const q = stockQuotes[m.symbol];
       return {
         id: m.symbol,
         symbol: m.symbol,
         name: m.name,
         image: '📈',
+        order: idx, // orden de la lista: las mayores primero, que son las que se cargan antes
         current_price: q ? q.price : null, // sin dato en vivo no inventamos un precio
         live: !!q,
         price_change_percentage_1h_in_currency: null,
@@ -1339,7 +1340,7 @@
       activeTab = btn.dataset.tab;
       document.querySelectorAll('.tab-btn:not(.tab-link-external)').forEach(b => { b.classList.toggle('tab-active', b === btn); b.setAttribute('aria-selected', b === btn ? 'true' : 'false'); });
 
-      sortKey = activeTab === 'crypto' ? 'market_cap_rank' : 'current_price';
+      sortKey = activeTab === 'crypto' ? 'market_cap_rank' : (activeTab === 'stocks' ? 'order' : 'current_price');
       sortDir = 'asc';
       search = '';
       searchInput.value = '';
