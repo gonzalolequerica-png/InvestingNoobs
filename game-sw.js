@@ -9,7 +9,7 @@
   - Imagenes, sonidos y scripts del juego: primero lo guardado y se actualiza por detras.
   - Todo lo demas: no se intercepta.
 */
-const VERSION = 'tycoon-v4';
+const VERSION = 'tycoon-v5';
 const CORE_CACHE = VERSION + '-core';
 const RUN_CACHE = VERSION + '-run';
 const RUN_MAX = 140; // tope de archivos guardados sobre la marcha
@@ -18,11 +18,11 @@ const RUN_MAX = 140; // tope de archivos guardados sobre la marcha
 const CORE = [
   'game.html',
   'game-manifest.json',
-  'game-career.js',
-  'game-career.css',
-  'game-finance.js',
-  'game-room-3d.js',
-  'game-room-3d.css',
+  'game-career.js?v=20260906-1',
+  'game-career.css?v=20260906-1',
+  'game-finance.js?v=20260906-1',
+  'game-room-3d.js?v=20260912-1',
+  'game-room-3d.css?v=20260912-1',
   'vendor/three/three.core.min.js',
   'vendor/three/three.module.min.js',
   'game-icon-192.png',
@@ -68,6 +68,7 @@ self.addEventListener('install', event => {
     await Promise.all(CORE.map(async ruta => {
       try { await cache.add(new Request(ruta, { cache: 'reload' })); } catch (e) {}
     }));
+    await self.skipWaiting(); // la version nueva manda ya, sin esperar a que se cierren las pestanas
   })());
 });
 
@@ -118,8 +119,10 @@ self.addEventListener('fetch', event => {
   }
 
   // Archivos del juego: lo guardado va primero y se refresca por detras.
+  // Se respeta el ?v= de la direccion: si el archivo cambia de version, se pide de nuevo
+  // en lugar de servir la copia antigua.
   event.respondWith((async () => {
-    const guardado = await caches.match(req, { ignoreSearch: true });
+    const guardado = await caches.match(req);
     const red = fetch(req).then(async res => {
       if (res && res.ok) {
         const cache = await caches.open(RUN_CACHE);
@@ -128,6 +131,10 @@ self.addEventListener('fetch', event => {
       }
       return res;
     }).catch(() => null);
-    return guardado || (await red) || Response.error();
+    if (guardado) return guardado;
+    const respuesta = await red;
+    if (respuesta) return respuesta;
+    // Sin conexion: sirve cualquier version guardada del mismo archivo
+    return (await caches.match(req, { ignoreSearch: true })) || Response.error();
   })());
 });
