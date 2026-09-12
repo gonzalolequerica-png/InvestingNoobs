@@ -1139,6 +1139,7 @@ button:active{transform:translateY(1px);}
       <div class="levelBarTop"><span id="levelLabel">⭐ Nivel 1</span><span id="levelNextLabel" style="color:var(--muted)"></span></div>
       <div class="levelProgTrack"><div class="levelProgFill" id="levelProgFill" style="width:0%"></div></div>
     </div>
+    <div id="tradeFeeNote" style="margin:0 9px 4px;font-size:9.5px;color:var(--muted)"></div>
     <div class="capitalSelectorWrap" id="capitalSelector"></div>
     <div class="scrollArea" id="assetList"></div>
     <div class="bottomnav">
@@ -2235,7 +2236,7 @@ const STEVE_ADVICE_CONTEXT=[
     return null;
   },
   ()=>{
-    const bulls=CRYPTO_IDS.filter(id=>{const a=ASSETS.find(x=>x.id===id);return a&&!a.locked&&mktCycle[id]==='bull';});
+    const bulls=CRYPTO_IDS.filter(id=>{const a=ASSETS.find(x=>x.id===id);return a&&!a.locked&&visibleCycle(id)==='bull';});
     if(bulls.length){
       const a=ASSETS.find(x=>x.id===bulls[Math.floor(Math.random()*bulls.length)]);
       return a.name+' está en fase 🔥 BULL ahora mismo. Si tienes caja libre, podría ser buen momento para entrar — pero no metas todo, guarda margen para lo que venga después.';
@@ -2243,7 +2244,7 @@ const STEVE_ADVICE_CONTEXT=[
     return null;
   },
   ()=>{
-    const bears=CRYPTO_IDS.filter(id=>{const a=ASSETS.find(x=>x.id===id);return a&&!a.locked&&mktCycle[id]==='bear'&&(state.holdings[id]||0)>0;});
+    const bears=CRYPTO_IDS.filter(id=>{const a=ASSETS.find(x=>x.id===id);return a&&!a.locked&&visibleCycle(id)==='bear'&&(state.holdings[id]||0)>0;});
     if(bears.length){
       const a=ASSETS.find(x=>x.id===bears[0]);
       return 'Tienes posiciones en '+a.name+' y está en 💀 BEAR. Si puedes aguantar, no vendas en pánico — los ciclos siempre se dan la vuelta.';
@@ -2422,23 +2423,28 @@ function triggerWorldVictory() {
     'Patrimonio final: ' + fmt(netWorth()) + ' · Día ' + state.day + ' · Prestige P' + (state.prestigeLevel||0);
   saveGame(true);
 }
-const mktCycle={},mktProg={},mktInt={};
-CRYPTO_IDS.forEach(id=>{mktCycle[id]='neutral';mktProg[id]=0;mktInt[id]=0;});
+const mktCycle={},mktProg={},mktInt={},mktFake={};
+// La señal 🔥 BULL / 💀 BEAR solo se ve cuando el movimiento ya ha empezado, y una parte de los ciclos
+// se desinfla (señal falsa). Antes bastaba con comprar al ver BULL y vender al desaparecer para multiplicar el dinero.
+const CYCLE_SIGNAL_AT=0.35, CYCLE_FAKE_CHANCE=0.35;
+function visibleCycle(id){return (mktProg[id]||0)>=CYCLE_SIGNAL_AT?(mktCycle[id]||'neutral'):'neutral';}
+CRYPTO_IDS.forEach(id=>{mktCycle[id]='neutral';mktProg[id]=0;mktInt[id]=0;mktFake[id]=false;});
 const NEW_GAME_ASSETS = ASSETS.map(a=>({id:a.id,price:a.price,hist:a.hist.slice(),momentum:a.momentum||0,locked:!!a.locked}));
 function resetForNewGame(){
   const keepLang=state.language;
   state=JSON.parse(JSON.stringify(NEW_GAME_STATE));
   if(keepLang)state.language=keepLang; // no perder el idioma elegido al empezar una partida nueva
   ASSETS.forEach(a=>{const base=NEW_GAME_ASSETS.find(x=>x.id===a.id);if(!base)return;a.price=base.price;a.hist=base.hist.slice();a.momentum=base.momentum;a.locked=base.locked;});
-  Object.keys(mktCycle).forEach(id=>{mktCycle[id]='neutral';mktProg[id]=0;mktInt[id]=0;});
+  Object.keys(mktCycle).forEach(id=>{mktCycle[id]='neutral';mktProg[id]=0;mktInt[id]=0;mktFake[id]=false;});
   tempPlayerGender='M';tempCompanionGender='M';gameStarted=false;
 }
 function peakMove(id,dir){
-  const base=dir==='bull'?0.09:0.11;   // mercado más exigente
+  const base=dir==='bull'?0.06:0.08;   // mercado más exigente
+  const fake=mktFake[id]?0.35:1;       // las señales falsas apenas mueven el precio
   const prestiScale=1+(state.prestigeLevel||0)*0.15;
   const scale=(1+state.chapterIdx*0.25)*prestiScale;
   const ins=state.insiderMode?1.5:1;
-  return base*scale*(mktInt[id]||0)*ins;
+  return base*scale*(mktInt[id]||0)*ins*fake;
 }
 function updateCycles(){
   CRYPTO_IDS.forEach(id=>{
@@ -2448,12 +2454,13 @@ function updateCycles(){
       if(mktCycle[id]==='neutral'){
         mktCycle[id]=Math.random()<0.44?'bull':'bear';
         mktInt[id]=0.4+Math.random()*0.6;
+        mktFake[id]=Math.random()<CYCLE_FAKE_CHANCE; // ciclo que promete pero se queda en nada
         if(mktCycle[id]==='bear'){state.survivedBear=false;if((state.holdings[id]||0)>0)playSound('bear');}
       } else {
         if(mktCycle[id]==='bear'){state.survivedBear=true;checkStoryScene('first_crash');}
         const a=ASSETS.find(x=>x.id===id);
         if(a&&mktCycle[id]==='bull'){const sp=a.hist[Math.max(0,a.hist.length-17)];if(a.price>=sp*2)state.bullHundred=true;}
-        mktCycle[id]='neutral';mktInt[id]=0;
+        mktCycle[id]='neutral';mktInt[id]=0;mktFake[id]=false;
       }
     }
   });
@@ -2475,6 +2482,7 @@ function moveMarket(){
       if(cycle==='bull'){
         move+=shape*peakMove(a.id,'bull')*0.4;
         if(prog>0.35&&prog<0.65)move+=peakMove(a.id,'bull')*(0.5+Math.random()*0.5);
+        if(mktFake[a.id]&&prog>0.7)move-=peakMove(a.id,'bull')*1.1; // la subida se deshace
       } else if(cycle==='bear'){
         move-=shape*peakMove(a.id,'bear')*0.4;
         if(prog>0.35&&prog<0.65)move-=peakMove(a.id,'bear')*(0.5+Math.random()*0.5);
@@ -2736,6 +2744,8 @@ function rivalDailyTick(){
   const ratio=r.nw/me;
   if(ratio<0.7)g+=0.03;else if(ratio<1)g+=0.012;else if(ratio>1.6)g-=0.02;else if(ratio>1.2)g-=0.008;
   r.nw=Math.max(1000,r.nw*(1+g));
+  // Si pegas un salto enorme, Víctor no se queda descolgado para siempre: recorta parte de la distancia cada día
+  if(r.nw<me*0.6)r.nw+=(me*0.6-r.nw)*0.06;
   if(r.lead!=='rival'&&r.nw>me*1.02){
     r.lead='rival';
     showToast(L3('⚔️ '+RIVAL_NAME+' te ha adelantado: '+fmt(r.nw),'⚔️ '+RIVAL_NAME+' has overtaken you: '+fmt(r.nw),'⚔️ '+RIVAL_NAME+'超过了你：'+fmt(r.nw)));
@@ -2916,7 +2926,9 @@ function buyAsset(id){
   if(amt>maxCash+0.01){showToast('Sin efectivo suficiente'+(isPersonal?'':' en esta cuenta fondeada'));return;}
   const a=ASSETS.find(x=>x.id===id);
   const real=Math.min(amt,maxCash);
-  const units=real/a.price;
+  const fee=real*TRADE_FEE;              // comisión del bróker
+  const slip=slippage(a,real);           // deslizamiento por el tamaño de la orden
+  const units=(real-fee)/(a.price*(1+slip));
   setCapCash(cash-Math.min(real,cash));
   // Apalancamiento: la parte que excede tu efectivo es un préstamo que se devuelve al vender (antes era dinero gratis)
   if(isPersonal&&real>cash){if(!state.marginDebt)state.marginDebt={};state.marginDebt[id]=(state.marginDebt[id]||0)+(real-Math.max(0,cash));}
@@ -2932,10 +2944,16 @@ function buyAsset(id){
   if(isPersonal)state.totalTraded+=real;
   window.dispatchEvent(new CustomEvent('tycoon-purchase',{detail:{type:'asset',id:id}}));
   vibrate(18);
-  showToast((isPersonal?'':'💼 ')+'Comprado '+units.toFixed(4)+' '+a.name+' por '+fmt(real)+(isPersonal?'':' (cuenta fondeada)'));
+  showToast((isPersonal?'':'💼 ')+'Comprado '+units.toFixed(4)+' '+a.name+' por '+fmt(real)+' ('+L3('comisión','fee','手续费')+' '+fmt(fee)+(slip>0.004?' · '+L3('deslizamiento','slippage','滑点')+' '+(slip*100).toFixed(1)+'%':'')+')'+(isPersonal?'':' 💼'));
   updateTopBar();checkAchievements();checkMisiones();checkChapter();checkWin();checkWorldMilestones();checkPropAccountStatus();renderCharacter();refreshCard(id);
   saveGame(true);
 }
+const TRADE_FEE=0.015; // comisión del bróker en cada compra y en cada venta
+// Liquidez: mover mucho dinero de golpe empeora tu precio (deslizamiento). Una meme coin aguanta
+// mucho menos dinero que BitKoin o un índice, así que operar en grande deja de ser gratis.
+const LIQUIDITY={'estable':1e12,'Índice':8e8,'forex':8e8,'metales':1.5e8,'materias':1.2e8,'inmobiliaria':1.2e8,'energía':1e8,'tech':1.5e8,'sostenible':8e7,'cripto':6e7,'defi':1.5e7,'nft/colec':6e6,'meme cripto':3e5};
+function assetLiquidity(a){return (LIQUIDITY[a.tag]||3e7)*(1+(state.prestigeLevel||0)*0.5);}
+function slippage(a,value){return Math.min(0.25,0.6*Math.max(0,value)/assetLiquidity(a));}
 function totalTradeBonus(){return (state.tradeBonus||0)+getStyleBonus()+advisorTradeBonus();}
 function takeMarginDebt(id){
   if(!state.marginDebt||!state.marginDebt[id])return 0;
@@ -2972,7 +2990,7 @@ function sellAsset(id){
   if(held<=0){showToast('No tienes ese activo'+(isPersonal?'':' en esta cuenta'));return;}
   // El bono de venta y el impuesto se aplican SOLO sobre el beneficio (valor - coste), no sobre todo lo vendido.
   // Antes se aplicaban al total, lo que permitía comprar y vender al instante (p.ej. StablUS) y ganar dinero gratis.
-  const value=held*a.price;
+  const value=held*a.price*(1-slippage(a,held*a.price)); // vender en grande también mueve el precio en tu contra
   const accB=isPersonal?null:getActiveAccount();
   const basis=isPersonal?((state.costBasis&&state.costBasis[id])||0):((accB&&accB.longBasis&&accB.longBasis[id])||0);
   const gain=basis>0?value-basis:0; // sin coste registrado (partidas antiguas) no hay bono
@@ -2980,6 +2998,8 @@ function sellAsset(id){
   const tax=isPersonal?(state.taxRate||0):0; // las cuentas fondeadas no pagan tu impuesto personal
   let proceeds=value;
   if(gain>0)proceeds=basis+gain*(1+bonusRate)*(1-tax);
+  const sellFee=proceeds*TRADE_FEE;
+  proceeds-=sellFee;
   // Si compraste con apalancamiento, primero se devuelve lo prestado
   const debt=isPersonal?takeMarginDebt(id):0;
   const cash=getCapCash();
@@ -2992,7 +3012,7 @@ function sellAsset(id){
     if(acc&&acc.longBasis){acc.longBasis[id]=0;}
   }
   vibrate(18);
-  showToast((isPersonal?'':'💼 ')+'Vendido por '+fmt(proceeds-debt)+((gain>0&&bonusRate>0)?' (+bono)':'')+((gain>0&&tax>0)?' (-impuesto)':'')+(debt>0?' (-deuda '+fmt(debt)+')':''));
+  showToast((isPersonal?'':'💼 ')+'Vendido por '+fmt(proceeds-debt)+' ('+L3('comisión','fee','手续费')+' '+fmt(sellFee)+')'+((gain>0&&bonusRate>0)?' (+bono)':'')+((gain>0&&tax>0)?' (-impuesto)':'')+(debt>0?' (-deuda '+fmt(debt)+')':''));
   updateTopBar();checkAchievements();checkMisiones();checkChapter();checkWin();checkWorldMilestones();checkPropAccountStatus();renderCharacter();refreshCard(id);
   saveGame(true);
 }
@@ -3025,9 +3045,10 @@ function openShort(id){
   const maxCash=cash; // los cortos no usan apalancamiento: el margen sale siempre de tu efectivo
   if(amt>maxCash+0.01){showToast('Sin efectivo suficiente para ese margen');return;}
   const a=ASSETS.find(x=>x.id===id);
-  const margin=Math.min(amt,maxCash);
+  const marginGross=Math.min(amt,maxCash);
+  const margin=marginGross*(1-TRADE_FEE); // la comisión también se paga al abrir un corto
   const units=margin/a.price;
-  setCapCash(cash-Math.min(margin,cash));
+  setCapCash(cash-Math.min(marginGross,cash));
   shorts[id]={margin,units,entryPrice:a.price,openDay:state.day};
   inputValues[id]=0;const el=document.getElementById('inp_'+id);if(el)el.value='';
   showToast((isPersonal?'':'💼 ')+'📉 Corto abierto en '+a.name+' — margen '+fmt(margin)+' a '+fmt(a.price));
@@ -3046,7 +3067,7 @@ function closeShort(id){
   const tax=isPersonal?(state.taxRate||0):0;
   let payout=s.margin+bonusedPnl;
   if(pnl>0)payout=s.margin+bonusedPnl*(1-tax);
-  payout=Math.max(0,payout);
+  payout=Math.max(0,payout*(1-TRADE_FEE));
   const netResult=payout-s.margin;
   const cash=getCapCash();
   setCapCash(cash+payout);
@@ -4418,7 +4439,7 @@ function renderPropScreen(){
     html+='</div>';
   });
 
-  document.getElementById('propList').innerHTML=html;
+  document.getElementById('propList').innerHTML=T(html);
 }
 function spark(hist){
   if(hist.length<2)return'';
@@ -4527,11 +4548,12 @@ function openChart(id,periods){
   +'<div class="chartLiveChart" style="background:rgba(12,22,38,.86);border:1px solid var(--line);border-radius:12px;padding:10px;min-height:270px;display:flex;align-items:center">'+spark(data).replace('height:84px','height:270px')+'</div>'
   +'<div style="margin-top:14px;padding:12px;border:1px solid var(--line);border-radius:10px;background:rgba(17,26,40,.8)"><div style="font-size:11px;color:var(--muted);margin-bottom:7px">Operar en '+a.name+'</div><input id="chartAmt" type="number" min="0.01" step="any" placeholder="Cantidad en $" style="width:100%;box-sizing:border-box;padding:11px;border-radius:8px;border:1px solid var(--line);background:#080e18;color:var(--text);margin-bottom:8px"><div style="display:flex;gap:6px;margin-bottom:8px"><button onclick="chartQuick(\''+id+'\',.10)" style="flex:1;padding:7px;border-radius:7px;border:1px solid var(--line);background:#111a28;color:var(--text)">10%</button><button onclick="chartQuick(\''+id+'\',.25)" style="flex:1;padding:7px;border-radius:7px;border:1px solid var(--line);background:#111a28;color:var(--text)">25%</button><button onclick="chartQuick(\''+id+'\',.50)" style="flex:1;padding:7px;border-radius:7px;border:1px solid var(--line);background:#111a28;color:var(--text)">50%</button><button onclick="chartQuick(\''+id+'\',1)" style="flex:1;padding:7px;border-radius:7px;border:1px solid var(--gold);background:#211b0b;color:var(--gold)">MAX</button></div><div style="display:flex;gap:8px"><button onclick="chartOrder(\''+id+'\',\'buy\')" style="flex:1;padding:11px;border-radius:8px;border:1px solid #10b981;background:#0a2418;color:#6ee7b7;font-weight:700">Comprar</button><button onclick="chartOrder(\''+id+'\',\'sell\')" style="flex:1;padding:11px;border-radius:8px;border:1px solid #f43f5e;background:#2a1018;color:#fda4af;font-weight:700">Vender todo</button></div></div>'
   +'<div style="color:var(--muted);font-size:11px;text-align:center;margin-top:10px">Cada vela representa un periodo de mercado. Las operaciones aplican al capital seleccionado.</div>';
+  if(state.language!=='es')modal.innerHTML=translateRuntimeText(modal.innerHTML,state.language);
   const chartButtons=modal.querySelectorAll('button');
   const chartSell=chartButtons[chartButtons.length-1],chartBuy=chartButtons[chartButtons.length-2];
   if(chartBuy&&chartSell){
-    chartBuy.textContent='LONG · Comprar';chartSell.textContent='VENDER TODO';
-    const chartShort=document.createElement('button');chartShort.textContent='SHORT · Abrir';chartShort.onclick=()=>chartOrder(id,'short');chartShort.style.cssText='flex:1;padding:11px;border-radius:8px;border:1px solid #8170d9;background:#17142b;color:#c4b5fd;font-weight:700';
+    chartBuy.textContent=T('LONG · Comprar');chartSell.textContent=T('VENDER TODO');
+    const chartShort=document.createElement('button');chartShort.textContent=T('SHORT · Abrir');chartShort.onclick=()=>chartOrder(id,'short');chartShort.style.cssText='flex:1;padding:11px;border-radius:8px;border:1px solid #8170d9;background:#17142b;color:#c4b5fd;font-weight:700';
     chartSell.parentElement.style.display='grid';chartSell.parentElement.style.gridTemplateColumns='1fr 1fr';chartSell.style.gridColumn='1/-1';chartSell.parentElement.insertBefore(chartShort,chartSell);
   }
   modal.style.display='flex';
@@ -4572,14 +4594,14 @@ function applyTradingLayout(){
     if(!buy||!sell)return;
     const id=(buy.getAttribute('onclick')||'').match(/buyAsset\('([^']+)'\)/);
     if(!id)return;
-    const short=document.createElement('button');short.className='shortTradeBtn';short.textContent='SHORT · Abrir';short.onclick=()=>openShort(id[1]);
-    row.insertBefore(short,sell);buy.textContent='LONG · Comprar';sell.textContent='VENDER TODO';
+    const short=document.createElement('button');short.className='shortTradeBtn';short.textContent=T('SHORT · Abrir');short.onclick=()=>openShort(id[1]);
+    row.insertBefore(short,sell);buy.textContent=T('LONG · Comprar');sell.textContent=T('VENDER TODO');
   });
 }
 function buildCard(a){
   const held=(getCapHoldings()[a.id])||0,prev=a.hist[a.hist.length-2]||a.price;
   const chg=((a.price-prev)/prev)*100,up=chg>=0;
-  const isCrypto=CRYPTO_IDS.includes(a.id),cycle=isCrypto?mktCycle[a.id]:'neutral';
+  const isCrypto=CRYPTO_IDS.includes(a.id),cycle=isCrypto?visibleCycle(a.id):'neutral';
   const cColor=cycle==='bull'?'#10B981':cycle==='bear'?'#F43F5E':'#5a7090';
   const cLabel=state.marketMode==='hard'?(up?' · ▲ ':' · ▼ ')+Math.abs(chg).toFixed(2)+'%':(cycle==='bull'?'🔥 BULL':cycle==='bear'?'💀 BEAR':'');
   if(a.locked)return'<div class="assetCard" id="card_'+a.id+'" style="opacity:.35"><div class="top"><div><div class="aName">🔒 '+a.name+'</div><div class="aTag">'+a.tag+'</div></div><div class="aPriceBox"><div class="aPrice" data-price>'+fmt(a.price)+'</div></div></div><div class="lockMsg">Se desbloquea en el siguiente capítulo</div></div>';
@@ -4607,7 +4629,7 @@ function renderCapitalSelector(){
     const isFunded=acc.status==='funded';
     html+='<button class="capChip'+(state.activeCapital===acc.id?' active':'')+(isFunded?' funded-chip':' challenge-chip')+'" onclick="selectCapitalSource('+acc.id+')">💼 '+fmt(acc.size)+(isFunded?' ✓':'')+' · '+fmt(acc.cash)+'</button>';
   });
-  el.innerHTML=html;
+  el.innerHTML=T(html);
 }
 function renderLevelBar(){
   const lvl=getCurrentLevel();
@@ -4634,9 +4656,13 @@ function renderTradeScreen(){
   renderCapitalSelector();
   renderLevelBar();
   document.getElementById('tradeCash').textContent=fmt(getCapCash());
-  document.getElementById('tradeCashLabel').textContent=state.activeCapital==='personal'?'Caja':'Caja (fondeada)';
+  document.getElementById('tradeCashLabel').textContent=T(state.activeCapital==='personal'?'Caja':'Caja (fondeada)');
+  const feeNote=document.getElementById('tradeFeeNote');
+  if(feeNote)feeNote.textContent=L3('Comisión '+(TRADE_FEE*100).toFixed(1)+'% por operación · las órdenes grandes mueven el precio en tu contra · las señales 🔥/💀 no siempre aciertan',
+    'Fee '+(TRADE_FEE*100).toFixed(1)+'% per trade · big orders move the price against you · the 🔥/💀 signals are not always right',
+    '每笔交易手续费'+(TRADE_FEE*100).toFixed(1)+'% · 大额订单会推动价格对你不利 · 🔥/💀信号并非总是准确');
   const list=document.getElementById('assetList');
-  if(!document.getElementById('card_'+ASSETS[0].id))list.innerHTML=ASSETS.map(a=>buildCard(a)).join('');
+  if(!document.getElementById('card_'+ASSETS[0].id))list.innerHTML=T(ASSETS.map(a=>buildCard(a)).join(''));
   else ASSETS.forEach(a=>refreshCard(a.id));
   applyTradingLayout();
 }
@@ -4647,10 +4673,10 @@ function refreshCard(id){
   const pe=card.querySelector('[data-price]');if(pe)pe.textContent=fmt(a.price);
   const ce=card.querySelector('[data-chg]');if(ce){ce.className=up?'chgUp':'chgDown';ce.textContent=(up?'▲':'▼')+' '+Math.abs(chg).toFixed(2)+'%';}
   const se=card.querySelector('[data-spark]');if(se)se.innerHTML=spark(a.hist);
-  const he=card.querySelector('[data-held]');if(he)he.innerHTML='<span>Cartera: '+(held>0?held.toFixed(4):'—')+'</span><span style="color:'+(held>0?'#F59E0B':'inherit')+'">'+(held>0?fmt(held*a.price):'')+'</span>';
+  const he=card.querySelector('[data-held]');if(he)he.innerHTML=T('<span>Cartera: '+(held>0?held.toFixed(4):'—')+'</span><span style="color:'+(held>0?'#F59E0B':'inherit')+'">'+(held>0?fmt(held*a.price):'')+'</span>');
   const sb=card.querySelector('[data-sell]');if(sb)sb.disabled=held<=0;
   const cy=card.querySelector('[data-cycle]');
-  if(cy){const cycle=mktCycle[id]||'neutral';cy.textContent=state.marketMode==='hard'?(up?'▲ ':'▼ ')+Math.abs(chg).toFixed(2)+'%':(cycle==='bull'?'🔥 BULL':cycle==='bear'?'💀 BEAR':'');cy.style.color=state.marketMode==='hard'?(up?'#10B981':'#F43F5E'):(cycle==='bull'?'#10B981':cycle==='bear'?'#F43F5E':'#5a7090');card.style.borderColor=cycle==='bull'?'#1a4030':cycle==='bear'?'#401a1a':'';}
+  if(cy){const cycle=visibleCycle(id);cy.textContent=state.marketMode==='hard'?(up?'▲ ':'▼ ')+Math.abs(chg).toFixed(2)+'%':(cycle==='bull'?'🔥 BULL':cycle==='bear'?'💀 BEAR':'');cy.style.color=state.marketMode==='hard'?(up?'#10B981':'#F43F5E'):(cycle==='bull'?'#10B981':cycle==='bear'?'#F43F5E':'#5a7090');card.style.borderColor=cycle==='bull'?'#1a4030':cycle==='bear'?'#401a1a':'';}
   const longEl=card.querySelector('[data-longsection]');
   if(longEl){const fresh=document.createElement('div');fresh.innerHTML=renderLongSection(a);longEl.replaceWith(fresh.firstElementChild||document.createElement('div'));}
   else if(held>0){const shortEl=card.querySelector('[data-shortsection]');if(shortEl)shortEl.insertAdjacentHTML('beforebegin',renderLongSection(a));}
@@ -4689,7 +4715,7 @@ function renderBiz(){
         +'<div class="upgradeRow">'+(lvl===0?'<button class="buyBizBtn"'+(state.cash<cost?' disabled':'')+' onclick="buyOrUpgradeBiz(\''+biz.id+'\')">🏪 Abrir — '+fmt(cost)+'</button>':maxed?'<button class="upgradeBtn" disabled style="color:var(--gold)">✓ Max · +'+fmt(income)+'/día</button>':'<button class="upgradeBtn"'+(state.cash<cost?' disabled':'')+' onclick="buyOrUpgradeBiz(\''+biz.id+'\')">⬆️ Niv.'+(lvl+1)+' — '+fmt(cost)+'</button>')+'</div></div>';
     });
   });
-  document.getElementById('bizList').innerHTML=html;
+  document.getElementById('bizList').innerHTML=T(html);
 }
 
 // ══════════════ RENDER SKILLS ══════════════
@@ -4697,12 +4723,12 @@ function renderSkills(){
   const prestiMult=1+(state.prestigeLevel||0)*0.5;
   document.getElementById('skillBonusTotal').textContent='+'+Math.round(state.tradeBonus*100)+'% trade · +'+Math.round((state.passiveBonus||0)*100)+'% pasivos';
   const tiers=[...new Set(SKILLS.map(s=>s.tier))];
-  document.getElementById('skillList').innerHTML=tiers.map(t=>'<div class="tierLabel">'+t+'</div>'+SKILLS.filter(s=>s.tier===t).map(sk=>{
+  document.getElementById('skillList').innerHTML=T(tiers.map(t=>'<div class="tierLabel">'+t+'</div>'+SKILLS.filter(s=>s.tier===t).map(sk=>{
     const owned=!!state.skillsOwned[sk.id];
     const cost=Math.round(sk.cost*prestiMult);
     const afford=state.cash>=cost;
     return'<div class="skillCard'+(owned?' owned':'')+'"><div class="skillIcon">'+sk.icon+'</div><div class="skillInfo"><div class="skillName">'+sk.name+'</div><div class="skillDesc">'+sk.desc+'</div><div class="skillCost">'+(owned?'✓ Aprendido':fmt(cost)+(state.prestigeLevel?'<span style="color:var(--red);font-size:8px"> (x'+prestiMult.toFixed(1)+' prestige)</span>':''))+'</div></div><button class="skillBtn'+(owned?' done':'')+(owned||!afford?' disabled':'')+'" onclick="buySkill(\''+sk.id+'\')">'+(owned?'✓':'Aprender')+'</button></div>';
-  }).join('')).join('');
+  }).join('')).join(''));
 }
 
 // ══════════════ RENDER MISIONES ══════════════
@@ -4730,7 +4756,7 @@ function renderMisiones(){
         +'</div>';
     });
   });
-  document.getElementById('misionList').innerHTML=html;
+  document.getElementById('misionList').innerHTML=T(html);
 }
 
 // ══════════════ RENDER EXTRA ══════════════
@@ -4785,6 +4811,8 @@ Object.assign(UI_TRANSLATIONS,{
 });
 const translatedNodes=new WeakMap();
 const RUNTIME_TRANSLATIONS={en:[[/\bMisión completada\b/g,'Mission completed'],[/\bRecompensa\b/g,'Reward'],[/\bDía\b/g,'Day'],[/\bCapítulo\b/gi,'Chapter'],[/\bNivel\b/g,'Level'],[/\bSin abrir\b/g,'Not opened'],[/\bcomprado y equipado\b/g,'purchased and equipped'],[/\bequipado\b/g,'equipped'],[/\bDesbloqueado\b/g,'Unlocked'],[/\bReclamado\b/g,'Claimed'],[/¡LISTO!/g,'READY!'],[/\bSe desbloquea en el capítulo\b/g,'Unlocks in chapter'],[/\bIngresos pasivos\b/g,'Passive income'],[/\bpor día\b/g,'per day'],[/\bganancia\b/gi,'profit'],[/\bpérdida\b/gi,'loss'],[/\bbeneficio\b/gi,'profit'],[/\bcomprar\b/gi,'buy'],[/\bvender\b/gi,'sell'],[/\bmercado\b/gi,'market'],[/\bcapital\b/gi,'capital'],[/\bpatrimonio\b/gi,'net worth'],[/\bobjetivo\b/gi,'target'],[/\bprogreso\b/gi,'progress'],[/\bcompletada\b/gi,'completed'],[/\bcompletado\b/gi,'completed'],[/\bTienda\b/g,'Shop'],[/\bPropiedad\b/g,'Property'],[/\bVehículos\b/g,'Vehicles'],[/\bJoyas\b/g,'Jewelry'],[/Mascotas [Ee]xóticas/g,'Exotic pets']],zh:[[/\bMisión completada\b/g,'任务已完成'],[/\bRecompensa\b/g,'奖励'],[/\bDía\b/g,'天'],[/\bCapítulo\b/gi,'章节'],[/\bNivel\b/g,'等级'],[/\bSin abrir\b/g,'未开启'],[/\bcomprado y equipado\b/g,'已购买并装备'],[/\bequipado\b/g,'已装备'],[/\bDesbloqueado\b/g,'已解锁'],[/\bReclamado\b/g,'已领取'],[/¡LISTO!/g,'完成！'],[/\bSe desbloquea en el capítulo\b/g,'在章节中解锁'],[/\bIngresos pasivos\b/g,'被动收入'],[/\bpor día\b/g,'每日'],[/\bganancia\b/gi,'收益'],[/\bpérdida\b/gi,'损失'],[/\bbeneficio\b/gi,'利润'],[/\bcomprar\b/gi,'买入'],[/\bvender\b/gi,'卖出'],[/\bmercado\b/gi,'市场'],[/\bcapital\b/gi,'资金'],[/\bpatrimonio\b/gi,'资产'],[/\bobjetivo\b/gi,'目标'],[/\bprogreso\b/gi,'进度'],[/\bcompletada\b/gi,'已完成'],[/\bcompletado\b/gi,'已完成'],[/\bTienda\b/g,'商店'],[/\bPropiedad\b/g,'房产'],[/\bVehículos\b/g,'车辆'],[/\bJoyas\b/g,'珠宝'],[/Mascotas [Ee]xóticas/g,'珍稀宠物']]};
+// Traduce el HTML generado por las pantallas (se construyen en español y antes quedaban sin traducir)
+function T(html){return state.language==='es'?html:translateRuntimeText(html,state.language);}
 function translateRuntimeText(value,lang){
   if(lang==='es'||typeof value!=='string')return value;
   let out=value;
@@ -5201,7 +5229,7 @@ RUNTIME_TRANSLATIONS.en.push(
   [/^Saltar$/g,'Skip'],
   [/% de capacidad crediticia/g,'% credit capacity'],
   [/Difícil · Las señales BULL\/BEAR están ocultas/g,'Hard · BULL\/BEAR signals are hidden'],
-  [/Fácil · Las señales BULL\/BEAR aparecen en las gráficas/g,'Easy · BULL\/BEAR signals appear on the charts'],
+  [/Fácil · Las señales BULL\/BEAR aparecen \(con retraso\) en las gráficas/g,'Easy · BULL\/BEAR signals appear on the charts, with a delay'],
   [/Jugadora trader/g,'Trader (female)'],
   [/Jugador trader/g,'Trader (male)'],
   [/Personaje trader/g,'Trader character'],
@@ -5278,7 +5306,7 @@ RUNTIME_TRANSLATIONS.zh.push(
   [/^Saltar$/g,'跳过'],
   [/% de capacidad crediticia/g,'%信贷额度'],
   [/Difícil · Las señales BULL\/BEAR están ocultas/g,'困难·隐藏BULL/BEAR信号'],
-  [/Fácil · Las señales BULL\/BEAR aparecen en las gráficas/g,'简单·图表上显示BULL/BEAR信号'],
+  [/Fácil · Las señales BULL\/BEAR aparecen \(con retraso\) en las gráficas/g,'简单·图表上延迟显示BULL/BEAR信号'],
   [/Jugadora trader/g,'女性交易员'],
   [/Jugador trader/g,'男性交易员'],
   [/Personaje trader/g,'交易员角色'],
@@ -6295,7 +6323,7 @@ function renderExtra(){
   const done=Object.keys(state.achievements).length;
   let html='';
   html+='<div class="msgEntryCard" style="border-color:var(--teal)"><div class="mIcon">🌐</div><div style="flex:1"><div class="mName" style="color:var(--teal)">Idioma / Language / 语言</div><div class="mDesc">Elige el idioma de la interfaz</div></div><select onchange="setLanguage(this.value)" style="background:var(--panel2);color:var(--text);border:1px solid var(--teal);border-radius:7px;padding:6px;font-size:10px"><option value="es"'+(state.language==='es'?' selected':'')+'>Espa&#241;ol</option><option value="en"'+(state.language==='en'?' selected':'')+'>English</option><option value="zh"'+(state.language==='zh'?' selected':'')+'>简体中文</option></select></div>';
-  html+='<div class="msgEntryCard" style="border-color:var(--purple);cursor:pointer" onclick="toggleMarketMode()"><div class="mIcon">🎚️</div><div style="flex:1"><div class="mName" style="color:var(--purple)">Modo de mercado</div><div class="mDesc">'+(state.marketMode==='hard'?'Difícil · Las señales BULL/BEAR están ocultas':'Fácil · Las señales BULL/BEAR aparecen en las gráficas')+'</div></div><div style="color:var(--purple);font-size:10px">Cambiar</div></div>';
+  html+='<div class="msgEntryCard" style="border-color:var(--purple);cursor:pointer" onclick="toggleMarketMode()"><div class="mIcon">🎚️</div><div style="flex:1"><div class="mName" style="color:var(--purple)">Modo de mercado</div><div class="mDesc">'+(state.marketMode==='hard'?'Difícil · Las señales BULL/BEAR están ocultas':'Fácil · Las señales BULL/BEAR aparecen (con retraso) en las gráficas')+'</div></div><div style="color:var(--purple);font-size:10px">Cambiar</div></div>';
   html+='<div class="msgEntryCard" style="border-color:var(--gold);cursor:pointer" onclick="toggleSound()"><div class="mIcon">'+(state.soundEnabled!==false?'🔊':'🔇')+'</div><div style="flex:1"><div class="mName" style="color:var(--gold)">Efectos de sonido</div><div class="mDesc" id="soundToggleDesc">'+(state.soundEnabled!==false?'Activados · sonido al ganar o perder en un trade y alerta en BEAR':'Desactivados')+'</div></div><div style="color:var(--gold);font-size:10px">Cambiar</div></div>';
   html+='<div class="msgEntryCard" style="border-color:var(--teal);cursor:pointer" onclick="toggleBgMusic()"><div class="mIcon">'+(state.bgMusicEnabled!==false?'🎧':'🔇')+'</div><div style="flex:1"><div class="mName" style="color:var(--teal)">Música de fondo</div><div class="mDesc">'+(state.bgMusicEnabled!==false?'Activada · loop alegre mientras juegas':'Desactivada')+'</div></div><div style="color:var(--teal);font-size:10px">Cambiar</div></div>';
   html+=renderStatsPanel();
@@ -6361,7 +6389,7 @@ function renderExtra(){
     html+='<div class="tierLabel" style="margin-top:8px">🌍 Eventos recientes</div>';
     html+=state.eventLog.slice(0,6).map(ev=>'<div class="eventCard"><h4>'+ev.title+'</h4><p>'+ev.msg+'</p></div>').join('');
   }
-  document.getElementById('extraList').innerHTML=html;
+  document.getElementById('extraList').innerHTML=T(html);
 }
 
 // ══════════════ ALAN SVG ══════════════
@@ -6928,7 +6956,7 @@ function renderShopScreen(){
     }
     html+='</div></div>';
   });
-  document.getElementById('shopList').innerHTML=html;
+  document.getElementById('shopList').innerHTML=T(html);
 }
 
 
@@ -7151,7 +7179,7 @@ function renderCrimeScreen(){
     html+='</div>';
   });
 
-  document.getElementById('crimeList').innerHTML=html;
+  document.getElementById('crimeList').innerHTML=T(html);
 }
 
 // ══════════════ GUARDAR / CARGAR PARTIDA ══════════════
