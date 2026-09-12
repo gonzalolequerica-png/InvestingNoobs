@@ -856,6 +856,29 @@ body{background:radial-gradient(ellipse at 15% 0%,rgba(99,102,241,.10),transpare
 @media(max-width:600px){#chartModal{padding:12px!important}#chartModal .chart-close-button{width:42px;height:42px;font-size:28px;border-radius:11px}}
 </style>
 <style id="mobile-game-ui">
+  /* Instalado como app: en el movil la barra de estado (reloj, bateria) se dibuja
+     encima de la pagina, y el juego se metia debajo. Aqui se reserva ese hueco,
+     y tambien el del indicador inferior del iPhone. */
+  @media (display-mode: standalone), (display-mode: fullscreen), (display-mode: minimal-ui) {
+    :root { --pwa-instalada: 1; }
+    body, .app { height: 100dvh; max-height: 100dvh; }
+    .app {
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    #mainMenu {
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+    }
+    #cineStage { padding-top: env(safe-area-inset-top, 0px); }
+    .site-return-link { top: calc(12px + env(safe-area-inset-top, 0px)); }
+    #inGameControls { top: calc(8px + env(safe-area-inset-top, 0px)); }
+    #saveToast { bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
+  }
+  @media (display-mode: standalone) and (max-width: 440px) {
+    #mainMenu { padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
+    .site-return-link { top: calc(8px + env(safe-area-inset-top, 0px)); }
+  }
   .site-return-link{position:fixed;top:12px;left:12px;z-index:9999;padding:10px 14px;border:1px solid #d6ad58;border-radius:10px;background:#111821;color:#f5f6f8;text-decoration:none;font:600 13px system-ui;box-shadow:0 5px 18px #0006}
   @media(max-width:700px){.site-return-link{top:8px;left:8px;padding:9px 11px;font-size:12px}.bottomnav{position:sticky;bottom:6px;z-index:20;margin-left:4px;margin-right:4px}.modal,.overlay{max-width:calc(100vw - 20px)!important}.assetGrid,.marketGrid,.cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}.actionBtn,button{min-height:42px}.mainScene{overflow-x:hidden}}
   /* Mobile layout: keep every control inside the viewport and keep quotes readable. */
