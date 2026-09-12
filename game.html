@@ -12,7 +12,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="InvestingNoobs">
-<link rel="stylesheet" href="game-room-3d.css?v=20260906-3">
+<link rel="stylesheet" href="game-room-3d.css?v=20260912-1">
 <style>
 :root{
   --bg:#0B0F19;--panel:#131826;--panel2:#0D1220;--line:rgba(255,255,255,.08);
@@ -933,6 +933,21 @@ body{background:radial-gradient(ellipse at 15% 0%,rgba(99,102,241,.10),transpare
     .sparkWrap{height:48px;}
     .buyBtn,.sellBtn,.shortTradeBtn{font-size:9px;}
   }
+
+  /* La barra de menu, pegada al borde de abajo: sin hueco ni margenes laterales.
+     En el movil instalado, la propia barra cubre la franja del indicador inferior. */
+  .bottomnav {
+    bottom: 0 !important;   /* venia con bottom:6px y position:relative: la subia 6px */
+    margin: auto 0 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 14px 14px 0 0 !important;
+    border-bottom: none !important;
+    height: auto !important;
+    min-height: 88px !important;
+    padding: 7px 6px calc(4px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+  html.pwa-standalone .app { padding-bottom: 0 !important; }
 </style>
 <style id="mobile-sparkline-fix">
 @media (max-width: 440px) {
@@ -8061,7 +8076,7 @@ window.TycoonCareerBridge={
 <script type="module" src="game-career.js?v=20260906-1"></script>
 <script type="module" src="game-finance.js?v=20260906-1"></script>
 <link rel="stylesheet" href="game-career.css?v=20260906-1">
-<script type="module" src="game-room-3d.js?v=20260906-3"></script>
+<script type="module" src="game-room-3d.js?v=20260912-1"></script>
 <script>
 // Las escenas grandes ya no van embebidas en el HTML: se precargan cuando
 // el navegador está libre, así el menú pinta antes y no hay parpadeo al entrar.
