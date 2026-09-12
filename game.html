@@ -5,11 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Investing Noobs Tycoon</title>
 <link rel="manifest" href="game-manifest.json">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="game-icon-192.png">
+<link rel="apple-touch-icon" sizes="512x512" href="game-icon-512.png">
 <meta name="theme-color" content="#0b0f14">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="InvestingNoobs">
 <link rel="stylesheet" href="game-room-3d.css?v=20260906-3">
 <style>
@@ -859,25 +860,23 @@ body{background:radial-gradient(ellipse at 15% 0%,rgba(99,102,241,.10),transpare
   /* Instalado como app: en el movil la barra de estado (reloj, bateria) se dibuja
      encima de la pagina, y el juego se metia debajo. Aqui se reserva ese hueco,
      y tambien el del indicador inferior del iPhone. */
-  @media (display-mode: standalone), (display-mode: fullscreen), (display-mode: minimal-ui) {
-    :root { --pwa-instalada: 1; }
-    body, .app { height: 100dvh; max-height: 100dvh; }
-    .app {
-      padding-top: env(safe-area-inset-top, 0px);
-      padding-bottom: env(safe-area-inset-bottom, 0px);
-    }
-    #mainMenu {
-      padding-top: env(safe-area-inset-top, 0px);
-      padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
-    }
-    #cineStage { padding-top: env(safe-area-inset-top, 0px); }
-    .site-return-link { top: calc(12px + env(safe-area-inset-top, 0px)); }
-    #inGameControls { top: calc(8px + env(safe-area-inset-top, 0px)); }
-    #saveToast { bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
+  html.pwa-standalone { --pwa-instalada: 1; }
+  html.pwa-standalone body, html.pwa-standalone .app { height: 100dvh; max-height: 100dvh; }
+  html.pwa-standalone .app {
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
-  @media (display-mode: standalone) and (max-width: 440px) {
-    #mainMenu { padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
-    .site-return-link { top: calc(8px + env(safe-area-inset-top, 0px)); }
+  html.pwa-standalone #mainMenu {
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+  }
+  html.pwa-standalone #cineStage { padding-top: env(safe-area-inset-top, 0px); }
+  html.pwa-standalone .site-return-link { top: calc(12px + env(safe-area-inset-top, 0px)); }
+  html.pwa-standalone #inGameControls { top: calc(8px + env(safe-area-inset-top, 0px)); }
+  html.pwa-standalone #saveToast { bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
+  @media (max-width: 440px) {
+    html.pwa-standalone #mainMenu { padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
+    html.pwa-standalone .site-return-link { top: calc(8px + env(safe-area-inset-top, 0px)); }
   }
   .site-return-link{position:fixed;top:12px;left:12px;z-index:9999;padding:10px 14px;border:1px solid #d6ad58;border-radius:10px;background:#111821;color:#f5f6f8;text-decoration:none;font:600 13px system-ui;box-shadow:0 5px 18px #0006}
   @media(max-width:700px){.site-return-link{top:8px;left:8px;padding:9px 11px;font-size:12px}.bottomnav{position:sticky;bottom:6px;z-index:20;margin-left:4px;margin-right:4px}.modal,.overlay{max-width:calc(100vw - 20px)!important}.assetGrid,.marketGrid,.cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}.actionBtn,button{min-height:42px}.mainScene{overflow-x:hidden}}
@@ -8074,6 +8073,12 @@ addEventListener('load',()=>{const idle=window.requestIdleCallback||(f=>setTimeo
 <script id="tycoon-pwa">
 /* Instalación como app y funcionamiento sin conexión. */
 (function(){
+  // iOS no siempre responde a la consulta display-mode: marcamos el html a mano.
+  try {
+    var abiertoComoApp = window.navigator.standalone === true ||
+      (window.matchMedia && (matchMedia('(display-mode: standalone)').matches || matchMedia('(display-mode: fullscreen)').matches));
+    if (abiertoComoApp) document.documentElement.classList.add('pwa-standalone');
+  } catch(e) {}
   function idioma(){ try { return (window.state && state.language) || localStorage.getItem('ct_language_pref') || 'es'; } catch(e) { return 'es'; } }
   function t(es,en,zh){ var l=idioma(); return l==='en'?en:(l==='zh'?zh:es); }
   var pendiente = null;
