@@ -937,6 +937,13 @@
   // Cada pestaña guarda su propio aviso: antes un fallo de cripto se veía también
   // en Materias primas y en Acciones, como si esos datos estuvieran rotos.
   const tabBanners = { crypto: null, commodities: null, stocks: null };
+  // Cada pestaña recuerda su propia línea de estado: al cambiar de pestaña se veía
+  // la hora y el contador de otra.
+  const tabStatus = { crypto: 'Loading…', commodities: 'Loading…', stocks: 'Loading…' };
+  function setStatus(tab, text) {
+    tabStatus[tab] = text;
+    if (activeTab === tab) statusText.textContent = text;
+  }
   function setBanner(tab, text) {
     tabBanners[tab] = text || null;
     renderBanner();
@@ -1112,7 +1119,7 @@
       coins = data;
       loading = false;
       setBanner('crypto', null);
-      if (activeTab === 'crypto') statusText.textContent = 'Updated ' + new Date().toLocaleTimeString('en-US');
+      setStatus('crypto', 'Updated ' + new Date().toLocaleTimeString('en-US'));
       updateStatStrip();
       if (activeTab === 'crypto') render();
       setTimeout(() => { prevPrices = {}; }, 900);
@@ -1183,8 +1190,8 @@
       loading = false;
       updateGoldStat();
       setBanner('commodities', null);
+      setStatus('commodities', 'Updated ' + new Date().toLocaleTimeString('en-US'));
       if (activeTab === 'commodities') {
-        statusText.textContent = 'Updated ' + new Date().toLocaleTimeString('en-US');
         render();
         setTimeout(() => { prevPrices = {}; }, 900);
       }
@@ -1207,8 +1214,8 @@
       loading = false;
       updateGoldStat();
       setBanner('commodities', 'No live commodity prices right now — retrying in the background.');
+      setStatus('commodities', 'No live data');
       if (activeTab === 'commodities') {
-        statusText.textContent = 'No live data';
         render();
       }
     }
@@ -1284,10 +1291,8 @@
       results.forEach((q, k) => { if (q) { stockQuotes[batch[k]] = q; got++; } });
       if (i === 0 && got === 0 && Object.keys(stockQuotes).length === 0) throw new Error('stocks source down');
       buildStocksFromCache();
-      if (activeTab === 'stocks') {
-        statusText.textContent = stockStatusLine();
-        render();
-      }
+      setStatus('stocks', stockStatusLine());
+      if (activeTab === 'stocks') render();
       if (i + batchSize < pending.length) await new Promise(r => setTimeout(r, gap));
     }
   }
@@ -1310,8 +1315,8 @@
       stocksLive = false;
       buildStocksFromCache();
       setBanner('stocks', 'No live stock prices right now — retrying in the background.');
+      setStatus('stocks', 'No live data');
       if (activeTab === 'stocks') {
-        statusText.textContent = 'No live data';
         render();
       }
     }
@@ -1340,6 +1345,7 @@
     btn.addEventListener('click', () => {
       if (activeTab === 'stocks' && btn.dataset.tab !== 'stocks') stockFetchToken++;
       activeTab = btn.dataset.tab;
+      statusText.textContent = tabStatus[activeTab] || 'Loading…';
       document.querySelectorAll('.tab-btn:not(.tab-link-external)').forEach(b => { b.classList.toggle('tab-active', b === btn); b.setAttribute('aria-selected', b === btn ? 'true' : 'false'); });
 
       sortKey = activeTab === 'crypto' ? 'market_cap_rank' : (activeTab === 'stocks' ? 'order' : 'current_price');
