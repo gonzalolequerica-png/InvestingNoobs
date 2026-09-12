@@ -531,6 +531,7 @@
   };
 
   // Only symbols the gold-api.com free endpoint actually serves are listed here.
+  // (Copper does work and is now included.)
   // (Copper, Rhodium, Aluminum, Nickel, Zinc, Lead, Tin and Iridium always 404 on
   // that API, which used to leave those rows permanently frozen on a hardcoded
   // fallback price while showing a "▲ 0.00%" as if it were live — removed rather
@@ -540,10 +541,9 @@
     { symbol: 'XAG', name: 'Silver', image: '🥈' },
     { symbol: 'XPT', name: 'Platinum', image: '⚪' },
     { symbol: 'XPD', name: 'Palladium', image: '⚙️' },
+    { symbol: 'HG', name: 'Copper', image: '🟠' },
   ];
-  const COMMODITY_FALLBACK = {
-    XAU: 2648.30, XAG: 30.85, XPT: 985.40, XPD: 1015.20,
-  };
+  // Sin tabla de precios de reserva: preferimos un guion a un precio falso.
 
   // Minimal fallback so the crypto tab is never fully empty, even if the very
   // first load fails before any real data has come in.
@@ -927,62 +927,29 @@
     { symbol: 'MKC', name: 'McCormick' },
     { symbol: 'TAP', name: 'Molson Coors' },
   ];
-  const STOCK_FALLBACK = {
-    AAPL: 357.09, MSFT: 28.38, GOOGL: 162.14, AMZN: 134.42, NVDA: 409.01, META: 377.03,
-    TSLA: 492.32, AVGO: 61.51, ORCL: 240.73, ADBE: 30.94, CRM: 131.97, AMD: 285.37,
-    INTC: 29.2, CSCO: 121.38, QCOM: 362.69, TXN: 306.54, IBM: 132.94, NOW: 330.26,
-    INTU: 448.05, AMAT: 18.48, MU: 446.11, LRCX: 388.5, ADI: 197.03, PANW: 98.18,
-    SNPS: 527.11, CDNS: 195.08, KLAC: 64.62, ANET: 66.74, FTNT: 468.41, NXPI: 337.99,
-    MRVL: 446.81, WDAY: 405.41, PYPL: 301.88, UBER: 535.62, ABNB: 217.52, SHOP: 310.34,
-    SQ: 458.73, SNOW: 345.91, PLTR: 476.01, CRWD: 323.88, ZS: 391.95, DDOG: 39.52,
-    NET: 136.93, MDB: 169.82, TEAM: 57.69, OKTA: 139.54, HUBS: 69.04, TTD: 163.72,
-    ROKU: 355.09, SPOT: 210.19, PINS: 213.05, SNAP: 127.09, EBAY: 157.83, ETSY: 516.11,
-    BKNG: 361.7, EXPE: 340.89, MAR: 106.56, HLT: 405.08, JPM: 102.42, BAC: 218.01,
-    WFC: 544.39, C: 357.4, GS: 312.97, MS: 381.27, USB: 465.93, PNC: 430.16,
-    TFC: 137.54, SCHW: 32.17, BLK: 183.77, SPGI: 158.24, ICE: 127.88, CME: 519.46,
-    V: 483.86, MA: 183.35, AXP: 365.66, COF: 226.66, 'BRK.B': 460, AIG: 504.28,
-    MET: 260.49, PRU: 156.71, TRV: 146.95, ALL: 315.33, PGR: 155.57, AON: 327.75,
-    MMC: 495.34, JNJ: 228.68, UNH: 132.34, PFE: 548.68, MRK: 287.6, ABBV: 63.64,
-    LLY: 40.21, TMO: 73.66, ABT: 350.68, DHR: 438.76, BMY: 240.86, AMGN: 48.99,
-    GILD: 219.17, CVS: 547.92, CI: 298.08, HUM: 534.53, ELV: 475.52, ISRG: 21.14,
-    VRTX: 400.59, REGN: 379.72, ZTS: 302.28, BSX: 157.75, SYK: 357.91, MDT: 74.68,
-    BDX: 247.6, HCA: 257.74, MRNA: 525.29, PG: 483.58, KO: 155.91, PEP: 282.81,
-    WMT: 110.58, COST: 503.26, HD: 480.73, LOW: 174.67, TGT: 356.84, NKE: 340.8,
-    MCD: 96.77, SBUX: 422.94, CMG: 303.57, YUM: 431.57, DIS: 298.74, NFLX: 15.31,
-    CMCSA: 188.42, WBD: 25.42, T: 512.07, VZ: 485.12, TMUS: 459.94, CL: 179.52,
-    KMB: 45.99, EL: 484.74, MO: 521.62, PM: 60.82, STZ: 275.0, KHC: 52.03,
-    GIS: 421.92, MDLZ: 424.72, HSY: 83.69, KDP: 269.28, MNST: 309.14, CLX: 156.81,
-    CHD: 481.75, XOM: 241.38, CVX: 128.31, COP: 303.52, SLB: 405.51, EOG: 122.62,
-    MPC: 181.77, PSX: 547.4, VLO: 362.68, OXY: 249.38, WMB: 291.9, KMI: 79.74,
-    HAL: 135.21, BA: 195.88, CAT: 329.75, DE: 138.11, GE: 132.82, HON: 52.98,
-    MMM: 352.64, LMT: 137.48, RTX: 499.4, NOC: 474.9, GD: 52.91, UPS: 142.33,
-    FDX: 372.9, UNP: 129.62, CSX: 85.79, NSC: 515.5, EMR: 320.51, ETN: 267.88,
-    ITW: 434.77, PH: 447.01, ROK: 116.87, CMI: 66.86, PCAR: 245.61, DAL: 241.61,
-    UAL: 264.86, AAL: 405.06, LUV: 375.25, F: 541.53, GM: 67.65, RIVN: 230.4,
-    LCID: 196.53, APD: 475.99, LIN: 148.03, SHW: 116.76, ECL: 255.01, NEM: 240.71,
-    FCX: 164.02, NUE: 148.65, DOW: 508.95, DD: 252.07, LYB: 475.82, NEE: 309.42,
-    DUK: 42.06, SO: 549.62, D: 462.27, AEP: 533.41, EXC: 510.61, SRE: 469.05,
-    XEL: 103.98, ED: 274.82, PEG: 129.35, AMT: 229.56, PLD: 46.37, CCI: 217.75,
-    EQIX: 542.14, PSA: 156.88, SPG: 434.48, O: 258.43, WELL: 241.31, DLR: 527.16,
-    AVB: 547.55, EQR: 312.34, VICI: 399.35, IRM: 97.82, ADP: 173.74, PAYX: 533.26,
-    VRSK: 324.86, CTAS: 305.07, FAST: 415.17, ODFL: 45.58, EFX: 327.54, RSG: 284.02,
-    WM: 471.21, CPRT: 99.23, IQV: 529.02, MCK: 57.86, COR: 114.42, CAH: 333.34,
-    A: 376.24, WAT: 140.83, MTD: 79.14, IDXX: 491.3, DXCM: 146.73, ALGN: 333.07,
-    EA: 346.37, TTWO: 239.29, ATVI: 327.26, MTCH: 294.69, LYV: 515.07, CHTR: 124.28,
-    FOXA: 398.16, PARA: 142.7, NWSA: 226.75, OMC: 374.35, IPG: 175.5, GPN: 184.15,
-    FIS: 417.25, FI: 53.81, WU: 260.18, SYF: 549.17, DFS: 547.91, ALLY: 54.19,
-    AFL: 129.04, HIG: 156.88, CB: 514.29, WTW: 486.26, MSCI: 485.41, MCO: 212.7,
-    NDAQ: 99.39, CBOE: 461.05, COIN: 391.39, HOOD: 342.25, SOFI: 543.17, AFRM: 364.88,
-    UPST: 19.19, DASH: 452.15, LYFT: 175.17, CVNA: 369.91, CROX: 517.33, DECK: 86.85,
-    LULU: 76.75, RL: 72.26, TPR: 310.97, VFC: 160.71, UAA: 338.58, GPS: 398.92,
-    ANF: 123.92, ROST: 354.32, TJX: 156.23, BURL: 276.36, DG: 499.36, DLTR: 467.67,
-    KR: 64.38, SYY: 241.61, ADM: 163.02, BG: 16.9, TSN: 427.55, HRL: 355.86,
-    CAG: 155.15, CPB: 411.56, K: 310.15, SJM: 243.81, MKC: 20.17, TAP: 55.26,
-  };
+  // (Aquí había 300 precios fijos que se mostraban como si fueran reales.)
+
 
   const tbody = document.getElementById('table-body');
   const statusText = document.getElementById('status-text');
   const errorBanner = document.getElementById('error-banner');
+  // Cada pestaña guarda su propio aviso: antes un fallo de cripto se veía también
+  // en Materias primas y en Acciones, como si esos datos estuvieran rotos.
+  const tabBanners = { crypto: null, commodities: null, stocks: null };
+  function setBanner(tab, text) {
+    tabBanners[tab] = text || null;
+    renderBanner();
+  }
+  function renderBanner() {
+    const text = tabBanners[activeTab];
+    if (text) {
+      errorBanner.style.display = 'block';
+      errorBanner.className = 'banner banner-info';
+      errorBanner.textContent = text;
+    } else {
+      errorBanner.style.display = 'none';
+    }
+  }
   const footerText = document.getElementById('footer-text');
   const searchInput = document.getElementById('search-input');
 
@@ -1115,7 +1082,7 @@
     });
 
     const dataLen = dataset.length;
-    const sourceLabel = isCrypto ? 'CoinGecko' : (activeTab === 'commodities' ? 'Gold-API' : 'Stooq');
+    const sourceLabel = isCrypto ? 'CoinGecko' : (activeTab === 'commodities' ? 'Gold-API' : 'StockAnalysis');
     const unitLabel = isCrypto ? ' coins' : (activeTab === 'commodities' ? ' commodities' : ' stocks');
     footerText.textContent = 'Data provided by ' + sourceLabel + ' · ' + sorted.length + ' of ' + dataLen + unitLabel;
   }
@@ -1143,8 +1110,8 @@
 
       coins = data;
       loading = false;
-      errorBanner.style.display = 'none';
-      statusText.textContent = 'Updated ' + new Date().toLocaleTimeString('en-US');
+      setBanner('crypto', null);
+      if (activeTab === 'crypto') statusText.textContent = 'Updated ' + new Date().toLocaleTimeString('en-US');
       updateStatStrip();
       if (activeTab === 'crypto') render();
       setTimeout(() => { prevPrices = {}; }, 900);
@@ -1157,14 +1124,10 @@
       if (activeTab === 'crypto') {
         if (coins.length > 0) {
           // We already have data on screen — don't blank it out, just note it's stale.
-          errorBanner.style.display = 'block';
-          errorBanner.className = 'banner banner-info';
-          errorBanner.textContent = 'Showing the last prices we could load — reconnecting in the background…';
+          setBanner('crypto', 'Showing the last prices we could load — reconnecting in the background…');
         } else {
-          coins = CRYPTO_FALLBACK.map(c => ({ ...c }));
-          errorBanner.style.display = 'block';
-          errorBanner.className = 'banner banner-info';
-          errorBanner.textContent = 'Showing reference prices while we reconnect to live data…';
+          coins = CRYPTO_FALLBACK.map(c => ({ ...c, current_price: null, price_change_percentage_1h_in_currency: null, price_change_percentage_24h_in_currency: null, price_change_percentage_7d_in_currency: null }));
+          setBanner('crypto', 'No live prices yet — reconnecting to the data source…');
         }
         render();
       }
@@ -1196,7 +1159,7 @@
       prevPrices = activeTab === 'commodities' ? newPrev : prevPrices;
 
       commodities = COMMODITY_META.map((m, i) => {
-        const price = results[i].price != null ? results[i].price : COMMODITY_FALLBACK[m.symbol];
+        const price = results[i].price != null ? results[i].price : null;
         const hist = commodityHistory[m.symbol] || { first: price, last: price, t: Date.now() };
         const pctSinceLoad = hist.first ? ((price - hist.first) / hist.first) * 100 : 0;
         commodityHistory[m.symbol] = { first: hist.first, last: price, t: hist.t };
@@ -1218,8 +1181,8 @@
       commoditiesLive = true;
       loading = false;
       updateGoldStat();
+      setBanner('commodities', null);
       if (activeTab === 'commodities') {
-        errorBanner.style.display = 'none';
         statusText.textContent = 'Updated ' + new Date().toLocaleTimeString('en-US');
         render();
         setTimeout(() => { prevPrices = {}; }, 900);
@@ -1232,7 +1195,7 @@
       // Fallback a precios de referencia si no hay conexión
       commodities = COMMODITY_META.map(m => ({
         id: m.symbol, symbol: m.symbol, name: m.name, image: m.image,
-        current_price: COMMODITY_FALLBACK[m.symbol],
+        current_price: null,
         price_change_percentage_1h_in_currency: null,
         price_change_percentage_24h_in_currency: null,
         price_change_percentage_7d_in_currency: null,
@@ -1242,11 +1205,9 @@
       commoditiesLive = false;
       loading = false;
       updateGoldStat();
+      setBanner('commodities', 'No live commodity prices right now — retrying in the background.');
       if (activeTab === 'commodities') {
-        errorBanner.style.display = 'block';
-        errorBanner.className = 'banner banner-info';
-        errorBanner.textContent = 'Could not connect to live commodities data. Showing reference prices.';
-        statusText.textContent = 'Reference prices (offline)';
+        statusText.textContent = 'No live data';
         render();
       }
     }
@@ -1257,86 +1218,98 @@
     if (gold) document.getElementById('stat-gold').textContent = fmtPrice(gold.current_price);
   }
 
-  // Stocks: prices via Stooq (free CSV API, no key). Only changes during US market hours.
-  let stockHistory = {};
+  // Acciones: precios vía StockAnalysis (gratis, sin clave y con CORS). Devuelve precio
+  // y variación real del día. La fuente anterior (Yahoo) respondía 503 a todas las
+  // peticiones, así que esta pestaña llevaba tiempo mostrando solo precios de referencia.
+  // Son 300 valores y la fuente solo responde de uno en uno: se piden por tandas,
+  // primero los que se ven arriba y el resto poco a poco, y se guardan en caché.
+  const stockQuotes = {};           // symbol -> { price, changePct, t }
+  let stockMarketState = null;
+  let stockFetchToken = 0;          // cancela la tanda anterior al cambiar de pestaña
+  const STOCK_FIRST_PASS = 60;      // los primeros que se piden al abrir la pestaña
+  const STOCK_QUOTE_TTL = 60000;    // un precio vale 60 s antes de volver a pedirlo
 
-  async function fetchStocks(retry) {
-    retry = retry || 0;
+  async function fetchStockQuote(sym) {
     try {
-      const BATCH = 12;
-      const priceMap = {};
-      for (let i = 0; i < STOCK_META.length; i += BATCH) {
-        const batch = STOCK_META.slice(i, i + BATCH);
-          const symbolsParam = batch.map(s => s.symbol.toUpperCase()).join(',');
-          try {
-          const responses = await Promise.all(batch.map(async s => {
-            const res = await fetch('https://query1.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(s.symbol) + '?range=1d&interval=1d');
-            if (!res.ok) return null;
-            const json = await res.json();
-            const meta = json.chart && json.chart.result && json.chart.result[0] && json.chart.result[0].meta;
-            return meta && Number.isFinite(meta.regularMarketPrice) ? { symbol: s.symbol, price: meta.regularMarketPrice } : null;
-          }));
-          responses.forEach(v => { if (v) priceMap[v.symbol] = v.price; });
-        } catch (batchErr) { /* seguimos con el resto de lotes aunque uno falle */ }
-        if (i + BATCH < STOCK_META.length) await new Promise(r => setTimeout(r, 800));
-      }
+      const res = await fetch('https://stockanalysis.com/api/quotes/s/' + encodeURIComponent(sym));
+      if (!res.ok) return null;
+      const json = await res.json();
+      const d = json && json.data;
+      if (!d || !Number.isFinite(d.p)) return null;
+      if (d.ms) stockMarketState = d.ms;
+      return { price: d.p, changePct: Number.isFinite(d.cp) ? d.cp : null, t: Date.now() };
+    } catch (e) { return null; }
+  }
 
-      const anyOk = Object.keys(priceMap).length > 0;
-      if (!anyOk) throw new Error('No stock data');
-
-      const newPrev = {};
-      stocks.forEach(c => { newPrev[c.id] = c.current_price; });
-      if (activeTab === 'stocks') prevPrices = newPrev;
-
-      stocks = STOCK_META.map(m => {
-        const price = priceMap[m.symbol] != null ? priceMap[m.symbol] : STOCK_FALLBACK[m.symbol];
-        const hist = stockHistory[m.symbol] || { first: price };
-        const pctSinceLoad = hist.first ? ((price - hist.first) / hist.first) * 100 : 0;
-        stockHistory[m.symbol] = { first: hist.first };
-        return {
-          id: m.symbol,
-          symbol: m.symbol,
-          name: m.name,
-          image: '📈',
-          current_price: price,
-          price_change_percentage_1h_in_currency: null,
-          price_change_percentage_24h_in_currency: pctSinceLoad,
-          price_change_percentage_7d_in_currency: null,
-          market_cap: null,
-          total_volume: null,
-        };
-      });
-
-      stocksLoaded = true;
-      stocksLive = true;
-      loading = false;
-      if (activeTab === 'stocks') {
-        errorBanner.style.display = 'none';
-        statusText.textContent = 'Updated ' + new Date().toLocaleTimeString('en-US');
-        render();
-        setTimeout(() => { prevPrices = {}; }, 900);
-      }
-    } catch (e) {
-      if (retry < 2) {
-        setTimeout(() => fetchStocks(retry + 1), 1500);
-        return;
-      }
-      stocks = STOCK_META.map(m => ({
-        id: m.symbol, symbol: m.symbol, name: m.name, image: '📈',
-        current_price: STOCK_FALLBACK[m.symbol],
+  function buildStocksFromCache() {
+    stocks = STOCK_META.map(m => {
+      const q = stockQuotes[m.symbol];
+      return {
+        id: m.symbol,
+        symbol: m.symbol,
+        name: m.name,
+        image: '📈',
+        current_price: q ? q.price : null, // sin dato en vivo no inventamos un precio
+        live: !!q,
         price_change_percentage_1h_in_currency: null,
-        price_change_percentage_24h_in_currency: null,
+        price_change_percentage_24h_in_currency: q ? q.changePct : null,
         price_change_percentage_7d_in_currency: null,
-        market_cap: null, total_volume: null,
-      }));
-      stocksLoaded = true;
-      stocksLive = false;
-      loading = false;
+        market_cap: null,
+        total_volume: null,
+      };
+    });
+  }
+
+  function stockStatusLine() {
+    const live = Object.keys(stockQuotes).length;
+    const closed = stockMarketState && stockMarketState !== 'open';
+    return 'Updated ' + new Date().toLocaleTimeString('en-US')
+      + ' · ' + live + '/' + STOCK_META.length + ' live'
+      + (closed ? ' · US market closed' : '');
+  }
+
+  // Pide cotizaciones en tandas pequeñas y va refrescando la tabla según llegan.
+  async function loadStockQuotes(symbols, token, batchSize, gap) {
+    const pending = symbols.filter(sym => {
+      const q = stockQuotes[sym];
+      return !q || Date.now() - q.t > STOCK_QUOTE_TTL;
+    });
+    for (let i = 0; i < pending.length; i += batchSize) {
+      if (token !== stockFetchToken) return;   // el usuario cambió de pestaña
+      const batch = pending.slice(i, i + batchSize);
+      const results = await Promise.all(batch.map(sym => fetchStockQuote(sym)));
+      let got = 0;
+      results.forEach((q, k) => { if (q) { stockQuotes[batch[k]] = q; got++; } });
+      if (i === 0 && got === 0 && Object.keys(stockQuotes).length === 0) throw new Error('stocks source down');
+      buildStocksFromCache();
       if (activeTab === 'stocks') {
-        errorBanner.style.display = 'block';
-        errorBanner.className = 'banner banner-info';
-        errorBanner.textContent = 'Could not connect to live stock data. Showing reference prices.';
-        statusText.textContent = 'Reference prices (offline)';
+        statusText.textContent = stockStatusLine();
+        render();
+      }
+      if (i + batchSize < pending.length) await new Promise(r => setTimeout(r, gap));
+    }
+  }
+
+  async function fetchStocks() {
+    const token = ++stockFetchToken;
+    const symbols = STOCK_META.map(m => m.symbol);
+    try {
+      stocksLoaded = true;
+      loading = false;
+      setBanner('stocks', 'Loading live prices…');
+      // Primero los de arriba, deprisa; el resto se van pidiendo poco a poco.
+      await loadStockQuotes(symbols.slice(0, STOCK_FIRST_PASS), token, 6, 200);
+      if (token !== stockFetchToken) return;
+      stocksLive = true;
+      setBanner('stocks', null);
+      await loadStockQuotes(symbols.slice(STOCK_FIRST_PASS), token, 6, 1500);
+    } catch (e) {
+      if (token !== stockFetchToken) return;
+      stocksLive = false;
+      buildStocksFromCache();
+      setBanner('stocks', 'No live stock prices right now — retrying in the background.');
+      if (activeTab === 'stocks') {
+        statusText.textContent = 'No live data';
         render();
       }
     }
@@ -1376,7 +1349,7 @@
         searchInput.placeholder = 'Search by name or symbol (BTC, ETH, SOL...)';
         document.getElementById('th-24h').textContent = '24h';
         loading = coins.length === 0;
-        errorBanner.style.display = 'none';
+        renderBanner();
       } else if (activeTab === 'commodities') {
         document.getElementById('page-title').textContent = 'Commodities';
         searchInput.placeholder = 'Search by name or symbol (Gold, Silver...)';
@@ -1385,27 +1358,15 @@
         // Reflect the true state immediately instead of hiding a warning that
         // was earned on a previous visit to this tab; retry in the background
         // if we're not currently getting live data.
-        if (commoditiesLoaded && !commoditiesLive) {
-          errorBanner.style.display = 'block';
-          errorBanner.className = 'banner banner-info';
-          errorBanner.textContent = 'Could not connect to live commodities data. Showing reference prices.';
-        } else {
-          errorBanner.style.display = 'none';
-        }
+        renderBanner();
         if (!commoditiesLive) fetchCommodities();
       } else if (activeTab === 'stocks') {
         document.getElementById('page-title').textContent = 'Stocks';
         searchInput.placeholder = 'Search by name or symbol (TSLA, AAPL...)';
-        document.getElementById('th-24h').textContent = 'Since load';
+        document.getElementById('th-24h').textContent = 'Today';
         loading = !stocksLoaded;
-        if (stocksLoaded && !stocksLive) {
-          errorBanner.style.display = 'block';
-          errorBanner.className = 'banner banner-info';
-          errorBanner.textContent = 'Could not connect to live stock data. Showing reference prices.';
-        } else {
-          errorBanner.style.display = 'none';
-        }
-        if (!stocksLive) fetchStocks();
+        renderBanner();
+        fetchStocks();
       }
       render();
     });
@@ -1435,7 +1396,11 @@
   setTimeout(() => fetchCommodities(), 2500);
   setInterval(() => fetchCoins(0), 10000);
   setInterval(() => { if (commoditiesLoaded) fetchCommodities(0); }, 30000);
-  setInterval(() => { if (stocksLoaded) fetchStocks(0); }, 30000);
+  setInterval(() => {
+    if (stocksLoaded && activeTab === 'stocks') {
+      loadStockQuotes(STOCK_META.slice(0, STOCK_FIRST_PASS).map(m => m.symbol), stockFetchToken, 6, 300).catch(() => {});
+    }
+  }, 60000);
 })();
 </script>
 
