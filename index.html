@@ -517,6 +517,7 @@
     cardano: 'A blockchain focused on research-driven development.',
     solana: 'Known for very fast, low-cost transactions.',
     XAU: 'Precious metal, traditionally used to protect savings.',
+    HG: 'Industrial metal used in wiring, construction and electric cars.',
     XAG: 'Cheaper than gold, also used heavily in electronics.',
     XPT: 'Rarer than gold, mostly used in industry and jewelry.',
     XPD: 'Mainly used in car exhaust systems (catalytic converters).',
@@ -1337,6 +1338,7 @@
 
   document.querySelectorAll('.tab-btn:not(.tab-link-external)').forEach(btn => {
     btn.addEventListener('click', () => {
+      if (activeTab === 'stocks' && btn.dataset.tab !== 'stocks') stockFetchToken++;
       activeTab = btn.dataset.tab;
       document.querySelectorAll('.tab-btn:not(.tab-link-external)').forEach(b => { b.classList.toggle('tab-active', b === btn); b.setAttribute('aria-selected', b === btn ? 'true' : 'false'); });
 
