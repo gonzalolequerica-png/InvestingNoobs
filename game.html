@@ -2858,7 +2858,9 @@ const RIVAL_STORY=[
 ];
 
 function ensureRival(){
-  if(!state.rival)state.rival={nw:Math.max(2000,netWorth()*0.8),lead:'player',hit:{},introduced:false,story:{}};
+  // Empieza casi a tu altura: antes arrancaba en 2.000$ frente a tus 500$ y el primer dia
+  // ya te sacaba un 75%, lo que no encaja con que "salio del mismo barrio que tu".
+  if(!state.rival)state.rival={nw:Math.max(300,netWorth()*0.9),lead:'player',hit:{},introduced:false,story:{}};
   if(!state.rival.story)state.rival.story={};
   return state.rival;
 }
@@ -3129,9 +3131,13 @@ const LIQUIDITY={'estable':1e12,'Índice':8e8,'forex':8e8,'metales':1.5e8,'mater
 function assetLiquidity(a){return (LIQUIDITY[a.tag]||3e7)*(1+(state.prestigeLevel||0)*0.5);}
 function slippage(a,value){return Math.min(0.25,0.6*Math.max(0,value)/assetLiquidity(a));}
 function totalTradeBonus(){return (state.tradeBonus||0)+getStyleBonus()+advisorTradeBonus();}
-function takeMarginDebt(id){
+function takeMarginDebt(id,part){
   if(!state.marginDebt||!state.marginDebt[id])return 0;
-  const d=state.marginDebt[id];delete state.marginDebt[id];return d;
+  const total=state.marginDebt[id];
+  const f=(typeof part==='number'&&isFinite(part))?Math.max(0,Math.min(1,part)):1;
+  const d=total*f;
+  if(f>=0.999999)delete state.marginDebt[id];else state.marginDebt[id]=total-d;
+  return d;
 }
 function totalMarginDebt(){return Object.values(state.marginDebt||{}).reduce((t,v)=>t+(Number(v)||0),0);}
 // Intereses diarios de la deuda de apalancamiento (0,1%/día)
@@ -3162,11 +3168,17 @@ function sellAsset(id){
   const holdings=getCapHoldings();
   const held=holdings[id]||0;
   if(held<=0){showToast('No tienes ese activo'+(isPersonal?'':' en esta cuenta'));return;}
+  // Las unidades pignoradas en un préstamo cripto no son tuyas hasta que lo saldes
+  const locked=isPersonal?Math.min(held,lockedUnits(id)):0;
+  const sellable=held-locked;
+  if(sellable<=0){showToast(L3('Esas unidades están bloqueadas como garantía de tu préstamo cripto','Those units are locked as collateral for your crypto loan','这些份额已被质押给你的加密贷款'));return;}
+  const part=sellable/held;   // venta parcial cuando hay colateral bloqueado
   // El bono de venta y el impuesto se aplican SOLO sobre el beneficio (valor - coste), no sobre todo lo vendido.
   // Antes se aplicaban al total, lo que permitía comprar y vender al instante (p.ej. StablUS) y ganar dinero gratis.
-  const value=held*a.price*(1-slippage(a,held*a.price)); // vender en grande también mueve el precio en tu contra
+  const value=sellable*a.price*(1-slippage(a,sellable*a.price)); // vender en grande también mueve el precio en tu contra
   const accB=isPersonal?null:getActiveAccount();
-  const basis=isPersonal?((state.costBasis&&state.costBasis[id])||0):((accB&&accB.longBasis&&accB.longBasis[id])||0);
+  const basisTotal=isPersonal?((state.costBasis&&state.costBasis[id])||0):((accB&&accB.longBasis&&accB.longBasis[id])||0);
+  const basis=basisTotal*part;   // sólo el coste de la parte que vendes
   const gain=basis>0?value-basis:0; // sin coste registrado (partidas antiguas) no hay bono
   const bonusRate=totalTradeBonus();
   const tax=isPersonal?(state.taxRate||0):0; // las cuentas fondeadas no pagan tu impuesto personal
@@ -3174,16 +3186,16 @@ function sellAsset(id){
   if(gain>0)proceeds=basis+gain*(1+bonusRate)*(1-tax);
   const sellFee=proceeds*TRADE_FEE;
   proceeds-=sellFee;
-  // Si compraste con apalancamiento, primero se devuelve lo prestado
-  const debt=isPersonal?takeMarginDebt(id):0;
+  // Si compraste con apalancamiento, primero se devuelve lo prestado (en proporción a lo vendido)
+  const debt=isPersonal?takeMarginDebt(id,part):0;
   const cash=getCapCash();
   setCapCash(cash+proceeds-debt);
-  holdings[id]=0;inputValues[id]=0;
+  holdings[id]=locked;inputValues[id]=0;
   const el=document.getElementById('inp_'+id);if(el)el.value='';
-  if(isPersonal){ensureStats();const basis=state.costBasis[id]||0, result=proceeds-basis;state.stats.profit+=result;if(result>0){state.stats.winningTrades++;playSound('chaching');}else if(result<0){playSound('loss');}if(result<state.stats.worstLoss)state.stats.worstLoss=result;state.costBasis[id]=0;state.totalEarned+=proceeds;state.totalSells++;}
+  if(isPersonal){ensureStats();const result=proceeds-basis;state.stats.profit+=result;if(result>0){state.stats.winningTrades++;playSound('chaching');}else if(result<0){playSound('loss');}if(result<state.stats.worstLoss)state.stats.worstLoss=result;state.costBasis[id]=basisTotal-basis;state.totalEarned+=proceeds;state.totalSells++;}
   else{
     const acc=getActiveAccount();
-    if(acc&&acc.longBasis){acc.longBasis[id]=0;}
+    if(acc&&acc.longBasis){acc.longBasis[id]=basisTotal-basis;}
   }
   vibrate(18);
   showToast((isPersonal?'':'💼 ')+'Vendido por '+fmt(proceeds-debt)+' ('+L3('comisión','fee','手续费')+' '+fmt(sellFee)+')'+((gain>0&&bonusRate>0)?' (+bono)':'')+((gain>0&&tax>0)?' (-impuesto)':'')+(debt>0?' (-deuda '+fmt(debt)+')':''));
@@ -4208,28 +4220,53 @@ function recalcScore(){
 }
 
 // Pedir préstamo
+// La cripto pignorada es, por definición, la que respalda los préstamos cripto vivos.
+// Antes se anotaba suelta en state.bank.cryptoCollateral, no se soltaba al saldar el préstamo
+// y, sobre todo, nadie impedía venderla: se podía pedir el préstamo, vender el colateral y
+// quedarse con el dinero de los dos lados.
+function syncCryptoCollateral(){
+  if(!state.bank)return;
+  const lock={};
+  (state.bank.loans||[]).forEach(l=>{
+    if(l.type!=='crypto'||!(l.remaining>0.01))return;
+    Object.keys(l.collateral||{}).forEach(id=>{
+      const u=Number(l.collateral[id]);
+      if(isFinite(u)&&u>0)lock[id]=(lock[id]||0)+u;
+    });
+  });
+  state.bank.cryptoCollateral=lock;
+}
+function lockedUnits(id){
+  const u=state.bank&&state.bank.cryptoCollateral&&state.bank.cryptoCollateral[id];
+  return (typeof u==='number'&&isFinite(u)&&u>0)?u:0;
+}
 function requestLoan(type, amount){
   const rate = interestRate(type);
   if(rate===null){ showToast('Tu rating no permite este producto'); return; }
   const max = maxLoan(type);
-  if(amount <= 0 || amount > max){ showToast('Cantidad fuera de límite (máx '+fmt(max)+')'); return; }
+  // NaN no cumple ninguna de las dos comparaciones, asi que se colaba y dejaba la caja en NaN
+  amount = Number(amount);
+  if(!isFinite(amount) || amount <= 0 || amount > max){ showToast('Cantidad fuera de límite (máx '+fmt(max)+')'); return; }
+  let lock=null;
   if(type==='crypto'){
-    // Bloquear cripto proporcional
+    // Sólo cuenta como colateral la cripto que todavía está libre: la que ya respalda
+    // otro préstamo no se puede volver a pignorar.
+    const freeUnits=id=>Math.max(0,(state.holdings[id]||0)-lockedUnits(id));
     const totalCryptoVal = CRYPTO_IDS.reduce((s,id)=>{
-      const a=ASSETS.find(x=>x.id===id); return s+(a?(state.holdings[id]||0)*a.price:0);
+      const a=ASSETS.find(x=>x.id===id); return s+(a?freeUnits(id)*a.price:0);
     },0);
-    if(totalCryptoVal*0.5 < amount){ showToast('No tienes suficiente cripto como colateral'); return; }
-    // Bloquear el 2x del préstamo en valor cripto
-    const needed = amount * 2;
-    let remaining = needed;
+    if(totalCryptoVal*0.5 < amount){ showToast('No tienes suficiente cripto libre como colateral'); return; }
+    // Bloquear el 2x del préstamo en valor cripto, anotado en el propio préstamo
+    let remaining = amount * 2;
+    lock={};
     CRYPTO_IDS.forEach(id=>{
       if(remaining<=0)return;
       const a=ASSETS.find(x=>x.id===id);
       if(!a)return;
-      const val=(state.holdings[id]||0)*a.price;
-      if(val<=0)return;
-      const unitsToLock=Math.min(state.holdings[id], remaining/a.price);
-      state.bank.cryptoCollateral[id]=(state.bank.cryptoCollateral[id]||0)+unitsToLock;
+      const free=freeUnits(id);
+      if(free<=0)return;
+      const unitsToLock=Math.min(free, remaining/a.price);
+      lock[id]=(lock[id]||0)+unitsToLock;
       remaining -= unitsToLock*a.price;
     });
   }
@@ -4243,8 +4280,10 @@ function requestLoan(type, amount){
     daysOverdue: 0, status:'active',
     label: {personal:'Préstamo Personal',business:'Préstamo Empresarial',mortgage:'Hipoteca',revolving:'Línea Revolving',crypto:'Cripto-Colateral'}[type]
   };
+  if(lock)loan.collateral=lock;
   if(type==='revolving'){ state.bank.revolvingUsed += amount; }
   else { state.bank.loans.push(loan); }
+  syncCryptoCollateral();
   state.cash += amount;
   showToast('✅ '+fmt(amount)+' recibido — TIN '+Math.round(rate*100)+'%/año');
   recalcScore();
@@ -4262,20 +4301,9 @@ function payLoan(loanId, amount){
   loan.remaining -= pay;
   state.bank.totalPaid += pay;
   if(loan.remaining <= 0.01){
-    // Préstamo saldado — liberar colateral si era cripto
-    if(loan.type==='crypto'){
-      Object.keys(state.bank.cryptoCollateral).forEach(id=>{
-        const a=ASSETS.find(x=>x.id===id);
-        if(!a)return;
-        const loanShare = loan.amount / (CRYPTO_IDS.reduce((s,cid)=>{
-          const ca=ASSETS.find(x=>x.id===cid);return s+(ca?(state.bank.cryptoCollateral[cid]||0)*ca.price:0);
-        },0)||1);
-        // liberar proporcionalmente
-        const toFree = (state.bank.cryptoCollateral[id]||0)*loanShare;
-        state.bank.cryptoCollateral[id] = Math.max(0,(state.bank.cryptoCollateral[id]||0)-toFree);
-      });
-    }
+    // Préstamo saldado — el colateral de ESE préstamo se libera solo al recalcular
     state.bank.loans = state.bank.loans.filter(l=>l.id!==loanId);
+    syncCryptoCollateral();
     state.bank.ratingScore = Math.min(850, state.bank.ratingScore+20);
     showToast('🎉 Préstamo saldado completamente');
   } else {
@@ -4335,8 +4363,9 @@ function bankDailyTick(){
     const rate = interestRate('revolving');
     if(rate) state.bank.revolvingUsed *= (1+rate/365);
   }
-  // Limpiar préstamos saldados
+  // Limpiar préstamos saldados (y soltar el colateral que respaldaban)
   state.bank.loans = state.bank.loans.filter(l=>l.remaining>0.01);
+  syncCryptoCollateral();
   // Recalcular score diariamente
   recalcScore();
   if(document.getElementById('screenBank').classList.contains('active')) renderBankScreen();
@@ -7509,6 +7538,8 @@ function applySaveObject(obj){
       sanitizeShorts(acc.shorts);
       return typeof acc.size==='number'&&typeof acc.floor==='number'&&typeof acc.target==='number';
     });
+    // Partidas antiguas: el colateral vivia suelto y podia quedarse bloqueado para siempre
+    syncCryptoCollateral();
     applyCompanionName(state.companionName);
     applyLanguage();
     return true;
