@@ -2264,9 +2264,12 @@ function updateAlanBox(){
   var tag=document.getElementById('missionTag');
   if(tag)tag.style.display='';
   var ch=CHAPTERS[state.chapterIdx];
-  document.getElementById('alanMsg').textContent=ch.short;
+  document.getElementById('alanMsg').textContent=T(ch.short);
   var q=state.alanQueue.length;
-  document.getElementById('alanTap').textContent=q>0?'💬 '+companionName()+' tiene '+q+' mensaje(s) →':'💬 Habla con '+companionName()+' para recibir ayuda →';
+  var companion=companionName(),lang=state.language||'es';
+  document.getElementById('alanTap').textContent=q>0
+    ?(lang==='en'?'💬 '+companion+' has '+q+' message(s) →':lang==='zh'?'💬 '+companion+'有'+q+'条消息 →':'💬 '+companion+' tiene '+q+' mensaje(s) →')
+    :(lang==='en'?'💬 Talk to '+companion+' for help →':lang==='zh'?'💬 与'+companion+'对话获取帮助 →':'💬 Habla con '+companion+' para recibir ayuda →');
   var el=document.getElementById('alanMsgCount');
   el.style.display=q>0?'':'none';
   if(q>0)el.textContent=q;
