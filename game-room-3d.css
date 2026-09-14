@@ -3,6 +3,10 @@ html body.room-enabled .app:has(#screenMain.active) {
   width:100%; max-width:1000px; height:100vh; height:100dvh;
   padding-top:54px; background:#0c1520;
 }
+/* La app cambiaba de ancho segun la pantalla activa: en Inicio se ensanchaba hasta 1000px y en
+   el resto volvia a los 440px de siempre, asi que al cambiar de pestana la barra de abajo (y todo
+   lo demas) daba un salto hacia la derecha. El ancho es ahora el mismo en todas las pantallas. */
+html body.room-enabled .app {width:100%;max-width:1000px;}
 body.room-enabled #screenMain {min-height:0;}
 body.room-enabled .app:has(#screenMain.active) .topbar {
   height:60px; margin:0 14px 9px; padding:10px 16px;
@@ -51,15 +55,18 @@ body.room-enabled #screenMain .alanBox {margin:0 14px 0;padding:9px 12px;min-hei
 body.room-enabled #screenMain .alanHead {margin-bottom:3px;}
 body.room-enabled #screenMain .alanMsg {font-size:11px;line-height:1.4;}
 body.room-enabled #screenMain .alanTap {font-size:10px;}
-body.room-enabled #screenMain .bottomnav {height:auto!important;min-height:66px!important;margin:auto 0 0!important;padding:4px 6px calc(4px + env(safe-area-inset-bottom,0px))!important;flex:0 0 auto!important;border:1px solid #293c49!important;border-bottom:0!important;background:#111e29!important;border-radius:14px 14px 0 0!important;box-shadow:none!important;}
-body.room-enabled #screenMain .bottomnav .bnav {height:56px!important;min-height:44px!important;font-size:10px!important;gap:4px!important;text-shadow:none!important;border-radius:10px!important;}
-body.room-enabled #screenMain .bottomnav .bnav .icon {width:24px!important;height:24px!important;flex-basis:24px!important;background:transparent!important;box-shadow:none!important;border:0!important;font-size:19px!important;}
-body.room-enabled #screenMain .bottomnav .bnav.active {background:#26372f!important;border-color:#52664e!important;box-shadow:none!important;color:#e3eccf!important;}
+/* La barra de navegacion es la misma en todas las pantallas. Estas reglas estaban limitadas
+   a #screenMain, asi que al cambiar de pestana la barra cambiaba de alto, de tamano de icono
+   y de reparto horizontal. */
+body.room-enabled .bottomnav {height:auto!important;min-height:66px!important;margin:auto 0 0!important;padding:4px 6px calc(4px + env(safe-area-inset-bottom,0px))!important;flex:0 0 auto!important;border:1px solid #293c49!important;border-bottom:0!important;background:#111e29!important;border-radius:14px 14px 0 0!important;box-shadow:none!important;}
+body.room-enabled .bottomnav .bnav {height:56px!important;min-height:44px!important;font-size:10px!important;gap:4px!important;text-shadow:none!important;border-radius:10px!important;}
+body.room-enabled .bottomnav .bnav .icon {width:24px!important;height:24px!important;flex-basis:24px!important;background:transparent!important;box-shadow:none!important;border:0!important;font-size:19px!important;}
+body.room-enabled .bottomnav .bnav.active {background:#26372f!important;border-color:#52664e!important;box-shadow:none!important;color:#e3eccf!important;}
 body.room-enabled .tutorialBtn {z-index:10;}
 body.room-enabled:has(#screenMain.active) #askSteveBtn {width:36px;height:36px;min-height:36px;font-size:18px;right:17px;bottom:97px;box-shadow:none;}
 @media(min-width:701px) {
   body.room-enabled {background:radial-gradient(ellipse at 50% 40%,#253843,#080f17 70%);}
-  body.room-enabled .app:has(#screenMain.active) {border-left:1px solid #24333f;border-right:1px solid #24333f;}
+  body.room-enabled .app {border-left:1px solid #24333f;border-right:1px solid #24333f;}
   body.room-enabled #screenMain .alanBox {padding:9px 15px;}
   body.room-enabled #screenMain .statsRow {gap:10px;}
 }
@@ -75,8 +82,8 @@ body.room-enabled:has(#screenMain.active) #askSteveBtn {width:36px;height:36px;m
   body.room-enabled #screenMain .statPill .sl {font-size:8px;letter-spacing:0;}
   body.room-enabled #screenMain .statPill .sv {font-size:12px;}
   body.room-enabled #screenMain .alanBox {margin:0 8px;min-height:55px;padding:7px 10px;}
-  body.room-enabled #screenMain .bottomnav {margin:auto 0 0!important;height:auto!important;min-height:62px!important;}
-  body.room-enabled #screenMain .bottomnav .bnav {height:51px!important;font-size:9px!important;}
+  body.room-enabled .bottomnav {margin:auto 0 0!important;height:auto!important;min-height:62px!important;}
+  body.room-enabled .bottomnav .bnav {height:51px!important;font-size:9px!important;}
   .room-heading {left:14px;top:13px;}
   .room-eyebrow {font-size:8px;}
   .room-title {font-size:17px;}
@@ -112,8 +119,8 @@ body.room-enabled:has(#screenMain.active) #askSteveBtn {width:36px;height:36px;m
   body.room-enabled #screenMain > div:has(> #languageHomeSelect) {display:none!important;}
   body.room-enabled #screenMain .alanBox {grid-column:2;grid-row:2;align-self:center;margin-left:0;}
   body.room-enabled #screenMain .bottomnav {grid-column:2;grid-row:3;margin:0 8px 8px 0!important;}
-  body.room-enabled #screenMain .bottomnav .bnav {font-size:7px!important;}
-  body.room-enabled #screenMain .bottomnav .bnav .icon {width:20px!important;font-size:15px!important;}
+  body.room-enabled .bottomnav .bnav {font-size:7px!important;}
+  body.room-enabled .bottomnav .bnav .icon {width:20px!important;font-size:15px!important;}
   body.room-enabled:has(#screenMain.active) #askSteveBtn {bottom:90px;}
   .room-toolbar {top:35px;bottom:auto;right:8px;}
   .room-toolbar button:first-child {display:none;}

@@ -9,7 +9,7 @@
   - Imagenes, sonidos y scripts del juego: primero lo guardado y se actualiza por detras.
   - Todo lo demas: no se intercepta.
 */
-const VERSION = 'tycoon-v6';
+const VERSION = 'tycoon-v7';
 const CORE_CACHE = VERSION + '-core';
 const RUN_CACHE = VERSION + '-run';
 const RUN_MAX = 140; // tope de archivos guardados sobre la marcha
@@ -22,7 +22,7 @@ const CORE = [
   'game-career.css?v=20260906-1',
   'game-finance.js?v=20260906-1',
   'game-room-3d.js?v=20260912-1',
-  'game-room-3d.css?v=20260912-1',
+  'game-room-3d.css?v=20260914-1',
   'vendor/three/three.core.min.js',
   'vendor/three/three.module.min.js',
   'game-icon-192.png',
