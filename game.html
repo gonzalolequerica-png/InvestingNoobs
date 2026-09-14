@@ -2,6 +2,11 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<script>
+/* Idioma inicial segun el navegador. Solo actua si el visitante no ha elegido
+   idioma antes: si ya hay preferencia guardada, se respeta. */
+(function(){try{var k='ct_language_pref';if(!localStorage.getItem(k)){var l=(navigator.language||navigator.userLanguage||'es').toLowerCase();var v=l.indexOf('es')===0?'es':(l.indexOf('zh')===0?'zh':'en');localStorage.setItem(k,v);}}catch(e){}})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Investing Noobs Tycoon</title>
 <link rel="manifest" href="game-manifest.json">
@@ -6939,7 +6944,8 @@ function renderTutorialStep(){
   document.getElementById('tutorialText').textContent=s[1];
   const selector=TUTORIAL_FOCUS[tutorialStep];
   if(selector){const target=document.querySelector('#'+TUTORIAL_TARGETS[tutorialStep]+' '+selector);if(target)target.classList.add('tutorialFocus');}
-  const b=document.getElementById('tutorialNext');b.textContent=tutorialStep===TUTORIAL_STEPS.length-1?'Terminar':'Siguiente';
+  const b=document.getElementById('tutorialNext');b.textContent=tutorialStep===TUTORIAL_STEPS.length-1?(cineLang()==='en'?'Finish':(cineLang()==='zh'?'完成':'Terminar')):'Siguiente';
+  try{translateVisibleText();}catch(e){} /* el tutorial se rellena despues del pase de traduccion */
 }
 function nextTutorialStep(){if(tutorialStep>=TUTORIAL_STEPS.length-1){closeTutorial();goScreen('screenMain');return;}tutorialStep++;goScreen(TUTORIAL_TARGETS[tutorialStep]||'screenMain');setTimeout(renderTutorialStep,80);}
 function syncBottomNav(activeTarget){
@@ -8070,6 +8076,11 @@ const CINE_LINES=[
   "Vamos a montar algo desde este cuarto. Tú y yo. ¿Estás dentro?"
 ];
 let cineLineIndex=0,cineCharIndex=0,cineTyping=false,cineTypeTimer=null;
+/* La intro se escribe letra a letra, asi que el pase de traduccion del DOM no la
+   alcanza: se traduce en el momento de escribirla. */
+function cineLang(){ try{ return (window.state&&state.language)||localStorage.getItem('ct_language_pref')||'es'; }catch(e){ return 'es'; } }
+function cineTxt(v){ try{ return translateRuntimeText(v, cineLang()); }catch(e){ return v; } }
+function cineGo(){ var l=cineLang(); return l==='en'?'Here we go!':(l==='zh'?'出发吧！':'¡Vamos allá!'); }
 function showCineIntro(){
   const overlay=document.getElementById('cineIntro');
   if(!overlay){ runFreshGameInit(); return; }
@@ -8089,7 +8100,7 @@ function showCineIntro(){
   cineLineIndex=0;cineCharIndex=0;cineTyping=false;
   document.getElementById('cineDialogueWrap').classList.remove('show');
   document.getElementById('cineTapHint').classList.remove('visible');
-  document.getElementById('cineTapHint').textContent='Toca para continuar';
+  document.getElementById('cineTapHint').textContent=cineTxt('Toca para continuar');
   document.getElementById('cineCursor').style.display='inline-block';
   document.getElementById('cineDialogueTextInner').textContent='';
   document.getElementById('cineDialogueBox').style.pointerEvents='';
@@ -8111,7 +8122,7 @@ function typeCineLine(){
   cursor.style.display='inline-block';
   textEl.textContent='';
   cineCharIndex=0;
-  const line=CINE_LINES[cineLineIndex];
+  const line=cineTxt(CINE_LINES[cineLineIndex]);
   function tick(){
     if(cineCharIndex<line.length){
       textEl.textContent+=line.charAt(cineCharIndex);
@@ -8126,7 +8137,7 @@ function typeCineLine(){
 }
 function completeCineLine(){
   clearTimeout(cineTypeTimer);
-  document.getElementById('cineDialogueTextInner').textContent=CINE_LINES[cineLineIndex];
+  document.getElementById('cineDialogueTextInner').textContent=cineTxt(CINE_LINES[cineLineIndex]);
   cineTyping=false;
   document.getElementById('cineTapHint').classList.add('visible');
 }
@@ -8138,7 +8149,7 @@ function advanceCineIntro(){
 function finishCineIntro(){
   document.getElementById('cineCursor').style.display='none';
   const tapHint=document.getElementById('cineTapHint');
-  tapHint.textContent='¡Vamos allá!';
+  tapHint.textContent=cineGo();
   tapHint.classList.add('visible');
   document.getElementById('cineDialogueBox').style.pointerEvents='none';
   if(!state.scenesSeen)state.scenesSeen={};
@@ -8192,8 +8203,8 @@ showMainMenu();
 <script id="game-locale-polish-final">
 (function(){
   var maps={
-    en:[['Se desbloquea en el siguiente capítulo','Unlocks in the next chapter'],['Se desbloquea más adelante','Unlocks later'],['Cartera:','Holdings:'],['Cantidad en $','Amount in $'],['Vender todo','Sell all'],['Val.','Sell'],['Comprar','Buy'],['Caja (fondeada)','Funded cash'],['Sin abrir','Not open'],['Niv.','Lvl.'],['Día','Day'],['día','day']],
-    zh:[['Se desbloquea en el siguiente capítulo','在下一章解锁'],['Se desbloquea más adelante','稍后解锁'],['Personal','个人'],['Cartera:','持仓：'],['Cantidad en $','金额（$）'],['Vender todo','全部卖出'],['Val.','卖出'],['Comprar','买入'],['Caja (fondeada)','资金账户'],['Caja','现金'],['Sin abrir','未开启'],['Día','天'],['día','天']]
+    en:[['Se desbloquea en el siguiente capítulo','Unlocks in the next chapter'],['Se desbloquea más adelante','Unlocks later'],['Cartera:','Holdings:'],['Cantidad en $','Amount in $'],['Vender todo','Sell all'],['Val.','Sell'],['Comprar','Buy'],['Caja (fondeada)','Funded cash'],['Sin abrir','Not open'],['Niv.','Lvl.'],['Día','Day'],['día','day'],['sell TODO','SELL ALL'],['VENDER TODO','SELL ALL'],['Próximo activo en ','Next asset unlocks at '],['Nivel máximo','Max level'],['Nivel ','Level '],['Caja:','Cash:'],['Cantidad en $','Amount in $'],['Operar en ','Trade '],['Vender todo','Sell all']],
+    zh:[['Se desbloquea en el siguiente capítulo','在下一章解锁'],['Se desbloquea más adelante','稍后解锁'],['Personal','个人'],['Cartera:','持仓：'],['Cantidad en $','金额（$）'],['Vender todo','全部卖出'],['Val.','卖出'],['Comprar','买入'],['Caja (fondeada)','资金账户'],['Caja','现金'],['Sin abrir','未开启'],['Día','天'],['día','天'],['Se desbloquea en el siguiente 章节','在下一章解锁'],['卖出 TODO','全部卖出'],['卖出TODO','全部卖出'],['VENDER TODO','全部卖出'],['Próximo activo en ','下一资产解锁需净资产 '],['Nivel máximo','最高等级'],['Nivel ','等级 '],['Caja:','现金：'],['Cantidad en $','金额（$）'],['Operar en ','交易 '],['Vender todo','全部卖出']]
   };
   var cleanZh=[
     ['起点','你从 $500 开始。理性投资，建立你的第一份资产。','我开始时比你还穷。看看我现在的样子。','你有500美元作为起点。先用小额资金进入市场，边做边学，再承担更大的风险。建立第一个业务，让被动收入帮助你成长。目标：净资产达到 $7,000。'],
@@ -8228,6 +8239,9 @@ showMainMenu();
     if(busy)return;busy=true;
     try{
       var lang=language();applyCleanZh();walkText(lang);
+      if(lang!=='es'){var pmap=maps[lang]||[];document.querySelectorAll('input[placeholder]').forEach(function(el){var v=el.getAttribute('placeholder')||'';pmap.forEach(function(pair){v=v.split(pair[0]).join(pair[1]);});if(v!==el.getAttribute('placeholder'))el.setAttribute('placeholder',v);});}
+      var cashL=document.getElementById('tradeCashLabel');
+      if(cashL&&lang!=='es'){var cv=lang==='en'?'Cash':'现金';if(cashL.textContent!==cv)cashL.textContent=cv;}
       var img=document.getElementById('mainCharacterImage');
       if(img)img.alt=lang==='zh'?'主角':lang==='en'?'Trader character':'Personaje principal';
       if(lang==='zh'&&typeof updateAlanBox==='function'){
