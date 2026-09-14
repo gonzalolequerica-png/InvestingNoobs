@@ -65,6 +65,60 @@
     .site-nav{display:flex;align-items:center;gap:3px;padding:4px;border:1px solid rgba(139,184,255,.18);border-radius:11px;background:rgba(17,25,37,.72)}.site-nav a{padding:7px 10px;border-radius:7px;color:#afbed1;font:600 11px 'IBM Plex Mono',monospace;text-decoration:none;transition:background .18s,color .18s}.site-nav a:hover,.site-nav a:focus-visible,.site-nav a[aria-current=page]{background:rgba(234,181,77,.13);color:var(--gold);outline:none}.site-nav a:focus-visible{box-shadow:0 0 0 2px rgba(234,181,77,.35)}.article-toc{margin:0 0 26px;padding:16px 18px;border:1px solid rgba(139,184,255,.2);border-radius:12px;background:rgba(52,91,145,.1)}.article-toc-title{margin:0 0 9px;color:var(--blue);font:600 11px 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase}.article-toc-list{display:flex;flex-wrap:wrap;gap:7px 16px;margin:0;padding:0;list-style:none}.article-toc a{color:#cbdcf2;font-size:13px;text-underline-offset:3px}.article-toc a:hover,.article-toc a:focus-visible{color:var(--gold)}
     @media(max-width:620px){.site-nav{display:none}.article-toc{padding:15px 16px}.article-toc-list{display:grid;gap:8px}.article-toc a{font-size:14px}}
     .brand{color:var(--text)}
+
+    /* ====== Lectura editorial: columna ancha, alineado a la izquierda, banner arriba.
+       Misma paleta y tipografia del sitio; solo cambia el ritmo de lectura. ====== */
+    main{max-width:840px;padding:42px 20px 96px}
+    .eyebrow{text-align:left;margin:0 0 22px}
+    .lesson-art{border:none;border-radius:18px;margin:0 0 34px;box-shadow:0 26px 60px rgba(0,0,0,.42)}
+    .lesson-art figcaption{padding:10px 2px 0;color:#7d8da0}
+    #article h1{text-align:left;background:none;-webkit-text-fill-color:currentColor;color:var(--text);text-shadow:none;
+      font-size:clamp(2.1rem,5.4vw,3.6rem);line-height:1.07;letter-spacing:-.02em;margin:0 0 14px}
+    .byline{margin:0 0 6px;color:var(--gold);font:600 .95rem/1.6 'IBM Plex Mono',monospace}
+    .lesson-name{text-align:left;color:#8fa0b5;font-size:.98rem;margin:0 0 22px}
+    .article-meta{justify-content:flex-start;margin:0 0 30px;font-size:11px}
+    .rule{margin-left:0}
+    .summary{max-width:68ch;font-size:1.28rem;line-height:1.7;color:#dce6f2}
+    .section{border-top:1px solid rgba(255,255,255,.12);margin-top:38px;padding-top:34px}
+    .section h2,.deep-section h2{font-size:clamp(1.55rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.015em;line-height:1.18;margin:0 0 18px;color:var(--text)}
+    .section p,.longform-section p,.example p,.exercise p,.advice p,.longform-intro{max-width:68ch;font-size:1.14rem;line-height:1.85;color:#c8d3e1;margin:0 0 20px}
+    .checklist ul,.sources ul,.terms,.steps{max-width:68ch;font-size:1.1rem;line-height:1.8;color:#c8d3e1}
+    .checklist li,.terms li,.steps li{margin:12px 0}
+    .example,.checklist,.exercise,.advice,.course-context{padding:34px 0 0;margin-top:38px;border-top:1px solid rgba(255,255,255,.12)}
+    .example h3,.checklist h3,.exercise h3,.advice h3{font-size:12px;margin:0 0 14px}
+    .longform-section h3{font-size:clamp(1.4rem,3vw,1.8rem);font-weight:800;letter-spacing:-.015em}
+    .lead-in{font-size:1.02rem!important;max-width:68ch}
+    @media(max-width:620px){
+      main{max-width:none;padding:30px 16px 70px}
+      .section p,.longform-section p,.example p,.exercise p,.advice p{font-size:1.06rem;line-height:1.78}
+      .summary{font-size:1.12rem}
+      .section{margin-top:30px;padding-top:26px}
+    }
+
+    /* El articulo deja de ser una tarjeta: texto directo sobre el fondo, como una pagina editorial. */
+    #article{border:none!important;border-radius:0!important;padding:0!important;background:none!important;
+      display:flex;flex-direction:column}
+    #article>.eyebrow{order:-10}#article>.lesson-art{order:-9}#article>h1{order:-8}#article>.byline{order:-7}
+    #article>.rule{order:-6}#article>.lesson-name{order:-5}#article>.article-meta{order:-4}
+    #article>.summary{order:-3}#article>.article-toc{order:-2}
+    /* Los controles de la pagina (progreso, audio, herramientas) van al final, no delante del texto. */
+    #article>.reading-progress{order:6}#article>.lesson-audio{order:7}#article>.article-tools{order:8}
+    #article>.disclaimer{order:9}#article>.actions{order:10}
+    .reading-progress,.lesson-audio,.article-toc,.article-tools{border:none!important;background:none!important;
+      border-radius:0!important;padding:26px 0 0!important;margin:30px 0 0!important;border-top:1px solid rgba(255,255,255,.12)!important}
+    .lesson-art figcaption{padding:12px 2px 0!important;color:#7d8da0;font-size:11px}
+    .rule{width:110px;height:1px;background:rgba(234,181,77,.55);margin:18px 0 22px}
+
+    /* Limpieza final: sin duplicados ni pie de foto, y menos aire entre secciones. */
+    #article>.eyebrow{display:none}           /* ya hay uno arriba de la pagina */
+    #article>.lesson-name{display:none}       /* "Lesson 07" ya sale en la fila de datos */
+    .lesson-art figcaption{display:none}
+    .lesson-art{margin-bottom:30px}
+    .section,.example,.checklist,.exercise,.advice,.course-context{margin-top:30px;padding-top:28px}
+    .section p:last-child,.longform-section p:last-child,.example p:last-child,.advice p:last-child{margin-bottom:0}
+    .checklist ul,.sources ul,.terms,.steps{margin-bottom:0}
+    #article>.summary{margin:22px 0 0}
+    .article-meta{margin:2px 0 0}
   </style>
 <style id="lesson-audio-style">
 .lesson-audio{margin:25px 0 3px;padding:18px 19px;border:1px solid rgba(234,181,77,.32);border-radius:13px;background:linear-gradient(135deg,rgba(234,181,77,.09),rgba(52,91,145,.12));box-shadow:0 9px 24px rgba(0,0,0,.16)}
@@ -94,7 +148,7 @@
     const n=Number(id.slice(1)),previous=n>1?'l'+(n-1):'',next=n<50?'l'+(n+1):'';
     document.title=item.t+' | InvestingNoobs';document.querySelector('meta[name="description"]').content=item.s;document.querySelector('meta[property="og:title"]').content=item.t;document.querySelector('meta[property="og:description"]').content=item.s;document.querySelector('link[rel="canonical"]').href=(window.__LESSON_ID__?location.origin+location.pathname:'https://investingnoobs.com/'+U(id));document.querySelector('meta[property="og:url"]').content=location.href;const ogImg=document.querySelector('meta[property="og:image"]'),twImg=document.querySelector('meta[name="twitter:image"]'),lessonImgUrl='https://investingnoobs.com/og-images/lesson-'+n+'.png';if(ogImg)ogImg.content=lessonImgUrl;if(twImg)twImg.content=lessonImgUrl;
     const guide=item.g.map(p=>'<p>'+esc(p)+'</p>').join(''),checks=item.c.map(p=>'<li>'+esc(p)+'</li>').join(''),source=item.src?'<div class="sources"><h3>Further reading</h3><ul><li><a href="'+esc(item.src[0])+'" target="_blank" rel="noopener">'+esc(item.src[1])+'</a></li></ul></div>':'';
-    root.innerHTML='<div class="eyebrow">INVESTINGNOOBS LEARNING SERIES</div><h1>'+esc(item.t)+'</h1><div class="rule"></div><p class="lesson-name">Lesson '+String(n).padStart(2,'0')+' · practical guide</p><p class="summary">'+esc(item.s)+'</p><section class="section"><h2>How it works</h2>'+guide+'</section><div class="example"><h3>Worked example</h3><p class="lead-in">Numbers make an idea concrete. Here is a small, illustrative one — not a forecast.</p><p>'+esc(item.e)+'</p></div><div class="checklist"><h3>Before you act</h3><p class="lead-in">Run through these questions before you commit any money or make a decision based on this lesson:</p><ul>'+checks+'</ul></div><div class="exercise"><h3>Practice this lesson</h3><p class="lead-in">Reading is a start; doing the exercise is what makes the idea stick.</p><p>'+esc(item.x)+'</p></div>'+source+'<p class="disclaimer"><strong>Educational content only:</strong> This guide is not personal financial, legal or tax advice. Markets involve risk, including the possible loss of capital. Verify current rules, fees and product availability in your country.</p><div class="actions"><a class="button" href="'+(previous?U(previous):'blog.html')+'">← '+(previous?'Previous article':'All lessons')+'</a><a class="button primary" href="'+(next?U(next):'test.html')+'">'+(next?'Next article →':'Take the final test →')+'</a></div>';
+    root.innerHTML='<div class="eyebrow">INVESTINGNOOBS LEARNING SERIES</div><h1>'+esc(item.t)+'</h1><p class="byline">By InvestingNoobs · Learning series</p><div class="rule"></div><p class="lesson-name">Lesson '+String(n).padStart(2,'0')+' · practical guide</p><p class="summary">'+esc(item.s)+'</p><section class="section"><h2>How it works</h2>'+guide+'</section><div class="example"><h3>Worked example</h3><p class="lead-in">Numbers make an idea concrete. Here is a small, illustrative one — not a forecast.</p><p>'+esc(item.e)+'</p></div><div class="checklist"><h3>Before you act</h3><p class="lead-in">Run through these questions before you commit any money or make a decision based on this lesson:</p><ul>'+checks+'</ul></div><div class="exercise"><h3>Practice this lesson</h3><p class="lead-in">Reading is a start; doing the exercise is what makes the idea stick.</p><p>'+esc(item.x)+'</p></div>'+source+'<p class="disclaimer"><strong>Educational content only:</strong> This guide is not personal financial, legal or tax advice. Markets involve risk, including the possible loss of capital. Verify current rules, fees and product availability in your country.</p><div class="actions"><a class="button" href="'+(previous?U(previous):'blog.html')+'">← '+(previous?'Previous article':'All lessons')+'</a><a class="button primary" href="'+(next?U(next):'test.html')+'">'+(next?'Next article →':'Take the final test →')+'</a></div>';
     const articleUrl=window.__LESSON_ID__?(location.origin+location.pathname):(location.origin+location.pathname+'?id='+encodeURIComponent(id));document.title=item.t+' | InvestingNoobs';const canonical=document.querySelector('link[rel="canonical"]');if(canonical)canonical.href=articleUrl;const ogTitle=document.querySelector('meta[property="og:title"]');if(ogTitle)ogTitle.content=item.t+' | InvestingNoobs';const ogDescription=document.querySelector('meta[property="og:description"]');if(ogDescription)ogDescription.content=item.s;const ogUrl=document.querySelector('meta[property="og:url"]');if(ogUrl)ogUrl.content=articleUrl;const lessonImgUrl2='https://investingnoobs.com/og-images/lesson-'+n+'.png';const ogImg2=document.querySelector('meta[property="og:image"]');if(ogImg2)ogImg2.content=lessonImgUrl2;const twImg2=document.querySelector('meta[name="twitter:image"]');if(twImg2)twImg2.content=lessonImgUrl2;const twTitle=document.querySelector('meta[name="twitter:title"]');if(twTitle)twTitle.content=item.t+' | InvestingNoobs';const twDescription=document.querySelector('meta[name="twitter:description"]');if(twDescription)twDescription.content=item.s;markRead();const ld={'@context':'https://schema.org','@type':'Article','headline':item.t,'description':item.s,'url':articleUrl,'image':lessonImgUrl2,'author':{'@type':'Organization','name':'InvestingNoobs'},'publisher':{'@type':'Organization','name':'InvestingNoobs','url':'https://investingnoobs.com/'},'mainEntityOfPage':{'@type':'WebPage','@id':articleUrl},'isPartOf':{'@type':'Course','name':'InvestingNoobs Crypto & Investing Course','url':'https://investingnoobs.com/blog.html'},'inLanguage':'en'};const breadcrumb={'@context':'https://schema.org','@type':'BreadcrumbList','itemListElement':[{'@type':'ListItem','position':1,'name':'InvestingNoobs','item':'https://investingnoobs.com/'},{'@type':'ListItem','position':2,'name':'Crypto & Investing Course','item':'https://investingnoobs.com/blog.html'},{'@type':'ListItem','position':3,'name':item.t,'item':articleUrl}]};if(!window.__LESSON_ID__)[ld,breadcrumb].forEach(data=>{const script=document.createElement('script');script.type='application/ld+json';script.textContent=JSON.stringify(data);document.head.appendChild(script)});
   }
   render();
