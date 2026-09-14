@@ -713,6 +713,30 @@ body{background:radial-gradient(ellipse at 15% 0%,rgba(99,102,241,.10),transpare
 .rivalBar .rvGap{font-size:10px;white-space:nowrap;}
 .rivalBar[hidden]{display:none;}
 .rivalBar .rvGap.ahead{color:var(--green);} .rivalBar .rvGap.behind{color:var(--red);}
+/* Ficha del rival — se abre al tocar la barra de rival */
+#rivalOverlay{position:fixed;inset:0;background:rgba(5,8,20,.88);z-index:1890;display:none;align-items:center;justify-content:center;padding:18px;}
+#rivalOverlay.show{display:flex;}
+#rivalOverlay .rvCard{background:var(--panel);border:1px solid var(--line);border-radius:16px;max-width:380px;width:100%;max-height:86vh;overflow-y:auto;padding:20px 18px;display:flex;flex-direction:column;gap:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+#rivalOverlay .rvHead{display:flex;align-items:center;gap:12px;}
+#rivalOverlay .rvAvatar{font-size:34px;line-height:1;width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,rgba(239,68,68,.18),rgba(167,139,250,.14));border:1px solid var(--line);flex:0 0 auto;}
+#rivalOverlay .rvTitle{font-size:16px;font-weight:800;color:var(--text);}
+#rivalOverlay .rvSub{font-size:10.5px;color:var(--muted);margin-top:2px;}
+#rivalOverlay .rvStats{display:flex;gap:8px;}
+#rivalOverlay .rvStat{flex:1;background:#070c14;border:1px solid var(--line);border-radius:10px;padding:9px;text-align:center;}
+#rivalOverlay .rvStat b{display:block;font-size:13px;margin-top:3px;}
+#rivalOverlay .rvStat span{font-size:9.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+#rivalOverlay .rvStoryTitle{font-size:10.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;}
+#rivalOverlay .rvBeat{background:#070c14;border:1px solid var(--line);border-left:3px solid var(--alan);border-radius:10px;padding:10px 12px;}
+#rivalOverlay .rvBeat h4{margin:0 0 5px;font-size:12px;font-weight:800;color:var(--gold);}
+#rivalOverlay .rvBeat i{display:block;font-size:11.5px;line-height:1.55;color:var(--text);margin-bottom:5px;}
+#rivalOverlay .rvBeat p{margin:0;font-size:11px;line-height:1.55;color:var(--muted);}
+#rivalOverlay .rvLocked{font-size:11px;color:var(--muted);text-align:center;line-height:1.6;padding:6px 0;}
+#rivalOverlay .rvClose{border:none;border-radius:10px;padding:12px;font-size:12.5px;font-weight:700;cursor:pointer;color:#10151f;background:linear-gradient(90deg,var(--accent),var(--alan));}
+/* Personalización: nombre del rival */
+.customizeHint{font-size:11px;color:var(--muted);line-height:1.5;margin:-3px 0 9px;}
+.nameChips{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px;}
+.nameChip{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:999px;padding:6px 11px;font-size:11px;color:var(--text);cursor:pointer;}
+.nameChip:hover{border-color:var(--alan);}
 #bustOverlay{position:fixed;inset:0;background:rgba(20,0,0,.94);z-index:900;display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:26px;text-align:center;}
 #bustOverlay.show{display:flex;}
 #bustOverlay .bIcon{font-size:58px;}
@@ -1097,6 +1121,12 @@ button:active{transform:translateY(1px);}
       </div>
       <input id="customizeNameInput" class="customizeNameInput" type="text" maxlength="18" placeholder="Nombre de tu compañero/a (ej. Steve)">
     </div>
+    <div class="customizeSection">
+      <div class="customizeLabel">⚔️ Tu rival</div>
+      <div class="customizeHint">Alguien de tu mismo barrio quiere hacerse rico antes que tú. Ponle nombre: lo verás durante toda la partida.</div>
+      <input id="customizeRivalInput" class="customizeNameInput" type="text" maxlength="18" placeholder="Nombre de tu rival (ej. Víctor Salas)">
+      <div class="nameChips" id="rivalNameChips"></div>
+    </div>
     <div class="customizeBtns">
       <button class="menuBtn menuBtnLoad" onclick="backToMenuFromCustomize()">← Volver</button>
       <button class="menuBtn menuBtnPlay" onclick="confirmCustomization()">Empezar partida 🚀</button>
@@ -1390,6 +1420,26 @@ button:active{transform:translateY(1px);}
   </div>
 </div>
 
+<!-- MODAL: FICHA DEL RIVAL -->
+<div id="rivalOverlay" role="dialog" aria-modal="true">
+  <div class="rvCard">
+    <div class="rvHead">
+      <div class="rvAvatar">⚔️</div>
+      <div>
+        <div class="rvTitle" id="rvCardName"></div>
+        <div class="rvSub" id="rvCardSub"></div>
+      </div>
+    </div>
+    <div class="rvStats">
+      <div class="rvStat"><span id="rvStatRivalLabel">Rival</span><b id="rvStatRival"></b></div>
+      <div class="rvStat"><span id="rvStatMeLabel">Tú</span><b id="rvStatMe"></b></div>
+    </div>
+    <div class="rvStoryTitle" id="rvStoryTitle">Su historia</div>
+    <div id="rvStoryList"></div>
+    <button class="rvClose" onclick="closeRivalInfo()" id="rvCloseBtn">Cerrar</button>
+  </div>
+</div>
+
 <!-- MODAL: ÉXITO CRIMINAL -->
 <div id="crimeSuccessOverlay">
   <div class="sIcon">💰</div>
@@ -1542,7 +1592,7 @@ let state={
   newsLog:[],
   crime:{heat:0,totalIllegal:0,busted:0,cooldowns:{},record:false,cleanRun:0},
   bank:{rating:'BBB',ratingScore:650,loans:[],revolvingUsed:0,totalPaid:0,defaultCount:0,cryptoCollateral:{}},
-  playerGender:'M',companionGender:'M',companionName:'Steve',
+  playerGender:'M',companionGender:'M',companionName:'Steve',rivalName:'Víctor Salas',
   shop:{owned:{home1b:true},equipped:{inmueble:'home1b'}},
   messageHistory:[],
   shorts:{},
@@ -2455,6 +2505,7 @@ function applyWorldReward(m) {
 
 function triggerWorldVictory() {
   state.worldWon = true;
+  try{ RIVAL_STORY.forEach(b=>{ if(isFinite(b.nw)) ensureRival().story[b.id]=true; }); unlockRivalBeat('rfinal'); }catch(e){}
   checkStoryScene('epilogue');
   document.getElementById('worldBanner').classList.add('show');
   document.getElementById('worldStats').textContent =
@@ -2762,20 +2813,80 @@ function resolveBizEvent(i){
 }
 
 // ══════════════ RIVAL ══════════════
-// Víctor Salas empezó en el mismo barrio. Su patrimonio crece cada día y se ajusta al tuyo:
-// si te duermes, te adelanta; si vas muy por delante, se queda algo atrás pero no desaparece.
-const RIVAL_NAME='Víctor Salas';
+// El rival (por defecto Víctor Salas, pero el nombre lo eliges al crear partida) empezó en el mismo
+// barrio. Su patrimonio crece cada día y se ajusta al tuyo: si te duermes, te adelanta; si vas muy por
+// delante, se queda algo atrás pero no desaparece. Además tiene una historia que se desbloquea por tramos.
+const RIVAL_DEFAULT_NAME='Víctor Salas';
+// Nombres sugeridos al crear partida (estilo Pokémon: eliges tú cómo se llama tu rival)
+const RIVAL_NAME_SUGGESTIONS=['Víctor Salas','Rubén Ortega','Nadia Ferrer','Hugo Marín','Lucía Bravo','Iván Costa'];
+function rivalFullName(){return (state&&state.rivalName)||RIVAL_DEFAULT_NAME;}
+function rivalShortName(){return String(rivalFullName()).trim().split(/\s+/)[0]||RIVAL_DEFAULT_NAME;}
+// %RF% = nombre completo del rival · %R% = sólo su nombre de pila
+function rvText(t){return String(t).replace(/%RF%/g,rivalFullName()).replace(/%R%/g,rivalShortName());}
 const RIVAL_MILESTONES=[30000,300000,3000000,50000000,500000000,5000000000,10000000000];
+
+// ── Su historia: se va desbloqueando según crecéis. Un capítulo por día como mucho. ──
+const RIVAL_STORY=[
+  {id:'r1',nw:25000,
+    title:['⚔️ %RF% — 1. El locutorio','⚔️ %RF% — 1. The corner shop','⚔️ %RF% — 1. 街角的小店'],
+    quote:['"¿%R%? Su padre tenía el locutorio de la esquina. Cerró el año que nos subieron el alquiler."','"%R%? Their father ran the little shop on the corner. It closed the year our rent went up."','"%R%？家里以前在街角开小店，就在我们房租上涨那年关门了。"'],
+    tip:['Desde entonces %R% repite la misma frase a quien quiera oírla: a ese barrio no se vuelve. Por eso no para nunca.','Ever since, %R% repeats the same line to anyone who will listen: never going back to that street. That is why %R% never stops.','从那以后，%R% 逢人便说同一句话：绝不回到那条街。所以从不停下。']},
+  {id:'r2',nw:250000,
+    title:['⚔️ %RF% — 2. El atajo','⚔️ %RF% — 2. The shortcut','⚔️ %RF% — 2. 捷径'],
+    quote:['"%R% no estudia el mercado: estudia lo que compras tú, y lo compra más rápido."','"%R% doesn\'t study the market: %R% studies what you buy, and buys it faster."','"%R% 不研究市场，只研究你买什么，然后买得更快。"'],
+    tip:['Medio barrio le ha dejado sus ahorros a cambio de un 20% al mes. De momento le sale bien. Prometer rentabilidades fijas en un mercado que se mueve es la forma más vieja de meterse en un lío.','Half the neighbourhood handed over their savings for a promised 20% a month. So far it works. Promising fixed returns in a market that moves is the oldest way to get into trouble.','半条街的人把积蓄交了出去，换来每月20%的承诺。目前还行。在波动的市场里承诺固定收益，是最老套的麻烦来源。']},
+  {id:'r3',nw:2500000,
+    title:['⚔️ %RF% — 3. La primera grieta','⚔️ %RF% — 3. The first crack','⚔️ %RF% — 3. 第一道裂缝'],
+    quote:['"Un vecino le ha pedido su dinero de vuelta. %R% se lo ha devuelto... pidiendo un préstamo."','"A neighbour asked for their money back. %R% returned it... by taking out a loan."','"有位邻居来要回本金。%R% 还了……但是靠借款还的。"'],
+    tip:['Su patrimonio sigue subiendo, pero ya no todo es suyo. Quien crece con dinero prestado sube más rápido y cae mucho más fuerte. Mira tus propios préstamos con esa misma lupa.','Net worth keeps climbing, but not all of it is theirs. Growth on borrowed money rises faster and falls much harder. Look at your own loans with the same lens.','净资产还在涨，但已经不全是自己的了。靠借来的钱成长，涨得更快，也跌得更狠。用同样的眼光看看你自己的贷款。']},
+  {id:'r4',nw:40000000,
+    title:['⚔️ %RF% — 4. La portada','⚔️ %RF% — 4. The magazine cover','⚔️ %RF% — 4. 杂志封面'],
+    quote:['"%R% sale en la portada. Traje nuevo, reloj nuevo, la misma cara del barrio."','"%R% is on the cover. New suit, new watch, same face from the old street."','"%R% 上了封面。新西装、新手表，还是那张街坊的脸。"'],
+    tip:['Ahora le llaman genio. Nadie pregunta cuánto de lo que enseña está apalancado. Tú sí deberías preguntártelo con tu propio imperio.','Now they call %R% a genius. Nobody asks how much of what is on display is leveraged. You should ask that about your own empire.','现在人人称其为天才。没人问那些展示出来的东西有多少是加杠杆买的。你倒是该问问自己的帝国。']},
+  {id:'r5',nw:400000000,
+    title:['⚔️ %RF% — 5. La llamada de margen','⚔️ %RF% — 5. The margin call','⚔️ %RF% — 5. 追加保证金'],
+    quote:['"Anoche le cerraron las posiciones. %R% ha perdido más de la mitad en una noche."','"The positions were closed out last night. %R% lost more than half in one night."','"昨晚仓位被强平。%R% 一夜之间损失过半。"'],
+    tip:['No ha desaparecido: ha vendido el coche, ha devuelto lo que ha podido y ha vuelto a empezar. Esta vez sin prometerle un 20% a nadie. Nadie te obliga a aprenderlo del mismo modo.','Not gone: the car is sold, what could be repaid was repaid, and the rebuild has started. This time without promising anyone 20%. Nobody is forcing you to learn it the same way.','并没有消失：卖了车，能还的都还了，然后重新开始。这次不再向任何人承诺20%。你不必用同样的方式学到这一课。']},
+  {id:'r6',nw:4000000000,
+    title:['⚔️ %RF% — 6. La tregua','⚔️ %RF% — 6. The truce','⚔️ %RF% — 6. 停战'],
+    quote:['"%R% ha llamado. Quiere verte. Sin cámaras, sin prensa."','"%R% called. Wants to meet you. No cameras, no press."','"%R% 打来电话，想见你。不要镜头，不要媒体。"'],
+    tip:['"Nunca quise ser más rico que tú", te dice. "Quería que alguien de nuestra calle lo consiguiera. Como ibas a irte igual, al menos te hice correr." — %RF%','"I never wanted to be richer than you," %R% says. "I wanted someone from our street to make it. You were leaving anyway, so at least I made you run." — %RF%','"我从没想过要比你更有钱，"%R% 说。"我只是希望我们那条街出一个人。反正你都要走，那至少让你跑起来。" — %RF%']},
+  {id:'rfinal',nw:Infinity,
+    title:['⚔️ %RF% — Final: La esquina de siempre','⚔️ %RF% — Finale: The same corner','⚔️ %RF% — 终章：还是那个街角'],
+    quote:['"%R% ya no compite contigo. Ha reabierto el locutorio de su padre, en la misma esquina."','"%R% is not competing any more. The father\'s old shop is open again, on the very same corner."','"%R% 不再和你竞争了。父亲的老店重新开张，就在那个街角。"'],
+    tip:['En el escaparate hay un cartel escrito a mano: "Aquí empezó la segunda persona más rica del mundo". Lo dice sin ironía, y sonríe.','In the window there is a handwritten sign: "The second richest person in the world started here." No irony in it, just a smile.','橱窗里有一块手写牌子："世界第二富有的人从这里起步。"没有嘲讽，只有笑意。']},
+];
+
 function ensureRival(){
-  if(!state.rival)state.rival={nw:Math.max(2000,netWorth()*0.8),lead:'player',hit:{},introduced:false};
+  if(!state.rival)state.rival={nw:Math.max(2000,netWorth()*0.8),lead:'player',hit:{},introduced:false,story:{}};
+  if(!state.rival.story)state.rival.story={};
   return state.rival;
+}
+function rivalBeatText(b,k){return rvText(L3(b[k][0],b[k][1],b[k][2]));}
+function unlockRivalBeat(id){
+  const r=ensureRival(),b=RIVAL_STORY.find(x=>x.id===id);
+  if(!b||r.story[id])return false;
+  r.story[id]=true;
+  queueAlan({quote:rivalBeatText(b,'quote'),tip:rivalBeatText(b,'tip'),title:rivalBeatText(b,'title'),reward:null});
+  showToast('⚔️ '+L3('Nuevo capítulo sobre ','New chapter about ','关于')+rivalFullName()+L3('','','的新篇章'));
+  return true;
+}
+// Un capítulo como mucho por día, para que la historia acompañe a la partida y no se suelte de golpe
+function rivalStoryTick(){
+  const r=ensureRival(),me=netWorth();
+  for(const b of RIVAL_STORY){
+    if(r.story[b.id]||!isFinite(b.nw))continue;
+    if(me<b.nw&&r.nw<b.nw)continue;
+    unlockRivalBeat(b.id);
+    return;
+  }
 }
 function rivalDailyTick(){
   const r=ensureRival(),me=Math.max(1,netWorth());
   if(!r.introduced){
     r.introduced=true;
-    queueAlan({quote:L3('"¿Ves a ese de ahí? Víctor Salas. Empezó en el mismo barrio que tú."','"See that guy? Víctor Salas. He started in the same neighbourhood as you."','"看到那个人了吗？Víctor Salas。他和你是在同一个街区起步的。"'),
-      tip:L3('Víctor también quiere ser el más rico. Su patrimonio sube cada día: si dejas de mejorar, te adelanta. Lo tienes siempre en la barra de Inicio.','Víctor also wants to be the richest. His net worth rises every day: if you stop improving, he will overtake you. You can always see him on the Home bar.','Víctor也想成为最富有的人。他的净资产每天都在增长：如果你停止进步，他就会超过你。你可以随时在首页栏看到他。'),
+    queueAlan({quote:rvText(L3('"¿Ves a esa persona de ahí? %RF%. Empezó en el mismo barrio que tú."','"See that person over there? %RF%. Started in the same neighbourhood as you."','"看到那边那个人了吗？%RF%。和你在同一个街区起步。"')),
+      tip:rvText(L3('%R% también quiere ser quien más tiene. Su patrimonio sube cada día: si dejas de mejorar, te adelanta. Lo tienes siempre en la barra de Inicio, y tocándola verás su ficha y su historia.','%R% also wants to be the richest. That net worth rises every day: if you stop improving, it overtakes you. It is always on the Home bar — tap it for the profile and the backstory.','%R% 也想成为最有钱的人。那份净资产每天都在增长：如果你停止进步，就会被超过。它一直在首页栏上——点一下可以看到档案和背景故事。')),
       title:L3('⚔️ Tu rival','⚔️ Your rival','⚔️ 你的对手'),reward:null});
   }
   let g=0.018+(Math.random()-0.5)*0.03;
@@ -2786,34 +2897,59 @@ function rivalDailyTick(){
   if(r.nw<me*0.6)r.nw+=(me*0.6-r.nw)*0.06;
   if(r.lead!=='rival'&&r.nw>me*1.02){
     r.lead='rival';
-    showToast(L3('⚔️ '+RIVAL_NAME+' te ha adelantado: '+fmt(r.nw),'⚔️ '+RIVAL_NAME+' has overtaken you: '+fmt(r.nw),'⚔️ '+RIVAL_NAME+'超过了你：'+fmt(r.nw)));
+    showToast(L3('⚔️ '+rivalFullName()+' te ha adelantado: '+fmt(r.nw),'⚔️ '+rivalFullName()+' has overtaken you: '+fmt(r.nw),'⚔️ '+rivalFullName()+'超过了你：'+fmt(r.nw)));
   } else if(r.lead==='rival'&&me>r.nw*1.02){
     r.lead='player';
-    showToast(L3('🏁 Has adelantado a '+RIVAL_NAME,'🏁 You have overtaken '+RIVAL_NAME,'🏁 你超过了'+RIVAL_NAME));
+    showToast(L3('🏁 Has adelantado a '+rivalFullName(),'🏁 You have overtaken '+rivalFullName(),'🏁 你超过了'+rivalFullName()));
   }
   RIVAL_MILESTONES.forEach(m=>{
     if(r.hit[m]||r.nw<m)return;
     r.hit[m]=true;
-    if(me<m)queueAlan({quote:L3('"'+RIVAL_NAME+' ya ha llegado a '+fmt(m)+'. Tú todavía no."','"'+RIVAL_NAME+' has already reached '+fmt(m)+'. You have not yet."','"'+RIVAL_NAME+'已经达到'+fmt(m)+'了，你还没有。"'),
+    if(me<m)queueAlan({quote:L3('"'+rivalFullName()+' ya ha llegado a '+fmt(m)+'. Tú todavía no."','"'+rivalFullName()+' has already reached '+fmt(m)+'. You have not yet."','"'+rivalFullName()+'已经达到'+fmt(m)+'了，你还没有。"'),
       tip:L3('Revisa tus negocios y tus gastos: ¿hay algo que mejorar o algún negocio que subir de nivel?','Check your businesses and expenses: is there anything to improve or a business to level up?','检查一下你的企业和支出：有没有可以改进的地方，或者可以升级的企业？'),
       title:L3('⚔️ Tu rival avanza','⚔️ Your rival moves ahead','⚔️ 对手领先了'),reward:null});
   });
+  rivalStoryTick();
 }
 function renderRivalBar(){
   const bar=document.getElementById('rivalBar');if(!bar)return;
   if(!gameStarted){bar.hidden=true;return;}
   const r=ensureRival();
   bar.hidden=false;
+  const nameEl=document.getElementById('rivalName');if(nameEl)nameEl.textContent=rivalFullName();
   const me=netWorth(),diff=me>0&&r.nw>0?(me-r.nw)/Math.max(me,r.nw):0,pct=Math.round(Math.abs(diff)*100);
   document.getElementById('rivalNw').textContent=fmt(r.nw);
   const gap=document.getElementById('rivalGap');
   gap.className='rvGap '+(diff>=0?'ahead':'behind');
   gap.textContent=diff>=0?L3('vas '+pct+'% por delante','you lead by '+pct+'%','你领先'+pct+'%'):L3('te saca '+pct+'%','ahead of you by '+pct+'%','领先你'+pct+'%');
 }
+function escapeHtml(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function showRivalInfo(){
   const r=state.rival;if(!r)return;
-  showToast(L3('⚔️ '+RIVAL_NAME+': '+fmt(r.nw)+' · Tú: '+fmt(netWorth()),'⚔️ '+RIVAL_NAME+': '+fmt(r.nw)+' · You: '+fmt(netWorth()),'⚔️ '+RIVAL_NAME+'：'+fmt(r.nw)+' · 你：'+fmt(netWorth())));
+  const ov=document.getElementById('rivalOverlay');
+  if(!ov){showToast('⚔️ '+rivalFullName()+': '+fmt(r.nw)+' · '+fmt(netWorth()));return;}
+  ensureRival();
+  const me=netWorth(),diff=me>0&&r.nw>0?(me-r.nw)/Math.max(me,r.nw):0,pct=Math.round(Math.abs(diff)*100);
+  document.getElementById('rvCardName').textContent=rivalFullName();
+  document.getElementById('rvCardSub').textContent=diff>=0
+    ? L3('Del mismo barrio que tú · vas '+pct+'% por delante','From your street · you lead by '+pct+'%','和你同一个街区 · 你领先'+pct+'%')
+    : L3('Del mismo barrio que tú · te saca un '+pct+'%','From your street · ahead of you by '+pct+'%','和你同一个街区 · 领先你'+pct+'%');
+  document.getElementById('rvStatRivalLabel').textContent=L3('Rival','Rival','对手');
+  document.getElementById('rvStatMeLabel').textContent=L3('Tú','You','你');
+  document.getElementById('rvStatRival').textContent=fmt(r.nw);
+  document.getElementById('rvStatMe').textContent=fmt(me);
+  document.getElementById('rvStoryTitle').textContent=L3('Su historia','Their story','他的故事');
+  document.getElementById('rvCloseBtn').textContent=L3('Cerrar','Close','关闭');
+  const unlocked=RIVAL_STORY.filter(b=>r.story&&r.story[b.id]);
+  const list=document.getElementById('rvStoryList');
+  list.innerHTML=unlocked.length
+    ? unlocked.map(b=>'<div class="rvBeat"><h4>'+escapeHtml(rivalBeatText(b,'title'))+'</h4><i>'+escapeHtml(rivalBeatText(b,'quote'))+'</i><p>'+escapeHtml(rivalBeatText(b,'tip'))+'</p></div>').join('')
+    : '<div class="rvLocked">'+L3('Todavía no sabes nada de su pasado. Irás descubriendo su historia a medida que crezca tu patrimonio.','You know nothing about their past yet. The story unlocks as your net worth grows.','你还不了解他的过去。随着你的净资产增长，故事会逐步解锁。')+'</div>';
+  if(unlocked.length&&unlocked.length<RIVAL_STORY.length)
+    list.innerHTML+='<div class="rvLocked">'+L3('Quedan capítulos por descubrir.','More chapters still to come.','还有篇章尚未揭晓。')+'</div>';
+  ov.classList.add('show');
 }
+function closeRivalInfo(){const ov=document.getElementById('rivalOverlay');if(ov)ov.classList.remove('show');}
 
 // ══════════════ UTILS ══════════════
 const fmt=n=>{
@@ -5097,6 +5233,8 @@ RUNTIME_TRANSLATIONS.zh.push(
 
 RUNTIME_TRANSLATIONS.en.push(
   [/Personaliza tu partida/g,'Customize your game'],
+  [/Alguien de tu mismo barrio quiere hacerse rico antes que tú\. Ponle nombre: lo verás durante toda la partida\./g,'Someone from your own street wants to get rich before you do. Give them a name: you will see it all game long.'],
+  [/⚔️ Tu rival/g,'⚔️ Your rival'],
   [/Elige tu apariencia y la de tu compañero\/a de viaje/g,"Choose your look and your travel companion's"],
   [/Tu compañero\/a/g,'Your companion'],
   [/👤 Tú/g,'👤 You'],
@@ -5121,6 +5259,8 @@ RUNTIME_TRANSLATIONS.en.push(
 );
 RUNTIME_TRANSLATIONS.zh.push(
   [/Personaliza tu partida/g,'自定义你的游戏'],
+  [/Alguien de tu mismo barrio quiere hacerse rico antes que tú\. Ponle nombre: lo verás durante toda la partida\./g,'和你同一个街区的人想抢在你前面变富。给他起个名字：整局游戏你都会看到。'],
+  [/⚔️ Tu rival/g,'⚔️ 你的对手'],
   [/Elige tu apariencia y la de tu compañero\/a de viaje/g,'选择你和同伴的外观'],
   [/Tu compañero\/a/g,'你的同伴'],
   [/👤 Tú/g,'👤 你'],
@@ -5147,7 +5287,8 @@ RUNTIME_TRANSLATIONS.zh.push(
 const PLACEHOLDER_TRANSLATIONS={
   'Cantidad ($)':{en:'Amount ($)',zh:'金额（美元）'},
   'Cantidad en $':{en:'Amount in $',zh:'金额（美元）'},
-  'Nombre de tu compañero/a (ej. Steve)':{en:"Your companion's name (e.g. Steve)",zh:'你的同伴姓名（例如 Steve）'}
+  'Nombre de tu compañero/a (ej. Steve)':{en:"Your companion's name (e.g. Steve)",zh:'你的同伴姓名（例如 Steve）'},
+  'Nombre de tu rival (ej. Víctor Salas)':{en:"Your rival's name (e.g. Victor Salas)",zh:'你的对手姓名（例如 Víctor Salas）'}
 };
 function translatePlaceholders(){
   const lang=state.language||'es';
@@ -7371,7 +7512,14 @@ function applySaveObject(obj){
   }
 }
 function deleteSaveGame(slot){
-  try{ localStorage.removeItem(slotKey(slot)); }catch(e){}
+  const n = slot||activeSlot;
+  // Borrar la ranura NO bastaba: readSaveGame() cae en la copia de seguridad cuando la clave
+  // principal no existe, así que la partida "borrada" volvía a aparecer (y al recargar, entera).
+  // Hay que eliminar las dos claves, y además la partida del sistema antiguo de una sola ranura:
+  // migrateOldSave() la reinyecta en la ranura 1 en cada carga si esa ranura está vacía.
+  try{ localStorage.removeItem(slotKey(n)); }catch(e){}
+  try{ localStorage.removeItem(backupSlotKey(n)); }catch(e){}
+  if(n===1){ try{ localStorage.removeItem('fundTycoonSave_v1'); }catch(e){} }
 }
 // ══════════════ MODAL DE CONFIRMACIÓN PERSONALIZADO ══════════════
 // Sustituye a window.confirm(), que puede estar bloqueado en entornos
@@ -7397,9 +7545,12 @@ function confirmOverlayYes(){
 
 function confirmDeleteSave(slot){
   const n = slot||activeSlot;
-  showConfirm('¿Seguro que quieres borrar la partida de la ranura '+n+'? Esta acción no se puede deshacer.',()=>{
+  showConfirm('¿Seguro que quieres borrar la partida de la ranura '+n+'? Se borra también su copia de seguridad: esta acción no se puede deshacer.',()=>{
     deleteSaveGame(n);
+    // Si borras la ranura en la que estabas jugando, el autoguardado no debe resucitarla
+    if(n===activeSlot)gameStarted=false;
     renderSlots();
+    renderBestRecords();
     showSaveToast('🗑️ Ranura '+n+' borrada');
   },'🗑️');
 }
@@ -7807,10 +7958,20 @@ function renderCustomizeSelections(){
   if(cgM)cgM.classList.toggle('selected',tempCompanionGender==='M');
   if(cgF)cgF.classList.toggle('selected',tempCompanionGender==='F');
 }
+function renderRivalNameChips(){
+  const wrap=document.getElementById('rivalNameChips');if(!wrap)return;
+  wrap.innerHTML=RIVAL_NAME_SUGGESTIONS.map(n=>'<div class="nameChip" onclick="pickRivalName(\''+n.replace(/'/g,"\\'")+'\')">'+n+'</div>').join('')
+    +'<div class="nameChip" onclick="pickRandomRivalName()">🎲 '+L3('Al azar','Random','随机')+'</div>';
+}
+function pickRivalName(n){const i=document.getElementById('customizeRivalInput');if(i)i.value=n;}
+function pickRandomRivalName(){pickRivalName(RIVAL_NAME_SUGGESTIONS[Math.floor(Math.random()*RIVAL_NAME_SUGGESTIONS.length)]);}
 function showCustomizeScreen(){
   tempPlayerGender='M';tempCompanionGender='M';
   const input=document.getElementById('customizeNameInput');
   if(input)input.value='';
+  const rivalInput=document.getElementById('customizeRivalInput');
+  if(rivalInput)rivalInput.value='';
+  renderRivalNameChips();
   renderCustomizeSelections();
   document.getElementById('customizeOverlay').classList.add('show');
 }
@@ -7946,6 +8107,8 @@ function confirmCustomization(){
   state.playerGender=tempPlayerGender;
   state.companionGender=tempCompanionGender;
   state.companionName=name;
+  const rawRival=(document.getElementById('customizeRivalInput')?.value||'').trim();
+  state.rivalName=rawRival.length?rawRival.slice(0,18):RIVAL_DEFAULT_NAME;
   applyCompanionName(name);
   applyCompanionNameToUI();
   tutorialPending=!state.tutorialSeen;
