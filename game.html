@@ -1841,7 +1841,7 @@ function claimMision(id){
   state.misiones[id]='claimed';
   state.misionesCompletadas++;
   applyMisionReward(m);
-  showToast('🎯 Misión completada: '+m.title);
+  showToast(L3('🎯 Misión completada: ','🎯 Mission completed: ','🎯 任务完成：')+m.title);
   updateTopBar();
   if(document.getElementById('screenExtra').classList.contains('active'))renderExtra();
   if(document.getElementById('screenMision').classList.contains('active'))renderMisiones();
@@ -1930,7 +1930,7 @@ function doPrestige(){
     title:'⭐ PRESTIGE '+pl+' — '+prestigeGoalLabel(),
     reward:'+10% trade y pasivos permanente'
   });
-  showToast('⭐ PRESTIGE '+pl+'! Nueva meta: '+prestigeGoalLabel());
+  showToast('⭐ PRESTIGE '+pl+L3('! Nueva meta: ','! New goal: ','！新目标：')+prestigeGoalLabel());
   showSteveOverlay(
     steveMsg2.tip+'\n\nBono acumulado: +'+(Math.round(state.prestigeBonus*100))+'% en todo permanente.',
     prestigeGoalLabel(),
@@ -2039,7 +2039,7 @@ function checkBestRecords(){
       const prev=bestRecords[t.key];
       bestRecords[t.key]=day;
       improved=true;
-      if(prev!=null)showToast('🏅 Nuevo récord: '+t.label+' en '+day+' día(s) (antes: '+prev+')');
+      if(prev!=null)showToast(L3('🏅 Nuevo récord: ','🏅 New record: ','🏅 新纪录：')+t.label+L3(' en ',' in ','，用时 ')+day+L3(' día(s) (antes: ',' day(s) (previous: ','天（此前：')+prev+')');
     }
   });
   if(state.worldWon&&(bestRecords.worldBuy==null||day<bestRecords.worldBuy)){
@@ -2244,15 +2244,15 @@ function handleAlanBoxClick(){
 }
 if(false){function hireAdvisorLegacy(){
   const next=(state.advisorLevel||0)+1, advisor=ADVISORS[next-1];
-  if(!advisor){showToast('Ya tienes el asesor de máximo nivel');return;}
+  if(!advisor){showToast(L3('Ya tienes el asesor de máximo nivel','Your advisor is already at the highest level','你的顾问已是最高等级'));return;}
   if(state.cash<advisor.cost){
-    showToast('Necesitas '+fmt(advisor.cost)+' para contratar a este asesor');
+    showToast(L3('Necesitas ','You need ','需要 ')+fmt(advisor.cost)+L3(' para contratar a este asesor',' to hire this advisor',' 才能聘请这位顾问'));
     return;
   }
   state.cash-=advisor.cost;
   state.advisorLevel=next;
   state.advisorHired=true;
-  showToast('🤝 '+companionName()+' se une a tu equipo como asesor financiero');
+  showToast('🤝 '+companionName()+L3(' se une a tu equipo como asesor financiero',' joins your team as financial advisor','加入你的团队，担任财务顾问'));
   updateTopBar();
   updateAlanBox();
   saveGame(true);
@@ -2270,10 +2270,10 @@ if(false){function hireAdvisorLegacy(){
 }
 function hireAdvisor(){
   const next=(state.advisorLevel||0)+1, advisor=ADVISORS[next-1];
-  if(!advisor){showToast('Ya tienes el asesor de máximo nivel');return;}
-  if(state.cash<advisor.cost){showToast('Necesitas '+fmt(advisor.cost)+' para contratar a este asesor');return;}
+  if(!advisor){showToast(L3('Ya tienes el asesor de máximo nivel','Your advisor is already at the highest level','你的顾问已是最高等级'));return;}
+  if(state.cash<advisor.cost){showToast(L3('Necesitas ','You need ','需要 ')+fmt(advisor.cost)+L3(' para contratar a este asesor',' to hire this advisor',' 才能聘请这位顾问'));return;}
   state.cash-=advisor.cost; state.advisorLevel=next; state.advisorHired=true;
-  showToast('Asesor contratado: '+advisor.name);
+  showToast(L3('Asesor contratado: ','Advisor hired: ','已聘请顾问：')+advisor.name);
   updateTopBar(); updateAlanBox(); saveGame(true);
   queueAlan({quote:'Asesor contratado: '+advisor.name,tip:advisor.desc,title:'💼 '+advisor.name,reward:null});
   showAdvisorHireOverlay(advisor);
@@ -2430,7 +2430,7 @@ function getSteveAdvice(){
 }
 function askSteveAdvice(){
   if(false&&!state.advisorHired){
-    showToast('🔒 Contrata a un asesor financiero primero (desde el panel inferior)');
+    showToast(L3('🔒 Contrata a un asesor financiero primero (desde el panel inferior)','🔒 Hire a financial advisor first (from the bottom panel)','🔒 请先聘请财务顾问（从下方面板）'));
     return;
   }
   if(!(state.advisorLevel||0)){
@@ -2629,7 +2629,7 @@ function collectAnnualTax(){
   const amount=taxable*.10;
   state.cash-=amount;
   state.lastAnnualTaxDay=state.day;
-  showToast('🏛️ Hacienda: impuesto anual del 10% — '+fmt(amount));
+  showToast(L3('🏛️ Hacienda: impuesto anual del 10% — ','🏛️ Tax office: 10% annual tax — ','🏛️ 税务局：10% 年度税 — ')+fmt(amount));
   queueAlan({quote:'Hacienda acaba de cobrar el impuesto anual. Conviene reservar liquidez para el próximo año.',tip:'Cada 365 días se descuenta el 10% de tu patrimonio neto.',title:'🏛️ Aviso de Hacienda',reward:null});
 }
 setInterval(()=>{
@@ -2676,6 +2676,7 @@ setInterval(()=>{
 const PAYROLL_RATE=0.30;        // nóminas: 30% del ingreso base de cada negocio delegado (nivel 2+)
 const HOME_UPKEEP_LIVE=0.001;   // vivienda en la que vives: 0,1% de su precio al día (IBI, comunidad, suministros)
 const HOME_UPKEEP_OTHER=0.0003; // otras viviendas en propiedad: 0,03% de su precio al día
+function TN(n){ try{ return translateRuntimeText(String(n), state.language); }catch(e){ return n; } }
 function L3(es,en,zh){return state.language==='en'?en:state.language==='zh'?zh:es;}
 function getBizBaseIncome(b){
   const l=state.bizOwned[b.id]||0;if(l===0)return 0;
@@ -3086,7 +3087,7 @@ function checkPropAccountStatus(){
     if(val<=acc.floor){
       changed=true;
       state.propFirm.totalFailed=(state.propFirm.totalFailed||0)+1;
-      showToast('💥 Cuenta de '+fmt(acc.size)+' liquidada — superaste la pérdida máxima permitida');
+      showToast(L3('💥 Cuenta de ','💥 Account of ','💥 ')+fmt(acc.size)+L3(' liquidada — superaste la pérdida máxima permitida',' liquidated — you exceeded the maximum allowed loss',' 账户已被清算 — 超过了最大允许亏损'));
       queueAlan({quote:'"Una cuenta fondeada quebrada. Duele, pero forma parte del juego."',tip:'Perdiste la cuenta de '+fmt(acc.size)+' al superar el límite de pérdida máxima. Es parte del negocio de las prop firms — hasta los mejores traders queman retos. Compra otro cuando quieras y vuelve a intentarlo.',title:'💥 Reto fallido',reward:null});
       if(state.activeCapital===acc.id)state.activeCapital='personal';
       return;
@@ -3094,7 +3095,7 @@ function checkPropAccountStatus(){
     if(acc.status==='challenge'&&val>=acc.target){
       changed=true;
       acc.status='funded';
-      showToast('🎉 ¡Reto superado! Cuenta de '+fmt(acc.size)+' FONDEADA');
+      showToast(L3('🎉 ¡Reto superado! Cuenta de ','🎉 Challenge passed! Account of ','🎉 挑战通过！')+fmt(acc.size)+L3(' FONDEADA',' FUNDED',' 账户已获资金'));
       queueAlan({quote:'"Lo lograste. Ahora tradeas con capital real de la firma."',tip:'Tu cuenta de '+fmt(acc.size)+' está oficialmente fondeada. A partir de ahora, cada beneficio que generes se reparte entre tú (el '+Math.round(acc.split*100)+'%) y la firma. Retira tus beneficios cuando quieras desde la pestaña de Capital Fondeado — pero solo el beneficio que tengas en efectivo líquido, no el que está invertido en posiciones abiertas.',title:'🎉 Cuenta fondeada',reward:'Profit split '+Math.round(acc.split*100)+'%'});
     }
     stillActive.push(acc);
@@ -3120,7 +3121,7 @@ function setQuick(id,mode){
   if(el){el.value=val.toFixed(2);el.focus();}
 }
 function buyAsset(id){
-  const amt=getAmt(id);if(amt<=0){showToast('Escribe una cantidad');return;}
+  const amt=getAmt(id);if(amt<=0){showToast(L3('Escribe una cantidad','Enter an amount','请输入金额'));return;}
   const isPersonal=state.activeCapital==='personal';
   const cash=getCapCash();
   if(isPersonal&&state.career&&state.career.reserve>0&&amt>Math.max(0,cash-state.career.reserve)+.01){
@@ -3128,7 +3129,7 @@ function buyAsset(id){
     showToast(messages[state.language]||messages.es);return;
   }
   const maxCash=isPersonal?cash*(state.leverage||1):cash;
-  if(amt>maxCash+0.01){showToast('Sin efectivo suficiente'+(isPersonal?'':' en esta cuenta fondeada'));return;}
+  if(amt>maxCash+0.01){showToast(L3('Sin efectivo suficiente','Not enough cash','现金不足')+(isPersonal?'':L3(' en esta cuenta fondeada',' in this funded account','（该资金账户）')));return;}
   const a=ASSETS.find(x=>x.id===id);
   const real=Math.min(amt,maxCash);
   const fee=real*TRADE_FEE;              // comisión del bróker
@@ -3149,7 +3150,7 @@ function buyAsset(id){
   if(isPersonal)state.totalTraded+=real;
   window.dispatchEvent(new CustomEvent('tycoon-purchase',{detail:{type:'asset',id:id}}));
   vibrate(18);
-  showToast((isPersonal?'':'💼 ')+'Comprado '+units.toFixed(4)+' '+a.name+' por '+fmt(real)+' ('+L3('comisión','fee','手续费')+' '+fmt(fee)+(slip>0.004?' · '+L3('deslizamiento','slippage','滑点')+' '+(slip*100).toFixed(1)+'%':'')+')'+(isPersonal?'':' 💼'));
+  showToast((isPersonal?'':'💼 ')+L3('Comprado ','Bought ','已买入 ')+units.toFixed(4)+' '+TN(a.name)+L3(' por ',' for ',' 花费 ')+fmt(real)+' ('+L3('comisión','fee','手续费')+' '+fmt(fee)+(slip>0.004?' · '+L3('deslizamiento','slippage','滑点')+' '+(slip*100).toFixed(1)+'%':'')+')'+(isPersonal?'':' 💼'));
   updateTopBar();checkAchievements();checkMisiones();checkChapter();checkWin();checkWorldMilestones();checkPropAccountStatus();renderCharacter();refreshCard(id);
   saveGame(true);
 }
@@ -3186,7 +3187,7 @@ function checkMarginCalls(){
       state.holdings[id]=0;
       if(state.costBasis)state.costBasis[id]=0;
       delete state.marginDebt[id];
-      showToast('💥 Margin call en '+a.name+': posición apalancada cerrada automáticamente');
+      showToast(L3('💥 Margin call en ','💥 Margin call on ','💥 追加保证金：')+TN(a.name)+L3(': posición apalancada cerrada automáticamente',': leveraged position closed automatically','，杠杆仓位已自动平仓'));
       if(document.getElementById('screenTrade').classList.contains('active'))refreshCard(id);
     }
   });
@@ -3196,7 +3197,7 @@ function sellAsset(id){
   const isPersonal=state.activeCapital==='personal';
   const holdings=getCapHoldings();
   const held=holdings[id]||0;
-  if(held<=0){showToast('No tienes ese activo'+(isPersonal?'':' en esta cuenta'));return;}
+  if(held<=0){showToast(L3('No tienes ese activo','You do not hold that asset','你没有该资产')+(isPersonal?'':L3(' en esta cuenta',' in this account','（本账户）')));return;}
   // Las unidades pignoradas en un préstamo cripto no son tuyas hasta que lo saldes
   const locked=isPersonal?Math.min(held,lockedUnits(id)):0;
   const sellable=held-locked;
@@ -3227,7 +3228,7 @@ function sellAsset(id){
     if(acc&&acc.longBasis){acc.longBasis[id]=basisTotal-basis;}
   }
   vibrate(18);
-  showToast((isPersonal?'':'💼 ')+'Vendido por '+fmt(proceeds-debt)+' ('+L3('comisión','fee','手续费')+' '+fmt(sellFee)+')'+((gain>0&&bonusRate>0)?' (+bono)':'')+((gain>0&&tax>0)?' (-impuesto)':'')+(debt>0?' (-deuda '+fmt(debt)+')':''));
+  showToast((isPersonal?'':'💼 ')+L3('Vendido por ','Sold for ','已卖出，收入 ')+fmt(proceeds-debt)+' ('+L3('comisión','fee','手续费')+' '+fmt(sellFee)+')'+((gain>0&&bonusRate>0)?L3(' (+bono)',' (+bonus)','（+奖励）'):'')+((gain>0&&tax>0)?L3(' (-impuesto)',' (-tax)','（-税）'):'')+(debt>0?L3(' (-deuda ',' (-debt ','（-负债 ')+fmt(debt)+')':''));
   updateTopBar();checkAchievements();checkMisiones();checkChapter();checkWin();checkWorldMilestones();checkPropAccountStatus();renderCharacter();refreshCard(id);
   saveGame(true);
 }
@@ -3250,15 +3251,15 @@ function shortPnL(id){
 }
 function openShort(id){
   const shorts=getCapShorts();
-  if(shorts[id]){showToast('Ya tienes un corto abierto en este activo. Ciérralo primero.');return;}
-  const amt=getAmt(id);if(amt<=0){showToast('Escribe una cantidad');return;}
+  if(shorts[id]){showToast(L3('Ya tienes un corto abierto en este activo. Ciérralo primero.','You already have a short open on this asset. Close it first.','你在该资产上已有空头仓位，请先平仓。'));return;}
+  const amt=getAmt(id);if(amt<=0){showToast(L3('Escribe una cantidad','Enter an amount','请输入金额'));return;}
   const isPersonal=state.activeCapital==='personal';
   const cash=getCapCash();
   if(isPersonal&&state.career&&state.career.reserve>0&&amt>Math.max(0,cash-state.career.reserve)+.01){
     const messages={es:'Esta operación consumiría tu reserva protegida. Ajústala en Ruta.',en:'This trade would use your protected reserve. Adjust it in Journey.',zh:'本次交易将使用受保护的储备。请在成长路线中调整。'};showToast(messages[state.language]||messages.es);return;
   }
   const maxCash=cash; // los cortos no usan apalancamiento: el margen sale siempre de tu efectivo
-  if(amt>maxCash+0.01){showToast('Sin efectivo suficiente para ese margen');return;}
+  if(amt>maxCash+0.01){showToast(L3('Sin efectivo suficiente para ese margen','Not enough cash for that margin','保证金所需现金不足'));return;}
   const a=ASSETS.find(x=>x.id===id);
   const marginGross=Math.min(amt,maxCash);
   const margin=marginGross*(1-TRADE_FEE); // la comisión también se paga al abrir un corto
@@ -3266,14 +3267,14 @@ function openShort(id){
   setCapCash(cash-Math.min(marginGross,cash));
   shorts[id]={margin,units,entryPrice:a.price,openDay:state.day};
   inputValues[id]=0;const el=document.getElementById('inp_'+id);if(el)el.value='';
-  showToast((isPersonal?'':'💼 ')+'📉 Corto abierto en '+a.name+' — margen '+fmt(margin)+' a '+fmt(a.price));
+  showToast((isPersonal?'':'💼 ')+L3('📉 Corto abierto en ','📉 Short opened on ','📉 已开空：')+TN(a.name)+L3(' — margen ',' — margin ','，保证金 ')+fmt(margin)+L3(' a ',' at ','，价格 ')+fmt(a.price));
   updateTopBar();checkAchievements();checkMisiones();checkPropAccountStatus();renderCharacter();refreshCard(id);
   saveGame(true);
 }
 function closeShort(id){
   const shorts=getCapShorts();
   const s=shorts&&shorts[id];
-  if(!s){showToast('No tienes corto abierto en este activo');return;}
+  if(!s){showToast(L3('No tienes corto abierto en este activo','You have no short open on this asset','你在该资产上没有空头仓位'));return;}
   const isPersonal=state.activeCapital==='personal';
   const a=ASSETS.find(x=>x.id===id);
   const pnl=shortPnL(id);
@@ -3295,7 +3296,7 @@ function closeShort(id){
   }
   if(isPersonal)state.totalShortsClosed=(state.totalShortsClosed||0)+1;
   delete shorts[id];
-  showToast((isPersonal?'':'💼 ')+(netResult>=0?'📉 Corto cerrado: +'+fmt(netResult)+' de beneficio':'📉 Corto cerrado con pérdidas de '+fmt(Math.abs(netResult))));
+  showToast((isPersonal?'':'💼 ')+(netResult>=0?L3('📉 Corto cerrado: +','📉 Short closed: +','📉 空头平仓：+')+fmt(netResult)+L3(' de beneficio',' profit',' 收益'):L3('📉 Corto cerrado con pérdidas de ','📉 Short closed with a loss of ','📉 空头平仓，亏损 ')+fmt(Math.abs(netResult))));
   updateTopBar();checkAchievements();checkMisiones();checkChapter();checkWin();checkWorldMilestones();checkPropAccountStatus();renderCharacter();refreshCard(id);
   saveGame(true);
 }
@@ -3342,7 +3343,7 @@ function checkShortLiquidations(){
       const loss=s.units*(a.price-s.entryPrice);
       if(loss>=s.margin){
         delete shorts[id];
-        showToast('💥 LIQUIDADO: un corto en '+a.name+' saltó por los aires. Se perdió el margen de '+fmt(s.margin));
+        showToast(L3('💥 LIQUIDADO: un corto en ','💥 LIQUIDATED: a short on ','💥 已爆仓：')+TN(a.name)+L3(' saltó por los aires. Se perdió el margen de ',' blew up. The margin of ','的空头仓位爆掉了，损失保证金 ')+fmt(s.margin)+L3('',' was lost.',''));
         if(shorts===state.shorts){
           queueAlan({quote:'"Un corto liquidado. El precio subir más rápido de lo que esperabas."',tip:'Los cortos son apuestas de alto riesgo apalancado. Si el precio sube demasiado antes de que cierres, la posición se liquida y pierdes toda la garantía.',title:'💥 Posición liquidada',reward:null});
         }
@@ -3356,17 +3357,17 @@ function checkShortLiquidations(){
 function buyOrUpgradeBiz(id){
   const biz=BUSINESSES.find(x=>x.id===id);
   const cost=Math.round(getBizCost(biz)*(1-(state.upgradeDisco||0))*(1+(state.prestigeLevel||0)*0.3));
-  if(state.cash<cost){showToast('Sin efectivo');return;}
+  if(state.cash<cost){showToast(L3('Sin efectivo','Not enough cash','现金不足'));return;}
   state.cash-=cost;
   const prevLvl=state.bizOwned[id]||0;
   state.bizOwned[id]=prevLvl+1;
   state.passive=calcTotalPassive();
   if(prevLvl===1){
     // Momento de delegar: ya no trabajas ahí tú mismo
-    showToast('👥 '+biz.name+' — '+biz.descDelegate);
+    showToast('👥 '+TN(biz.name)+' — '+TN(biz.descDelegate));
     checkStoryScene('first_delegation');
   }else{
-    showToast(biz.icon+' '+biz.name+' — Nivel '+state.bizOwned[id]);
+    showToast(biz.icon+' '+TN(biz.name)+L3(' — Nivel ',' — Level ','— 等级 ')+state.bizOwned[id]);
   }
   updateTopBar();checkAchievements();checkMisiones();checkChapter();checkWin();checkWorldMilestones();renderCharacter();
   if(document.getElementById('screenBiz').classList.contains('active'))renderBiz();
@@ -3375,9 +3376,9 @@ function buyOrUpgradeBiz(id){
 // ══════════════ SKILLS ══════════════
 function buySkill(id){
   const sk=SKILLS.find(x=>x.id===id);
-  if(state.skillsOwned[id]){showToast('Ya tienes esta habilidad');return;}
+  if(state.skillsOwned[id]){showToast(L3('Ya tienes esta habilidad','You already have this skill','你已拥有该技能'));return;}
   const cost=Math.round(sk.cost*(1+(state.prestigeLevel||0)*0.5));
-  if(state.cash<cost){showToast('Sin efectivo (coste: '+fmt(cost)+')');return;}
+  if(state.cash<cost){showToast(L3('Sin efectivo (coste: ','Not enough cash (cost: ','现金不足（需要 ')+fmt(cost)+L3(')',')','）'));return;}
   state.cash-=cost;state.skillsOwned[id]=true;sk.eff(state);
   state.passive=calcTotalPassive();
   showToast(sk.icon+' '+sk.name+' desbloqueado');
@@ -3530,7 +3531,7 @@ function showSteveOverlayLegacy(msg, nextTitle, nextDesc){
   if(!state.advisorHired){
     // Sin asesor contratado todavía: solo un aviso breve, sin la superposición a pantalla completa.
     // El mensaje completo ya queda guardado en el Centro de Mensajes para leerlo cuando quieras.
-    showToast('📖 '+(nextTitle||'Progreso')+' — contrata un asesor financiero para recibir orientación completa');
+    showToast('📖 '+(nextTitle||L3('Progreso','Progress','进度'))+L3(' — contrata un asesor financiero para recibir orientación completa',' — hire a financial advisor for full guidance','— 聘请财务顾问以获得完整指导'));
     return;
   }
   document.getElementById('steveCap').textContent=companionName()+' — Capítulo '+(state.chapterIdx+1);
@@ -3870,7 +3871,7 @@ function checkChapter(){
     const completedNum=state.chapterIdx+1;
     state.chapterIdx++;
     const nch=CHAPTERS[state.chapterIdx];
-    if(state.chapterIdx===4&&!state.taxUnlocked){state.taxUnlocked=true;state.taxRate=0.15;showToast('🧾 Los impuestos sobre ventas ya están activos: 15%');}
+    if(state.chapterIdx===4&&!state.taxUnlocked){state.taxUnlocked=true;state.taxRate=0.15;showToast(L3('🧾 Los impuestos sobre ventas ya están activos: 15%','🧾 Sales tax is now active: 15%','🧾 销售税已生效：15%'));}
     // Los activos de este capítulo YA NO se desbloquean todos de golpe — se irán
     // revelando progresivamente según subes de nivel (patrimonio neto). Aquí solo
     // anunciamos que la puerta se ha abierto; checkAssetUnlocks() hace el resto.
@@ -3922,7 +3923,7 @@ function checkAssetUnlocks(){
       a.locked=false;
       changed=true;
       const lvl=getCurrentLevel();
-      showToast('🔓 Nivel '+lvl+' — Nuevo activo: '+a.name);
+      showToast(L3('🔓 Nivel ','🔓 Level ','🔓 等级 ')+lvl+L3(' — Nuevo activo: ',' — New asset: ','— 新资产：')+TN(a.name));
       queueAlan({quote:'"Un activo nuevo en el mercado. Cuanto más patrimonio acumulas, más oportunidades se abren."',tip:a.name+' ('+a.tag+') ya está disponible para tradear. Lo has desbloqueado al alcanzar '+fmt(a.unlockNW)+' de patrimonio neto — Nivel '+lvl+'.',title:'🔓 Nuevo activo desbloqueado',reward:null});
     }
   });
@@ -4212,10 +4213,10 @@ function negotiateBank(){
   const bank=state.bank;
   const luxury=luxuryCreditBonus();
   const last=bank.lastNegotiationDay||-9999;
-  if(state.day-last<30){showToast('El banco revisará tus condiciones dentro de '+(30-(state.day-last))+' días');return;}
-  if(luxury<=0&&state.bank.ratingScore<700){showToast('Necesitas mejor historial o artículos de lujo para negociar');return;}
+  if(state.day-last<30){showToast(L3('El banco revisará tus condiciones dentro de ','The bank will review your terms in ','银行将在 ')+(30-(state.day-last))+L3(' días',' days',' 天后重新评估你的条件'));return;}
+  if(luxury<=0&&state.bank.ratingScore<700){showToast(L3('Necesitas mejor historial o artículos de lujo para negociar','You need a better record or luxury items to negotiate','需要更好的信用记录或奢侈品才能协商'));return;}
   const choice=window.prompt('NEGOCIACIÓN CON EL BANCO\n\n1 — Reducir intereses\n2 — Aumentar límite de crédito\n3 — Condiciones equilibradas\n\nEscribe 1, 2 o 3:','3');
-  if(!['1','2','3'].includes(choice)){showToast('Negociación cancelada');return;}
+  if(!['1','2','3'].includes(choice)){showToast(L3('Negociación cancelada','Negotiation cancelled','协商已取消'));return;}
   bank.negotiationLevel=Math.min(6,(bank.negotiationLevel||0)+1);
   bank.negotiationChoice=choice;
   bank.lastNegotiationDay=state.day;
@@ -4223,7 +4224,7 @@ function negotiateBank(){
   if(choice==='1')bank.rateDiscount=(bank.rateDiscount||0)+0.008;
   if(choice==='2')bank.creditNegotiationBonus=Math.min(0.60,(bank.creditNegotiationBonus||0)+0.12);
   if(choice==='3'){bank.rateDiscount=(bank.rateDiscount||0)+0.004;bank.creditNegotiationBonus=Math.min(0.60,(bank.creditNegotiationBonus||0)+0.06);}
-  showToast(choice==='1'?'🤝 Intereses reducidos: el banco acepta tu propuesta':choice==='2'?'🤝 Límite de crédito ampliado: has ganado poder de negociación':'🤝 Acuerdo equilibrado: mejores intereses y más crédito');
+  showToast(choice==='1'?L3('🤝 Intereses reducidos: el banco acepta tu propuesta','🤝 Lower interest: the bank accepts your proposal','🤝 利率下调：银行接受了你的提议'):choice==='2'?L3('🤝 Límite de crédito ampliado: has ganado poder de negociación','🤝 Credit limit raised: you have gained bargaining power','🤝 信用额度提高：你获得了议价能力'):L3('🤝 Acuerdo equilibrado: mejores intereses y más crédito','🤝 Balanced deal: better interest and more credit','🤝 平衡协议：更低利率与更多额度'));
   recalcScore();renderBankScreen();saveGame(true);
 }
 
@@ -4271,11 +4272,11 @@ function lockedUnits(id){
 }
 function requestLoan(type, amount){
   const rate = interestRate(type);
-  if(rate===null){ showToast('Tu rating no permite este producto'); return; }
+  if(rate===null){ showToast(L3('Tu rating no permite este producto','Your rating does not allow this product','你的信用评级无法使用该产品')); return; }
   const max = maxLoan(type);
   // NaN no cumple ninguna de las dos comparaciones, asi que se colaba y dejaba la caja en NaN
   amount = Number(amount);
-  if(!isFinite(amount) || amount <= 0 || amount > max){ showToast('Cantidad fuera de límite (máx '+fmt(max)+')'); return; }
+  if(!isFinite(amount) || amount <= 0 || amount > max){ showToast(L3('Cantidad fuera de límite (máx ','Amount out of range (max ','金额超出范围（上限 ')+fmt(max)+L3(')',')','）')); return; }
   let lock=null;
   if(type==='crypto'){
     // Sólo cuenta como colateral la cripto que todavía está libre: la que ya respalda
@@ -4284,7 +4285,7 @@ function requestLoan(type, amount){
     const totalCryptoVal = CRYPTO_IDS.reduce((s,id)=>{
       const a=ASSETS.find(x=>x.id===id); return s+(a?freeUnits(id)*a.price:0);
     },0);
-    if(totalCryptoVal*0.5 < amount){ showToast('No tienes suficiente cripto libre como colateral'); return; }
+    if(totalCryptoVal*0.5 < amount){ showToast(L3('No tienes suficiente cripto libre como colateral','You do not have enough free crypto as collateral','可用作抵押的加密资产不足')); return; }
     // Bloquear el 2x del préstamo en valor cripto, anotado en el propio préstamo
     let remaining = amount * 2;
     lock={};
@@ -4314,7 +4315,7 @@ function requestLoan(type, amount){
   else { state.bank.loans.push(loan); }
   syncCryptoCollateral();
   state.cash += amount;
-  showToast('✅ '+fmt(amount)+' recibido — TIN '+Math.round(rate*100)+'%/año');
+  showToast('✅ '+fmt(amount)+L3(' recibido — TIN ',' received — rate ','已到账 — 年利率 ')+Math.round(rate*100)+L3('%/año','%/year','%'));
   recalcScore();
   renderBankScreen();
   updateTopBar();
@@ -4323,8 +4324,8 @@ function requestLoan(type, amount){
 // Pagar préstamo
 function payLoan(loanId, amount){
   const loan = state.bank.loans.find(l=>l.id===loanId);
-  if(!loan){ showToast('Préstamo no encontrado'); return; }
-  if(state.cash < amount){ showToast('Sin efectivo suficiente'); return; }
+  if(!loan){ showToast(L3('Préstamo no encontrado','Loan not found','未找到该贷款')); return; }
+  if(state.cash < amount){ showToast(L3('Sin efectivo suficiente','Not enough cash','现金不足')); return; }
   const pay = Math.min(amount, loan.remaining);
   state.cash -= pay;
   loan.remaining -= pay;
@@ -4334,7 +4335,7 @@ function payLoan(loanId, amount){
     state.bank.loans = state.bank.loans.filter(l=>l.id!==loanId);
     syncCryptoCollateral();
     state.bank.ratingScore = Math.min(850, state.bank.ratingScore+20);
-    showToast('🎉 Préstamo saldado completamente');
+    showToast(L3('🎉 Préstamo saldado completamente','🎉 Loan fully repaid','🎉 贷款已全部还清'));
   } else {
     showToast('💸 Pagado '+fmt(pay)+' — Queda '+fmt(loan.remaining));
   }
@@ -4344,12 +4345,12 @@ function payLoan(loanId, amount){
 }
 
 function payRevolving(amount){
-  if(state.cash < amount){ showToast('Sin efectivo'); return; }
+  if(state.cash < amount){ showToast(L3('Sin efectivo','Not enough cash','现金不足')); return; }
   const pay = Math.min(amount, state.bank.revolvingUsed);
   state.cash -= pay;
   state.bank.revolvingUsed = Math.max(0, state.bank.revolvingUsed - pay);
   state.bank.totalPaid += pay;
-  showToast('💸 Línea revolving: pagado '+fmt(pay));
+  showToast(L3('💸 Línea revolving: pagado ','💸 Revolving line: paid ','💸 循环额度：已还 ')+fmt(pay));
   recalcScore();
   renderBankScreen();
   updateTopBar();
@@ -4369,7 +4370,7 @@ function bankDailyTick(){
     if(loan.termDays>0 && loan.daysTaken > loan.termDays){
       loan.daysOverdue++;
       if(loan.daysOverdue===1){
-        showToast('⚠️ Préstamo vencido: '+loan.label+'. Paga pronto.');
+        showToast(L3('⚠️ Préstamo vencido: ','⚠️ Loan overdue: ','⚠️ 贷款逾期：')+loan.label+L3('. Paga pronto.','. Pay it soon.','，请尽快偿还。'));
         queueAlan({quote:'"Tu préstamo '+loan.label+' está vencido. Esto data tu rating."',tip:'Entra en el Banco y págalo antes de que empeoré tu rating crediticio. Un default puede bloquearte el acceso a nuevos préstamos.',title:'⚠️ Mora bancaria',reward:null});
       }
       if(loan.daysOverdue>=5){
@@ -4381,7 +4382,7 @@ function bankDailyTick(){
           const embargo = Math.min(state.cash, loan.remaining*0.1);
           state.cash -= embargo;
           loan.remaining -= embargo;
-          showToast('🚨 EMBARGO: '+fmt(embargo)+' tomados por el banco');
+          showToast(L3('🚨 EMBARGO: ','🚨 SEIZURE: ','🚨 强制扣款：')+fmt(embargo)+L3(' tomados por el banco',' taken by the bank','，已被银行扣划'));
         }
         loan.status = loan.remaining<=0?'paid':'overdue';
       }
@@ -4566,8 +4567,8 @@ function propTierUnlocked(tier){
 function buyPropChallenge(tierId){
   const tier=PROP_TIERS.find(t=>t.id===tierId);
   if(!tier)return;
-  if(!propTierUnlocked(tier)){showToast('🔒 Se desbloquea más adelante');return;}
-  if(state.cash<tier.fee){showToast('Sin efectivo suficiente para pagar el reto');return;}
+  if(!propTierUnlocked(tier)){showToast(L3('🔒 Se desbloquea más adelante','🔒 Unlocks later','🔒 稍后解锁'));return;}
+  if(state.cash<tier.fee){showToast(L3('Sin efectivo suficiente para pagar el reto','Not enough cash to pay for the challenge','现金不足，无法支付挑战费用'));return;}
   state.cash-=tier.fee;
   if(!state.propFirm)state.propFirm={accounts:[],nextId:1,totalWithdrawn:0,totalFailed:0};
   const acc={
@@ -4585,7 +4586,7 @@ function buyPropChallenge(tierId){
     totalWithdrawn:0,
   };
   state.propFirm.accounts.push(acc);
-  showToast('💼 Reto de '+fmt(tier.size)+' comprado por '+fmt(tier.fee));
+  showToast(L3('💼 Reto de ','💼 Challenge of ','💼 ')+fmt(tier.size)+L3(' comprado por ',' bought for ',' 挑战已购买，花费 ')+fmt(tier.fee));
   checkStoryScene('first_propfirm');
   queueAlan({quote:'"Un nuevo reto. Demuestra que sabes tradear con el dinero de otros."',tip:'Tienes una cuenta de '+fmt(tier.size)+' con objetivo de beneficio de '+fmt(acc.target-acc.size)+' y un límite de pérdida de '+fmt(acc.size-acc.floor)+'. Ve a la pestaña Invertir y cambia tu fuente de capital a esta cuenta fondeada para empezar a operar con ella. Si superas el objetivo antes de tocar el límite, la cuenta se financia y te quedas con el '+Math.round(tier.split*100)+'% de cada beneficio que retires.',title:'💼 Reto iniciado',reward:null});
   updateTopBar();
@@ -4599,7 +4600,7 @@ function withdrawPropProfit(accId){
   const profit=Math.max(0,value-acc.size);
   const withdrawable=Math.min(profit,Math.max(0,acc.cash));
   if(withdrawable<=0){
-    showToast(profit>0?'Ese beneficio está invertido en posiciones abiertas — véndelas o ciérralas primero':'Sin beneficio que retirar todavía');
+    showToast(profit>0?L3('Ese beneficio está invertido en posiciones abiertas — véndelas o ciérralas primero','That profit is tied up in open positions — sell or close them first','该收益仍在未平仓位中 — 请先卖出或平仓'):L3('Sin beneficio que retirar todavía','No profit to withdraw yet','暂无可提取的收益'));
     return;
   }
   const payout=withdrawable*acc.split;
@@ -4608,7 +4609,7 @@ function withdrawPropProfit(accId){
   acc.cash-=withdrawable;
   acc.totalWithdrawn+=payout;
   state.propFirm.totalWithdrawn=(state.propFirm.totalWithdrawn||0)+payout;
-  showToast('💰 Retirado '+fmt(payout)+' de tu cuenta fondeada de '+fmt(acc.size));
+  showToast(L3('💰 Retirado ','💰 Withdrew ','💰 已提取 ')+fmt(payout)+L3(' de tu cuenta fondeada de ',' from your funded account of ','，来自你的 ')+fmt(acc.size)+L3('','',' 资金账户'));
   updateTopBar();checkAchievements();checkMisiones();checkChapter();checkWin();checkWorldMilestones();
   renderPropScreen();
   saveGame(true);
@@ -4816,7 +4817,7 @@ function chartOrder(id,action){
   const input=document.getElementById('chartAmt');
   const amount=parseFloat(input&&input.value)||0;
   if(action==='buy'||action==='short'){
-    if(amount<=0){showToast('Introduce una cantidad para comprar');return;}
+    if(amount<=0){showToast(L3('Introduce una cantidad para comprar','Enter an amount to buy','请输入购买金额'));return;}
     inputValues[id]=amount;
     action==='buy'?buyAsset(id):openShort(id);
   }else sellAsset(id);
@@ -5048,7 +5049,7 @@ Object.assign(UI_TRANSLATIONS,{
   'Comprar negocio':['Buy business','购买企业'],'Comprar activo':['Buy asset','购买资产'],'Vender activo':['Sell asset','出售资产'],'Operaciones abiertas':['Open positions','未平仓头寸'],'Posición':['Position','仓位'],'Margen':['Margin','保证金'],'Precio de entrada':['Entry price','入场价格'],'Precio actual':['Current price','当前价格'],'Ganancia/Pérdida':['Profit/Loss','盈亏'],'Cerrar posición':['Close position','平仓'],'Capital disponible':['Available capital','可用资金'],'Límite de pérdida':['Loss limit','亏损限额'],'Cuenta activa':['Active account','当前账户'],'Reto':['Challenge','挑战'],'Cuenta financiada':['Funded account','资金账户'],'Retirar beneficio':['Withdraw profit','提取利润'],'Días activos':['Active days','活跃天数'],'Nivel':['Level','等级'],'Coste':['Cost','费用'],'Ingresos':['Income','收入'],'Ingresos diarios':['Daily income','每日收入'],'Propiedad':['Property','房产'],'Casa en propiedad':['Owned house','自有房屋'],'Apartamento de alquiler':['Rental apartment','出租公寓'],'Comprar vivienda':['Buy property','购买房产'],'Ya comprado':['Already owned','已拥有'],'Bloqueado':['Locked','已锁定'],'Tienda de lujo':['Luxury shop','奢侈品商店'],'Colección':['Collection','收藏'],'Estilo':['Style','风格']
 });
 const translatedNodes=new WeakMap();
-const RUNTIME_TRANSLATIONS={en:[[/\bMisión completada\b/g,'Mission completed'],[/\bRecompensa\b/g,'Reward'],[/\bDía\b/g,'Day'],[/\bCapítulo\b/gi,'Chapter'],[/\bNivel\b/g,'Level'],[/\bSin abrir\b/g,'Not opened'],[/\bcomprado y equipado\b/g,'purchased and equipped'],[/\bequipado\b/g,'equipped'],[/\bDesbloqueado\b/g,'Unlocked'],[/\bReclamado\b/g,'Claimed'],[/¡LISTO!/g,'READY!'],[/\bSe desbloquea en el capítulo\b/g,'Unlocks in chapter'],[/\bIngresos pasivos\b/g,'Passive income'],[/\bpor día\b/g,'per day'],[/\bganancia\b/gi,'profit'],[/\bpérdida\b/gi,'loss'],[/\bbeneficio\b/gi,'profit'],[/\bcomprar\b/gi,'buy'],[/\bvender\b/gi,'sell'],[/\bmercado\b/gi,'market'],[/\bcapital\b/gi,'capital'],[/\bpatrimonio\b/gi,'net worth'],[/\bobjetivo\b/gi,'target'],[/\bprogreso\b/gi,'progress'],[/\bcompletada\b/gi,'completed'],[/\bcompletado\b/gi,'completed'],[/\bTienda\b/g,'Shop'],[/\bPropiedad\b/g,'Property'],[/\bVehículos\b/g,'Vehicles'],[/\bJoyas\b/g,'Jewelry'],[/Mascotas [Ee]xóticas/g,'Exotic pets']],zh:[[/\bMisión completada\b/g,'任务已完成'],[/\bRecompensa\b/g,'奖励'],[/\bDía\b/g,'天'],[/\bCapítulo\b/gi,'章节'],[/\bNivel\b/g,'等级'],[/\bSin abrir\b/g,'未开启'],[/\bcomprado y equipado\b/g,'已购买并装备'],[/\bequipado\b/g,'已装备'],[/\bDesbloqueado\b/g,'已解锁'],[/\bReclamado\b/g,'已领取'],[/¡LISTO!/g,'完成！'],[/\bSe desbloquea en el capítulo\b/g,'在章节中解锁'],[/\bIngresos pasivos\b/g,'被动收入'],[/\bpor día\b/g,'每日'],[/\bganancia\b/gi,'收益'],[/\bpérdida\b/gi,'损失'],[/\bbeneficio\b/gi,'利润'],[/\bcomprar\b/gi,'买入'],[/\bvender\b/gi,'卖出'],[/\bmercado\b/gi,'市场'],[/\bcapital\b/gi,'资金'],[/\bpatrimonio\b/gi,'资产'],[/\bobjetivo\b/gi,'目标'],[/\bprogreso\b/gi,'进度'],[/\bcompletada\b/gi,'已完成'],[/\bcompletado\b/gi,'已完成'],[/\bTienda\b/g,'商店'],[/\bPropiedad\b/g,'房产'],[/\bVehículos\b/g,'车辆'],[/\bJoyas\b/g,'珠宝'],[/Mascotas [Ee]xóticas/g,'珍稀宠物']]};
+const RUNTIME_TRANSLATIONS={en:[[/\bMisión completada\b/g,'Mission completed'],[/\bRecompensa\b/g,'Reward'],[/\bDía\b/g,'Day'],[/Se desbloquea en el siguiente capítulo/g,'Unlocks in the next chapter'],[/\bCapítulo\b/gi,'Chapter'],[/\bNivel\b/g,'Level'],[/\bSin abrir\b/g,'Not opened'],[/\bcomprado y equipado\b/g,'purchased and equipped'],[/\bequipado\b/g,'equipped'],[/\bDesbloqueado\b/g,'Unlocked'],[/\bReclamado\b/g,'Claimed'],[/¡LISTO!/g,'READY!'],[/\bSe desbloquea en el capítulo\b/g,'Unlocks in chapter'],[/\bIngresos pasivos\b/g,'Passive income'],[/\bpor día\b/g,'per day'],[/\bganancia\b/gi,'profit'],[/\bpérdida\b/gi,'loss'],[/\bbeneficio\b/gi,'profit'],[/\bcomprar\b/gi,'buy'],[/\bvender\b/gi,'sell'],[/\bmercado\b/gi,'market'],[/\bcapital\b/gi,'capital'],[/\bpatrimonio\b/gi,'net worth'],[/\bobjetivo\b/gi,'target'],[/\bprogreso\b/gi,'progress'],[/\bcompletada\b/gi,'completed'],[/\bcompletado\b/gi,'completed'],[/\bTienda\b/g,'Shop'],[/\bPropiedad\b/g,'Property'],[/\bVehículos\b/g,'Vehicles'],[/\bJoyas\b/g,'Jewelry'],[/Mascotas [Ee]xóticas/g,'Exotic pets']],zh:[[/\bMisión completada\b/g,'任务已完成'],[/\bRecompensa\b/g,'奖励'],[/\bDía\b/g,'天'],[/Se desbloquea en el siguiente capítulo/g,'在下一章解锁'],[/\bCapítulo\b/gi,'章节'],[/\bNivel\b/g,'等级'],[/\bSin abrir\b/g,'未开启'],[/\bcomprado y equipado\b/g,'已购买并装备'],[/\bequipado\b/g,'已装备'],[/\bDesbloqueado\b/g,'已解锁'],[/\bReclamado\b/g,'已领取'],[/¡LISTO!/g,'完成！'],[/\bSe desbloquea en el capítulo\b/g,'在章节中解锁'],[/\bIngresos pasivos\b/g,'被动收入'],[/\bpor día\b/g,'每日'],[/\bganancia\b/gi,'收益'],[/\bpérdida\b/gi,'损失'],[/\bbeneficio\b/gi,'利润'],[/\bcomprar\b/gi,'买入'],[/\bvender\b/gi,'卖出'],[/\bmercado\b/gi,'市场'],[/\bcapital\b/gi,'资金'],[/\bpatrimonio\b/gi,'资产'],[/\bobjetivo\b/gi,'目标'],[/\bprogreso\b/gi,'进度'],[/\bcompletada\b/gi,'已完成'],[/\bcompletado\b/gi,'已完成'],[/\bTienda\b/g,'商店'],[/\bPropiedad\b/g,'房产'],[/\bVehículos\b/g,'车辆'],[/\bJoyas\b/g,'珠宝'],[/Mascotas [Ee]xóticas/g,'珍稀宠物']]};
 // Traduce el HTML generado por las pantallas (se construyen en español y antes quedaban sin traducir)
 function T(html){return state.language==='es'?html:translateRuntimeText(html,state.language);}
 function translateRuntimeText(value,lang){
@@ -6560,7 +6561,7 @@ function setLanguage(lang){
   else if(active==='screenProp')renderPropScreen();
   else if(active==='screenNews')renderNewsScreen();
   else if(active==='screenExtra')renderExtra();
-  applyLanguage();showToast('Idioma: '+LANGUAGE_NAMES[lang]);
+  applyLanguage();showToast(L3('Idioma: ','Language: ','语言：')+LANGUAGE_NAMES[lang]);
 }
 function renderExtra(){
   const done=Object.keys(state.achievements).length;
@@ -7138,14 +7139,14 @@ function buyShopItem(id){
       state.shop.owned.home1b=true;
       state.shop.equipped.inmueble='home1b';
     }
-  if(!shopItemUnlocked(item)){showToast('🔒 Se desbloquea más adelante');return;}
-  if(state.shop.owned[id]){showToast('Ya tienes este artículo');return;}
-  if(state.cash<item.cost){showToast('Sin efectivo suficiente');return;}
+  if(!shopItemUnlocked(item)){showToast(L3('🔒 Se desbloquea más adelante','🔒 Unlocks later','🔒 稍后解锁'));return;}
+  if(state.shop.owned[id]){showToast(L3('Ya tienes este artículo','You already own this item','你已拥有该物品'));return;}
+  if(state.cash<item.cost){showToast(L3('Sin efectivo suficiente','Not enough cash','现金不足'));return;}
   state.cash-=item.cost;
   state.shop.owned[id]=true;
   state.shop.equipped[item.cat]=id;
   window.dispatchEvent(new CustomEvent('tycoon-purchase',{detail:{type:item.cat,id:item.id}}));
-  showToast(item.icon+' '+item.name+' comprado y equipado');
+  showToast(item.icon+' '+TN(item.name)+L3(' comprado y equipado',' bought and equipped','已购买并装备'));
   checkAchievements();
   updateTopBar();renderCharacter();
   renderShopScreen();
@@ -7155,7 +7156,7 @@ function equipShopItem(id){
   const item=SHOP_ITEMS.find(x=>x.id===id);
   if(!item||!state.shop||!state.shop.owned[id])return;
   state.shop.equipped[item.cat]=id;
-  showToast(item.icon+' '+item.name+' equipado');
+  showToast(item.icon+' '+TN(item.name)+L3(' equipado',' equipped','已装备'));
   updateTopBar();renderCharacter();
   renderShopScreen();
   saveGame(true);
@@ -7258,8 +7259,8 @@ function crimeUnlocked(action){
 function attemptCrime(id){
   const action=CRIME_ACTIONS.find(a=>a.id===id);
   if(!action)return;
-  if(!crimeUnlocked(action)){showToast('🔒 Se desbloquea más adelante');return;}
-  if(crimeOnCooldown(id)){showToast('⏳ Necesitas esperar antes de repetir esto');return;}
+  if(!crimeUnlocked(action)){showToast(L3('🔒 Se desbloquea más adelante','🔒 Unlocks later','🔒 稍后解锁'));return;}
+  if(crimeOnCooldown(id)){showToast(L3('⏳ Necesitas esperar antes de repetir esto','⏳ You need to wait before doing this again','⏳ 需要等待后才能再次进行'));return;}
   const risk=crimeRisk(action);
   const caught=Math.random()<risk;
   state.crime.cooldowns[id]=state.day+action.cooldownDays;
@@ -7286,9 +7287,9 @@ function attemptCrime(id){
 
 function launderMoney(){
   const action=CRIME_LAUNDER;
-  if(!crimeUnlocked(action)){showToast('🔒 Se desbloquea más adelante');return;}
-  if(crimeOnCooldown('launder')){showToast('⏳ Necesitas esperar antes de repetir esto');return;}
-  if(state.cash<=0){showToast('Sin efectivo que blanquear');return;}
+  if(!crimeUnlocked(action)){showToast(L3('🔒 Se desbloquea más adelante','🔒 Unlocks later','🔒 稍后解锁'));return;}
+  if(crimeOnCooldown('launder')){showToast(L3('⏳ Necesitas esperar antes de repetir esto','⏳ You need to wait before doing this again','⏳ 需要等待后才能再次进行'));return;}
+  if(state.cash<=0){showToast(L3('Sin efectivo que blanquear','No cash to launder','没有可洗的现金'));return;}
   const cost=state.cash*action.cost;
   const risk=crimeRisk(action);
   const caught=Math.random()<risk;
@@ -7764,7 +7765,7 @@ function showMainMenu(){
 }
 function toggleMarketMode(){
   state.marketMode=state.marketMode==='hard'?'easy':'hard';
-  showToast(state.marketMode==='hard'?'🎯 Modo difícil: señales ocultas':'💡 Modo fácil: señales visibles');
+  showToast(state.marketMode==='hard'?L3('🎯 Modo difícil: señales ocultas','🎯 Hard mode: signals hidden','🎯 困难模式：信号隐藏'):L3('💡 Modo fácil: señales visibles','💡 Easy mode: signals visible','💡 简单模式：信号可见'));
   saveGame(true);renderExtra();applyLanguage();
   if(document.getElementById('screenTrade').classList.contains('active'))renderTradeScreen();
 }
@@ -7974,8 +7975,8 @@ function runFreshGameInit(){
     );
     // Sin asesor contratado todavía: unas pistas neutras para no dejarte a ciegas
     if(!state.advisorHired){
-      setTimeout(()=>showToast('💡 Empieza en la pestaña Invertir: compra BitKoin o Ethera con tu caja inicial.'),1600);
-      setTimeout(()=>showToast('💼 Contrata un asesor financiero desde el panel inferior cuando tengas '+fmt(ADVISOR_HIRE_COST)+'.'),4600);
+      setTimeout(()=>showToast(L3('💡 Empieza en la pestaña Invertir: compra BitKoin o Ethera con tu caja inicial.','💡 Start on the Trade tab: buy BitKoin or Ethera with your starting cash.','💡 从交易标签开始：用初始资金买入 BitKoin 或 Ethera。')),1600);
+      setTimeout(()=>showToast(L3('💼 Contrata un asesor financiero desde el panel inferior cuando tengas ','💼 Hire a financial advisor from the bottom panel once you have ','💼 当你拥有 ')+fmt(ADVISOR_HIRE_COST)+L3('.','.','，可从下方面板聘请财务顾问。')),4600);
     }
   },800);
 }
@@ -8206,8 +8207,8 @@ showMainMenu();
 <script id="game-locale-polish-final">
 (function(){
   var maps={
-    en:[['Se desbloquea en el siguiente capítulo','Unlocks in the next chapter'],['Se desbloquea más adelante','Unlocks later'],['Cartera:','Holdings:'],['Cantidad en $','Amount in $'],['Vender todo','Sell all'],['Val.','Sell'],['Comprar','Buy'],['Caja (fondeada)','Funded cash'],['Sin abrir','Not open'],['Niv.','Lvl.'],['Día','Day'],['día','day'],['sell TODO','SELL ALL'],['VENDER TODO','SELL ALL'],['Próximo activo en ','Next asset unlocks at '],['Nivel máximo','Max level'],['Nivel ','Level '],['Caja:','Cash:'],['Cantidad en $','Amount in $'],['Operar en ','Trade '],['Vender todo','Sell all']],
-    zh:[['Se desbloquea en el siguiente capítulo','在下一章解锁'],['Se desbloquea más adelante','稍后解锁'],['Personal','个人'],['Cartera:','持仓：'],['Cantidad en $','金额（$）'],['Vender todo','全部卖出'],['Val.','卖出'],['Comprar','买入'],['Caja (fondeada)','资金账户'],['Caja','现金'],['Sin abrir','未开启'],['Día','天'],['día','天'],['Se desbloquea en el siguiente 章节','在下一章解锁'],['卖出 TODO','全部卖出'],['卖出TODO','全部卖出'],['VENDER TODO','全部卖出'],['Próximo activo en ','下一资产解锁需净资产 '],['Nivel máximo','最高等级'],['Nivel ','等级 '],['Caja:','现金：'],['Cantidad en $','金额（$）'],['Operar en ','交易 '],['Vender todo','全部卖出']]
+    en:[['Se desbloquea en el siguiente capítulo','Unlocks in the next chapter'],['Se desbloquea en el siguiente Chapter','Unlocks in the next chapter'],['No hay noticias en esta categoría todavía.','No news in this category yet.'],['Sigue jugando para que lleguen las primeras.','Keep playing for the first ones to arrive.'],['Activados · sonido al ganar o perder en un trade y alerta en BEAR','On · a sound when a trade wins or loses, and an alert in BEAR'],['Desactivados','Off'],['Se desbloquea más adelante','Unlocks later'],['Cartera:','Holdings:'],['Cantidad en $','Amount in $'],['Vender todo','Sell all'],['Val.','Sell'],['Comprar','Buy'],['Caja (fondeada)','Funded cash'],['Sin abrir','Not open'],['Niv.','Lvl.'],['Día','Day'],['día','day'],['sell TODO','SELL ALL'],['VENDER TODO','SELL ALL'],['Próximo activo en ','Next asset unlocks at '],['Nivel máximo','Max level'],['Nivel ','Level '],['Caja:','Cash:'],['Cantidad en $','Amount in $'],['Operar en ','Trade '],['Vender todo','Sell all']],
+    zh:[['Se desbloquea en el siguiente capítulo','在下一章解锁'],['No hay noticias en esta categoría todavía.','该分类暂无新闻。'],['Sigue jugando para que lleguen las primeras.','继续游戏以获取最新消息。'],['Activados · sonido al ganar o perder en un trade y alerta en BEAR','已开启 · 交易盈亏提示音与熊市警报'],['Desactivados','已关闭'],['Se desbloquea más adelante','稍后解锁'],['Personal','个人'],['Cartera:','持仓：'],['Cantidad en $','金额（$）'],['Vender todo','全部卖出'],['Val.','卖出'],['Comprar','买入'],['Caja (fondeada)','资金账户'],['Caja','现金'],['Sin abrir','未开启'],['Día','天'],['día','天'],['Se desbloquea en el siguiente 章节','在下一章解锁'],['卖出 TODO','全部卖出'],['卖出TODO','全部卖出'],['VENDER TODO','全部卖出'],['Próximo activo en ','下一资产解锁需净资产 '],['Nivel máximo','最高等级'],['Nivel ','等级 '],['Caja:','现金：'],['Cantidad en $','金额（$）'],['Operar en ','交易 '],['Vender todo','全部卖出']]
   };
   var cleanZh=[
     ['起点','你从 $500 开始。理性投资，建立你的第一份资产。','我开始时比你还穷。看看我现在的样子。','你有500美元作为起点。先用小额资金进入市场，边做边学，再承担更大的风险。建立第一个业务，让被动收入帮助你成长。目标：净资产达到 $7,000。'],

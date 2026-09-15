@@ -9,7 +9,7 @@
   - Imagenes, sonidos y scripts del juego: primero lo guardado y se actualiza por detras.
   - Todo lo demas: no se intercepta.
 */
-const VERSION = 'tycoon-v9';
+const VERSION = 'tycoon-v10';
 const CORE_CACHE = VERSION + '-core';
 const RUN_CACHE = VERSION + '-run';
 const RUN_MAX = 140; // tope de archivos guardados sobre la marcha
