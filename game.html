@@ -4843,8 +4843,13 @@ function buildCard(a){
   const isCrypto=CRYPTO_IDS.includes(a.id),cycle=isCrypto?visibleCycle(a.id):'neutral';
   const cColor=cycle==='bull'?'#10B981':cycle==='bear'?'#F43F5E':'#5a7090';
   const cLabel=state.marketMode==='hard'?(up?' · ▲ ':' · ▼ ')+Math.abs(chg).toFixed(2)+'%':(cycle==='bull'?'🔥 BULL':cycle==='bear'?'💀 BEAR':'');
-  if(a.locked)return'<div class="assetCard" id="card_'+a.id+'" style="opacity:.35"><div class="top"><div><div class="aName">🔒 '+a.name+'</div><div class="aTag">'+a.tag+'</div></div><div class="aPriceBox"><div class="aPrice" data-price>'+fmt(a.price)+'</div></div></div><div class="lockMsg">Se desbloquea en el siguiente capítulo</div></div>';
-  return'<div class="assetCard" id="card_'+a.id+'">'
+  if(a.locked){
+    const need=a.unlockNW?fmt(a.unlockNW):null;
+    const lockTxt=need?L3('Se desbloquea al llegar a '+need+' de patrimonio','Unlocks when you reach '+need+' net worth','净资产达到'+need+'时解锁')
+                      :L3('Se desbloquea al subir de nivel','Unlocks as you level up','升级后解锁');
+    return'<div class="assetCard" id="card_'+a.id+'" data-locked="1" style="opacity:.35"><div class="top"><div><div class="aName">🔒 '+a.name+'</div><div class="aTag">'+a.tag+'</div></div><div class="aPriceBox"><div class="aPrice" data-price>'+fmt(a.price)+'</div></div></div><div class="lockMsg">'+lockTxt+'</div></div>';
+  }
+  return'<div class="assetCard" id="card_'+a.id+'" data-locked="0">'
     +'<div class="top"><div>'
     +'<div class="aName">'+a.name+(isCrypto?' <span data-cycle style="font-size:9px;font-weight:700;color:'+cColor+'">'+cLabel+'</span>':'')+'</div>'
     +'<div class="aTag">'+a.tag+'</div></div>'
@@ -4907,7 +4912,17 @@ function renderTradeScreen(){
 }
 function refreshCard(id){
   const card=document.getElementById('card_'+id);if(!card)return;
-  const a=ASSETS.find(x=>x.id===id),held=(getCapHoldings()[id])||0;
+  const a=ASSETS.find(x=>x.id===id);if(!a)return;
+  // La tarjeta se construyó con un estado de bloqueo distinto (el activo acaba de
+  // desbloquearse). Hay que reconstruirla: refrescar los datos no cambia el HTML.
+  if((card.dataset.locked==='1')!==!!a.locked){
+    const wrap=document.createElement('div');
+    wrap.innerHTML=T(buildCard(a));
+    const fresh=wrap.firstElementChild;
+    if(fresh){card.replaceWith(fresh);try{translateVisibleText();}catch(e){}}
+    return;
+  }
+  const held=(getCapHoldings()[id])||0;
   const prev=a.hist[a.hist.length-2]||a.price,chg=((a.price-prev)/prev)*100,up=chg>=0;
   const pe=card.querySelector('[data-price]');if(pe)pe.textContent=fmt(a.price);
   const ce=card.querySelector('[data-chg]');if(ce){ce.className=up?'chgUp':'chgDown';ce.textContent=(up?'▲':'▼')+' '+Math.abs(chg).toFixed(2)+'%';}
@@ -5049,7 +5064,7 @@ Object.assign(UI_TRANSLATIONS,{
   'Comprar negocio':['Buy business','购买企业'],'Comprar activo':['Buy asset','购买资产'],'Vender activo':['Sell asset','出售资产'],'Operaciones abiertas':['Open positions','未平仓头寸'],'Posición':['Position','仓位'],'Margen':['Margin','保证金'],'Precio de entrada':['Entry price','入场价格'],'Precio actual':['Current price','当前价格'],'Ganancia/Pérdida':['Profit/Loss','盈亏'],'Cerrar posición':['Close position','平仓'],'Capital disponible':['Available capital','可用资金'],'Límite de pérdida':['Loss limit','亏损限额'],'Cuenta activa':['Active account','当前账户'],'Reto':['Challenge','挑战'],'Cuenta financiada':['Funded account','资金账户'],'Retirar beneficio':['Withdraw profit','提取利润'],'Días activos':['Active days','活跃天数'],'Nivel':['Level','等级'],'Coste':['Cost','费用'],'Ingresos':['Income','收入'],'Ingresos diarios':['Daily income','每日收入'],'Propiedad':['Property','房产'],'Casa en propiedad':['Owned house','自有房屋'],'Apartamento de alquiler':['Rental apartment','出租公寓'],'Comprar vivienda':['Buy property','购买房产'],'Ya comprado':['Already owned','已拥有'],'Bloqueado':['Locked','已锁定'],'Tienda de lujo':['Luxury shop','奢侈品商店'],'Colección':['Collection','收藏'],'Estilo':['Style','风格']
 });
 const translatedNodes=new WeakMap();
-const RUNTIME_TRANSLATIONS={en:[[/\bMisión completada\b/g,'Mission completed'],[/\bRecompensa\b/g,'Reward'],[/\bDía\b/g,'Day'],[/Se desbloquea en el siguiente capítulo/g,'Unlocks in the next chapter'],[/\bCapítulo\b/gi,'Chapter'],[/\bNivel\b/g,'Level'],[/\bSin abrir\b/g,'Not opened'],[/\bcomprado y equipado\b/g,'purchased and equipped'],[/\bequipado\b/g,'equipped'],[/\bDesbloqueado\b/g,'Unlocked'],[/\bReclamado\b/g,'Claimed'],[/¡LISTO!/g,'READY!'],[/\bSe desbloquea en el capítulo\b/g,'Unlocks in chapter'],[/\bIngresos pasivos\b/g,'Passive income'],[/\bpor día\b/g,'per day'],[/\bganancia\b/gi,'profit'],[/\bpérdida\b/gi,'loss'],[/\bbeneficio\b/gi,'profit'],[/\bcomprar\b/gi,'buy'],[/\bvender\b/gi,'sell'],[/\bmercado\b/gi,'market'],[/\bcapital\b/gi,'capital'],[/\bpatrimonio\b/gi,'net worth'],[/\bobjetivo\b/gi,'target'],[/\bprogreso\b/gi,'progress'],[/\bcompletada\b/gi,'completed'],[/\bcompletado\b/gi,'completed'],[/\bTienda\b/g,'Shop'],[/\bPropiedad\b/g,'Property'],[/\bVehículos\b/g,'Vehicles'],[/\bJoyas\b/g,'Jewelry'],[/Mascotas [Ee]xóticas/g,'Exotic pets']],zh:[[/\bMisión completada\b/g,'任务已完成'],[/\bRecompensa\b/g,'奖励'],[/\bDía\b/g,'天'],[/Se desbloquea en el siguiente capítulo/g,'在下一章解锁'],[/\bCapítulo\b/gi,'章节'],[/\bNivel\b/g,'等级'],[/\bSin abrir\b/g,'未开启'],[/\bcomprado y equipado\b/g,'已购买并装备'],[/\bequipado\b/g,'已装备'],[/\bDesbloqueado\b/g,'已解锁'],[/\bReclamado\b/g,'已领取'],[/¡LISTO!/g,'完成！'],[/\bSe desbloquea en el capítulo\b/g,'在章节中解锁'],[/\bIngresos pasivos\b/g,'被动收入'],[/\bpor día\b/g,'每日'],[/\bganancia\b/gi,'收益'],[/\bpérdida\b/gi,'损失'],[/\bbeneficio\b/gi,'利润'],[/\bcomprar\b/gi,'买入'],[/\bvender\b/gi,'卖出'],[/\bmercado\b/gi,'市场'],[/\bcapital\b/gi,'资金'],[/\bpatrimonio\b/gi,'资产'],[/\bobjetivo\b/gi,'目标'],[/\bprogreso\b/gi,'进度'],[/\bcompletada\b/gi,'已完成'],[/\bcompletado\b/gi,'已完成'],[/\bTienda\b/g,'商店'],[/\bPropiedad\b/g,'房产'],[/\bVehículos\b/g,'车辆'],[/\bJoyas\b/g,'珠宝'],[/Mascotas [Ee]xóticas/g,'珍稀宠物']]};
+const RUNTIME_TRANSLATIONS={en:[[/\bMisión completada\b/g,'Mission completed'],[/\bRecompensa\b/g,'Reward'],[/\bDía\b/g,'Day'],[/Se desbloquea en el siguiente capítulo/g,'Unlocks in the next chapter'],[/\bCapítulo\b/gi,'Chapter'],[/\bNivel\b/g,'Level'],[/\bSin abrir\b/g,'Not opened'],[/\bcomprado y equipado\b/g,'purchased and equipped'],[/\bequipado\b/g,'equipped'],[/\bDesbloqueado\b/g,'Unlocked'],[/\bReclamado\b/g,'Claimed'],[/¡LISTO!/g,'READY!'],[/\bSe desbloquea en el capítulo\b/g,'Unlocks in chapter'],[/\bIngresos pasivos\b/g,'Passive income'],[/\bpor día\b/g,'per day'],[/\bganancia\b/gi,'profit'],[/\bpérdida\b/gi,'loss'],[/\bbeneficio\b/gi,'profit'],[/\bComprar\b/g,'Buy'],[/\bVender\b/g,'Sell'],[/\bcomprar\b/gi,'buy'],[/\bvender\b/gi,'sell'],[/\bmercado\b/gi,'market'],[/\bcapital\b/gi,'capital'],[/\bpatrimonio\b/gi,'net worth'],[/\bobjetivo\b/gi,'target'],[/\bprogreso\b/gi,'progress'],[/\bcompletada\b/gi,'completed'],[/\bcompletado\b/gi,'completed'],[/\bTienda\b/g,'Shop'],[/\bPropiedad\b/g,'Property'],[/\bVehículos\b/g,'Vehicles'],[/\bJoyas\b/g,'Jewelry'],[/Mascotas [Ee]xóticas/g,'Exotic pets']],zh:[[/\bMisión completada\b/g,'任务已完成'],[/\bRecompensa\b/g,'奖励'],[/\bDía\b/g,'天'],[/Se desbloquea en el siguiente capítulo/g,'在下一章解锁'],[/\bCapítulo\b/gi,'章节'],[/\bNivel\b/g,'等级'],[/\bSin abrir\b/g,'未开启'],[/\bcomprado y equipado\b/g,'已购买并装备'],[/\bequipado\b/g,'已装备'],[/\bDesbloqueado\b/g,'已解锁'],[/\bReclamado\b/g,'已领取'],[/¡LISTO!/g,'完成！'],[/\bSe desbloquea en el capítulo\b/g,'在章节中解锁'],[/\bIngresos pasivos\b/g,'被动收入'],[/\bpor día\b/g,'每日'],[/\bganancia\b/gi,'收益'],[/\bpérdida\b/gi,'损失'],[/\bbeneficio\b/gi,'利润'],[/\bcomprar\b/gi,'买入'],[/\bvender\b/gi,'卖出'],[/\bmercado\b/gi,'市场'],[/\bcapital\b/gi,'资金'],[/\bpatrimonio\b/gi,'资产'],[/\bobjetivo\b/gi,'目标'],[/\bprogreso\b/gi,'进度'],[/\bcompletada\b/gi,'已完成'],[/\bcompletado\b/gi,'已完成'],[/\bTienda\b/g,'商店'],[/\bPropiedad\b/g,'房产'],[/\bVehículos\b/g,'车辆'],[/\bJoyas\b/g,'珠宝'],[/Mascotas [Ee]xóticas/g,'珍稀宠物']]};
 // Traduce el HTML generado por las pantallas (se construyen en español y antes quedaban sin traducir)
 function T(html){return state.language==='es'?html:translateRuntimeText(html,state.language);}
 function translateRuntimeText(value,lang){
