@@ -1164,7 +1164,7 @@ Use a research checklist: what do I own, why might it have value, what can go wr
 
 - [Live market tracker](https://investingnoobs.com/): crypto, stocks and commodity reference prices.
 - [Course index / progress tracker](https://investingnoobs.com/blog.html)
-- [InvestingNoobs Tycoon simulator game](https://investingnoobs.com/game.html): learn investing concepts by playing through career, income and risk decisions.
+- [InvestingNoobs Tycoon simulator game](https://investing-noobs.itch.io/investing-noobs-tycoon): learn investing concepts by playing through career, income and risk decisions.
 - [50-question final assessment](https://investingnoobs.com/test.html): one practical question per lesson, 80% required to pass.
 - [Investor Passport](https://investingnoobs.com/passport.html): a personalised three-step route through the course and tools.
 - [Research Room](https://investingnoobs.com/research.html): build an evidence-based thesis for a crypto, stock or commodity.

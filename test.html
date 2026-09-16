@@ -125,7 +125,7 @@
   <script>
   (()=>{
     const topbar=document.querySelector('.topbar');
-    if(topbar&&!topbar.querySelector('.site-nav')){const nav=document.createElement('nav');nav.className='site-nav';nav.setAttribute('aria-label','Academy navigation');nav.innerHTML='<a href="blog.html">Course</a><a href="test.html" aria-current="page">Assessment</a><a href="index.html">Tracker</a><a href="game.html">Game</a>';const back=topbar.querySelector('.back');if(back)topbar.insertBefore(nav,back);else topbar.appendChild(nav)}
+    if(topbar&&!topbar.querySelector('.site-nav')){const nav=document.createElement('nav');nav.className='site-nav';nav.setAttribute('aria-label','Academy navigation');nav.innerHTML='<a href="blog.html">Course</a><a href="test.html" aria-current="page">Assessment</a><a href="index.html">Tracker</a><a href="https://investing-noobs.itch.io/investing-noobs-tycoon" target="_blank" rel="noopener">Game</a>';const back=topbar.querySelector('.back');if(back)topbar.insertBefore(nav,back);else topbar.appendChild(nav)}
     const key='in_assessment_draft_v1',name=document.getElementById('name'),email=document.getElementById('email'),status=document.getElementById('draft-status'),clear=document.getElementById('clear-draft'),quiz=document.getElementById('quiz');
     if(!quiz||!status)return;
     const message=text=>{const label=status.querySelector('span');if(label)label.textContent=text};

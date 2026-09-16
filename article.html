@@ -278,7 +278,7 @@
   <script>
   (()=>{
     const topbar=document.querySelector('.topbar');
-    if(topbar&&!topbar.querySelector('.site-nav')){const nav=document.createElement('nav');nav.className='site-nav';nav.setAttribute('aria-label','Academy navigation');nav.innerHTML='<a href="blog.html" aria-current="page">Course</a><a href="test.html">Assessment</a><a href="index.html">Tracker</a><a href="game.html">Game</a>';const back=topbar.querySelector('.back');if(back)topbar.insertBefore(nav,back);else topbar.appendChild(nav)}
+    if(topbar&&!topbar.querySelector('.site-nav')){const nav=document.createElement('nav');nav.className='site-nav';nav.setAttribute('aria-label','Academy navigation');nav.innerHTML='<a href="blog.html" aria-current="page">Course</a><a href="test.html">Assessment</a><a href="index.html">Tracker</a><a href="https://investing-noobs.itch.io/investing-noobs-tycoon" target="_blank" rel="noopener">Game</a>';const back=topbar.querySelector('.back');if(back)topbar.insertBefore(nav,back);else topbar.appendChild(nav)}
     const article=document.getElementById('article');
     if(!article)return;
     const headings=[...article.querySelectorAll('h2')].filter(heading=>!heading.closest('.course-context')&&!heading.closest('.article-toc'));
