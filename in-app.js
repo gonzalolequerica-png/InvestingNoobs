@@ -196,12 +196,118 @@
     if (b) b.remove();
   });
 
+  /* ---------- weekly email sign-up ---------- */
+  var NEWS_URL = 'https://yreinzemfharuuvumduq.supabase.co/functions/v1/newsletter';
+
+  function newsletterCSS() {
+    if (document.getElementById('in-news-css')) return;
+    var s = document.createElement('style');
+    s.id = 'in-news-css';
+    s.textContent = [
+      '.in-news{max-width:1000px;margin:24px auto;padding:20px 20px 18px;border:1px solid var(--line,#242b35);',
+      'border-radius:14px;background:linear-gradient(135deg,rgba(201,163,90,.08),var(--surface,#12161d));}',
+      '.in-news h3{margin:6px 0 6px;font-family:Fraunces,Georgia,serif;font-weight:600;font-size:19px;color:var(--text,#eceef1);}',
+      '.in-news p{margin:0 0 14px;color:var(--muted,#8b93a0);font-size:13.5px;line-height:1.55;}',
+      '.in-news form{display:flex;gap:8px;flex-wrap:wrap;}',
+      '.in-news input[type=email]{flex:1;min-width:200px;padding:11px 13px;border-radius:9px;background:#151b24;',
+      'border:1px solid var(--line,#242b35);color:var(--text,#eceef1);font-size:15px;font-family:inherit;}',
+      '.in-news input[type=email]:focus{outline:none;border-color:var(--gold,#c9a35a);}',
+      '.in-news .in-consent{display:flex;align-items:flex-start;gap:8px;margin-top:11px;color:var(--muted,#8b93a0);',
+      'font-size:11.5px;line-height:1.5;}',
+      '.in-news .in-consent input{margin-top:2px;flex:none;accent-color:var(--gold,#c9a35a);}',
+      '.in-news a{color:var(--gold,#c9a35a);}',
+      '.in-news .in-msg{margin:10px 0 0;font-size:13.5px;}',
+      '.in-news .in-msg.bad{color:#ff9b9b;}.in-news .in-msg.good{color:#7fd6a5;}'
+    ].join('');
+    document.head.appendChild(s);
+  }
+
+  function newsletterHTML(source) {
+    return '<span class="in-kicker">Weekly email</span>' +
+      '<h3>One email a week, in plain English</h3>' +
+      '<p>What actually moved in crypto, metals and stocks, and what those moves mean. ' +
+      'No tips, no hype, nobody telling you what to buy.</p>' +
+      '<form novalidate>' +
+      '<input type="email" placeholder="your@email.com" autocomplete="email" aria-label="Your email" required>' +
+      '<button class="in-btn" type="submit">Subscribe</button>' +
+      '</form>' +
+      '<label class="in-consent"><input type="checkbox">' +
+      '<span>Yes, email me the weekly round-up. I can unsubscribe from any email, in one click. ' +
+      '<a href="/privacy/">Privacy policy</a>.</span></label>' +
+      '<p class="in-msg" hidden></p>' +
+      '<input type="hidden" value="' + source + '">';
+  }
+
+  function wireNewsletter(box, source) {
+    var form = box.querySelector('form');
+    var input = box.querySelector('input[type=email]');
+    var consent = box.querySelector('input[type=checkbox]');
+    var msg = box.querySelector('.in-msg');
+    var btn = box.querySelector('button');
+
+    function say(text, good) {
+      msg.textContent = text;
+      msg.className = 'in-msg ' + (good ? 'good' : 'bad');
+      msg.hidden = false;
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = (input.value || '').trim();
+      if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(email)) return say('That email does not look right.', false);
+      if (!consent.checked) return say('Tick the box so we know you want the emails.', false);
+      btn.disabled = true;
+      say('Sending…', true);
+      fetch(NEWS_URL, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ email: email, source: source })
+      }).then(function (r) { return r.json().then(function (j) { return { s: r.status, j: j }; }); })
+        .then(function (res) {
+          btn.disabled = false;
+          if (res.j && res.j.ok) {
+            if (res.j.already) return say('You are already on the list.', true);
+            form.hidden = true;
+            consent.parentNode.hidden = true;
+            say('You are on the list. The first issue goes out as soon as it is ready.', true);
+            try { localStorage.setItem('in_news', '1'); } catch (_) {}
+          } else if (res.s === 429) {
+            say('Too many sign-ups from here. Try again later.', false);
+          } else {
+            say('Could not sign you up right now. Try again in a minute.', false);
+          }
+        })
+        .catch(function () { btn.disabled = false; say('No connection. Try again in a minute.', false); });
+    });
+  }
+
+  function renderNewsletter() {
+    if (document.querySelector('.in-news')) return;
+    try { if (localStorage.getItem('in_news') === '1') return; } catch (_) {}
+
+    var anchor = null, where = 'after', source = 'site';
+    var card = document.getElementById('in-course-card');
+    var finalCard = document.querySelector('.final-card');
+    if (card) { anchor = card; source = 'home'; }
+    else if (finalCard) { anchor = finalCard; source = 'course'; }
+    if (!anchor) return;
+
+    newsletterCSS();
+    var box = document.createElement('section');
+    box.className = 'in-news';
+    box.setAttribute('aria-label', 'Weekly email sign-up');
+    box.innerHTML = newsletterHTML(source);
+    anchor.parentNode.insertBefore(box, anchor.nextSibling);
+    wireNewsletter(box, source);
+  }
+
   /* ---------- boot ---------- */
   function boot() {
     injectCSS();
     bumpStreak();
     renderHomeCard();
     renderCourseBadges();
+    renderNewsletter();
   }
 
   if (document.readyState === 'loading') {
