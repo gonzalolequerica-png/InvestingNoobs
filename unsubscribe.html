@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email preferences — InvestingNoobs</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#0b0f14">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:#0b0f14;color:#eceef1;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;padding:24px}
+  .card{max-width:470px;width:100%;text-align:center;background:#12161d;border:1px solid #242b35;
+    border-radius:16px;padding:34px 28px}
+  h1{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:23px;margin:0 0 12px;color:#c9a35a}
+  h1.bad{color:#ff9b9b}
+  p{color:#9aa5b4;line-height:1.6;font-size:15px;margin:0 0 22px}
+  a.btn{display:inline-block;padding:11px 20px;border-radius:10px;background:#c9a35a;color:#0b0f14;
+    text-decoration:none;font-weight:700;font-size:14px}
+  a.btn:hover{filter:brightness(1.08)}
+  .small{font-size:12.5px;margin-top:18px;margin-bottom:0}
+  .small a{color:#c9a35a}
+</style>
+</head>
+<body>
+<main class="card">
+  <h1 id="title">One moment…</h1>
+  <p id="msg">Checking your subscription.</p>
+  <a class="btn" href="/">Back to InvestingNoobs</a>
+  <p class="small">Changed your mind? You can subscribe again from the <a href="/">home page</a>.</p>
+</main>
+<script>
+(function () {
+  var FN = 'https://yreinzemfharuuvumduq.supabase.co/functions/v1/newsletter';
+  var q = new URLSearchParams(location.search);
+  var title = document.getElementById('title');
+  var msg = document.getElementById('msg');
+
+  function show(t, m, bad) {
+    title.textContent = t;
+    title.className = bad ? 'bad' : '';
+    msg.textContent = m;
+  }
+
+  if (q.get('done') === '1') {
+    return show('You are unsubscribed',
+      'You will not get any more emails from us. The tracker, the course and the price alerts stay free and open.');
+  }
+  if (q.get('done') === '0') {
+    return show('Link not valid',
+      'We could not find that subscription. It may already have been removed.', true);
+  }
+  if (q.get('confirmed') === '1') {
+    return show('You are in',
+      'Your subscription is confirmed. You will get one email a week with what actually moved in the market.');
+  }
+  if (q.get('confirmed') === '0') {
+    return show('Link not valid', 'That confirmation link has expired or was already used.', true);
+  }
+
+  var token = q.get('t');
+  if (!token) {
+    return show('Nothing to do here',
+      'This page is used by the unsubscribe link in our emails.', true);
+  }
+
+  fetch(FN, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ unsub: token })
+  })
+    .then(function (r) { return r.json().catch(function () { return {}; }); })
+    .then(function (j) {
+      if (j && j.ok) {
+        show('You are unsubscribed',
+          'You will not get any more emails from us. The tracker, the course and the price alerts stay free and open.');
+      } else {
+        show('Link not valid',
+          'We could not find that subscription. It may already have been removed.', true);
+      }
+    })
+    .catch(function () {
+      show('Could not reach the server',
+        'Try the link again in a minute, or write to gonzalo.lequerica@gmail.com and we will remove you by hand.', true);
+    });
+})();
+</script>
+</body>
+</html>
