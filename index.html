@@ -509,7 +509,16 @@
 
   function saveWatchlist() {
     try { localStorage.setItem('ct_watchlist', JSON.stringify(Array.from(watchlist))); } catch (e) { /* ignore */ }
+    try { window.dispatchEvent(new Event('in-watchlist-changed')); } catch (e) { /* ignore */ }
   }
+  // Used by in-alerts.js when the cloud copy of the list is merged in.
+  window.IN_SET_WATCHLIST = function (ids) {
+    try {
+      watchlist = new Set(ids);
+      localStorage.setItem('ct_watchlist', JSON.stringify(Array.from(watchlist)));
+      render();
+    } catch (e) { /* ignore */ }
+  };
   function toggleWatch(id) {
     if (watchlist.has(id)) watchlist.delete(id); else watchlist.add(id);
     saveWatchlist();
@@ -1022,6 +1031,9 @@
   }
 
   function render() {
+    // Shared with in-alerts.js so the alerts panel can offer the same assets
+    // and prefill the current price.
+    try { window.IN_MARKET = { crypto: coins, commodities: commodities, stocks: stocks }; } catch (e) {}
     const dataset = activeTab === 'crypto' ? coins : (activeTab === 'commodities' ? commodities : stocks);
     let filtered = dataset.filter(c =>
       c.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -1467,5 +1479,6 @@
 </script>
 <script src="lesson-urls.js" defer></script>
 <script src="in-app.js" defer></script>
+<script src="in-alerts.js" defer></script>
 </body>
 </html>
