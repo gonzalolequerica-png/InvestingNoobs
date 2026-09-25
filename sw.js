@@ -1,7 +1,7 @@
 /* InvestingNoobs service worker.
    Keeps the shell available offline and lets the site be installed as an app.
    Never caches market data: every price request goes straight to the network. */
-const CACHE = 'in-shell-v2';
+const CACHE = 'in-shell-v3';
 const SHELL = [
   './',
   'index.html',
@@ -63,7 +63,9 @@ self.addEventListener('fetch', (e) => {
   if (/\.(?:js|css|png|jpg|jpeg|webp|svg|woff2?|json)$/i.test(url.pathname)) {
     e.respondWith(
       caches.match(req).then((hit) => {
-        const net = fetch(req).then((res) => {
+        // Also revalidated: without this the browser's own cache can keep
+        // handing back an old file for up to ten minutes after a deploy.
+        const net = fetch(new Request(req, { cache: 'no-cache' })).then((res) => {
           if (res && res.ok) {
             const copy = res.clone();
             caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
