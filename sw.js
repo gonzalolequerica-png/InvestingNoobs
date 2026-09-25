@@ -9,6 +9,7 @@ const SHELL = [
   'manifest.json',
   'lesson-urls.js',
   'in-app.js',
+  'in-alerts.js',
   'icon-192.png',
   'icon-512.png',
   'favicon.svg'
