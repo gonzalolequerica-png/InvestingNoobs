@@ -336,6 +336,30 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:type" content="image/png">
+<style id="minimal-home">
+  #home-primary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 14px}
+  .hp-card{display:flex;flex-direction:column;gap:6px;padding:20px 18px;border:1px solid #242b35;border-radius:14px;
+    background:#10151c;text-decoration:none;color:#eceef1;transition:border-color .15s ease,transform .15s ease}
+  .hp-card:hover,.hp-card:focus-visible{border-color:#c9a35a;transform:translateY(-2px)}
+  .hp-card strong{font-family:'Fraunces',Georgia,serif;font-size:19px;font-weight:600;line-height:1.25}
+  .hp-kicker{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#c9a35a}
+  .hp-sub{font-size:13px;line-height:1.55;color:#8b93a0}
+  .hp-tracker{background:linear-gradient(135deg,rgba(201,163,90,.13),#10151c)}
+  .alerts-cta{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
+    margin:0 0 20px;padding:18px 20px;border:1px solid #242b35;border-radius:14px;background:#10151c}
+  .alerts-cta strong{display:block;font-family:'Fraunces',Georgia,serif;font-size:18px;font-weight:600;margin:7px 0 4px}
+  .alerts-cta .hp-sub{display:block;max-width:540px}
+  #alerts-cta-btn{flex:none;padding:12px 20px;border:0;border-radius:10px;background:#c9a35a;color:#0b0f14;
+    font:700 14px/1 inherit;font-family:inherit;cursor:pointer}
+  #alerts-cta-btn:hover{filter:brightness(1.08)}
+  .start-tools{margin:26px auto 20px}
+  @media(max-width:700px){
+    #home-primary{grid-template-columns:1fr;gap:9px;margin-bottom:10px}
+    .hp-card{padding:16px}
+    .alerts-cta{padding:16px}
+    #alerts-cta-btn{width:100%}
+  }
+</style>
 </head>
 <body>
 <div id="wrap">
@@ -357,27 +381,32 @@
     </div>
   </header>
 
-  <nav id="tabs" aria-label="Market sections" style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
-    <button type="button" data-tab="crypto" class="tab-btn tab-active" role="tab" aria-selected="true">Cryptocurrencies</button>
-    <button type="button" data-tab="commodities" class="tab-btn" role="tab" aria-selected="false">Commodities</button>
-    <button type="button" data-tab="stocks" class="tab-btn" role="tab" aria-selected="false">Stocks</button>
-    <a href="https://investing-noobs.itch.io/investing-noobs-tycoon" target="_blank" rel="noopener" class="tab-btn tab-link-external" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">🎮 Game <span style="font-size:11px;opacity:0.6;">↗</span></a>
-    <a href="portfolio.html" class="tab-btn tab-link-external" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">Blueprint <span style="font-size:11px;opacity:0.6;">↗</span></a><a href="research.html" class="tab-btn tab-link-external" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">Research <span style="font-size:11px;opacity:0.6;">↗</span></a>
-    <a href="passport.html" class="tab-btn tab-link-external" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">Passport <span style="font-size:11px;opacity:0.6;">↗</span></a>
-    <a href="decisionlab.html" class="tab-btn tab-link-external" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">Lab <span style="font-size:11px;opacity:0.6;">↗</span></a>
-    <a href="blog.html" class="tab-btn tab-link-external" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-left:auto;">Learn <span style="font-size:11px;opacity:0.6;">↗</span></a>
-  </nav>
-  <section class="start-paths" aria-label="Choose your next step">
-    <a class="start-path" href="blog.html"><span class="path-kicker">Learn</span><strong>Build your investing foundation</strong><span>50 practical lessons from crypto basics to risk management →</span></a>
-    <a class="start-path path-highlight" href="portfolio.html"><span class="path-kicker">Blueprint</span><strong>Make a plan you can explain</strong><span>Set guardrails, see fee drag and stress-test your thinking →</span></a>
-    <a class="start-path" href="decisionlab.html"><span class="path-kicker">Lab</span><strong>Stress-test your investing process</strong><span>Make a plan, face five scenarios and learn from the reasoning →</span></a>
-    <a class="start-path" href="passport.html"><span class="path-kicker">Passport</span><strong>Build your personal learning route</strong><span>Choose your level and get three next steps →</span></a>
-    <a class="start-path" href="research.html"><span class="path-kicker">Research</span><strong>Turn a ticker into a thesis</strong><span>Use evidence, risks and review triggers before you act →</span></a><a class="start-path" href="https://investing-noobs.itch.io/investing-noobs-tycoon" target="_blank" rel="noopener"><span class="path-kicker">Play</span><strong>Turn concepts into a challenge</strong><span>Learn through the InvestingNoobs Tycoon game →</span></a>
+  <section id="home-primary" aria-label="Start here">
+    <a class="hp-card hp-tracker" href="#market-view">
+      <span class="hp-kicker">Tracker</span>
+      <strong>Live prices, no jargon</strong>
+      <span class="hp-sub">Crypto, metals and stocks in one place, updated every 10 seconds.</span>
+    </a>
+    <a class="hp-card" href="blog.html">
+      <span class="hp-kicker">Course</span>
+      <strong>Learn this from zero</strong>
+      <span class="hp-sub">50 short lessons, free, no account needed.</span>
+    </a>
+    <a class="hp-card" href="https://investing-noobs.itch.io/investing-noobs-tycoon" target="_blank" rel="noopener">
+      <span class="hp-kicker">Game</span>
+      <strong>From $500 to Wall Street</strong>
+      <span class="hp-sub">Practise the decisions with fake money before using real money.</span>
+    </a>
   </section>
-  <a class="itch-banner" href="https://investing-noobs.itch.io/investing-noobs-tycoon" target="_blank" rel="noopener" style="max-width:1000px;margin:0 auto 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:14px 18px;border:1px solid rgba(250,92,92,.55);border-radius:14px;background:linear-gradient(135deg,rgba(250,92,92,.16),#101721);text-decoration:none;color:#f4f6f8;">
-    <span style="display:flex;flex-direction:column;gap:4px;min-width:0;"><span style="color:#fa5c5c;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;">🎮 Now on itch.io</span><strong style="font-family:Georgia,serif;font-size:18px;line-height:1.2;">Play the Tycoon: from $500 to Wall Street</strong><span style="color:#9cacbf;font-size:12px;">Free in your browser. Rate it and leave a comment to help other players find it.</span></span>
-    <span style="flex-shrink:0;background:#fa5c5c;color:#fff;font-weight:700;font-size:14px;padding:10px 16px;border-radius:10px;">Play on itch.io →</span>
-  </a>
+
+  <section class="alerts-cta" aria-label="Price alerts">
+    <div>
+      <span class="hp-kicker">Price alerts</span>
+      <strong>Tell us the price. We tell your phone.</strong>
+      <span class="hp-sub">Pick an asset and a level. You get a notification when it gets there, even with the site closed.</span>
+    </div>
+    <button type="button" id="alerts-cta-btn">Set an alert</button>
+  </section>
 
   <div id="stat-strip" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:#242b35;border:1px solid #242b35;border-radius:6px;overflow:hidden;margin-bottom:20px;">
     <div class="stat-cell">
@@ -402,16 +431,11 @@
     </div>
   </div>
 
-  <aside class="support-banner" aria-label="Support InvestingNoobs" style="margin-bottom:20px;border:1.5px solid #c9a35a;border-radius:8px;padding:18px 22px;background:linear-gradient(180deg, #161206, #10141a 70%);box-shadow:0 0 0 4px rgba(201,163,90,0.08), 0 8px 24px -14px rgba(201,163,90,0.3);display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:space-between;">
-    <div style="display:flex;align-items:center;gap:14px;flex:1;min-width:240px;">
-      <div style="font-size:28px;">☕</div>
-      <div>
-        <div class="serif" style="font-size:16px;font-weight:600;color:#eceef1;">Support this project</div>
-        <div style="font-size:12.5px;line-height:1.5;color:#a9b0bb;">Free and always will be. Donations go toward improving the site little by little.</div>
-      </div>
-    </div>
-    <a href="https://www.buymeacoffee.com/investingnoobs" target="_blank" rel="noopener" class="buy-btn" style="font-size:13.5px;padding:10px 22px;flex-shrink:0;">☕ Buy us a coffee</a>
-  </aside>
+  <nav id="tabs" aria-label="Market sections" style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;">
+    <button type="button" data-tab="crypto" class="tab-btn tab-active" role="tab" aria-selected="true">Cryptocurrencies</button>
+    <button type="button" data-tab="commodities" class="tab-btn" role="tab" aria-selected="false">Commodities</button>
+    <button type="button" data-tab="stocks" class="tab-btn" role="tab" aria-selected="false">Stocks</button>
+  </nav>
 
   <div id="market-view">
     <div class="market-toolbar" style="display:flex;gap:10px;margin-bottom:20px;">
@@ -456,6 +480,21 @@
       Data provided by CoinGecko
     </div>
   </div>
+
+  <div class="start-tools" aria-label="More tools">
+    <span class="start-tools-label">Go deeper</span><span aria-hidden="true">·</span><a href="portfolio.html">Portfolio Blueprint</a><span aria-hidden="true">·</span><a href="decisionlab.html">Decision Lab</a><span aria-hidden="true">·</span><a href="passport.html">Investor Passport</a><span aria-hidden="true">·</span><a href="research.html">Research Room</a>
+  </div>
+
+  <aside class="support-banner" aria-label="Support InvestingNoobs" style="margin-bottom:20px;border:1.5px solid #c9a35a;border-radius:8px;padding:18px 22px;background:linear-gradient(180deg, #161206, #10141a 70%);box-shadow:0 0 0 4px rgba(201,163,90,0.08), 0 8px 24px -14px rgba(201,163,90,0.3);display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:space-between;">
+    <div style="display:flex;align-items:center;gap:14px;flex:1;min-width:240px;">
+      <div style="font-size:28px;">☕</div>
+      <div>
+        <div class="serif" style="font-size:16px;font-weight:600;color:#eceef1;">Support this project</div>
+        <div style="font-size:12.5px;line-height:1.5;color:#a9b0bb;">Free and always will be. Donations go toward improving the site little by little.</div>
+      </div>
+    </div>
+    <a href="https://www.buymeacoffee.com/investingnoobs" target="_blank" rel="noopener" class="buy-btn" style="font-size:13.5px;padding:10px 22px;flex-shrink:0;">☕ Buy us a coffee</a>
+  </aside>
 
   <div style="margin-top:56px;border-top:1px solid #242b35;padding-top:36px;">
     <h2 class="serif" style="font-size:24px;font-weight:600;color:#eceef1;margin:0 0 16px;">About this tracker</h2>
@@ -1461,20 +1500,14 @@
   </div>
 </section>
 <script>
-(() => {
-  const paths = document.querySelector('.start-paths');
-  if (!paths || paths.dataset.focusedHome) return;
-  paths.dataset.focusedHome = 'true';
-  const cards = Array.from(paths.querySelectorAll('.start-path'));
-  if (cards.length >= 6) {
-    const pillars = [cards[0], cards[1], cards[4]];
-    paths.replaceChildren(...pillars);
-    const tools = document.createElement('div');
-    tools.className = 'start-tools';
-    tools.setAttribute('aria-label', 'More learning tools');
-    tools.innerHTML = '<span class="start-tools-label">Go deeper</span><span aria-hidden="true">·</span><a href="decisionlab.html">Decision Lab</a><span aria-hidden="true">·</span><a href="passport.html">Investor Passport</a><span aria-hidden="true">·</span><a href="https://investing-noobs.itch.io/investing-noobs-tycoon" target="_blank" rel="noopener">Play the Tycoon</a>';
-    paths.after(tools);
-  }
+(function () {
+  var b = document.getElementById('alerts-cta-btn');
+  if (!b) return;
+  b.addEventListener('click', function () {
+    if (typeof window.IN_OPEN_ALERTS === 'function') return window.IN_OPEN_ALERTS();
+    var t = document.getElementById('in-alerts-btn');
+    if (t) t.click();
+  });
 })();
 </script>
 <script src="lesson-urls.js" defer></script>

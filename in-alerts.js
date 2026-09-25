@@ -242,6 +242,9 @@
   }
   function close() { if (modal) modal.classList.remove('is-on'); }
 
+  // Lets the big "Set an alert" block on the home page open this panel.
+  window.IN_OPEN_ALERTS = open;
+
   function render(body) {
     var p = document.getElementById('in-panel');
     if (!p) return;
@@ -422,6 +425,9 @@
   /* ---------------- entry point ---------------- */
 
   function addButton() {
+    // The home page has its own big "Set an alert" block, so the small tab
+    // button is only added on pages that do not.
+    if (document.getElementById('alerts-cta-btn')) return;
     var nav = document.getElementById('tabs');
     if (!nav || document.getElementById('in-alerts-btn')) return;
     var b = el('button', { id: 'in-alerts-btn', type: 'button', class: 'tab-btn' }, '🔔 Alerts');
