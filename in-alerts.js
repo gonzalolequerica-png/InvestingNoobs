@@ -249,7 +249,7 @@
     var p = document.getElementById('in-panel');
     if (!p) return;
     p.innerHTML =
-      '<div class="in-head"><h2>Price alerts</h2><button class="in-x" type="button" aria-label="Close">×</button></div>' + body;
+      '<div class="in-head"><h2>Price &amp; signal alerts</h2><button class="in-x" type="button" aria-label="Close">×</button></div>' + body;
     p.querySelector('.in-x').addEventListener('click', close);
   }
 
@@ -266,7 +266,7 @@
   /* --- signed out --- */
   function drawAuth(msg, ok) {
     render(
-      '<p class="in-sub">Get a notification on your phone when a price crosses the level you choose — even with the site closed. ' +
+      '<p class="in-sub">Get a notification on your phone when a price crosses the level you choose, or when an asset\'s 7-day signal turns Favorable or Unfavorable — even with the site closed. ' +
       'An account also keeps your ☆ list the same on every device.</p>' +
       (msg ? '<p class="' + (ok ? 'in-ok' : 'in-err') + '">' + esc(msg) + '</p>' : '') +
       '<label class="in-field">Email<input type="email" id="in-email" autocomplete="email" inputmode="email"></label>' +
@@ -328,11 +328,17 @@
     });
 
     var rowsHTML = alerts.length ? alerts.map(function (a) {
+      var isSig = String(a.direction).indexOf('signal_') === 0;
+      var sigNames = { favorable: 'Favorable', leaning: 'Leaning up', wait: 'Wait', unfavorable: 'Unfavorable', stable: 'Stable' };
       var status = a.active
-        ? 'Waiting · last seen $' + (a.last_price != null ? money(a.last_price) : '—')
+        ? (isSig
+          ? 'Waiting · signal now ' + (a.last_signal ? sigNames[a.last_signal] || a.last_signal : '—')
+          : 'Waiting · last seen $' + (a.last_price != null ? money(a.last_price) : '—'))
         : 'Triggered' + (a.fired_at ? ' on ' + new Date(a.fired_at).toLocaleDateString() : '');
-      return '<div class="in-alert"><span><strong>' + esc(a.label) + '</strong> ' +
-        (a.direction === 'above' ? 'above' : 'below') + ' $' + money(a.target) +
+      var what = isSig
+        ? '7-day signal turns ' + (a.direction === 'signal_favorable' ? 'Favorable' : 'Unfavorable')
+        : (a.direction === 'above' ? 'above' : 'below') + ' $' + money(a.target);
+      return '<div class="in-alert"><span><strong>' + esc(a.label) + '</strong> ' + what +
         '<small>' + esc(status) + '</small></span>' +
         '<button class="in-del" type="button" data-del="' + esc(a.id) + '" aria-label="Delete alert">✕</button></div>';
     }).join('') : '<p class="in-sub">No alerts yet. Create your first one below.</p>';
@@ -355,13 +361,16 @@
       (options
         ? '<label class="in-field">Asset<select id="in-asset">' + options + '</select></label>' +
           '<div class="in-row">' +
-          '<label class="in-field">When the price goes<select id="in-dir"><option value="above">above</option><option value="below">below</option></select></label>' +
-          '<label class="in-field">Price in $<input type="number" id="in-target" step="any" inputmode="decimal"></label>' +
+          '<label class="in-field">Notify me when<select id="in-dir">' +
+            '<option value="above">the price goes above</option><option value="below">the price goes below</option>' +
+            '<option value="signal_favorable">the 7-day signal turns Favorable</option>' +
+            '<option value="signal_unfavorable">the 7-day signal turns Unfavorable</option></select></label>' +
+          '<label class="in-field" id="in-target-wrap">Price in $<input type="number" id="in-target" step="any" inputmode="decimal"></label>' +
           '</div>' +
           '<button class="in-btn in-wide" type="button" id="in-add">Create alert</button>'
         : '<p class="in-sub">Open this from the market tracker so the asset list is loaded.</p>') +
       '<div class="in-sep"></div>' +
-      '<p class="in-sub" style="margin:0">We check prices every 5 minutes. Each alert fires once, then stops.</p>' +
+      '<p class="in-sub" style="margin:0">We check prices and signals every 5 minutes. Signals use the daily closes of the last 7 days. Each alert fires once, then stops.</p>' +
       '<button class="in-ghost in-wide" type="button" id="in-logout" style="margin-top:12px">Log out</button>'
     );
 
@@ -388,6 +397,9 @@
       var o = sel.options[sel.selectedIndex];
       var price = Number(o && o.getAttribute('data-price'));
       var dir = p.querySelector('#in-dir').value;
+      var sig = dir.indexOf('signal_') === 0;
+      p.querySelector('#in-target-wrap').style.display = sig ? 'none' : '';
+      if (sig) return;
       if (isFinite(price) && price > 0) {
         var v = dir === 'above' ? price * 1.05 : price * 0.95;
         target.value = v >= 100 ? Math.round(v) : Number(v.toPrecision(4));
@@ -400,12 +412,13 @@
       p.querySelector('#in-add').addEventListener('click', async function () {
         var b = this;
         var parts = (sel.value || '').split('|');
-        var value = Number(target.value);
+        var dirVal = p.querySelector('#in-dir').value;
+        var value = dirVal.indexOf('signal_') === 0 ? 1 : Number(target.value);
         if (!parts[1] || !isFinite(value) || value <= 0) return toast('Choose an asset and a price.');
         b.disabled = true;
         var r = await sb.from('alerts').insert({
           kind: parts[0], source_id: parts[1], label: parts[2],
-          direction: p.querySelector('#in-dir').value, target: value
+          direction: dirVal, target: value
         }).select().single();
         b.disabled = false;
         if (r.error) return toast(r.error.message || 'Could not create the alert.');
