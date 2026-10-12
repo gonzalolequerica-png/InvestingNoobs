@@ -15,19 +15,19 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="InvestingNoobs">
-<title>InvestingNoobs | Live Market Tracker, Investing Course &amp; Risk Tools</title>
-<meta name="description" content="Track crypto, stock and commodity prices with InvestingNoobs. Learn investing and trading from zero with a free 50-lesson course, portfolio blueprint, risk lab and practical market tools.">
+<title>InvestingNoobs | Should I Invest Today? Signals From the Last 7 Days</title>
+<meta name="description" content="Is now a good moment to invest? InvestingNoobs reads the last 7 days of every crypto, stock and metal and turns it into a simple signal: Favorable, Leaning up, Wait or Unfavorable. Free, no jargon.">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://investingnoobs.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="InvestingNoobs">
-<meta property="og:title" content="InvestingNoobs | Live Market Tracker, Investing Course &amp; Risk Tools">
-<meta property="og:description" content="A free market tracker, practical investing course and risk-first tools for crypto, stocks and commodities.">
+<meta property="og:title" content="InvestingNoobs | Should I Invest Today? Signals From the Last 7 Days">
+<meta property="og:description" content="A simple signal for every crypto, stock and metal, built from how its price behaved over the last 7 days.">
 <meta property="og:url" content="https://investingnoobs.com/">
 <meta property="og:image" content="https://investingnoobs.com/og-images/site.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="InvestingNoobs | Live Market Tracker, Course &amp; Risk Tools">
-<meta name="twitter:description" content="Track crypto, stocks and commodities, then learn investing, trading and risk management through practical tools and lessons.">
+<meta name="twitter:title" content="InvestingNoobs | Should I Invest Today? 7-Day Signals">
+<meta name="twitter:description" content="Every crypto, stock and metal gets a simple signal built from its last 7 days: Favorable, Leaning up, Wait or Unfavorable.">
 <meta name="twitter:image" content="https://investingnoobs.com/og-images/site.png">
 <script type="application/ld+json">
 {
@@ -279,6 +279,7 @@
   "@context":"https://schema.org",
   "@type":"FAQPage",
   "mainEntity":[
+    {"@type":"Question","name":"How does the InvestingNoobs signal decide if it's a good moment to invest?","acceptedAnswer":{"@type":"Answer","text":"It only looks at the previous days. For each asset it takes the daily closing prices of the last 7 days and checks four things: the 7-day change, whether the price is above or below its 7-day average, how many of those days closed up, and the direction of the last 3 days. The result is Favorable, Leaning up, Wait or Unfavorable. It describes the recent past and does not predict the future."}},
     {"@type":"Question","name":"What can I track on InvestingNoobs?","acceptedAnswer":{"@type":"Answer","text":"You can compare cryptocurrency, stock and commodity reference prices in one browser-based dashboard, then explore the free InvestingNoobs course."}},
     {"@type":"Question","name":"How can a beginner start learning about investing?","acceptedAnswer":{"@type":"Answer","text":"Start by learning how markets, risk, fees, diversification and time horizon work before committing money. InvestingNoobs provides a free course with practical examples and checklists."}},
     {"@type":"Question","name":"Is InvestingNoobs personal financial advice?","acceptedAnswer":{"@type":"Answer","text":"No. InvestingNoobs is educational content and market reference information, not personal financial, legal or tax advice. Markets can fall and you can lose capital."}}
@@ -359,6 +360,24 @@
     .alerts-cta{padding:16px}
     #alerts-cta-btn{width:100%}
   }
+  /* Signal built from the previous days */
+  #market-read{margin:0 0 18px;padding:20px;border:1px solid #2c3542;border-radius:14px;
+    background:linear-gradient(135deg,rgba(63,160,110,.08),#10151c 55%)}
+  #market-read h2{font-family:'Fraunces',Georgia,serif;font-size:22px;font-weight:600;margin:6px 0 4px;color:#eceef1}
+  #market-read .mr-sub{font-size:13px;color:#8b93a0;line-height:1.55;margin:0 0 14px;max-width:640px}
+  .mr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+  .mr-cell{padding:12px 14px;border:1px solid #242b35;border-radius:10px;background:#0d1218}
+  .mr-cell .mr-k{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8b93a0}
+  .mr-cell .mr-v{font-size:17px;font-weight:600;margin-top:6px}
+  .mr-cell .mr-d{font-size:11.5px;color:#8b93a0;margin-top:3px;line-height:1.45}
+  .mr-bar{display:flex;height:8px;border-radius:6px;overflow:hidden;background:#1a212b;margin:14px 0 6px}
+  .mr-bar span{display:block;height:100%}
+  .mr-legend{display:flex;flex-wrap:wrap;gap:12px;font-size:11.5px;color:#a9b0bb}
+  .mr-legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px;vertical-align:0}
+  .sig-cell{display:flex;align-items:center;gap:8px}
+  .sig-cell svg{flex:none}
+  .sig-why{font-size:10.5px;color:#7d8796;margin-top:3px;white-space:nowrap}
+  @media(max-width:700px){#market-read{padding:16px}.mr-grid{grid-template-columns:1fr 1fr}.sig-cell svg{display:none}}
 </style>
 </head>
 <body>
@@ -370,7 +389,7 @@
         LIVE MARKET DATA
       </div>
       <h1 class="serif" id="page-title" style="font-size:clamp(30px,5vw,46px);font-weight:600;margin:0 0 6px;letter-spacing:-0.01em;">InvestingNoobs</h1>
-      <p style="font-size:13px;color:#8b93a0;margin:0;max-width:420px;line-height:1.5;">Built for people who don't know much about this yet: a simple way to check prices, without the jargon.</p>
+      <p style="font-size:13px;color:#8b93a0;margin:0;max-width:420px;line-height:1.5;">Is it a good moment to invest? We read how each price behaved over the last 7 days and turn it into one simple signal.</p>
     </div>
     <div style="text-align:right;font-size:12px;color:#8b93a0;" class="mono">
       <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;">
@@ -381,11 +400,20 @@
     </div>
   </header>
 
+  <section id="market-read" aria-label="What the last 7 days say">
+    <span class="hp-kicker">Signal · based on the previous days</span>
+    <h2 id="mr-title">Reading the last 7 days…</h2>
+    <p class="mr-sub" id="mr-sub">We take the daily closes of the last 7 days for each asset and check its trend, its average, how many days closed up and where the last 3 days went.</p>
+    <div class="mr-grid" id="mr-grid"></div>
+    <div class="mr-bar" id="mr-bar" aria-hidden="true"></div>
+    <div class="mr-legend" id="mr-legend"></div>
+  </section>
+
   <section id="home-primary" aria-label="Start here">
     <a class="hp-card hp-tracker" href="#market-view">
       <span class="hp-kicker">Tracker</span>
-      <strong>Live prices, no jargon</strong>
-      <span class="hp-sub">Crypto, metals and stocks in one place, updated every 10 seconds.</span>
+      <strong>Buy, wait or avoid?</strong>
+      <span class="hp-sub">Crypto, metals and stocks with live prices and a signal built from their last 7 days.</span>
     </a>
     <a class="hp-card" href="blog.html">
       <span class="hp-kicker">Course</span>
@@ -449,7 +477,7 @@
     <div id="error-banner" class="banner banner-error" style="display:none;"></div>
 
     <div class="banner banner-info">
-      <strong style="color:#c9a35a;">About "Momentum":</strong> describes the recent price trend (1h/24h/7d), not a prediction of where it's headed. No indicator can reliably anticipate future moves — use it as context, not investment advice.
+      <strong style="color:#c9a35a;">How the signal works:</strong> it is built only from the previous days — the daily closes of the last 7 days. <b style="color:#3fa06e">Favorable</b> means the price has been rising steadily, <b style="color:#e0b84d">Wait</b> means no clear direction, <b style="color:#c05a52">Unfavorable</b> means it has been falling. It describes the recent past, not the future, and is not financial advice. Click the column header to sort by it.
     </div>
 
     <div id="table-container">
@@ -465,7 +493,7 @@
               <th data-sort="price_change_percentage_1h_in_currency" style="text-align:right;">1h</th>
               <th data-sort="price_change_percentage_24h_in_currency" style="text-align:right;" id="th-24h">24h</th>
               <th data-sort="price_change_percentage_7d_in_currency" style="text-align:right;" class="hide-mobile">7d</th>
-              <th style="text-align:left;">Momentum</th>
+              <th data-sort="signal_score" style="text-align:left;" title="Built from the daily closes of the previous 7 days">Signal (last 7 days)</th>
               <th data-sort="market_cap" style="text-align:right;" class="hide-mobile">Market Cap</th>
               <th data-sort="total_volume" style="text-align:right;" class="hide-mobile">Volume 24h</th>
               <th class="buy-col-cell"></th>
@@ -503,7 +531,7 @@
     </p>
     <h3 class="mono" style="font-size:15px;color:#c9a35a;margin:24px 0 10px;">What does each column mean?</h3>
     <p style="font-size:14px;line-height:1.7;color:#a9b0bb;margin:0 0 16px;">
-      The <strong style="color:#eceef1;">price</strong> is the latest available quote. The <strong style="color:#eceef1;">1h, 24h and 7d</strong> columns show the percentage change over those periods. The <strong style="color:#eceef1;">Momentum</strong> column summarizes whether those changes point in the same direction (up or down) or contradict each other — it's a read of the recent trend, not a prediction of what happens next.
+      The <strong style="color:#eceef1;">price</strong> is the latest available quote. The <strong style="color:#eceef1;">1h, 24h and 7d</strong> columns show the percentage change over those periods. The <strong style="color:#eceef1;">Signal</strong> column answers the question beginners ask most — "is this a good moment to buy?" — using only what already happened. It takes the daily closing prices of the previous 7 days and scores four things: the 7-day change, whether today's price is above or below the 7-day average, how many of those days closed up, and the direction of the last 3 days. Four positives make it <em>Favorable</em>, mostly positives <em>Leaning up</em>, a mix <em>Wait</em>, and mostly negatives <em>Unfavorable</em>. Assets that swing more than 6% a day get a "big swings" warning. It is a summary of the recent past, not a prediction of what happens next.
     </p>
     <h3 class="mono" style="font-size:15px;color:#c9a35a;margin:24px 0 10px;">An important note</h3>
     <p style="font-size:14px;line-height:1.7;color:#a9b0bb;margin:0;">
@@ -1057,16 +1085,189 @@
     const arrow = positive ? '▲' : '▼';
     return '<span class="pct" style="color:' + color + '">' + arrow + ' ' + Math.abs(v).toFixed(2) + '%</span>';
   }
-  function momentumSignal(coin) {
-    const h1 = coin.price_change_percentage_1h_in_currency;
-    const h24 = coin.price_change_percentage_24h_in_currency;
-    const d7 = coin.price_change_percentage_7d_in_currency;
-    if (h1 == null || h24 == null) return { label: 'No data', color: '#6b7280' };
-    const aligned = (h1 >= 0) === (h24 >= 0) && (d7 == null || (h24 >= 0) === (d7 >= 0));
-    const strength = Math.abs(h1) + Math.abs(h24) * 0.5;
-    if (aligned && h24 > 0) return { label: strength > 5 ? 'Strong bullish momentum' : 'Bullish momentum', color: '#3fa06e' };
-    if (aligned && h24 < 0) return { label: strength > 5 ? 'Strong bearish momentum' : 'Bearish momentum', color: '#c05a52' };
-    return { label: 'Mixed signals', color: '#e0b84d' };
+  // ── Signal built from the previous days ─────────────────────────────────
+  // Every asset is judged only on its daily closes over the last 7 days.
+  // Crypto: CoinGecko's 7-day hourly series (one close every 24 h).
+  // Stocks and metals: market-history.json, rebuilt each evening by a GitHub Action.
+  const SIGNAL_DAYS = 7;
+  let cryptoHistory = {};     // coin id -> daily closes, oldest first
+  let marketHistory = {};     // stock/metal symbol -> daily closes, oldest first
+  let marketHistoryDate = null;
+
+  const SIGNAL_LEVELS = {
+    favorable:   { label: 'Favorable',   color: '#3fa06e' },
+    leaning:     { label: 'Leaning up',  color: '#8cc084' },
+    wait:        { label: 'Wait',        color: '#e0b84d' },
+    unfavorable: { label: 'Unfavorable', color: '#c05a52' },
+    stable:      { label: 'Stable',      color: '#7d8796' },
+    none:        { label: 'No history',  color: '#6b7280' },
+  };
+
+  function closesFor(asset) {
+    let base = activeTabOf(asset) === 'crypto' ? cryptoHistory[asset.id] : marketHistory[asset.symbol];
+    if (!base || base.length < 2) return null;
+    let closes = base.slice();
+    // Today's live price takes the place of the last close (crypto) or is added
+    // after the last market close (stocks and metals).
+    if (asset.current_price != null && isFinite(asset.current_price)) {
+      if (activeTabOf(asset) === 'crypto') closes[closes.length - 1] = asset.current_price;
+      else if (Math.abs(asset.current_price / closes[closes.length - 1] - 1) > 1e-9) closes.push(asset.current_price);
+    }
+    return closes.slice(-(SIGNAL_DAYS + 1));
+  }
+  function activeTabOf(asset) { return asset._kind || 'crypto'; }
+
+  function analyzeCloses(closes) {
+    if (!closes || closes.length < 4) return null;
+    const n = closes.length, last = closes[n - 1], first = closes[0];
+    const rets = [];
+    for (let i = 1; i < n; i++) rets.push((closes[i] / closes[i - 1] - 1) * 100);
+    const change = (last / first - 1) * 100;
+    const avg = closes.reduce((a, b) => a + b, 0) / n;
+    const upDays = rets.filter(r => r > 0).length;
+    const upShare = upDays / rets.length;
+    const last3 = (last / closes[Math.max(0, n - 4)] - 1) * 100;
+    const mean = rets.reduce((a, b) => a + b, 0) / rets.length;
+    const vol = Math.sqrt(rets.reduce((a, r) => a + (r - mean) * (r - mean), 0) / rets.length);
+    const vsAvg = (last / avg - 1) * 100;
+    let score = 0;
+    if (change > 2) score++; else if (change < -2) score--;
+    if (vsAvg > 0.5) score++; else if (vsAvg < -0.5) score--;
+    if (upShare >= 0.6) score++; else if (upShare <= 0.4) score--;
+    if (last3 > 1) score++; else if (last3 < -1) score--;
+    let level;
+    if (vol < 0.3 && Math.abs(change) < 1) level = 'stable';
+    else if (score >= 3) level = 'favorable';
+    else if (score >= 1) level = 'leaning';
+    else if (score >= -1) level = 'wait';
+    else level = 'unfavorable';
+    return { level, score, change, upDays, days: rets.length, vsAvg, last3, vol, closes };
+  }
+
+  function signalFor(asset) {
+    const a = analyzeCloses(closesFor(asset));
+    asset.signal_score = a ? (a.level === 'stable' ? 0 : a.score) : null;
+    return a;
+  }
+
+  function sparkSvg(closes, color) {
+    const w = 58, h = 20, min = Math.min.apply(null, closes), max = Math.max.apply(null, closes);
+    const span = max - min || 1;
+    const pts = closes.map((v, i) => (i * w / (closes.length - 1)).toFixed(1) + ',' + (h - 2 - (v - min) / span * (h - 4)).toFixed(1)).join(' ');
+    return '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '" aria-hidden="true"><polyline fill="none" stroke="' + color + '" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" points="' + pts + '"/></svg>';
+  }
+
+  function signalCellHtml(asset) {
+    const a = signalFor(asset);
+    if (!a) {
+      const waiting = activeTabOf(asset) === 'crypto' ? 'Loading history…' : 'No history yet';
+      return '<span class="pill" style="color:#6b7280;background:#6b728018;">' + waiting + '</span>';
+    }
+    const lv = SIGNAL_LEVELS[a.level];
+    const sign = v => (v >= 0 ? '+' : '') + v.toFixed(1) + '%';
+    const why = sign(a.change) + ' in ' + a.days + 'd · ' + a.upDays + '/' + a.days + ' days up · ' + (a.vsAvg >= 0 ? 'above' : 'below') + ' avg';
+    const risky = a.vol > 6 ? ' <span title="Daily moves above 6% on average" style="color:#e08a4d;">⚡ big swings</span>' : '';
+    const title = 'Last ' + a.days + ' days: ' + sign(a.change) + ' · ' + a.upDays + ' of ' + a.days + ' days closed up · price ' + sign(a.vsAvg) + ' vs 7-day average · last 3 days ' + sign(a.last3) + ' · typical daily move ' + a.vol.toFixed(1) + '%';
+    return '<div class="sig-cell" title="' + title + '">' + sparkSvg(a.closes, lv.color) +
+      '<div><span class="pill" style="color:' + lv.color + ';background:' + lv.color + '18;">' + lv.label + '</span>' + risky +
+      '<div class="sig-why mono">' + why + '</div></div></div>';
+  }
+
+  // Summary card at the top of the page.
+  function renderMarketRead() {
+    const box = document.getElementById('market-read');
+    if (!box) return;
+    const top = coins.filter(c => c.market_cap_rank && c.market_cap_rank <= 100);
+    const counts = { favorable: 0, leaning: 0, wait: 0, unfavorable: 0 };
+    let total = 0;
+    top.forEach(c => { c._kind = 'crypto'; const a = signalFor(c); if (a && counts[a.level] != null) { counts[a.level]++; total++; } });
+    if (!total) return;
+    const pos = counts.favorable + counts.leaning, neg = counts.unfavorable;
+    let title, sub;
+    if (pos / total >= 0.55) { title = 'The last 7 days lean positive'; sub = pos + ' of the top ' + total + ' cryptos have been rising over the previous days. That is a better backdrop than a falling market — it still says nothing certain about tomorrow.'; }
+    else if (neg / total >= 0.45) { title = 'The last 7 days have been weak'; sub = neg + ' of the top ' + total + ' cryptos have been falling over the previous days. Most beginners do better waiting for the trend to settle than buying into a drop.'; }
+    else { title = 'No clear direction in the last 7 days'; sub = 'The top ' + total + ' cryptos are split between rising, falling and going sideways. A mixed backdrop is usually a moment to wait, not to rush.'; }
+    document.getElementById('mr-title').textContent = title;
+    document.getElementById('mr-sub').textContent = sub;
+    const cell = (k, asset) => {
+      if (!asset) return '';
+      const a = signalFor(asset);
+      if (!a) return '';
+      const lv = SIGNAL_LEVELS[a.level];
+      return '<div class="mr-cell"><div class="mr-k">' + k + '</div><div class="mr-v" style="color:' + lv.color + '">' + lv.label + '</div><div class="mr-d">' + (a.change >= 0 ? '+' : '') + a.change.toFixed(1) + '% in ' + a.days + ' days · ' + a.upDays + '/' + a.days + ' up</div></div>';
+    };
+    const gold = commodities.find(c => c.id === 'XAU');
+    const spy = stocks.find(c => c.symbol === 'AAPL');
+    document.getElementById('mr-grid').innerHTML =
+      cell('Bitcoin', coins.find(c => c.id === 'bitcoin')) +
+      cell('Ethereum', coins.find(c => c.id === 'ethereum')) +
+      (gold ? cell('Gold', gold) : '') +
+      (spy && marketHistory.AAPL ? cell('Apple', spy) : '') +
+      '<div class="mr-cell"><div class="mr-k">Top 100 crypto</div><div class="mr-v" style="color:' + (pos >= neg ? '#3fa06e' : '#c05a52') + '">' + pos + ' up · ' + neg + ' down</div><div class="mr-d">' + (counts.wait) + ' with no clear trend</div></div>';
+    const seg = (k) => '<span style="width:' + (counts[k] / total * 100).toFixed(1) + '%;background:' + SIGNAL_LEVELS[k].color + '"></span>';
+    document.getElementById('mr-bar').innerHTML = seg('favorable') + seg('leaning') + seg('wait') + seg('unfavorable');
+    document.getElementById('mr-legend').innerHTML = ['favorable', 'leaning', 'wait', 'unfavorable'].map(k =>
+      '<span><i style="background:' + SIGNAL_LEVELS[k].color + '"></i>' + SIGNAL_LEVELS[k].label + ' ' + counts[k] + '</span>').join('') +
+      '<span style="color:#6b7280">Stablecoins left out · not financial advice</span>';
+  }
+
+  function dailyFromHourly(prices) {
+    if (!prices || prices.length < 48) return null;
+    const out = [];
+    let i = prices.length - 1;
+    for (; i >= 0 && out.length < SIGNAL_DAYS + 1; i -= 24) out.unshift(prices[i]);
+    // CoinGecko sends ~168 hourly points, one short of 7 full days: the oldest
+    // point stands in for the close of 7 days ago.
+    if (out.length < SIGNAL_DAYS + 1 && i > -24) out.unshift(prices[0]);
+    return out;
+  }
+
+  async function fetchCryptoHistory() {
+    const urls = [
+      'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=true',
+      'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=6&sparkline=true',
+    ];
+    let got = false;
+    for (const u of urls) {
+      try {
+        const res = await fetch(u);
+        if (!res.ok) continue;
+        const data = await res.json();
+        data.forEach(c => {
+          const d = dailyFromHourly(c.sparkline_in_7d && c.sparkline_in_7d.price);
+          if (d) { cryptoHistory[c.id] = d; got = true; }
+        });
+      } catch (e) { /* try again on the next round */ }
+      await new Promise(r => setTimeout(r, 1500));
+    }
+    if (got) { renderMarketRead(); if (activeTab === 'crypto') render(); }
+    return got;
+  }
+
+  async function fetchMarketHistory() {
+    try {
+      const res = await fetch('market-history.json?h=' + Math.floor(Date.now() / 3600000));
+      if (!res.ok) return;
+      const json = await res.json();
+      marketHistory = json.series || {};
+      marketHistoryDate = json.updated || null;
+      applyHistoryChanges(commodities);
+      applyHistoryChanges(stocks);
+      renderMarketRead();
+      if (activeTab !== 'crypto') render();
+    } catch (e) { /* the signal shows "No history yet" */ }
+  }
+
+  // Real 24h and 7-day changes for stocks and metals, from the daily closes.
+  function applyHistoryChanges(list) {
+    list.forEach(a => {
+      const h = marketHistory[a.symbol];
+      if (!h || h.length < 2 || a.current_price == null) return;
+      const prev = h[h.length - 1];
+      if (a._kind === 'commodities') a.price_change_percentage_24h_in_currency = (a.current_price / prev - 1) * 100;
+      const weekAgo = h[Math.max(0, h.length - SIGNAL_DAYS)];
+      a.price_change_percentage_7d_in_currency = (a.current_price / weekAgo - 1) * 100;
+    });
   }
 
   function render() {
@@ -1079,6 +1280,7 @@
       c.symbol.toLowerCase().includes(search.toLowerCase())
     );
     if (showOnlyWatchlist) filtered = filtered.filter(c => watchlist.has(c.id));
+    filtered.forEach(c => { c._kind = activeTab; signalFor(c); });
     const sorted = filtered.slice().sort((a, b) => {
       let av = a[sortKey], bv = b[sortKey];
       if (av == null) av = sortDir === 'asc' ? Infinity : -Infinity;
@@ -1114,7 +1316,6 @@
     }
 
     tbody.innerHTML = sorted.map(coin => {
-      const sig = momentumSignal(coin);
       const flash = prevPrices[coin.id] != null && prevPrices[coin.id] !== coin.current_price
         ? (coin.current_price > prevPrices[coin.id] ? ' flash-up' : ' flash-down')
         : '';
@@ -1145,7 +1346,7 @@
         '<td class="mono" style="text-align:right;font-size:13px;">' + pctHtml(coin.price_change_percentage_1h_in_currency) + '</td>' +
         '<td class="mono" style="text-align:right;font-size:13px;">' + pctHtml(coin.price_change_percentage_24h_in_currency) + '</td>' +
         '<td class="mono hide-mobile" style="text-align:right;font-size:13px;">' + pctHtml(coin.price_change_percentage_7d_in_currency) + '</td>' +
-        '<td><span class="pill" style="color:' + sig.color + ';background:' + sig.color + '18;">' + sig.label + '</span></td>' +
+        '<td>' + signalCellHtml(coin) + '</td>' +
         '<td class="mono hide-mobile" style="text-align:right;font-size:13px;color:#c7cdd6;">' + capCell + '</td>' +
         '<td class="mono hide-mobile" style="text-align:right;font-size:13px;color:#c7cdd6;">' + volCell + '</td>' +
         buyCell +
@@ -1188,6 +1389,7 @@
       setBanner('crypto', null);
       setStatus('crypto', 'Updated ' + new Date().toLocaleTimeString('en-US'));
       updateStatStrip();
+      renderMarketRead();
       if (activeTab === 'crypto') render();
       setTimeout(() => { prevPrices = {}; }, 900);
     } catch (e) {
@@ -1249,8 +1451,10 @@
           price_change_percentage_7d_in_currency: null,
           market_cap: null,
           total_volume: null,
+          _kind: 'commodities',
         };
       });
+      applyHistoryChanges(commodities);
 
       commoditiesLoaded = true;
       commoditiesLive = true;
@@ -1332,8 +1536,10 @@
         price_change_percentage_7d_in_currency: null,
         market_cap: null,
         total_volume: null,
+        _kind: 'stocks',
       };
     });
+    applyHistoryChanges(stocks);
   }
 
   function stockStatusLine() {
@@ -1393,7 +1599,7 @@
     th.addEventListener('click', () => {
       const key = th.dataset.sort;
       if (sortKey === key) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
-      else { sortKey = key; sortDir = 'asc'; }
+      else { sortKey = key; sortDir = key === 'signal_score' ? 'desc' : 'asc'; }
       render();
     });
   });
@@ -1429,7 +1635,7 @@
       } else if (activeTab === 'commodities') {
         document.getElementById('page-title').textContent = 'Commodities';
         searchInput.placeholder = 'Search by name or symbol (Gold, Silver...)';
-        document.getElementById('th-24h').textContent = 'Since load';
+        document.getElementById('th-24h').textContent = Object.keys(marketHistory).length ? '24h' : 'Since load';
         loading = !commoditiesLoaded;
         // Reflect the true state immediately instead of hiding a warning that
         // was earned on a previous visit to this tab; retry in the background
@@ -1469,6 +1675,9 @@
   });
 
   fetchCoins();
+  setTimeout(() => fetchCryptoHistory().then(ok => { if (!ok) setTimeout(fetchCryptoHistory, 20000); }), 4000);
+  setInterval(fetchCryptoHistory, 30 * 60 * 1000);
+  fetchMarketHistory();
   setTimeout(() => fetchCommodities(), 2500);
   setInterval(() => fetchCoins(0), 10000);
   setInterval(() => { if (commoditiesLoaded) fetchCommodities(0); }, 30000);
