@@ -407,6 +407,8 @@
     <div class="mr-grid" id="mr-grid"></div>
     <div class="mr-bar" id="mr-bar" aria-hidden="true"></div>
     <div class="mr-legend" id="mr-legend"></div>
+    <p class="mr-sub" id="mr-track" style="margin:12px 0 0;display:none"></p>
+    <p style="margin:12px 0 0;font-size:13px"><a href="signals.html" style="color:#4ed3df">Should I invest today? Every asset's signal, one page each →</a></p>
   </section>
 
   <section id="home-primary" aria-label="Start here">
@@ -429,9 +431,9 @@
 
   <section class="alerts-cta" aria-label="Price alerts">
     <div>
-      <span class="hp-kicker">Price alerts</span>
-      <strong>Tell us the price. We tell your phone.</strong>
-      <span class="hp-sub">Pick an asset and a level. You get a notification when it gets there, even with the site closed.</span>
+      <span class="hp-kicker">Price &amp; signal alerts</span>
+      <strong>Don't watch the chart. We'll tell your phone.</strong>
+      <span class="hp-sub">Get a notification when an asset's 7-day signal turns Favorable or Unfavorable, or when the price hits your level — even with the site closed.</span>
     </div>
     <button type="button" id="alerts-cta-btn">Set an alert</button>
   </section>
@@ -471,13 +473,17 @@
         <span>🔍</span>
         <input id="search-input" placeholder="Search by name or symbol (BTC, ETH, SOL...)" />
       </div>
+      <div id="window-toggle" role="group" aria-label="Signal window" style="display:flex;gap:4px;">
+        <button type="button" class="tab-btn win-btn tab-active" data-days="7" aria-pressed="true" title="Signal from the last 7 days">7d</button>
+        <button type="button" class="tab-btn win-btn" data-days="30" aria-pressed="false" title="Signal from the last 30 days">30d</button>
+      </div>
       <button id="watchlist-toggle" class="tab-btn" style="white-space:nowrap;">☆ My List</button>
     </div>
 
     <div id="error-banner" class="banner banner-error" style="display:none;"></div>
 
     <div class="banner banner-info">
-      <strong style="color:#c9a35a;">How the signal works:</strong> it is built only from the previous days — the daily closes of the last 7 days. <b style="color:#3fa06e">Favorable</b> means the price has been rising steadily, <b style="color:#e0b84d">Wait</b> means no clear direction, <b style="color:#c05a52">Unfavorable</b> means it has been falling. It describes the recent past, not the future, and is not financial advice. Click the column header to sort by it.
+      <strong style="color:#c9a35a;">How the signal works:</strong> it is built only from the previous days — the daily closes of the last 7 days (or 30, with the 30d button; coins without 30 days of history keep their 7-day read). <b style="color:#3fa06e">Favorable</b> means the price has been rising steadily, <b style="color:#e0b84d">Wait</b> means no clear direction, <b style="color:#c05a52">Unfavorable</b> means it has been falling. It describes the recent past, not the future, and is not financial advice. Click the column header to sort by it.
     </div>
 
     <div id="table-container">
@@ -493,7 +499,7 @@
               <th data-sort="price_change_percentage_1h_in_currency" style="text-align:right;">1h</th>
               <th data-sort="price_change_percentage_24h_in_currency" style="text-align:right;" id="th-24h">24h</th>
               <th data-sort="price_change_percentage_7d_in_currency" style="text-align:right;" class="hide-mobile">7d</th>
-              <th data-sort="signal_score" style="text-align:left;" title="Built from the daily closes of the previous 7 days">Signal (last 7 days)</th>
+              <th data-sort="signal_score" style="text-align:left;" id="th-signal" title="Built from the daily closes of the previous days">Signal (last 7 days)</th>
               <th data-sort="market_cap" style="text-align:right;" class="hide-mobile">Market Cap</th>
               <th data-sort="total_volume" style="text-align:right;" class="hide-mobile">Volume 24h</th>
               <th class="buy-col-cell"></th>
@@ -510,7 +516,7 @@
   </div>
 
   <div class="start-tools" aria-label="More tools">
-    <span class="start-tools-label">Go deeper</span><span aria-hidden="true">·</span><a href="portfolio.html">Portfolio Blueprint</a><span aria-hidden="true">·</span><a href="decisionlab.html">Decision Lab</a><span aria-hidden="true">·</span><a href="passport.html">Investor Passport</a><span aria-hidden="true">·</span><a href="research.html">Research Room</a>
+    <span class="start-tools-label">Go deeper</span><span aria-hidden="true">·</span><a href="signals.html">Should I invest today?</a><span aria-hidden="true">·</span><a href="portfolio.html">Portfolio Blueprint</a><span aria-hidden="true">·</span><a href="decisionlab.html">Decision Lab</a><span aria-hidden="true">·</span><a href="passport.html">Investor Passport</a><span aria-hidden="true">·</span><a href="research.html">Research Room</a>
   </div>
 
   <aside class="support-banner" aria-label="Support InvestingNoobs" style="margin-bottom:20px;border:1.5px solid #c9a35a;border-radius:8px;padding:18px 22px;background:linear-gradient(180deg, #161206, #10141a 70%);box-shadow:0 0 0 4px rgba(201,163,90,0.08), 0 8px 24px -14px rgba(201,163,90,0.3);display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:space-between;">
@@ -1089,7 +1095,10 @@
   // Every asset is judged only on its daily closes over the last 7 days.
   // Crypto: CoinGecko's 7-day hourly series (one close every 24 h).
   // Stocks and metals: market-history.json, rebuilt each evening by a GitHub Action.
-  const SIGNAL_DAYS = 7;
+  const SIGNAL_DAYS = 7;          // window for the 7d change column
+  let signalDays = 7;             // window the visitor picked: 7 or 30
+  try { if (localStorage.getItem('in_signal_days') === '30') signalDays = 30; } catch (e) { /* ignore */ }
+  let siteSignals = null;         // signals.json: track record and asset pages
   let cryptoHistory = {};     // coin id -> daily closes, oldest first
   let marketHistory = {};     // stock/metal symbol -> daily closes, oldest first
   let marketHistoryDate = null;
@@ -1104,16 +1113,24 @@
   };
 
   function closesFor(asset) {
-    let base = activeTabOf(asset) === 'crypto' ? cryptoHistory[asset.id] : marketHistory[asset.symbol];
+    const isCrypto = activeTabOf(asset) === 'crypto';
+    // Crypto: the 7-day hourly series is the freshest; for 30 days (and as a
+    // fallback) the daily file is used, which covers the main coins.
+    let base = isCrypto
+      ? (signalDays === 7 && cryptoHistory[asset.id]) || marketHistory[asset.id] || cryptoHistory[asset.id]
+      : marketHistory[asset.symbol];
     if (!base || base.length < 2) return null;
     let closes = base.slice();
-    // Today's live price takes the place of the last close (crypto) or is added
-    // after the last market close (stocks and metals).
+    // Today's live price takes the place of the last close (crypto, whose last
+    // daily bar is today's) or is added after the last market close (stocks, metals).
     if (asset.current_price != null && isFinite(asset.current_price)) {
-      if (activeTabOf(asset) === 'crypto') closes[closes.length - 1] = asset.current_price;
+      if (isCrypto) closes[closes.length - 1] = asset.current_price;
       else if (Math.abs(asset.current_price / closes[closes.length - 1] - 1) > 1e-9) closes.push(asset.current_price);
     }
-    return closes.slice(-(SIGNAL_DAYS + 1));
+    closes = closes.slice(-(signalDays + 1));
+    // Not enough days for the chosen window: no signal rather than a short one.
+    if (closes.length < Math.min(signalDays, 8)) return null;
+    return closes;
   }
   function activeTabOf(asset) { return asset._kind || 'crypto'; }
 
@@ -1160,17 +1177,20 @@
   function signalCellHtml(asset) {
     const a = signalFor(asset);
     if (!a) {
-      const waiting = activeTabOf(asset) === 'crypto' ? 'Loading history…' : 'No history yet';
+      const waiting = signalDays === 30 ? 'No 30-day history' : (activeTabOf(asset) === 'crypto' ? 'Loading history…' : 'No history yet');
       return '<span class="pill" style="color:#6b7280;background:#6b728018;">' + waiting + '</span>';
     }
     const lv = SIGNAL_LEVELS[a.level];
     const sign = v => (v >= 0 ? '+' : '') + v.toFixed(1) + '%';
     const why = sign(a.change) + ' in ' + a.days + 'd · ' + a.upDays + '/' + a.days + ' days up · ' + (a.vsAvg >= 0 ? 'above' : 'below') + ' avg';
-    const risky = a.vol > 6 ? ' <span title="Daily moves above 6% on average" style="color:#e08a4d;">⚡ big swings</span>' : '';
-    const title = 'Last ' + a.days + ' days: ' + sign(a.change) + ' · ' + a.upDays + ' of ' + a.days + ' days closed up · price ' + sign(a.vsAvg) + ' vs 7-day average · last 3 days ' + sign(a.last3) + ' · typical daily move ' + a.vol.toFixed(1) + '%';
+    const key = activeTabOf(asset) === 'crypto' ? asset.id : asset.symbol;
+    const pageInfo = siteSignals && siteSignals.assets && siteSignals.assets[key];
+    const pageLink = pageInfo && pageInfo.page ? ' · <a href="' + pageInfo.page + '" style="color:#4ed3df;text-decoration:none">why?</a>' : '';
+    const risky = a.vol > 6 ? ' <span title="Daily moves above 6% on average" style="color:#e08a4d;font-size:11px;white-space:nowrap;">⚡ big swings</span>' : '';
+    const title = 'Last ' + a.days + ' days: ' + sign(a.change) + ' · ' + a.upDays + ' of ' + a.days + ' days closed up · price ' + sign(a.vsAvg) + ' vs ' + a.days + '-day average · last 3 days ' + sign(a.last3) + ' · typical daily move ' + a.vol.toFixed(1) + '%';
     return '<div class="sig-cell" title="' + title + '">' + sparkSvg(a.closes, lv.color) +
       '<div><span class="pill" style="color:' + lv.color + ';background:' + lv.color + '18;">' + lv.label + '</span>' + risky +
-      '<div class="sig-why mono">' + why + '</div></div></div>';
+      '<div class="sig-why mono">' + why + pageLink + '</div></div></div>';
   }
 
   // Summary card at the top of the page.
@@ -1184,9 +1204,10 @@
     if (!total) return;
     const pos = counts.favorable + counts.leaning, neg = counts.unfavorable;
     let title, sub;
-    if (pos / total >= 0.55) { title = 'The last 7 days lean positive'; sub = pos + ' of the top ' + total + ' cryptos have been rising over the previous days. That is a better backdrop than a falling market — it still says nothing certain about tomorrow.'; }
-    else if (neg / total >= 0.45) { title = 'The last 7 days have been weak'; sub = neg + ' of the top ' + total + ' cryptos have been falling over the previous days. Most beginners do better waiting for the trend to settle than buying into a drop.'; }
-    else { title = 'No clear direction in the last 7 days'; sub = 'The top ' + total + ' cryptos are split between rising, falling and going sideways. A mixed backdrop is usually a moment to wait, not to rush.'; }
+    const W = signalDays;
+    if (pos / total >= 0.55) { title = 'The last ' + W + ' days lean positive'; sub = pos + ' of the top ' + total + ' cryptos have been rising over the previous days. That is a better backdrop than a falling market — it still says nothing certain about tomorrow.'; }
+    else if (neg / total >= 0.45) { title = 'The last ' + W + ' days have been weak'; sub = neg + ' of the top ' + total + ' cryptos have been falling over the previous days. Most beginners do better waiting for the trend to settle than buying into a drop.'; }
+    else { title = 'No clear direction in the last ' + W + ' days'; sub = 'The top ' + total + ' cryptos are split between rising, falling and going sideways. A mixed backdrop is usually a moment to wait, not to rush.'; }
     document.getElementById('mr-title').textContent = title;
     document.getElementById('mr-sub').textContent = sub;
     const cell = (k, asset) => {
@@ -1209,6 +1230,20 @@
     document.getElementById('mr-legend').innerHTML = ['favorable', 'leaning', 'wait', 'unfavorable'].map(k =>
       '<span><i style="background:' + SIGNAL_LEVELS[k].color + '"></i>' + SIGNAL_LEVELS[k].label + ' ' + counts[k] + '</span>').join('') +
       '<span style="color:#6b7280">Stablecoins left out · not financial advice</span>';
+    renderTrack();
+  }
+
+  // "Has it worked?" line, from the daily file's track record for Bitcoin.
+  function renderTrack() {
+    const el = document.getElementById('mr-track');
+    const b = siteSignals && siteSignals.assets && siteSignals.assets.bitcoin;
+    const t = b && b.track;
+    if (!el || !t || t.favN < 3) return;
+    const rate = Math.round(t.favUp / t.favN * 100), base = Math.round(t.baseUp / t.baseN * 100);
+    el.style.display = 'block';
+    el.innerHTML = '<b style="color:#eceef1">Has it worked?</b> In the last ' + (t.baseN + 14) + ' days Bitcoin was Favorable on ' + t.favN +
+      ' days; a week later it was higher <b style="color:#eceef1">' + rate + '%</b> of those times, against ' + base + '% for any day. ' +
+      (rate > base + 5 ? 'Better than chance, far from certain.' : 'No better than chance — use it as context, not a forecast.');
   }
 
   function dailyFromHourly(prices) {
@@ -1242,6 +1277,30 @@
     }
     if (got) { renderMarketRead(); if (activeTab === 'crypto') render(); }
     return got;
+  }
+
+  async function fetchSiteSignals() {
+    try {
+      const res = await fetch('signals.json?h=' + Math.floor(Date.now() / 3600000));
+      if (!res.ok) return;
+      siteSignals = await res.json();
+      renderMarketRead();
+      render();
+    } catch (e) { /* optional */ }
+  }
+
+  function setSignalDays(d) {
+    signalDays = d;
+    try { localStorage.setItem('in_signal_days', String(d)); } catch (e) { /* ignore */ }
+    document.querySelectorAll('.win-btn').forEach(b => {
+      const on = Number(b.dataset.days) === d;
+      b.classList.toggle('tab-active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    const th = document.getElementById('th-signal');
+    if (th) th.textContent = 'Signal (last ' + d + ' days)';
+    renderMarketRead();
+    render();
   }
 
   async function fetchMarketHistory() {
@@ -1614,12 +1673,12 @@
     render();
   });
 
-  document.querySelectorAll('.tab-btn:not(.tab-link-external)').forEach(btn => {
+  document.querySelectorAll('.tab-btn[data-tab]:not(.tab-link-external)').forEach(btn => {
     btn.addEventListener('click', () => {
       if (activeTab === 'stocks' && btn.dataset.tab !== 'stocks') stockFetchToken++;
       activeTab = btn.dataset.tab;
       statusText.textContent = tabStatus[activeTab] || 'Loading…';
-      document.querySelectorAll('.tab-btn:not(.tab-link-external)').forEach(b => { b.classList.toggle('tab-active', b === btn); b.setAttribute('aria-selected', b === btn ? 'true' : 'false'); });
+      document.querySelectorAll('.tab-btn[data-tab]:not(.tab-link-external)').forEach(b => { b.classList.toggle('tab-active', b === btn); b.setAttribute('aria-selected', b === btn ? 'true' : 'false'); });
 
       sortKey = activeTab === 'crypto' ? 'market_cap_rank' : (activeTab === 'stocks' ? 'order' : 'current_price');
       sortDir = 'asc';
@@ -1678,6 +1737,9 @@
   setTimeout(() => fetchCryptoHistory().then(ok => { if (!ok) setTimeout(fetchCryptoHistory, 20000); }), 4000);
   setInterval(fetchCryptoHistory, 30 * 60 * 1000);
   fetchMarketHistory();
+  fetchSiteSignals();
+  document.querySelectorAll('.win-btn').forEach(b => b.addEventListener('click', () => setSignalDays(Number(b.dataset.days))));
+  if (signalDays !== 7) setSignalDays(signalDays);
   setTimeout(() => fetchCommodities(), 2500);
   setInterval(() => fetchCoins(0), 10000);
   setInterval(() => { if (commoditiesLoaded) fetchCommodities(0); }, 30000);
